@@ -1,10 +1,11 @@
 <ul>
   <li>
     <a href="admin.php">
-      <i class="glyphicon glyphicon-home"></i>
+      <i class="glyphicon glyphicon-home"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
       <span>Panel de control</span>
     </a>
   </li>
+
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>
@@ -15,12 +16,14 @@
       <li><a href="users.php">Administrar usuarios</a> </li>
    </ul>
   </li>
+
   <li>
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
       <span>Categorías</span>
     </a>
   </li>
+
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-large"></i>
@@ -31,12 +34,14 @@
        <li><a href="add_product.php">Agregar productos</a> </li>
    </ul>
   </li>
+
   <li>
     <a href="media.php" >
       <i class="glyphicon glyphicon-picture"></i>
       <span>Media</span>
     </a>
   </li>
+
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
@@ -47,6 +52,7 @@
          <li><a href="add_sale.php">Agregar venta</a> </li>
      </ul>
   </li>
+
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-signal"></i>
