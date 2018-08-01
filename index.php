@@ -27,7 +27,7 @@ tutorial diseño de sistema completo
 https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH3-T&index=1
 */
   ob_start();
-  require_once('includes/load.php');
+  require_once('includes/load.php');                                    //importa archivos de include
   if($session->isUserLoggedIn(true)) { redirect('home.php', false);}
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
             <input type="password" name= "password" class="form-control" placeholder="Contraseña">
         </div>
         <div class="form-group">
-                <button type="submit" class="btn btn-info  pull-right">Entrar</button>
+                <button type="submit" class="btn btn-info  pull-right">Entrar</button>         <!-- submit permite que la accion de form se ejecute-->
         </div>
     </form>
 </div>
