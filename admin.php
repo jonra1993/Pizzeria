@@ -20,29 +20,33 @@
      <?php echo display_msg($msg); ?>
    </div>
 </div>
+  <!--.......Cuadrados de visualizacion......-->
   <div class="row">
+  <!--Usuarios-->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-green">
           <i class="glyphicon glyphicon-user"></i>
         </div>
         <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_user['total']; ?> </h2>
+          <h2 class="margin-top"> <?php  echo $c_user['total']; ?> </h2>    <!--Lee # de usuarios-->
           <p class="text-muted">Usuarios</p>
         </div>
        </div>
     </div>
+    <!--Categorias-->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-red">
           <i class="glyphicon glyphicon-list"></i>
         </div>
         <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>
+          <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>   <!--Lee # de Categorias-->
           <p class="text-muted">Categorías</p>
         </div>
        </div>
     </div>
+    <!--Procductos-->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-blue">
@@ -54,6 +58,7 @@
         </div>
        </div>
     </div>
+    <!--Ventas-->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-yellow">
@@ -66,8 +71,9 @@
        </div>
     </div>
 </div>
-
+  <!--.......Detalle de productos......-->
   <div class="row">
+  <!--Productos mas vedidos-->
    <div class="col-md-4">
      <div class="panel panel-default">
        <div class="panel-heading">
@@ -98,6 +104,7 @@
        </div>
      </div>
    </div>
+   <!--Ultimas Ventas-->
    <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -121,7 +128,7 @@
          <tr>
            <td class="text-center"><?php echo count_id();?></td>
            <td>
-            <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">
+            <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">    <!--Redireccionamiento a editar producto en el item especifico-->
              <?php echo remove_junk(first_character($recent_sale['name'])); ?>
            </a>
            </td>
@@ -135,6 +142,7 @@
     </div>
    </div>
   </div>
+  <!--Productos recientes-->
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">

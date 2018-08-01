@@ -2,8 +2,8 @@
 <?php
 $req_fields = array('username','password' );
 validate_fields($req_fields);
-$username = remove_junk($_POST['username']);
-$password = remove_junk($_POST['password']);
+$username = remove_junk($_POST['username']);    //Adquiero varieble username de index
+$password = remove_junk($_POST['password']);    //Adquiero varible password de index
 
 if(empty($errors)){
   $user_id = authenticate($username, $password);
@@ -12,7 +12,7 @@ if(empty($errors)){
      $session->login($user_id);
     //Update Sign in time
      updateLastLogIn($user_id);
-     $session->msg("s", "Bienvenido a OSWA-INV.");
+     $session->msg("s", "Bienvenido a Pizeria Amangiare.");
      redirect('home.php',false);
 
   } else {

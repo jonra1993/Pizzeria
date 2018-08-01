@@ -63,14 +63,14 @@
       </div>
         <div class="panel-body">
           <table class="table table-bordered table-striped table-hover">
-            <thead>
+            <thead>                                                             <!--Cabecera dentro de la tabla-->
                 <tr>
                     <th class="text-center" style="width: 50px;">#</th>
                     <th>Categorías</th>
                     <th class="text-center" style="width: 100px;">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody>                                                              <!--Cuerpo dentro de la tabla-->
               <?php foreach ($all_categories as $cat):?>
                 <tr>
                     <td class="text-center"><?php echo count_id();?></td>
