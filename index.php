@@ -21,6 +21,7 @@ proyectos en ingles
 https://www.youtube.com/watch?v=jk8L4_Wx40U   https://codersfolder.com/
 https://www.webscript.info/user-posts/post?pid=118&post=inventory-management-system-using-php-mysqli-jquery-ajax-bootstrap
 
+sidebar https://bootsnipp.com/snippets/featured/responsive-sidebar-menu
 
 
 tutorial diseño de sistema completo

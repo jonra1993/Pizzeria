@@ -82,4 +82,21 @@
         <li><a href="daily_sales.php">Ventas diarias</a> </li>
       </ul>
   </li>
+
+  <!--Apertura y cierre de caja-->
+  <li>
+    <a href="caja_apertura.php">
+      <i class="glyphicon glyphicon-folder-open"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span>Apertura de caja</span>
+    </a>
+  </li>
+
+    <li>
+    <a href="caja_cierre.php">
+      <i class="glyphicon glyphicon-folder-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span>Cierre de Caja</span>
+    </a>
+  </li>
+
+
 </ul>
