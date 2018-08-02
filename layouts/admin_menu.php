@@ -56,12 +56,19 @@
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
-       <span>Ventas</span>
+       <span>Registro de Ventas</span>
       </a>
       <ul class="nav submenu">
          <li><a href="sales.php">Administrar ventas</a> </li>
          <li><a href="add_sale.php">Agregar venta</a> </li>
      </ul>
+  </li>
+  <!-- Realizar una Nueva Venta -->
+  <li>
+    <a href="realizar_venta.php">
+      <i class="glyphicon glyphicon-tags"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span>Nueva Venta</span>
+    </a>
   </li>
 
   <li>
