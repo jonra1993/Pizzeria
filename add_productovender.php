@@ -120,8 +120,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="number" class="form-control" name="saleing-price" placeholder="Precio de venta">
-                      <span class="input-group-addon">.00</span>
+                      <input type="decimal" class="form-control" name="saleing-price" placeholder="Precio de venta">
                    </div>
                   </div>
                </div>
