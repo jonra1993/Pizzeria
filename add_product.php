@@ -57,7 +57,7 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Agregar producto</span>
+            <span>Agregar Materia prima</span>
          </strong>
         </div>
         <div class="panel-body">
@@ -125,9 +125,9 @@
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
+                   <i class="glyphicon glyphicon-briefcase"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-title" placeholder="Proveedor">
+                  <input type="text" class="form-control" name="nombre-proveedor" placeholder="Proveedor">
                </div>
               </div>
               <button type="submit" name="add_product" class="btn btn-danger">Agregar producto</button>
