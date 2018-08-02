@@ -38,9 +38,9 @@
                 <td class="text-center"><?php echo count_id();?></td>
                 <td>
                   <?php if($product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/productosvender/no_image.jpg" alt="">
+                    <img class="img-avatar img-circle" src="uploads/productovender/no_image.jpg" alt="">
                   <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/productosvender/<?php echo $product['image']; ?>" alt="">
+                  <img class="img-avatar img-circle" src="uploads/productovender/<?php echo $product['image']; ?>" alt="">
                 <?php endif; ?>
                 </td>
                 <!-- Vinculacion a BD producto vender -->
