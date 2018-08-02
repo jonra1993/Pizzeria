@@ -26,12 +26,12 @@
 <!--Lista de productos a vender-->
   <li>
     <a href="#" class="submenu-toggle">
-      <i class="glyphicon glyphicon-th-large"></i>
-      <span>Productos</span>
+      <i class="glyphicon glyphicon-shopping-cart"></i>
+      <span>Productos a vender</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="productovender.php">Administrar productos</a> </li>
-       <li><a href="add_productovender.php">Agregar productos</a> </li>
+       <li><a href="productovender.php">Administrar productos a vender</a> </li>
+       <li><a href="add_productovender.php">Agregar productos a vender</a> </li>
    </ul>
   </li>
 <!--Iventario-->
