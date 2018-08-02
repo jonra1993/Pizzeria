@@ -28,7 +28,7 @@
     <!--Usuarios-->
       <div class="col-md-3">
         <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="uploads/imagenes/pizza.jpg" alt="Card image cap">
+          <img class="card-img-top img-responsive" src="uploads/imagenes/pizza.jpg" alt="Card image cap">     <!--img-responsive: permite redimensionar img-->
           <!-- <div class="card-img-top" "bg-green">
             <i class="glyphicon glyphicon-user"></i>
           </div> -->
