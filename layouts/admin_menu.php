@@ -23,15 +23,26 @@
       <span>Categorías</span>
     </a>
   </li>
-
+<!--Lista de productos a vender-->
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-large"></i>
       <span>Productos</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="product.php">Administrar productos</a> </li>
-       <li><a href="add_product.php">Agregar productos</a> </li>
+       <li><a href="productovender.php">Administrar productos</a> </li>
+       <li><a href="add_productovender.php">Agregar productos</a> </li>
+   </ul>
+  </li>
+<!--Iventario-->
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class=" glyphicon glyphicon-leaf"></i>
+      <span>Inventario</span>
+    </a>
+    <ul class="nav submenu">
+       <li><a href="product.php">Administrar materia prima</a> </li>
+       <li><a href="add_product.php">Agregar materia prima</a> </li>
    </ul>
   </li>
 
