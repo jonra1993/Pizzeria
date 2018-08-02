@@ -8,11 +8,12 @@
 ?>
 <?php
  if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
+   $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price','nombre-proveedor' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
+     $p_prov   = remove_junk($db->escape($_POST['nombre-proveedor']));
      $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
      $p_buy   = remove_junk($db->escape($_POST['buying-price']));
      $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
@@ -23,9 +24,9 @@
      }
      $date    = make_date();
      $query  = "INSERT INTO products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date";
+     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date,proveedor";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}'";
+     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_prov}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -56,7 +57,7 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Agregar producto</span>
+            <span>Agregar Materia prima</span>
          </strong>
         </div>
         <div class="panel-body">
@@ -119,6 +120,14 @@
                       <input type="decimal" class="form-control" name="saleing-price" placeholder="Precio de venta">
                    </div>
                   </div>
+               </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-briefcase"></i>
+                  </span>
+                  <input type="text" class="form-control" name="nombre-proveedor" placeholder="Proveedor">
                </div>
               </div>
               <button type="submit" name="add_product" class="btn btn-danger">Agregar producto</button>

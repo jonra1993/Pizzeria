@@ -1,5 +1,5 @@
 <?php
-  $page_title = 'Lista de productos';
+  $page_title = 'Lista de materia prima';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
@@ -14,7 +14,7 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
          <div class="pull-right">
-           <a href="add_product.php" class="btn btn-primary">Agragar producto</a>
+           <a href="add_product.php" class="btn btn-primary">Agragar materia prima</a>
          </div>
         </div>
         <div class="panel-body">
@@ -26,6 +26,7 @@
                 <th> Descripción </th>
                 <th class="text-center" style="width: 10%;"> Categoría </th>
                 <th class="text-center" style="width: 10%;"> Stock </th>
+                <th class="text-center" style="width: 10%;"> Proveedor </th>
                 <th class="text-center" style="width: 10%;"> Precio de compra </th>
                 <th class="text-center" style="width: 10%;"> Precio de venta </th>
                 <th class="text-center" style="width: 10%;"> Agregado </th>
@@ -46,6 +47,7 @@
                 <td> <?php echo remove_junk($product['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['proveedor']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
