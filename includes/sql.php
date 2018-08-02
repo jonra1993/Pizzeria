@@ -220,6 +220,21 @@ function tableExists($table){
 
    }
   /*--------------------------------------------------------------*/
+   /* Funcion para vinvular la base de datos de productos vender
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+   function join_productovender_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.name,p.sale_price,p.media_id,c.name";
+   $sql  .=" AS categorie,m.file_name AS image";
+   $sql  .=" FROM productovender p";                    //Definir la base de datos necesaria
+   $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+
+  }
+ /*--------------------------------------------------------------*/
   /* Function for Finding all product name
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/
