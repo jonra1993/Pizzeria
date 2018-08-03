@@ -3,6 +3,7 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
+   $categorias = join_categories_table();
 ?>
 <?php
  $c_categorie     = count_by_id('categories');
@@ -26,54 +27,22 @@
   <div class="col-md-8">
     <div class="row">
     <!--Usuarios-->
-      <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top img-responsive" src="uploads/imagenes/pizza.jpg" alt="Card image cap">     <!--img-responsive: permite redimensionar img-->
-          <!-- <div class="card-img-top" "bg-green">
-            <i class="glyphicon glyphicon-user"></i>
-          </div> -->
-          <div class="card-body">
-            <h2 class="card-title"> <?php  echo $c_user['total']; ?> </h2>    <!--Lee # de usuarios-->
-            <p class="text-muted">Usuarios</p>
+      <?php foreach ($categorias as $cat):?>
+        <div class="col-md-3">
+          <div class="card" style="width: 18rem;">
+            <?php if($cat['media_id'] === '0'): ?>
+              <a href="edit_categorie.php?id=<?php echo (int)$cat['id'];?>" title="Seleccionar Categoria"> 
+               <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+              </a>
+            <?php else: ?>
+              <a href="edit_categorie.php?id=<?php echo (int)$cat['id'];?>" title="Seleccionar Categoria"> 
+                <img class="card-img-top img-responsive" src="uploads/products/<?php echo $cat['image']; ?>" alt="">
+              </a>
+            <?php endif; ?>
+            <h4 class="card-title"> <?php echo remove_junk(ucfirst($cat['name'])); ?> </h4>    <!--Lee nombres de categrias-->
           </div>
         </div>
-      </div>
-      <!--Categorias-->
-      <div class="col-md-3">
-        <div class="panel panel-box clearfix">
-          <div class="panel-icon pull-left bg-red">
-            <i class="glyphicon glyphicon-list"></i>
-          </div>
-          <div class="panel-value pull-right">
-            <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>   <!--Lee # de Categorias-->
-            <p class="text-muted">Categorías</p>
-          </div>
-        </div>
-      </div>
-      <!--Procductos-->
-      <div class="col-md-3">
-        <div class="panel panel-box clearfix">
-          <div class="panel-icon pull-left bg-blue">
-            <i class="glyphicon glyphicon-shopping-cart"></i>
-          </div>
-          <div class="panel-value pull-right">
-            <h2 class="margin-top"> <?php  echo $c_product['total']; ?> </h2>
-            <p class="text-muted">Productos</p>
-          </div>
-        </div>
-      </div>
-      <!--Ventas-->
-      <div class="col-md-3">
-        <div class="panel panel-box clearfix">
-          <div class="panel-icon pull-left bg-yellow">
-            <i class="glyphicon glyphicon-usd"></i>
-          </div>
-          <div class="panel-value pull-right">
-            <h2 class="margin-top"> <?php  echo $c_sale['total']; ?></h2>
-            <p class="text-muted">Ventas</p>
-          </div>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
     <div class="row">
       <nav class="navbar navbar-light text-center" style="background-color: #A3ABA7;">
