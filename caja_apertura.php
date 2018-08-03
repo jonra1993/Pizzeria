@@ -10,18 +10,33 @@
    $req_fields = array('dinero');
    validate_fields($req_fields);
    if(empty($errors)){
+     $aux = remove_junk(ucwords($user['username']));
      $p_dinero = remove_junk($db->escape($_POST['dinero']));
+     $p_user = remove_junk($db->escape($_POST['username']));
+     $p_id = remove_junk($db->escape($_POST['id']));
+     $p_bloqueo = true;
+
      $p_date    = make_date();
 
-     $query  = "INSERT INTO tabalaperturascaja (";        //Insertar la BD en donde se va a ingresar los datos
-     $query .=" dinero_apertura,date";
+     $query  = "INSERT INTO tabla_aperturas_cajas (";        //Insertar la BD en donde se va a ingresar los datos
+     $query .=" dinero_apertura,username,date";
      $query .=") VALUES (";
-     $query .=" '{$p_dinero}', '{$p_date}'";
-     $query .=")";
+     $query .=" '{$p_dinero}', '{$p_user}', '{$p_date}'";
+     $query .="); ";
+
 
      if($db->query($query)){
        $session->msg('s',"Caja Abierta");
-       redirect('admin.php', false);
+       $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
+       $query2 .=" bloqueocaja = true WHERE id =";
+       $query2 .=" '{$p_id}' ;";
+       if($db->query($query2)){
+        redirect('admin.php', false);
+       }
+       else{
+        $session->msg('d',' Lo siento, registro memoria.');
+       }
+       
      } else {
        $session->msg('d',' Lo siento, registro falló.');
        redirect('caja_apertura.php', false);         //Regresar a administrar productos a vender
@@ -33,12 +48,14 @@
    }
 
  }
-{
+ else
+  {
     $session->msg('d',' Operación cancelada.');
-}
+  }
 
 ?>
 <?php include_once('layouts/header.php'); ?>
+
 <div class="row">
   <div class="col-md-12">
     <?php echo display_msg($msg); ?>
@@ -81,8 +98,14 @@
                   </div>
                </div>
               </div>
+              <input style="visibility: hidden" type="text" class="form-control" name="id" value=<?php echo remove_junk(ucwords($user['id'])); ?>>
+              <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php echo remove_junk(ucwords($user['username'])); ?>>
               <button type="submit" name="abrir_caja" class="btn btn-danger">Aceptar</button>
               <button type="submit" name="no_abrir" class="btn btn-danger">Cancelar</button>
+
+              <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php $x= current_user(); echo remove_junk(ucwords($user['bloqueocaja']));?>>
+
+              
           </form>
          </div>
         </div>
@@ -90,4 +113,11 @@
     </div>
   </div>
 
-<?php include_once('layouts/footer.php'); ?>
+<?php 
+include_once('layouts/footer.php'); 
+if($user['bloqueocaja']==true){
+  $session->msg("s", 'La caja se encuentra abierta, cierrela primero!');
+  redirect('admin.php', false);
+  exit();
+}
+?>
