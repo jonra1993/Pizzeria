@@ -40,7 +40,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
      <?php echo display_msg($msg); ?>
       <form method="post" action="auth.php" class="clearfix">
         <div class="form-group">
-              <label for="username" class="control-label">Usario</label>
+              <label for="username" class="control-label">Usuario</label>
               <input type="name" class="form-control" name="username" placeholder="Usario">
         </div>
         <div class="form-group">

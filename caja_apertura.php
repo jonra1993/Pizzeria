@@ -6,7 +6,7 @@
 ?>
 
 <?php
- if(isset($_POST['abrir_caja'])){
+if(isset($_POST['abrir_caja'])){
    $req_fields = array('dinero');
    validate_fields($req_fields);
    if(empty($errors)){
@@ -25,33 +25,31 @@
      $query .="); ";
 
 
-     if($db->query($query)){
-       $session->msg('s',"Caja Abierta");
-       $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
-       $query2 .=" bloqueocaja = true WHERE id =";
-       $query2 .=" '{$p_id}' ;";
-       if($db->query($query2)){
-        redirect('admin.php', false);
-       }
-       else{
-        $session->msg('d',' Lo siento, registro memoria.');
-       }
-       
-     } else {
-       $session->msg('d',' Lo siento, registro falló.');
-       redirect('caja_apertura.php', false);         //Regresar a administrar productos a vender
-     }
+    if($db->query($query)){
+      $session->msg('s',"Caja Abierta");
+      $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
+      $query2 .=" bloqueocaja = true WHERE id =";
+      $query2 .=" '{$p_id}' ;";
+      if($db->query($query2)) redirect('admin.php', false);
+      else $session->msg('d',' Lo siento, registro memoria.');        
+    } else {
+      $session->msg('d',' Lo siento, registro falló.');
+      redirect('caja_apertura.php', false);         //Regresar a administrar productos a vender
+    }
 
    } else{
      $session->msg("d", $errors);
      redirect('caja_apertura.php',false);
    }
-
- }
- else
-  {
-    $session->msg('d',' Operación cancelada.');
+}
+else{
+  $user = current_user();
+  if($user['bloqueocaja']==true){
+    $session->msg("s", 'La caja se encuentra abierta, cierrela primero!');
+    redirect('admin.php', false);
+    exit();
   }
+} 
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -115,9 +113,5 @@
 
 <?php 
 include_once('layouts/footer.php'); 
-if($user['bloqueocaja']==true){
-  $session->msg("s", 'La caja se encuentra abierta, cierrela primero!');
-  redirect('admin.php', false);
-  exit();
-}
+
 ?>
