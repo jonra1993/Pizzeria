@@ -20,61 +20,63 @@
 
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
-    <header id="header">
-      <div class="logo pull-left"> Administrador </div>
-      <div class="header-content">
-      <div class="header-date pull-left">
-        <strong><?php date_default_timezone_set('America/Bogota'); echo date("d/m/Y  g:i a");?></strong>
-      </div>
-      <div class="pull-right clearfix">
-        <ul class="info-menu list-inline list-unstyled">
-          <li class="profile">
-            <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-              <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-              <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                  <a href="profile.php?id=<?php echo (int)$user['id'];?>">
-                      <i class="glyphicon glyphicon-user"></i>
-                      Perfil
-                  </a>
+    <div class="container">
+      <header id="header">
+        <div class="logo pull-left"> Administrador </div>
+        <div class="header-content">
+          <div class="header-date pull-left">
+            <strong><?php date_default_timezone_set('America/Bogota'); echo date("d/m/Y  g:i a");?></strong>
+          </div>
+          <div class="pull-right clearfix">
+            <ul class="info-menu list-inline list-unstyled">
+              <li class="profile">
+                <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
+                  <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
+                  <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                      <a href="profile.php?id=<?php echo (int)$user['id'];?>">
+                          <i class="glyphicon glyphicon-user"></i>
+                          Perfil
+                      </a>
+                  </li>
+                <li>
+                    <a href="edit_account.php" title="edit account">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        Configuración
+                    </a>
+                </li>
+                <li class="last">
+                    <a href="logout.php">
+                        <i class="glyphicon glyphicon-off"></i>
+                        Salir
+                    </a>
+                </li>
+              </ul>
               </li>
-             <li>
-                 <a href="edit_account.php" title="edit account">
-                     <i class="glyphicon glyphicon-cog"></i>
-                     Configuración
-                 </a>
-             </li>
-             <li class="last">
-                 <a href="logout.php">
-                     <i class="glyphicon glyphicon-off"></i>
-                     Salir
-                 </a>
-             </li>
-           </ul>
-          </li>
-        </ul>
-      </div>
-     </div>
-    </header>
-    <div class="sidebar">
-      <?php if($user['user_level'] === '1'): ?>
-        <!-- admin menu -->
-      <?php include_once('admin_menu.php');?>       <!--Importa opciones de administrador-->
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="sidebar">
+        <?php if($user['user_level'] === '1'): ?>
+          <!-- admin menu -->
+        <?php include_once('admin_menu.php');?>       <!--Importa opciones de administrador-->
 
-      <?php elseif($user['user_level'] === '2'): ?>
-        <!-- Special user -->
-      <?php include_once('special_menu.php');?>     <!--Importa opciones de usuario Especial-->
+        <?php elseif($user['user_level'] === '2'): ?>
+          <!-- Special user -->
+        <?php include_once('special_menu.php');?>     <!--Importa opciones de usuario Especial-->
 
-      <?php elseif($user['user_level'] === '3'): ?>
-        <!-- User menu -->
-      <?php include_once('user_menu.php');?>        <!--Importa opciones de Usuario-->
+        <?php elseif($user['user_level'] === '3'): ?>
+          <!-- User menu -->
+        <?php include_once('user_menu.php');?>        <!--Importa opciones de Usuario-->
 
-      <?php endif;?>
+        <?php endif;?>
+      </div> 
+    </div>
+  <?php endif;?>
+  </body>
 
-   </div>
-<?php endif;?>
-
-<div class="page">
+  <div class="page">
   <div class="container-fluid">
