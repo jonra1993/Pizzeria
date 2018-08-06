@@ -68,6 +68,7 @@ else{
             <span>Apertura de caja</span>
          </strong>
         </div>
+        
         <div class="panel-body">
          <div class="col-md-12">
           <form method="post" action="caja_apertura.php" class="clearfix">

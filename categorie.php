@@ -34,7 +34,7 @@
        <?php echo display_msg($msg); ?>
      </div>
   </div>
-   <div class="row">
+  <div class="row">
     <div class="col-md-5">
       <div class="panel panel-default">
         <div class="panel-heading">
