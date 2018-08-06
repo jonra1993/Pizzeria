@@ -3,8 +3,52 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(2);
-  $all_categories = find_all('categories');
-  $all_photo = find_all('media');
+?>
+<?php
+$user = current_user();
+if(isset($_POST['cerrar_caja'])){
+   $req_fields = array('dinero');
+   validate_fields($req_fields);
+   if(empty($errors)){
+     $aux = remove_junk(ucwords($user['username']));
+     $p_dinero = remove_junk($db->escape($_POST['dinero']));
+     $p_user = remove_junk($db->escape($_POST['username']));
+     $p_id = remove_junk($db->escape($_POST['id']));
+     $p_bloqueo = true;
+
+     $p_date    = make_date();
+
+     $query  = "INSERT INTO tabla_aperturas_cajas (";        //Insertar la BD en donde se va a ingresar los datos
+     $query .=" dinero_apertura,username,date";
+     $query .=") VALUES (";
+     $query .=" '{$p_dinero}', '{$aux}', '{$p_date}'";
+     $query .="); ";
+
+
+    if($db->query($query)){
+      $session->msg('s',"Caja Abierta");
+      $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
+      $query2 .=" bloqueocaja = true WHERE id =";
+      $query2 .=" '{$p_id}' ;";
+      if($db->query($query2)) redirect('admin.php', false);
+      else $session->msg('d',' Lo siento, registro memoria.');        
+    } else {
+      $session->msg('d',' Lo siento, registro falló.');
+      redirect('caja_cierre.php', false);         //Regresar a administrar productos a vender
+    }
+
+   } else{
+     $session->msg("d", $errors);
+     redirect('caja_cierre.php',false);
+   }
+}
+if(isset($_POST['no_cerrar'])) redirect('admin.php', false);
+else{
+  if($user['bloqueocaja']==false){
+    $session->msg("d", 'La caja se encuentra cerrada, abrala primero!');
+    redirect('admin.php', false); //ojo depende de q menu este user, admin o special no todos van a admin
+  }
+} 
 ?>
 
 <?php include_once('layouts/header.php'); ?>
@@ -24,6 +68,7 @@
        </strong>
       </div>
       <div class="panel-body">
+      <form method="post" action="caja_cierre.php" class="clearfix">
         <table class="table table-bordered table-striped table-hover">
           <thead>                                                             <!--Cabecera dentro de la tabla-->
               <tr>
@@ -31,20 +76,21 @@
               </tr>
           </thead>
           <tbody>                                                              <!--Cuerpo dentro de la tabla-->
-            <tr><td>Apertura de caja</td><td class="text-center" value="0">0</td></tr>
-            <tr><td>Cobros en efectivo</td><td class="text-center " value="0">0</td></tr>
-            <tr><td>Cobros con tarjeta</td><td class="text-center">0</td></tr>
-            <tr style="background-color:#0099ff"><td>Total de ventas</td><td class="text-center">0</td></tr>
-            <tr><td>Autoconsumo</td><td class="text-center">0</td></tr>
-            <tr><td>Ingreso de efectivo en caja</td><td class="text-center">0</td></tr>
-            <tr><td>Ingreso de efectivo en caja</td><td class="text-center">0</td></tr>
-            <tr><td>Retiro de efectivo en caja</td><td class="text-center">0</td></tr>
-            <tr style="background-color:#0099ff"><td>Dinero a entregar</td><td class="text-center"id="dinero_entregar">0</td></tr>
-            <tr style="background-color:#0099ff"><td>Dinero entregado</td><td class="text-center" id="dinero_entregado">0</td></tr>
-            <tr><td id="dinero_sobra_txt">a</td><td class="text-center" id="dinero_sobra">0</td></tr>
+            <tr><td>Apertura de caja</td><td class="text-center" name="apertura_caja">0</td></tr>
+            <tr><td>Cobros en efectivo</td><td class="text-center " name="cobros_efectivo">0</td></tr>
+            <tr><td>Cobros con tarjeta</td><td class="text-center" name="cobros_tarjeta">0</td></tr>
+            <tr style="background-color:#0099ff"><td>Total de ventas</td><td class="text-center" name="total_ventas">0</td></tr>
+            <tr><td>Autoconsumo</td><td class="text-center" name="autoconsumo">0</td></tr>
+            <tr><td>Ingreso de efectivo en caja</td><td class="text-center" name="ingreso_ef_caja">0</td></tr>
+            <tr><td>Retiro de efectivo en caja</td><td class="text-center" name="retiro_ef_caja">0</td></tr>
+            <tr style="background-color:#0099ff"><td>Dinero a entregar</td><td class="text-center"id="dinero_entregar" name="dinero_entregar">0</td></tr>
+            <tr style="background-color:#0099ff"><td>Dinero entregado</td><td class="text-center" id="dinero_entregado" name="dinero_entregado">0</td></tr>
+            <tr><td id="dinero_sobra_txt">a</td><td class="text-center" id="dinero_sobra" name="dinero_sobra">0</td></tr>
           </tbody>
+          </form>
         </table>
-        <button type="submit" name="add_cat" class="btn btn-success">Cerrar Caja</button>
+        <button type="submit" name="cerrar_caja" class="btn btn-success">Cerrar Caja</button>
+        <button type="submit" name="no_cerrar" class="btn btn-danger">Cancelar</button>
       </div>
     </div>
   </div>

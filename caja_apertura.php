@@ -43,15 +43,16 @@ if(isset($_POST['abrir_caja'])){
      redirect('caja_apertura.php',false);
    }
 }
+if(isset($_POST['no_abrir'])) redirect('admin.php', false);
 else{
   if($user['bloqueocaja']==true){
-    $session->msg("s", 'La caja se encuentra abierta, cierrela primero!');
+    $session->msg("d", 'La caja se encuentra abierta, cierrela primero!');
     redirect('admin.php', false); //ojo depende de q menu este user, admin o special no todos van a admin
     exit();
   }
 } 
-
 ?>
+
 <?php include_once('layouts/header.php'); ?>
 
 <div class="row">
@@ -68,7 +69,7 @@ else{
             <span>Apertura de caja</span>
          </strong>
         </div>
-        
+
         <div class="panel-body">
          <div class="col-md-12">
           <form method="post" action="caja_apertura.php" class="clearfix">
@@ -99,7 +100,7 @@ else{
               </div>
               <input style="visibility: hidden" type="text" class="form-control" name="id" value=<?php echo remove_junk(ucwords($user['id'])); ?>>
               <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php echo remove_junk(ucwords($user['username'])); ?>>
-              <button type="submit" name="abrir_caja" class="btn btn-danger">Aceptar</button>
+              <button type="submit" name="abrir_caja" class="btn btn-success">Aceptar</button>
               <button type="submit" name="no_abrir" class="btn btn-danger">Cancelar</button>
 
               <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php $x= current_user(); echo remove_junk(ucwords($user['bloqueocaja']));?>>
