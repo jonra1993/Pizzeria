@@ -95,26 +95,6 @@
 
               <div class="form-group">
                <div class="row">
-
-                 <!-- <div class="col-md-4">
-                   <div class="input-group">
-                     <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-shopping-cart"></i>
-                     </span>
-                     <input type="number" class="form-control" name="product-quantity" placeholder="Cantidad">
-                  </div>
-                 </div> -->
-
-                 <!-- <div class="col-md-4">
-                   <div class="input-group">
-                     <span class="input-group-addon">
-                       <i class="glyphicon glyphicon-usd"></i>
-                     </span>
-                     <input type="number" class="form-control" name="buying-price" placeholder="Precio de compra">
-                     <span class="input-group-addon">.00</span>
-                  </div>
-                 </div> -->
-
                   <div class="col-md-4">
                     <div class="input-group">
                       <span class="input-group-addon">

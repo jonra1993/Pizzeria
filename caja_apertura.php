@@ -6,6 +6,7 @@
 ?>
 
 <?php
+$user = current_user();
 if(isset($_POST['abrir_caja'])){
    $req_fields = array('dinero');
    validate_fields($req_fields);
@@ -21,7 +22,7 @@ if(isset($_POST['abrir_caja'])){
      $query  = "INSERT INTO tabla_aperturas_cajas (";        //Insertar la BD en donde se va a ingresar los datos
      $query .=" dinero_apertura,username,date";
      $query .=") VALUES (";
-     $query .=" '{$p_dinero}', '{$p_user}', '{$p_date}'";
+     $query .=" '{$p_dinero}', '{$aux}', '{$p_date}'";
      $query .="); ";
 
 
@@ -43,7 +44,6 @@ if(isset($_POST['abrir_caja'])){
    }
 }
 else{
-  $user = current_user();
   if($user['bloqueocaja']==true){
     $session->msg("s", 'La caja se encuentra abierta, cierrela primero!');
     redirect('admin.php', false); //ojo depende de q menu este user, admin o special no todos van a admin
