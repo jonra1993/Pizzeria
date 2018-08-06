@@ -46,7 +46,7 @@ else{
   $user = current_user();
   if($user['bloqueocaja']==true){
     $session->msg("s", 'La caja se encuentra abierta, cierrela primero!');
-    redirect('admin.php', false);
+    redirect('admin.php', false); //ojo depende de q menu este user, admin o special no todos van a admin
     exit();
   }
 } 

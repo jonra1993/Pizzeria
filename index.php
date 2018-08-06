@@ -41,7 +41,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
       <form method="post" action="auth.php" class="clearfix">
         <div class="form-group">
               <label for="username" class="control-label">Usuario</label>
-              <input type="name" class="form-control" name="username" placeholder="Usario">
+              <input type="name" class="form-control" name="username" placeholder="Usuario">
         </div>
         <div class="form-group">
             <label for="Password" class="control-label">Contraseña</label>
