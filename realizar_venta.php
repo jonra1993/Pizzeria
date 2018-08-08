@@ -29,7 +29,7 @@
   <div class="row">
   <!--Seleccion de Productos-->
   <div class="col-md-8">
-    <div class="row">
+    <div id="cont_categ" class="row">
     <!--Categorias-->
       <?php foreach ($categorias as $cat):?>
         <div class="col-md-3">
@@ -52,7 +52,14 @@
     </div>
     <!-- Contenedor de productos -->
     <div class="row">
-      <div id="selec_productos" class="container-fluid text-center" style="margin-top: 20px;; background-color: #A3ABA7;">
+      <div id="selec_productos" class="container-fluid text-center" style="background-color: #A3ABA7;">
+        <!-- regresar -->
+        <div id="funcion_regresar" class="row" style="display: none;">
+          <button type="button" class="btn btn-success" style="width: auto" onclick="regresar_carac()">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+          Regresar
+          </button>
+        </div>
         <!-- Presentacion de opciones -->
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
