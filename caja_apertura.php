@@ -13,8 +13,7 @@ if(isset($_POST['abrir_caja'])){
    if(empty($errors)){
      $aux = remove_junk(ucwords($user['username']));
      $p_dinero = remove_junk($db->escape($_POST['dinero']));
-     $p_user = remove_junk($db->escape($_POST['username']));
-     $p_id = remove_junk($db->escape($_POST['id']));
+     $p_id = remove_junk(ucwords($user['id']));
      $p_bloqueo = true;
 
      $p_date    = make_date();
@@ -98,7 +97,6 @@ else{
                   </div>
                </div>
               </div>
-              <input style="visibility: hidden" type="text" class="form-control" name="id" value=<?php echo remove_junk(ucwords($user['id'])); ?>>
               <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php echo remove_junk(ucwords($user['username'])); ?>>
               <button type="submit" name="abrir_caja" class="btn btn-success">Aceptar</button>
               <button type="submit" name="no_abrir" class="btn btn-danger">Cancelar</button>

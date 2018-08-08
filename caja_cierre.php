@@ -6,35 +6,41 @@
 ?>
 <?php
 $user = current_user();
+$open=find_last_open_box();
+
 if(isset($_POST['cerrar_caja'])){
-   $req_fields = array('dinero');
-   validate_fields($req_fields);
-   if(empty($errors)){
-     $aux = remove_junk(ucwords($user['username']));
-     $p_dinero = remove_junk($db->escape($_POST['dinero']));
-     $p_user = remove_junk($db->escape($_POST['username']));
-     $p_id = remove_junk($db->escape($_POST['id']));
-     $p_bloqueo = true;
-
+   if(empty($errors)){   
+     $p_apertura_caja = remove_junk($db->escape($_POST['apertura_caja']));
+     $p_cobros_efectivo = remove_junk($db->escape($_POST['cobros_efectivo']));
+     $p_cobros_tarjeta = remove_junk($db->escape($_POST['cobros_tarjeta']));
+     $p_total_ventas = remove_junk($db->escape($_POST['total_ventas']));
+     $p_autoconsumo = remove_junk($db->escape($_POST['autoconsumo']));
+     $p_ingreso_ef_caja = remove_junk($db->escape($_POST['ingreso_ef_caja']));
+     $p_retiro_ef_caja = remove_junk($db->escape($_POST['retiro_ef_caja']));
+     $p_dinero_entregar = remove_junk($db->escape($_POST['dinero_entregar']));
+     $p_dinero_entregado = remove_junk($db->escape($_POST['dinero_entregado']));
+     $p_dinero_sobra = remove_junk($db->escape($_POST['dinero_sobra']));
      $p_date    = make_date();
+     $p_user = remove_junk(ucwords($user['username']));
 
-     $query  = "INSERT INTO tabla_aperturas_cajas (";        //Insertar la BD en donde se va a ingresar los datos
-     $query .=" dinero_apertura,username,date";
+     $query  = "INSERT INTO tabla_cierres_cajas (";        //Insertar la BD en donde se va a ingresar los datos
+     $query .=" dinero_apertura, cobros_en_caja, cobros_con_tarjeta, total_ventas, 	autoconsumo, 	ingreso_efectivo_en_caja, retiro_efectivo_en_caja, dinero_a_entregar, dinero_entregado, saldo, 	date, username";
      $query .=") VALUES (";
-     $query .=" '{$p_dinero}', '{$aux}', '{$p_date}'";
+     $query .=" '{$p_apertura_caja}','{$p_cobros_efectivo}','{$p_cobros_tarjeta}','{$p_total_ventas}','{$p_autoconsumo}','{$p_ingreso_ef_caja}','{$p_retiro_ef_caja}','{$p_dinero_entregar}','{$p_dinero_entregado}','{$p_dinero_sobra}','{$p_date}','{$p_user}'";
      $query .="); ";
 
 
     if($db->query($query)){
-      $session->msg('s',"Caja Abierta");
+      $session->msg('s',"Cerrada correctamente");
+      $p_id = remove_junk(ucwords($user['id']));
       $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
-      $query2 .=" bloqueocaja = true WHERE id =";
+      $query2 .=" bloqueocaja = 0 WHERE id =";
       $query2 .=" '{$p_id}' ;";
       if($db->query($query2)) redirect('admin.php', false);
       else $session->msg('d',' Lo siento, registro memoria.');        
     } else {
       $session->msg('d',' Lo siento, registro falló.');
-      redirect('caja_cierre.php', false);         //Regresar a administrar productos a vender
+      redirect('caja_cierre.php', false);  
     }
 
    } else{
@@ -43,6 +49,7 @@ if(isset($_POST['cerrar_caja'])){
    }
 }
 if(isset($_POST['no_cerrar'])) redirect('admin.php', false);
+
 else{
   if($user['bloqueocaja']==false){
     $session->msg("d", 'La caja se encuentra cerrada, abrala primero!');
@@ -51,7 +58,7 @@ else{
 } 
 ?>
 
-<?php include_once('layouts/header.php'); ?>
+<?php include_once('layouts/header.php');?>
 <div class="row">
      <div class="col-md-12">
        <?php echo display_msg($msg); ?>
@@ -76,21 +83,41 @@ else{
               </tr>
           </thead>
           <tbody>                                                              <!--Cuerpo dentro de la tabla-->
-            <tr><td>Apertura de caja</td><td class="text-center" name="apertura_caja">0</td></tr>
-            <tr><td>Cobros en efectivo</td><td class="text-center " name="cobros_efectivo">0</td></tr>
-            <tr><td>Cobros con tarjeta</td><td class="text-center" name="cobros_tarjeta">0</td></tr>
-            <tr style="background-color:#0099ff"><td>Total de ventas</td><td class="text-center" name="total_ventas">0</td></tr>
-            <tr><td>Autoconsumo</td><td class="text-center" name="autoconsumo">0</td></tr>
-            <tr><td>Ingreso de efectivo en caja</td><td class="text-center" name="ingreso_ef_caja">0</td></tr>
-            <tr><td>Retiro de efectivo en caja</td><td class="text-center" name="retiro_ef_caja">0</td></tr>
-            <tr style="background-color:#0099ff"><td>Dinero a entregar</td><td class="text-center"id="dinero_entregar" name="dinero_entregar">0</td></tr>
-            <tr style="background-color:#0099ff"><td>Dinero entregado</td><td class="text-center" id="dinero_entregado" name="dinero_entregado">0</td></tr>
-            <tr><td id="dinero_sobra_txt">a</td><td class="text-center" id="dinero_sobra" name="dinero_sobra">0</td></tr>
+            <tr><td>Apertura de caja</td><td class="text-center" >
+              <input readonly type="number" style="text-align:center" id="apertura_caja" name="apertura_caja" value=<?php echo remove_junk(ucwords($open['dinero_apertura']));?> />
+            </td></tr>
+            <tr><td>Cobros en efectivo</td><td class="text-center ">
+              <input readonly style="text-align:center" id="cobros_efectivo" name="cobros_efectivo" value="0"/>
+            </td></tr>
+            <tr><td>Cobros con tarjeta</td><td class="text-center">
+              <input readonly style="text-align:center"  id="cobros_tarjeta" name="cobros_tarjeta"  value="0"/>
+            </td></tr>
+            <tr><td style="background-color:#0099ff">Total de ventas</td><td class="text-center">
+              <input readonly style="text-align:center"   id="total_ventas" name="total_ventas" value="0"  style="color:#0099ff"/>
+            </td></tr>
+            <tr><td>Autoconsumo</td><td class="text-center">
+              <input readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
+            </td></tr>
+            <tr><td>Ingreso de efectivo en caja</td><td class="text-center">
+              <input readonly style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value="0"/>
+            </td></tr>
+            <tr><td>Retiro de efectivo en caja</td><td class="text-center">
+              <input readonly style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value="0"/>
+            </td></tr>
+            <tr><td style="background-color:#0099ff">Dinero a entregar</td><td class="text-center">
+              <input readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
+            </td></tr>
+            <tr><td  style="background-color:#0099ff">Dinero entregado</td><td class="text-center" >
+              <input readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
+            </td></tr>
+            <tr id="color_saldo"><td id="dinero_sobra_txt">a</td><td class="text-center">
+              <input readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
+            </td></tr>
           </tbody>
-          </form>
         </table>
         <button type="submit" name="cerrar_caja" class="btn btn-success">Cerrar Caja</button>
         <button type="submit" name="no_cerrar" class="btn btn-danger">Cancelar</button>
+        </form>
       </div>
     </div>
   </div>
@@ -156,11 +183,26 @@ else{
 <script>
   myFunction();
   function myFunction() {
+    var color_saldo = document.getElementById("color_saldo");
 
-    var d_sobra_txt = document.getElementById("dinero_sobra_txt");
+    var d_apertura = document.getElementById("apertura_caja");
+    var d_cobro_ef = document.getElementById("cobros_efectivo");
+    var d_cobro_tar = document.getElementById("cobros_tarjeta");
+    var d_total_v = document.getElementById("total_ventas");
+    var d_autoconsumo = document.getElementById("autoconsumo");
+    var d_ing_ef_caja = document.getElementById("ingreso_ef_caja");
+    var d_ret_ef_caja = document.getElementById("retiro_ef_caja");
+
     var d_entregado = document.getElementById("dinero_entregado");
     var d_entregar = document.getElementById("dinero_entregar");
+    var d_sobra_txt = document.getElementById("dinero_sobra_txt");
     var d_sobra = document.getElementById("dinero_sobra");
+
+    var s1=d_apertura.value+d_cobro_ef.value+d_cobro_tar.value;
+    var rr=parseFloat(s1)
+    d_total_v.value=rr.toFixed(2);
+
+    var s2= -d_autoconsumo.value+d_ing_ef_caja.value-d_ret_ef_caja.value;
 
     //dolares
     var cien = document.getElementById("cien_d").value;
@@ -187,26 +229,28 @@ else{
     var suma2= 1*cien+0.01*((50*cincuenta)+(25*veinte)+(10*diez)+(5*cinco)+1*un);
     var k=suma2+suma1;
     var t=k.toFixed(2);
-    d_entregado.innerHTML = t;
+    d_entregado.value = t;
 
 
-    var tempo=100;
-    d_entregar.innerHTML = tempo;
+    var tempo=s1+s2-d_cobro_tar.value;
+    d_entregar.value = tempo.toFixed(2);
 
     var sobra=k-tempo;
     if(sobra<0){
-      d_sobra.style.backgroundColor = "#ff9933";
+      //d_sobra.style.backgroundColor = "#ff9933";
+      //color_saldo.style.backgroundColor = "#ff9933";
       d_sobra_txt.style.backgroundColor = "#ff9933";
       d_sobra_txt.innerHTML = "Falta dinero en caja";
     } 
     else{
-      d_sobra.style.backgroundColor = "#66ff66";
+      //d_sobra.style.backgroundColor = "#66ff66";
+      //color_saldo.style.backgroundColor = "#66ff66";
       d_sobra_txt.style.backgroundColor = "#66ff66";
       d_sobra_txt.innerHTML = "Sobra dinero en caja";
     } 
 
     sobra=sobra.toFixed(2);
-    d_sobra.innerHTML = sobra;
+    d_sobra.value = sobra;
 
   }
 
