@@ -52,20 +52,6 @@
     <!-- Contenedor de productos -->
     <div class="row">
       <nav id="selec_productos" class="navbar navbar-light text-center" style="background-color: #A3ABA7;">
-        <!-- Barra de seleccion de caracteristicas -->
-        <form id="selc_pizzas" class="form-inline" style="display: none;">
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-success active btn-lg">
-              <input type="radio" name="options" id="option1" autocomplete="off" checked> Tamaño Pizza
-            </label>
-            <label class="btn btn-success btn-lg">
-              <input type="radio" name="options" id="option2" autocomplete="off"> Tipo
-            </label>
-            <label class="btn btn-success btn-lg">
-              <input type="radio" name="options" id="option3" autocomplete="off"> Ingredietes
-            </label>
-          </div>
-        </form>
         <!-- Presentacion de opciones -->
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
@@ -85,18 +71,37 @@
             </div>
           <?php endforeach; ?>
         </div>
+        <!-- Pizza especial o normal -->
+        <div id="selc_pizzas_nor_esp" class="row justify-content-around"  style="display: none; ">
+          <div class="col-4">
+            <div class="card" style="width: 5rem;">
+              <a href="#" onclick="pizzas_espec();" title="Seleccionar Pizza Especial"> 
+              <img class="card-img-top img-responsive" src="uploads/products/pizza_especial.png" alt="">
+              </a>
+              <h4 class="card-title center"> Pizza Especial </h4>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card" style="width: 10rem;">
+              <a href="#" onclick="pizzas_normal();" title="Seleccionar Pizza Normal"> 
+              <img class="card-img-top img-responsive" src="uploads/products/pizza_normal.png" alt="">
+              </a>
+              <h4 class="card-title center"> Pizza Normal </h4>
+            </div>
+          </div>  
+        </div>
         <!-- Tipo de pizza -->
         <div id="selc_pizzas_tipo" class="row" style="display: none;">
           <?php foreach ($tipo_pizzas as $tip):?>
-            <div class="col-sm-3 mx-auto">
-              <div class="card mb-2" style="width: 18rem;">
+            <div class="col-sm">
+              <div class="card" style="width: 100px; heght: 100px;">
                 <?php if($tip['media_id'] === '0'): ?>
                   <a href="#" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
                 <a href="#" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
-                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt="">
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="width: 100px; heght: 100px;">
                   </a>
                 <?php endif; ?>
                 <h4 class="card-title center"> <?php echo remove_junk(ucfirst($tip['name'])); ?> </h4>
