@@ -402,4 +402,23 @@ function  monthlySales($year){
   return find_by_sql($sql);
 }
 
+ /*--------------------------------------------------------------*/
+  /* Function for Finding valor de apertura y otros
+  /* Request coming from ajax.php for auto suggest
+  /*--------------------------------------------------------------*/
+
+  function find_last_open_box(){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    global $db;
+    if(tableExists($table)){
+      $sql = $db->query("SELECT * FROM tabla_aperturas_cajas WHERE username='{$p_user}' ORDER BY id DESC LIMIT 1");
+      if($result = $db->fetch_assoc($sql))
+        return $result;
+      else
+        return null;
+    }
+  }
+  
 ?>
+

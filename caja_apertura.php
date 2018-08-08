@@ -6,39 +6,54 @@
 ?>
 
 <?php
- if(isset($_POST['abrir_caja'])){
+$user = current_user();
+if(isset($_POST['abrir_caja'])){
    $req_fields = array('dinero');
    validate_fields($req_fields);
    if(empty($errors)){
+     $aux = remove_junk(ucwords($user['username']));
      $p_dinero = remove_junk($db->escape($_POST['dinero']));
+     $p_id = remove_junk(ucwords($user['id']));
+     $p_bloqueo = true;
+
      $p_date    = make_date();
 
-     $query  = "INSERT INTO tabalaperturascaja (";        //Insertar la BD en donde se va a ingresar los datos
-     $query .=" dinero_apertura,date";
+     $query  = "INSERT INTO tabla_aperturas_cajas (";        //Insertar la BD en donde se va a ingresar los datos
+     $query .=" dinero_apertura,username,date";
      $query .=") VALUES (";
-     $query .=" '{$p_dinero}', '{$p_date}'";
-     $query .=")";
+     $query .=" '{$p_dinero}', '{$aux}', '{$p_date}'";
+     $query .="); ";
 
-     if($db->query($query)){
-       $session->msg('s',"Caja Abierta");
-       redirect('admin.php', false);
-     } else {
-       $session->msg('d',' Lo siento, registro falló.');
-       redirect('caja_apertura.php', false);         //Regresar a administrar productos a vender
-     }
+
+    if($db->query($query)){
+      $session->msg('s',"Caja Abierta");
+      $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
+      $query2 .=" bloqueocaja = true WHERE id =";
+      $query2 .=" '{$p_id}' ;";
+      if($db->query($query2)) redirect('admin.php', false);
+      else $session->msg('d',' Lo siento, registro memoria.');        
+    } else {
+      $session->msg('d',' Lo siento, registro falló.');
+      redirect('caja_apertura.php', false);         //Regresar a administrar productos a vender
+    }
 
    } else{
      $session->msg("d", $errors);
      redirect('caja_apertura.php',false);
    }
-
- }
-{
-    $session->msg('d',' Operación cancelada.');
 }
-
+if(isset($_POST['no_abrir'])) redirect('admin.php', false);
+else{
+  if($user['bloqueocaja']==true){
+    $session->msg("d", 'La caja se encuentra abierta, cierrela primero!');
+    redirect('admin.php', false); //ojo depende de q menu este user, admin o special no todos van a admin
+    exit();
+  }
+} 
 ?>
+
 <?php include_once('layouts/header.php'); ?>
+
 <div class="row">
   <div class="col-md-12">
     <?php echo display_msg($msg); ?>
@@ -53,6 +68,7 @@
             <span>Apertura de caja</span>
          </strong>
         </div>
+
         <div class="panel-body">
          <div class="col-md-12">
           <form method="post" action="caja_apertura.php" class="clearfix">
@@ -81,8 +97,13 @@
                   </div>
                </div>
               </div>
-              <button type="submit" name="abrir_caja" class="btn btn-danger">Aceptar</button>
+              <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php echo remove_junk(ucwords($user['username'])); ?>>
+              <button type="submit" name="abrir_caja" class="btn btn-success">Aceptar</button>
               <button type="submit" name="no_abrir" class="btn btn-danger">Cancelar</button>
+
+              <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php $x= current_user(); echo remove_junk(ucwords($user['bloqueocaja']));?>>
+
+              
           </form>
          </div>
         </div>
@@ -90,4 +111,7 @@
     </div>
   </div>
 
-<?php include_once('layouts/footer.php'); ?>
+<?php 
+include_once('layouts/footer.php'); 
+
+?>
