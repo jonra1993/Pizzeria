@@ -3,7 +3,8 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(1);
-  
+  $all_photo = find_all('media');
+  $categorias = join_categories_table();
   $all_categories = find_all('categories')
 ?>
 <?php
@@ -11,10 +12,16 @@
    $req_field = array('categorie-name');
    validate_fields($req_field);
    $cat_name = remove_junk($db->escape($_POST['categorie-name']));
+   if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
+      $media_id = '0';
+    } else {
+      $media_id = remove_junk($db->escape($_POST['product-photo']));
+    }
    if(empty($errors)){
-      $sql  = "INSERT INTO categories (name)";
-      $sql .= " VALUES ('{$cat_name}')";
-      if($db->query($sql)){
+      $query  = "INSERT INTO categories (";
+      $query .=" name,media_id";
+      $query .= ") VALUES ('{$cat_name}','{$media_id}')";
+      if($db->query($query)){
         $session->msg("s", "Categoría agregada exitosamente.");
         redirect('categorie.php',false);
       } else {
@@ -48,11 +55,21 @@
             <div class="form-group">
                 <input type="text" class="form-control" name="categorie-name" placeholder="Nombre de la categoría" required>
             </div>
+            <div class="col-md-6">
+              <select class="form-control" name="product-photo">
+                <option value="">Selecciona una imagen</option>
+              <?php  foreach ($all_photo as $photo): ?>
+                <option value="<?php echo (int)$photo['id'] ?>">
+                  <?php echo $photo['file_name'] ?></option>
+              <?php endforeach; ?>
+              </select>
+            </div>
             <button type="submit" name="add_cat" class="btn btn-primary">Agregar categoría</button>
         </form>
         </div>
       </div>
     </div>
+    <!-- Visualizador de categorias -->
     <div class="col-md-7">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -67,14 +84,22 @@
                 <tr>
                     <th class="text-center" style="width: 50px;">#</th>
                     <th>Categorías</th>
+                    <th class="text-center">Imágen</th>
                     <th class="text-center" style="width: 100px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>                                                              <!--Cuerpo dentro de la tabla-->
-              <?php foreach ($all_categories as $cat):?>
+              <?php foreach ($categorias as $cat):?>
                 <tr>
                     <td class="text-center"><?php echo count_id();?></td>
                     <td><?php echo remove_junk(ucfirst($cat['name'])); ?></td>
+                    <td>
+                      <?php if($cat['media_id'] === '0'): ?>
+                          <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
+                        <?php else: ?>
+                        <img class="img-avatar img-circle" src="uploads/products/<?php echo $cat['image']; ?>" alt="">
+                      <?php endif; ?>
+                    </td>
                     <td class="text-center">
                       <div class="btn-group">
                         <a href="edit_categorie.php?id=<?php echo (int)$cat['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">

@@ -223,6 +223,43 @@ function tableExists($table){
    /* Funcion para vinvular la base de datos de productos vender
    /* JOIN with categorie  and media database table
    /*--------------------------------------------------------------*/
+   function join_categories_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.name,p.media_id,";
+   $sql  .=" m.file_name AS image";
+   $sql  .=" FROM categories p";                    //Definir la base de datos necesaria
+   #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+
+  }
+  function join_tampizza_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.name,p.media_id,";
+   $sql  .=" m.file_name AS image";
+   $sql  .=" FROM tam_pizzas p";                    //Definir la base de datos necesaria
+   #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+  }
+
+  function join_tipopizza_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.name,p.tipo_descrip,p.media_id,";
+   $sql  .=" m.file_name AS image";
+   $sql  .=" FROM tipo_pizzas p";                    //Definir la base de datos necesaria
+   #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+  }
+
+ /*--------------------------------------------------------------*/
+
+  /* JUNTAR BD categorie
+   /*--------------------------------------------------------------*/
    function join_productovender_table(){
     global $db;
     $sql  =" SELECT p.id,p.name,p.sale_price,p.media_id,c.name";
@@ -234,7 +271,6 @@ function tableExists($table){
    return find_by_sql($sql);
 
   }
- /*--------------------------------------------------------------*/
   /* Function for Finding all product name
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/

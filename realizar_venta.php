@@ -3,6 +3,9 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
+   $categorias = join_categories_table();
+   $tam_pizzas= join_tampizza_table();
+   $tipo_pizzas=join_tipopizza_table();
 ?>
 <?php
  $c_categorie     = count_by_id('categories');
@@ -15,6 +18,7 @@
 ?>
 <?php include_once('layouts/header.php'); ?>
 
+
 <div class="row">
    <div class="col-md-6">
      <?php echo display_msg($msg); ?>
@@ -22,78 +26,97 @@
 </div>
   <!--.......Cuadrados de visualizacion......-->
   <div class="row">
-  <!--Tamaño de Pizzas-->
+  <!--Seleccion de Productos-->
   <div class="col-md-8">
     <div class="row">
-    <!--Usuarios-->
-      <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="uploads/imagenes/pizza.jpg" alt="Card image cap">
-          <!-- <div class="card-img-top" "bg-green">
-            <i class="glyphicon glyphicon-user"></i>
-          </div> -->
-          <div class="card-body">
-            <h2 class="card-title"> <?php  echo $c_user['total']; ?> </h2>    <!--Lee # de usuarios-->
-            <p class="text-muted">Usuarios</p>
+    <!--Categorias-->
+      <?php foreach ($categorias as $cat):?>
+        <div class="col-md-3">
+          <div class="card" style="width: 18rem;">
+            <?php if($cat['media_id'] === '0'): ?>
+              <a href="#" onclick="selec_categ('<?php echo remove_junk(ucfirst($cat['name'])); ?>');" title="Seleccionar Categoria"> 
+               <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+              </a>
+            <?php else: ?>
+          
+                <a href="#"  onclick="selec_categ('<?php echo remove_junk(ucfirst($cat['name'])); ?>');" title="Seleccionar Categoria"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/<?php echo $cat['image']; ?>" alt="">
+                </a>
+                
+            <?php endif; ?>
+            <h4 class="card-title center"> <?php echo remove_junk(ucfirst($cat['name'])); ?> </h4>    <!--Lee nombres de categrias-->
           </div>
         </div>
-      </div>
-      <!--Categorias-->
-      <div class="col-md-3">
-        <div class="panel panel-box clearfix">
-          <div class="panel-icon pull-left bg-red">
-            <i class="glyphicon glyphicon-list"></i>
-          </div>
-          <div class="panel-value pull-right">
-            <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>   <!--Lee # de Categorias-->
-            <p class="text-muted">Categorías</p>
-          </div>
-        </div>
-      </div>
-      <!--Procductos-->
-      <div class="col-md-3">
-        <div class="panel panel-box clearfix">
-          <div class="panel-icon pull-left bg-blue">
-            <i class="glyphicon glyphicon-shopping-cart"></i>
-          </div>
-          <div class="panel-value pull-right">
-            <h2 class="margin-top"> <?php  echo $c_product['total']; ?> </h2>
-            <p class="text-muted">Productos</p>
-          </div>
-        </div>
-      </div>
-      <!--Ventas-->
-      <div class="col-md-3">
-        <div class="panel panel-box clearfix">
-          <div class="panel-icon pull-left bg-yellow">
-            <i class="glyphicon glyphicon-usd"></i>
-          </div>
-          <div class="panel-value pull-right">
-            <h2 class="margin-top"> <?php  echo $c_sale['total']; ?></h2>
-            <p class="text-muted">Ventas</p>
-          </div>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
+    <!-- Contenedor de productos -->
     <div class="row">
-      <nav class="navbar navbar-light text-center" style="background-color: #A3ABA7;">
-        <form class="form-inline">
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-success active btn-lg">
-              <input type="radio" name="options" id="option1" autocomplete="off" checked> Tamaño Pizza
-            </label>
-            <label class="btn btn-success btn-lg">
-              <input type="radio" name="options" id="option2" autocomplete="off"> Tipo
-            </label>
-            <label class="btn btn-success btn-lg">
-              <input type="radio" name="options" id="option3" autocomplete="off"> Ingredietes
-            </label>
+      <nav id="selec_productos" class="navbar navbar-light text-center" style="background-color: #A3ABA7;">
+        <!-- Presentacion de opciones -->
+        <div id="selc_pizzas_tam" class="row" style="display: none;">
+          <?php foreach ($tam_pizzas as $tam):?>
+            <div class="col-sm-3 mx-auto">
+              <div class="card" style="width: 18rem;">
+                <?php if($tam['media_id'] === '0'): ?>
+                  <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar Producto"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tam['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tam['image']; ?>" alt="">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($tam['name'])); ?> </h4>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <!-- Pizza especial o normal -->
+        <div id="selc_pizzas_nor_esp" class="row justify-content-around"  style="display: none; ">
+          <div class="col-4">
+            <div class="card" style="width: 5rem;">
+              <a href="#" onclick="pizzas_espec();" title="Seleccionar Pizza Especial"> 
+              <img class="card-img-top img-responsive" src="uploads/products/pizza_especial.png" alt="">
+              </a>
+              <h4 class="card-title center"> Pizza Especial </h4>
+            </div>
           </div>
-        </form>
+          <div class="col-4">
+            <div class="card" style="width: 10rem;">
+              <a href="#" onclick="pizzas_normal();" title="Seleccionar Pizza Normal"> 
+              <img class="card-img-top img-responsive" src="uploads/products/pizza_normal.png" alt="">
+              </a>
+              <h4 class="card-title center"> Pizza Normal </h4>
+            </div>
+          </div>  
+        </div>
+        <!-- Tipo de pizza -->
+        <div id="selc_pizzas_tipo" class="row" style="display: none;">
+          <?php foreach ($tipo_pizzas as $tip):?>
+            <div class="col-sm">
+              <div class="card" style="width: 100px; heght: 100px;">
+                <?php if($tip['media_id'] === '0'): ?>
+                  <a href="#" title="Seleccionar Tipo"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="width: 100px; heght: 100px;">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($tip['name'])); ?> </h4>
+                <p class="card-body"> Ingedientes: <?php echo remove_junk(ucfirst($tip['tipo_descrip'])); ?> </p>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <!-- <div class="row">
+          <button type="button" class="btn btn-primary btn-lg btn-blocks">Siguiente</button>
+        </div>  -->
       </nav>
     </div>
   </div>
-  <!--Productos recientes-->
+  <!--Factura-->
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -121,10 +144,11 @@
                 <span class="list-group-item-text pull-right">
                 <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
               </span>
-          </a>
       <?php endforeach; ?>
     </div>
   </div>
 </div>
+
+<script src="libs/js/realizar_venta.js"></script>
 
 <?php include_once('layouts/footer.php'); ?>
