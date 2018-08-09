@@ -28,17 +28,20 @@ if(isset($_POST['cerrar_caja'])){
      $query .=") VALUES (";
      $query .=" '{$p_apertura_caja}','{$p_cobros_efectivo}','{$p_cobros_tarjeta}','{$p_total_ventas}','{$p_autoconsumo}','{$p_ingreso_ef_caja}','{$p_retiro_ef_caja}','{$p_dinero_entregar}','{$p_dinero_entregado}','{$p_dinero_sobra}','{$p_date}','{$p_user}'";
      $query .="); ";
-
-
+     
     if($db->query($query)){
       $session->msg('s',"Cerrada correctamente");
       $p_id = remove_junk(ucwords($user['id']));
       $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
       $query2 .=" bloqueocaja = 0 WHERE id =";
       $query2 .=" '{$p_id}' ;";
-      if($db->query($query2)) redirect('admin.php', false);
+      if($db->query($query2)){
+        redirect('admin.php', false);
+      } 
+      //if($db->query($query2)) redirect('agenpdp.php', false);
       else $session->msg('d',' Lo siento, registro memoria.');        
-    } else {
+    } 
+    else {
       $session->msg('d',' Lo siento, registro falló.');
       redirect('caja_cierre.php', false);  
     }
@@ -65,7 +68,6 @@ else{
      </div>
 </div>
 <div class="row">
-
   <div class="col-md-7">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -75,48 +77,48 @@ else{
        </strong>
       </div>
       <div class="panel-body">
-      <form method="post" action="caja_cierre.php" class="clearfix">
-        <table class="table table-bordered table-striped table-hover">
-          <thead>                                                             <!--Cabecera dentro de la tabla-->
-              <tr>
-                  <th>Descripción</th><th class="text-center" style="width: 100px;">    Valor    </th>
-              </tr>
-          </thead>
-          <tbody>                                                              <!--Cuerpo dentro de la tabla-->
-            <tr><td>Apertura de caja</td><td class="text-center" >
-              <input readonly type="number" style="text-align:center" id="apertura_caja" name="apertura_caja" value=<?php echo remove_junk(ucwords($open['dinero_apertura']));?> />
-            </td></tr>
-            <tr><td>Cobros en efectivo</td><td class="text-center ">
-              <input readonly style="text-align:center" id="cobros_efectivo" name="cobros_efectivo" value="0"/>
-            </td></tr>
-            <tr><td>Cobros con tarjeta</td><td class="text-center">
-              <input readonly style="text-align:center"  id="cobros_tarjeta" name="cobros_tarjeta"  value="0"/>
-            </td></tr>
-            <tr><td style="background-color:#0099ff">Total de ventas</td><td class="text-center">
-              <input readonly style="text-align:center"   id="total_ventas" name="total_ventas" value="0"  style="color:#0099ff"/>
-            </td></tr>
-            <tr><td>Autoconsumo</td><td class="text-center">
-              <input readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
-            </td></tr>
-            <tr><td>Ingreso de efectivo en caja</td><td class="text-center">
-              <input readonly style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value="0"/>
-            </td></tr>
-            <tr><td>Retiro de efectivo en caja</td><td class="text-center">
-              <input readonly style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value="0"/>
-            </td></tr>
-            <tr><td style="background-color:#0099ff">Dinero a entregar</td><td class="text-center">
-              <input readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
-            </td></tr>
-            <tr><td  style="background-color:#0099ff">Dinero entregado</td><td class="text-center" >
-              <input readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
-            </td></tr>
-            <tr id="color_saldo"><td id="dinero_sobra_txt">a</td><td class="text-center">
-              <input readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
-            </td></tr>
-          </tbody>
-        </table>
-        <button type="submit" name="cerrar_caja" class="btn btn-success">Cerrar Caja</button>
-        <button type="submit" name="no_cerrar" class="btn btn-danger">Cancelar</button>
+        <form method="post" action="caja_cierre.php" class="clearfix" id="get_order_data">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>                                                             <!--Cabecera dentro de la tabla-->
+                <tr>
+                    <th>Descripción</th><th class="text-center" style="width: 100px;">    Valor    </th>
+                </tr>
+            </thead>
+            <tbody>                                                              <!--Cuerpo dentro de la tabla-->
+              <tr><td>Apertura de caja</td><td class="text-center" >
+                <input readonly type="number" style="text-align:center" id="apertura_caja" name="apertura_caja" value=<?php echo remove_junk(ucwords($open['dinero_apertura']));?> />
+              </td></tr>
+              <tr><td>Cobros en efectivo</td><td class="text-center ">
+                <input readonly style="text-align:center" id="cobros_efectivo" name="cobros_efectivo" value="0"/>
+              </td></tr>
+              <tr><td>Cobros con tarjeta</td><td class="text-center">
+                <input readonly style="text-align:center"  id="cobros_tarjeta" name="cobros_tarjeta"  value="0"/>
+              </td></tr>
+              <tr><td style="background-color:#0099ff">Total de ventas</td><td class="text-center">
+                <input readonly style="text-align:center"   id="total_ventas" name="total_ventas" value="0"  style="color:#0099ff"/>
+              </td></tr>
+              <tr><td>Autoconsumo</td><td class="text-center">
+                <input readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
+              </td></tr>
+              <tr><td>Ingreso de efectivo en caja</td><td class="text-center">
+                <input readonly style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value="0"/>
+              </td></tr>
+              <tr><td>Retiro de efectivo en caja</td><td class="text-center">
+                <input readonly style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value="0"/>
+              </td></tr>
+              <tr><td style="background-color:#0099ff">Dinero a entregar</td><td class="text-center">
+                <input readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
+              </td></tr>
+              <tr><td  style="background-color:#0099ff">Dinero entregado</td><td class="text-center" >
+                <input readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
+              </td></tr>
+              <tr id="color_saldo"><td id="dinero_sobra_txt">a</td><td class="text-center">
+                <input readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
+              </td></tr>
+            </tbody>
+          </table>
+          <button type="submit" name="cerrar_caja" class="btn btn-success" id="cerradura">Cerrar Caja</button>
+          <button type="submit" name="no_cerrar" class="btn btn-danger">Cancelar</button>
         </form>
       </div>
     </div>
@@ -138,7 +140,7 @@ else{
               </tr>
           </thead>
           <tbody> 
-            <tr><td>$1</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_d"type="text"></td></tr>
+            <tr><td>$1</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_d"type="number"></td></tr>
             <tr><td>$5</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_d"type="number"></td></tr>
             <tr><td>$10</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="diez_d" type="number"></td></tr>
             <tr><td>$20</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="veinte_d" type="number"></td></tr>
@@ -181,7 +183,23 @@ else{
 </div>
 
 <script>
-  myFunction();
+
+  $(document).ready(function(){
+    myFunction();
+  });
+
+	$("#cerradura").click(function(){
+    var user = "<?php echo $user['username']; ?>";
+    var date = "<?php echo make_date(); ?>";
+    var d = new Date();
+    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+    
+    var data = $("#get_order_data").serialize(); 
+    var win = window.open("caja_c_reporte.php?"+data+"&"+"user="+user+"&"+"date1="+date1+"&"+"date="+date,"_blank"); // will open new tab on document ready
+    win.focus();
+	});
+
+
   function myFunction() {
     var color_saldo = document.getElementById("color_saldo");
 
@@ -198,7 +216,7 @@ else{
     var d_sobra_txt = document.getElementById("dinero_sobra_txt");
     var d_sobra = document.getElementById("dinero_sobra");
 
-    var s1=d_apertura.value+d_cobro_ef.value+d_cobro_tar.value;
+    var s1=d_cobro_ef.value+d_cobro_tar.value;
     var rr=parseFloat(s1)
     d_total_v.value=rr.toFixed(2);
 
@@ -232,7 +250,8 @@ else{
     d_entregado.value = t;
 
 
-    var tempo=s1+s2-d_cobro_tar.value;
+    var tempo=s1+s2-d_cobro_tar.value+d_apertura.value;
+    var tempo=parseFloat(tempo)
     d_entregar.value = tempo.toFixed(2);
 
     var sobra=k-tempo;
