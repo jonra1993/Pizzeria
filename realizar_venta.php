@@ -99,17 +99,17 @@
           </div>  
         </div>
         <!-- Tipo de pizza -->
-        <div id="selc_pizzas_tipo" class="row" style="display: none;">
+        <div id="selc_pizzas_tipo" class="row justify-content-around" style="display: none;">
           <?php foreach ($tipo_pizzas as $tip):?>
             <div class="col-md-3">
-              <div class="card" style="width: 100px; heght: 80px;">
+              <div class="card" style="width: 18rem;">
                 <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar Tipo"> 
+                  <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
-                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="width: 100px; heght: 100px;">
+                <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
                 <h4 class="card-title center"> <?php echo remove_junk(ucfirst($tip['name'])); ?> </h4>
@@ -119,17 +119,17 @@
           <?php endforeach; ?>
         </div>
         <!-- Ingredientes Extras -->
-        <div id="selc_extra" class="row" style="display: none;">
+        <div id="selc_extra" class="row justify-content-around" style="display: none;">
           <?php foreach ($extra_pizzas as $extra):?>
             <div class="col-md-3">
-              <div class="card" style="width: 100px; heght: 80px;">
+              <div class="card" style="width: 18rem;">
                 <?php if($tip['media_id'] === '0'): ?>
                   <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar Extra"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
-                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="width: 100px; heght: 100px;">
+                <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($extra['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $extra['image']; ?>" alt=""   style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
                 <h4 class="card-title center"> <?php echo remove_junk(ucfirst($extra['name'])); ?> </h4>
@@ -137,6 +137,27 @@
             </div>
           <?php endforeach; ?>
         </div>
+
+        <!-- Servirse o llevar-->
+        <div id="selc_pizzas_forma" class="row justify-content-around"  style="display: none; ">
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <a href="#" onclick="forma_servir('Servirse');" title="Seleccionar Pizza Especial"> 
+              <img class="card-img-top img-responsive" src="uploads/products/forma_.servirse.png" alt="">
+              </a>
+              <h4 class="card-title center"> Para Servirse </h4>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <a href="#" onclick="forma_servir('Llevar')" title="Seleccionar Llevar"> 
+              <img class="card-img-top img-responsive" src="uploads/products/forma_.llevar.png" alt="">
+              </a>
+              <h4 class="card-title center"> Para Llevar </h4>
+            </div>
+          </div>  
+        </div>
+
       </div>
     </div>
   </div>

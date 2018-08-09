@@ -1,5 +1,5 @@
 // Progrma de venta de productos 2
-var categ, p_tama, p_tipo, p_extras, pizza_vent='0';
+var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
   
 function selec_categ(nombre_cat) {
   if(nombre_cat=="Pizzas"){
@@ -42,15 +42,28 @@ function pizzas_normal(){
   pizza_vent=2;   //Ventana de tipo
 }
 
-function ingre_extra(tipo_pizza){
+function tip_pizza(tipo){
   var e = document.getElementById("selc_extra");
   var f = document.getElementById("selc_pizzas_tipo");
+  var g = document.getElementById("selc_pizzas_forma");
   centrar(e);
   f.style.display = 'none';
-  p_tipo=tipo_pizza;
+  g.style.display = 'none';
+  p_tipo=tipo;
   pizza_vent=3;   //Ventana de extras
-
 }
+
+function ingre_extra(extra){
+  var e = document.getElementById("selc_pizzas_forma");
+  var f = document.getElementById("selc_extra");
+  centrar(e);
+  f.style.display = 'none';
+  p_extras=extra;
+  pizza_vent=4;   //Ventana de servr o llevar
+}
+ function forma_servir(forma) {
+  p_forma=forma;
+ }
 
 function centrar(id){
   id.style.display = 'flex';
@@ -70,6 +83,9 @@ function regresar_carac(){
       break;
     case 3:
       pizzas_normal()
+      break;
+    case 4:
+      tip_pizza(tipo);
       break;
     case 0:
       var g = document.getElementById("cont_categ");
