@@ -76,7 +76,7 @@ function centrar(id){
 function regresar_carac(){
   switch (pizza_vent) {
     case 1:
-    selec_categ(categ);
+      selec_categ(categ);
       break;
     case 2:
       tam_pizzas(p_tama)
@@ -85,7 +85,7 @@ function regresar_carac(){
       pizzas_normal()
       break;
     case 4:
-      tip_pizza(tipo);
+      tip_pizza(p_tipo);
       break;
     case 0:
       var g = document.getElementById("cont_categ");

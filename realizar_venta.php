@@ -143,7 +143,7 @@
           <div class="col-md-3">
             <div class="card" style="width: 18rem;">
               <a href="#" onclick="forma_servir('Servirse');" title="Seleccionar Pizza Especial"> 
-              <img class="card-img-top img-responsive" src="uploads/products/forma_.servirse.png" alt="">
+              <img class="card-img-top img-responsive" src="uploads/products/forma_servirse.png" alt="">
               </a>
               <h4 class="card-title center"> Para Servirse </h4>
             </div>
@@ -151,7 +151,7 @@
           <div class="col-md-3">
             <div class="card" style="width: 18rem;">
               <a href="#" onclick="forma_servir('Llevar')" title="Seleccionar Llevar"> 
-              <img class="card-img-top img-responsive" src="uploads/products/forma_.llevar.png" alt="">
+              <img class="card-img-top img-responsive" src="uploads/products/forma_llevar.png" alt="">
               </a>
               <h4 class="card-title center"> Para Llevar </h4>
             </div>
