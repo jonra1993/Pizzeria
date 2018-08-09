@@ -54,9 +54,7 @@
      $session->msg("d", $errors);
      redirect('add_product.php',false);
    }
-
  }
-
 ?>
 
 <div class="row">
