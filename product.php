@@ -26,6 +26,7 @@
                 <th> Descripción </th>
                 <th class="text-center" style="width: 10%;"> Categoría </th>
                 <th class="text-center" style="width: 10%;"> Stock </th>
+                <th class="text-center" style="width: 10%;"> Unidades </th>
                 <th class="text-center" style="width: 10%;"> Proveedor </th>
                 <th class="text-center" style="width: 10%;"> Precio de compra </th>
                 <th class="text-center" style="width: 10%;"> Precio de venta </th>
@@ -47,6 +48,7 @@
                 <td> <?php echo remove_junk($product['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['proveedor']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>

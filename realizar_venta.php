@@ -6,6 +6,7 @@
    $categorias = join_categories_table();
    $tam_pizzas= join_tampizza_table();
    $tipo_pizzas=join_tipopizza_table();
+   $extra_pizzas=join_extrapizza_table();
 ?>
 <?php
  $c_categorie     = count_by_id('categories');
@@ -17,7 +18,44 @@
  $recent_sales    = find_recent_sale_added('5')
 ?>
 <?php include_once('layouts/header.php'); ?>
+<?php
+ if(isset($_POST['add_product'])){
+   $req_fields = array('product-title','product-categorie','product-quantity','desc-unidades','buying-price', 'saleing-price','nombre-proveedor' );
+   validate_fields($req_fields);
+   if(empty($errors)){
+     $p_name  = remove_junk($db->escape($_POST['product-title']));
+     $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
+     $p_prov   = remove_junk($db->escape($_POST['nombre-proveedor']));
+     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
+     $p_uni   = remove_junk($db->escape($_POST['desc-unidades']));
+     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
+     $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+     if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
+       $media_id = '0';
+     } else {
+       $media_id = remove_junk($db->escape($_POST['product-photo']));
+     }
+     $date    = make_date();
+     $query  = "INSERT INTO products (";
+     $query .=" name,quantity,unidades,buy_price,sale_price,categorie_id,media_id,date,proveedor";
+     $query .=") VALUES (";
+     $query .=" '{$p_name}', '{$p_qty}','{$p_uni}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_prov}'";
+     $query .=")";
+     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
+     if($db->query($query)){
+       $session->msg('s',"Producto agregado exitosamente. ");
+       redirect('add_product.php', false);
+     } else {
+       $session->msg('d',' Lo siento, registro falló.');
+       redirect('product.php', false);
+     }
 
+   } else{
+     $session->msg("d", $errors);
+     redirect('add_product.php',false);
+   }
+ }
+?>
 
 <div class="row">
    <div class="col-md-6">
@@ -28,7 +66,7 @@
   <div class="row">
   <!--Seleccion de Productos-->
   <div class="col-md-8">
-    <div class="row">
+    <div id="cont_categ" class="row">
     <!--Categorias-->
       <?php foreach ($categorias as $cat):?>
         <div class="col-md-3">
@@ -51,11 +89,18 @@
     </div>
     <!-- Contenedor de productos -->
     <div class="row">
-      <nav id="selec_productos" class="navbar navbar-light text-center" style="background-color: #A3ABA7;">
+      <div id="selec_productos" class="container-fluid text-center" style="background-color: #A3ABA7;">
+        <!-- regresar -->
+        <div id="funcion_regresar" class="row" style="display: none;">
+          <button type="button" class="btn btn-success" style="width: auto" onclick="regresar_carac()">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+          Regresar
+          </button>
+        </div>
         <!-- Presentacion de opciones -->
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
-            <div class="col-sm-3 mx-auto">
+            <div class="col-sm-3">
               <div class="card" style="width: 18rem;">
                 <?php if($tam['media_id'] === '0'): ?>
                   <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar Producto"> 
@@ -73,16 +118,16 @@
         </div>
         <!-- Pizza especial o normal -->
         <div id="selc_pizzas_nor_esp" class="row justify-content-around"  style="display: none; ">
-          <div class="col-4">
-            <div class="card" style="width: 5rem;">
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
               <a href="#" onclick="pizzas_espec();" title="Seleccionar Pizza Especial"> 
               <img class="card-img-top img-responsive" src="uploads/products/pizza_especial.png" alt="">
               </a>
               <h4 class="card-title center"> Pizza Especial </h4>
             </div>
           </div>
-          <div class="col-4">
-            <div class="card" style="width: 10rem;">
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
               <a href="#" onclick="pizzas_normal();" title="Seleccionar Pizza Normal"> 
               <img class="card-img-top img-responsive" src="uploads/products/pizza_normal.png" alt="">
               </a>
@@ -91,17 +136,17 @@
           </div>  
         </div>
         <!-- Tipo de pizza -->
-        <div id="selc_pizzas_tipo" class="row" style="display: none;">
+        <div id="selc_pizzas_tipo" class="row justify-content-around" style="display: none;">
           <?php foreach ($tipo_pizzas as $tip):?>
-            <div class="col-sm">
-              <div class="card" style="width: 100px; heght: 100px;">
+            <div class="col-md-3">
+              <div class="card" style="width: 18rem;">
                 <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" title="Seleccionar Tipo"> 
+                  <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
-                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="width: 100px; heght: 100px;">
+                <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
                 <h4 class="card-title center"> <?php echo remove_junk(ucfirst($tip['name'])); ?> </h4>
@@ -110,10 +155,47 @@
             </div>
           <?php endforeach; ?>
         </div>
-        <!-- <div class="row">
-          <button type="button" class="btn btn-primary btn-lg btn-blocks">Siguiente</button>
-        </div>  -->
-      </nav>
+        <!-- Ingredientes Extras -->
+        <div id="selc_extra" class="row justify-content-around" style="display: none;">
+          <?php foreach ($extra_pizzas as $extra):?>
+            <div class="col-md-3">
+              <div class="card" style="width: 18rem;">
+                <?php if($tip['media_id'] === '0'): ?>
+                  <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar Extra"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($extra['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $extra['image']; ?>" alt=""   style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($extra['name'])); ?> </h4>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- Servirse o llevar-->
+        <div id="selc_pizzas_forma" class="row justify-content-around"  style="display: none; ">
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <a href="#" onclick="forma_servir('Servirse');" title="Seleccionar Pizza Especial"> 
+              <img class="card-img-top img-responsive" src="uploads/products/forma_servirse.png" alt="">
+              </a>
+              <h4 class="card-title center"> Para Servirse </h4>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <a href="#" onclick="forma_servir('Llevar')" title="Seleccionar Llevar"> 
+              <img class="card-img-top img-responsive" src="uploads/products/forma_llevar.png" alt="">
+              </a>
+              <h4 class="card-title center"> Para Llevar </h4>
+            </div>
+          </div>  
+        </div>
+
+      </div>
     </div>
   </div>
   <!--Factura-->
@@ -128,7 +210,7 @@
       <div class="panel-body">
 
         <div class="list-group">
-      <?php foreach ($recent_products as  $recent_product): ?>
+      <!-- <?php foreach ($recent_products as  $recent_product): ?>
             <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
                 <h4 class="list-group-item-heading">
                  <?php if($recent_product['media_id'] === '0'): ?>
@@ -144,7 +226,7 @@
                 <span class="list-group-item-text pull-right">
                 <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
               </span>
-      <?php endforeach; ?>
+      <?php endforeach; ?> -->
     </div>
   </div>
 </div>
