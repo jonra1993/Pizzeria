@@ -14,7 +14,7 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
          <div class="pull-right">
-           <a href="add_productovender.php" class="btn btn-primary">Agragar producto a vender</a>
+           <a href="add_productovender.php" class="btn btn-primary">Agregar producto a vender</a>
          </div>
         </div>
         <div class="panel-body">
@@ -46,10 +46,7 @@
                 <!-- Vinculacion a BD producto vender -->
                 <td> <?php echo remove_junk($product['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
-                <!-- <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td> -->
-                <!-- <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
-                <!-- <td class="text-center"> <?php echo read_date($product['date']); ?></td> -->
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="edit_productovender.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
