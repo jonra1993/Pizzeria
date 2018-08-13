@@ -140,12 +140,12 @@ else{
               </tr>
           </thead>
           <tbody> 
-            <tr><td>$1</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_d"type="number"></td></tr>
-            <tr><td>$5</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_d"type="number"></td></tr>
-            <tr><td>$10</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="diez_d" type="number"></td></tr>
-            <tr><td>$20</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="veinte_d" type="number"></td></tr>
-            <tr><td>$50</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_d" type="number"></td></tr>
-            <tr><td>$100</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_d" type="number"></td></tr>
+            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_d"type="number"></td></tr>
+            <tr><td>$5</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_d"type="number"></td></tr>
+            <tr><td>$10</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="diez_d" type="number"></td></tr>
+            <tr><td>$20</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="veinte_d" type="number"></td></tr>
+            <tr><td>$50</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_d" type="number"></td></tr>
+            <tr><td>$100</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_d" type="number"></td></tr>
           </tbody>
         </table>
       </div>
@@ -168,12 +168,12 @@ else{
               </tr>
           </thead>
           <tbody>
-            <tr><td>1 ctv</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_c" type="number"></td></tr>
-            <tr><td>5 ctv</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_c" type="number"></td></tr>
-            <tr><td>10 ctv</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="diez_c" type="number"></td></tr>
-            <tr><td>25 ctv</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="veinte_c" type="number"></td></tr>
-            <tr><td>50 ctv</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_c"type="number"></td></tr>
-            <tr><td>$1</td><td class="text-center"><input style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_c"type="text"></td></tr>
+            <tr><td>1 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_c" type="number"></td></tr>
+            <tr><td>5 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_c" type="number"></td></tr>
+            <tr><td>10 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="diez_c" type="number"></td></tr>
+            <tr><td>25 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="veinte_c" type="number"></td></tr>
+            <tr><td>50 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_c"type="number"></td></tr>
+            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_c"type="text"></td></tr>
           </tbody>
         </table>
       </div>
@@ -199,7 +199,16 @@ else{
     win.focus();
 	});
 
-
+  function isInputNumber(evt){
+      
+      var ch = String.fromCharCode(evt.which);
+      
+      if(!(/[0-9]/.test(ch))){
+          evt.preventDefault();
+      }
+      
+  }
+  
   function myFunction() {
     var color_saldo = document.getElementById("color_saldo");
 

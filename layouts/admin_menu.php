@@ -91,10 +91,17 @@
     </a>
   </li>
 
-    <li>
+  <li>
     <a href="caja_cierre.php">
       <i class="glyphicon glyphicon-folder-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
       <span>Cierre de Caja</span>
+    </a>
+  </li>
+
+    <li>
+    <a href="product_update.php">
+      <i class="glyphicon glyphicon-check"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span>Actualización Inventario</span>
     </a>
   </li>
 
