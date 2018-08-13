@@ -10,9 +10,27 @@
 
   if(isset($_POST['hola1'])){
     foreach ($products as $product) {
-      $valor = $valor * 2;
+      
+      $p_id =  remove_junk($product['id']);
+      //$newQuantity=$_POST['hola'.$p_id]+$product['quantity'];
+      //$newQuantity=$product['quantity']+1;
+      $newQuantity=$product['quantity']+remove_junk($db->escape($_POST['hola'.$p_id]));
+
+      $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
+      $query .=" quantity = '{$newQuantity}' WHERE id =";
+      $query .=" '{$p_id}' ;";
+
+     if($db->query($query)){
+       //$session->msg('s',"Catidad Actualizada");
+
+     } 
+     else {
+       //$session->msg('d',' Lo siento, registro falló.');
+       //redirect('caja_cierre.php', false);  
+     }
     }
-    redirect('admin.php', false);
+    $session->msg('s',"Cantidad Actualizada");
+    redirect('product.php', false);
   }
 
 ?>

@@ -42,7 +42,7 @@
     </a>
     <ul class="nav submenu">
        <li><a href="product.php">Administrar materia prima</a> </li>
-       <!--li><a href="add_product.php">Agregar materia prima</a> </li-->
+       <li><a href="add_product.php">Agregar materia prima</a> </li>
    </ul>
   </li>
 
