@@ -1,5 +1,6 @@
 // Progrma de venta de productos 2
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
+var counter = 0;
   
 function selec_categ(nombre_cat) {
   if(nombre_cat=="Pizzas"){
@@ -63,7 +64,20 @@ function ingre_extra(extra){
 }
  function forma_servir(forma) {
   p_forma=forma;
-  var win = window.open("realizar_venta.php?"+"&"+"pizz_tam="+p_tama+"&"+"pizz_tipo="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma);
+
+  var newRow = $("<tr>");
+  var cols = "";
+
+  cols += '<td class="text-center"><input type="number" value="1" min="1" style="width: 60%;"></td>';
+  cols += '<td class="text-center"></td>';
+  cols += '<td class="text-center"></td>';
+  cols += '<td class="text-center"> <span href=""  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
+
+  cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+  newRow.append(cols);
+  $("table.table-striped.table-hover.table-condensed").append(newRow);
+  counter++;
+  //var win = window.open("realizar_venta.php?"+"&"+"pizz_tam="+p_tama+"&"+"pizz_tipo="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
  }
 
 function centrar(id){

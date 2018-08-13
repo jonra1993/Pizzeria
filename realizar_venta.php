@@ -15,33 +15,21 @@
  $c_user          = count_by_id('users');
  $products_sold   = find_higest_saleing_product('10');
  $recent_products = find_recent_product_added('5');
- $recent_sales    = find_recent_sale_added('5')
+ $recent_sales    = find_recent_sale_added('5');
+ $cars = array("Volvo", "BMW", "Toyota");
+ $arrlength = count($cars);
 ?>
 <?php include_once('layouts/header.php'); ?>
-<!--<?php
+<?php
  if(isset($_GET['pizz_tam'])){
     $p_tam  = $_GET['pizz_tam'];
     $p_tipo  = $_GET['pizz_tipo'];
     $p_extra  = $_GET['pizz_extra'];
     $p_form   = $_GET['pizz_forma'];
     
-    //Ingresar dentro de la base de datos
-    $date    = make_date();
-    $query  = "INSERT INTO venta_pizzas (";
-    $query .=" id_tam_pizza,id_tipo_pizza,llevar_pizza,extras,date";
-    $query .=") VALUES (";
-    $query .=" '{$p_tam}', '{$p_tipo}','{$p_extra}', '{$p_form}', '{$date}'";
-    $query .=")";
-    //$query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-    if($db->query($query)){
-      $session->msg('s',"Nuevo producto en carrito de compras. ");
-      redirect('realizar_venta.php', false);
-    } else {
-      $session->msg('d',' Lo siento, registro falló.');
-      redirect('realizar_venta.php', false);
-    }
+   
   }
-?>-->
+?>
 
 <div class="row">
    <div class="col-md-6">
@@ -194,7 +182,7 @@
         </strong>
       </div>
       <div class="panel-body">
-        <table class="table table-striped table-bordered table-condensed">
+        <table id="tabla_factura" class="table table-striped table-hover table-condensed">
           <thead>
             <tr>
               <th style="width:20%">Cantidad</th>
@@ -203,16 +191,16 @@
               <th style="width:10%">Accion</th>
             <tr>
           </thead>
-          <tbody>
+          <tbody id="tb_factura" >
             <tr>
               <td class="text-center"><input type='number' value='1' min='1' style="width: 60%;"></input></td>
-              <td class="text-justify"><?php $_GET['pizz_tam']?> </td>
-              <td class="text-center" style="">$Precio</td>
+              <td class="text-justify"><?php echo "Pizza "," $p_tam ","$p_tipo ","Extras:"," $p_extra ",". Para ","$p_form"?></td>
+              <td class="text-center">$Precio</td>
               <td class="text-center">
-                <span href="delete_categorie.php?id=<?php echo (int)$cat['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                <span href=""  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
                   <span class="glyphicon glyphicon-trash"></span>
                 </span>
-              </span>
+              </td>
             </tr>
           </tbody>
         </table>
