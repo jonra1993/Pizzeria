@@ -14,14 +14,14 @@
       $p_date    = make_date();
       $newQuantity=$product['quantity']+remove_junk($db->escape($_POST['hola'.$p_id]));
 
-      if($newQuantity!=$product['quantity']){
+      if($newQuantity!=$product['quantity']){   //solo actualiza si se cambiado el valor
         $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
         $query .=" quantity = '{$newQuantity}', date = '{$p_date}' WHERE id =";
         $query .=" '{$p_id}' ;";
   
-        if($db->query($query)){
+        if(!$db->query($query)){
+          $session->msg('d',' Lo siento, registro falló.');
         } 
-
       }
 
     }
