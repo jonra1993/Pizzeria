@@ -1,6 +1,6 @@
 <?php
  $errors = array();
-
+ date_default_timezone_set('America/Bogota');
  /*--------------------------------------------------------------*/
  /* Function for Remove escapes special
  /* characters in a string for use in an SQL statement

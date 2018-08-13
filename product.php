@@ -73,13 +73,17 @@
                   <?php if($product['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
                   <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
-                <?php endif; ?>
+                    <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
+                  <?php endif; ?>
                 </td>
+                <?php if($product['quantity'] <= 2): ?>
+                <td style="background-color:#ff4d5f"> <?php echo remove_junk($product['name']); ?></td>
+                <?php else: ?>
                 <td> <?php echo remove_junk($product['name']); ?></td>
+                <?php endif; ?>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" min="0" value="0" onkeydown="return false" type="number" class="form-control"></td>
+                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" min="0" value="0" onkeypress="isInputNumber(event)" type="number" class="form-control"></td>
                 <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['proveedor']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
@@ -109,6 +113,16 @@
   </div>
 
 <script>
+
+  function isInputNumber(evt){
+      
+      var ch = String.fromCharCode(evt.which);
+      
+      if(!(/[0-9]/.test(ch))){
+          evt.preventDefault();
+      }
+      
+  }
   function funct(){
     document.getElementById("get_form").submit();
   }
