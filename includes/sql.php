@@ -217,7 +217,6 @@ function tableExists($table){
     $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);
-
    }
   /*--------------------------------------------------------------*/
    /* Funcion para vinvular la base de datos de productos vender
@@ -430,6 +429,45 @@ function  monthlySales($year){
         return null;
     }
   }
-  
+     /*--------------------------------------------------------------*/
+   /* Function for Finding all valores de cierres
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+   function join_cierres_cajas(){
+    global $db;
+    $sql  =" SELECT c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.date,c.username";
+    $sql  .=" FROM tabla_cierres_cajas c";
+    $sql  .=" ORDER BY c.date DESC";
+    return find_by_sql($sql);
+  }
+/*--------------------------------------------------------------*/
+/* Function for Generate Daily cierres de caja report
+/*--------------------------------------------------------------*/
+function  daily_cierres_cajas($year,$month,$day){
+  global $db;
+  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
+  $sql .= " FROM tabla_cierres_cajas c";
+  $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
+  return find_by_sql($sql);
+}
+
+function monthly_cierres_cajas ($year,$month){ 
+  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
+  $sql .= " FROM tabla_cierres_cajas c";
+  $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m' ) = '{$year}-{$month}'";
+  return find_by_sql($sql);
+}
+
+function by_dates_cierres_cajas ($start_date,$end_date){ 
+  global $db;
+  $start_date  = date("Y-m-d", strtotime($start_date));
+  $end_date    = date("Y-m-d", strtotime($end_date));
+  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
+  $sql .= " FROM tabla_cierres_cajas c";
+  $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}'";
+  $sql .= " ORDER BY DATE(c.date) DESC";
+  return $db->query($sql);
+}
+
 ?>
 

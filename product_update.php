@@ -1,5 +1,7 @@
-<?php
-  $page_title = 'Lista de materia prima';
+  <?php
+  //referencia http://www.menuspararestaurantes.com/como_controlar_el_inventario_en_tu_restaurante/
+  // Inventario Inicial + Compras – Inventario final = Inventario Utilizado
+  $page_title = 'Actualización de Inventario';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
@@ -12,9 +14,9 @@
     foreach ($products as $product) {     
       $p_id =  remove_junk($product['id']);
       $p_date    = make_date();
-      $newQuantity=$product['quantity']+remove_junk($db->escape($_POST['hola'.$p_id]));
+      $newQuantity=remove_junk($db->escape($_POST['hola'.$p_id]));
 
-      if($newQuantity!=$product['quantity']){   //solo actualiza si se cambiado el valor
+      if($newQuantity!=''){   //solo actualiza si se cambiado el valor
         $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
         $query .=" quantity = '{$newQuantity}', date = '{$p_date}' WHERE id =";
         $query .=" '{$p_id}' ;";
@@ -23,10 +25,9 @@
           $session->msg('d',' Lo siento, registro falló.');
         } 
       }
-
     }
     $session->msg('s',"Cantidad Actualizada");
-    redirect('product.php', false);
+    redirect('product_update.php', false);
   }
 
 ?>
@@ -42,9 +43,10 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-         <div class="pull-right">
-           <a href="add_product.php" class="btn btn-primary">Agregar materia prima</a>
-         </div>
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>Actualización de Inventario</span>
+          </strong>
         </div>
         <div class="panel-body">
           <table class="table table-bordered">
@@ -54,18 +56,17 @@
                 <th> Imagen</th>
                 <th> Descripción </th>
                 <th class="text-center" style="width: 10%;"> Categoría </th>
-                <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 10%;"> Añadir </th>
                 <th class="text-center" style="width: 10%;"> Unidades </th>
                 <th class="text-center" style="width: 10%;"> Proveedor </th>
-                <th class="text-center" style="width: 10%;"> Precio de compra </th>
-                <th class="text-center" style="width: 10%;"> Precio de venta </th>
-                <th class="text-center" style="width: 10%;"> Agregado </th>
+                <th class="text-center" style="width: 10%;"> Stock Inicial</th>
+                <th class="text-center" style="width: 10%;"> Stock Final </th>
+                <th class="text-center" style="width: 10%;"> Stock Utilizado </th>
+                <th class="text-center" style="width: 10%;"> Fecha </th>
                 <th class="text-center" style="width: 10%;"> Acciones </th>
               </tr>
             </thead>
             <tbody>
-            <form method="post" action="product.php" class="clearfix" id="get_form">
+            <form method="post" action="product_update.php" class="clearfix" id="get_form">
               <?php foreach ($products as $product):?>
               <tr>
                 <td class="text-center"><?php echo count_id();?></td>
@@ -73,32 +74,21 @@
                   <?php if($product['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
                   <?php else: ?>
-                    <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
-                  <?php endif; ?>
-                </td>
-                <?php if($product['quantity'] <= 2): ?>
-                <td style="background-color:#ff4d5f"> <?php echo remove_junk($product['name']); ?></td>
-                <?php else: ?>
-                <td> <?php echo remove_junk($product['name']); ?></td>
+                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
                 <?php endif; ?>
+                </td>
+                <td> <?php echo remove_junk($product['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" min="0" value="0" onkeypress="isInputNumber(event)" type="number" class="form-control"></td>
                 <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['proveedor']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
+                <td class="text-center" id="i<?php echo remove_junk($product['id']); ?>"> <?php echo remove_junk($product['quantity']); ?></td>
+                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" id="f<?php echo remove_junk($product['id']); ?>" min="0" onkeypress="isInputNumber(event)" onchange="myFunction(<?php echo remove_junk($product['id']); ?>)" type="number" class="form-control"></td>
+                <td class="text-center" id="utilizado<?php echo remove_junk($product['id']); ?>"></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a onclick="funct()" class="btn btn-success btn-xs"  title="Añadir" data-toggle="tooltip">
+                    <a onclick="funct()" class="btn btn-success btn-xs"  title="Actualizar" data-toggle="tooltip">
                       <span  class="glyphicon glyphicon-ok"></span>
-                    </a>
-                    <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                     <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-trash"></span>
                     </a>
                   </div>
                 </td>
@@ -115,14 +105,19 @@
 <script>
 
   function isInputNumber(evt){
-      
       var ch = String.fromCharCode(evt.which);
-      
       if(!(/[0-9]/.test(ch))){
           evt.preventDefault();
-      }
-      
+      }     
   }
+
+  function myFunction(id) {
+    var inicial = document.getElementById("i"+id);
+    var final = document.getElementById("f"+id).value;
+    var utilizado = document.getElementById("utilizado"+id);
+    utilizado.innerHTML = inicial.innerHTML-final;
+  }
+
   function funct(){
     document.getElementById("get_form").submit();
   }

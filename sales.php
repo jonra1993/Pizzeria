@@ -4,6 +4,43 @@
   // Checkin What level user has permission to view this page
    page_require_level(3);
 ?>
+
+
+<?php
+/*$size = array('mediana', 'familiar', 'extragrande');
+$tipo = 'normal';
+$flavor = array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
+
+foreach ($size as $s) {
+    foreach ($flavor as $f) {
+      $precio =0;        
+      $query = "INSERT INTO catalogo_pizzas (`size`, `type`, `flavor`, `price`) ";        //Insertar la BD en la memoria de usuario
+      $query .="VALUES ('{$s}','{$tipo}','{$f}','{$precio}')";
+      if($db->query($query)){
+
+      }  
+  }
+}*/
+
+/*$size = array('mediana', 'familiar', 'extragrande');
+$tipo = 'especial';
+$flavor = array('mangiare','tradicional');
+
+foreach ($size as $s) {
+    foreach ($flavor as $f) {
+      $precio =0;        
+      $query = "INSERT INTO catalogo_pizzas (`size`, `type`, `flavor`, `price`) ";        //Insertar la BD en la memoria de usuario
+      $query .="VALUES ('{$s}','{$tipo}','{$f}','{$precio}')";
+      if($db->query($query)){
+
+      }  
+  }
+}*/
+
+
+?>
+
+
 <?php
 $sales = find_all_sale();
 ?>

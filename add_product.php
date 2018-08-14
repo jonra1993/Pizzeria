@@ -44,6 +44,7 @@
    }
 
  }
+ else if(isset($_POST['regresar'])) redirect('product.php',false);
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -144,7 +145,9 @@
                   <input type="text" class="form-control" name="nombre-proveedor" placeholder="Proveedor">
                </div>
               </div>
-              <button type="submit" name="add_product" class="btn btn-danger">Agregar producto</button>
+              <button type="submit" name="add_product" class="btn btn-success">Agregar producto</button>
+              <button type="submit" name="regresar" class="btn btn-danger">Cancelar</button>
+
           </form>
          </div>
         </div>
