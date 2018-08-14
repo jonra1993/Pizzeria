@@ -39,7 +39,7 @@
   <!--.......Cuadrados de visualizacion......-->
   <div class="row">
   <!--Seleccion de Productos-->
-  <div class="col-md-8">
+  <div class="col-md-7">
     <div id="cont_categ" class="row">
     <!--Categorias-->
       <?php foreach ($categorias as $cat):?>
@@ -75,7 +75,7 @@
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
             <div class="col-sm-3">
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 16rem;">
                 <?php if($tam['media_id'] === '0'): ?>
                   <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar Producto"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
@@ -113,7 +113,7 @@
         <div id="selc_pizzas_tipo" class="row justify-content-around" style="display: none;">
           <?php foreach ($tipo_pizzas as $tip):?>
             <div class="col-md-3">
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
                   <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
@@ -173,7 +173,7 @@
     </div>
   </div>
   <!--Factura-->
-  <div class="col-md-4">
+  <div class="col-md-5">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>
@@ -185,22 +185,23 @@
         <table id="tabla_factura" class="table table-striped table-hover table-condensed">
           <thead>
             <tr>
-              <th style="width:20%">Cantidad</th>
-              <th style="width:40%">Descrip</th>
-              <th style="width:20%">Precio</th>
-              <th style="width:10%">Accion</th>
+              <th class="text-center" style="width:10%">Cantidad</th>
+              <th class="text-justify" style="width:40%">Descrip</th>
+              <th class="text-center" style="width:20%">Precio</th>
+              <th class="text-center" style="width:20%">Total</th>
+              <th class="text-center" style="width:10%"></th>
             <tr>
           </thead>
           <tbody id="tb_factura" >
             <tr>
-              <td class="text-center"><input type='number' value='1' min='1' style="width: 60%;"></input></td>
+              <!-- <td class="text-center"><input type='number' value='1' min='1' style="width: 60%;"></input></td>
               <td class="text-justify"><?php echo "Pizza "," $p_tam ","$p_tipo ","Extras:"," $p_extra ",". Para ","$p_form"?></td>
               <td class="text-center">$Precio</td>
               <td class="text-center">
                 <span href=""  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
                   <span class="glyphicon glyphicon-trash"></span>
                 </span>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

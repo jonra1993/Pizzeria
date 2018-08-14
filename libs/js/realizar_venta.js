@@ -1,6 +1,7 @@
 // Progrma de venta de productos 2
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
 var counter = 0;
+var aux_fila_elim = 0;
   
 function selec_categ(nombre_cat) {
   if(nombre_cat=="Pizzas"){
@@ -64,16 +65,18 @@ function ingre_extra(extra){
 }
  function forma_servir(forma) {
   p_forma=forma;
+  //Creacion de nueva fila
+  var fila_id=aux_fila_elim++;
+  console.log("Cread:"+fila_id);
 
-  var newRow = $("<tr>");
+  var newRow = $("<tr id="+fila_id+">");
   var cols = "";
+  cols += '<td class="text-center"><input name="cantidad" type="number" value="1" min="1" style="width: 60%;"></td>';
+  cols += '<td class="text-justify"><input name="descrip" type="text" style="width: 100%;" disabled></td>';
+  cols += '<td class="text-center"><input name="precio" type="text"  style="width: 100%;" disabled></td>';
+  cols += '<td class="text-center"><input name="total" type="text"  style="width: 100%;" disabled></td>';
+  cols += '<td class="text-center""> <span id="hola" onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
 
-  cols += '<td class="text-center"><input type="number" value="1" min="1" style="width: 60%;"></td>';
-  cols += '<td class="text-center"></td>';
-  cols += '<td class="text-center"></td>';
-  cols += '<td class="text-center"> <span href=""  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
-
-  cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
   newRow.append(cols);
   $("table.table-striped.table-hover.table-condensed").append(newRow);
   counter++;
@@ -113,3 +116,7 @@ function regresar_carac(){
   }
 }
 
+function eliminar_fila(tr_id) {
+  //Eliminar fila
+  $('#tabla_factura tbody tr#'+tr_id).remove();
+}
