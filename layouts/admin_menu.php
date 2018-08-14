@@ -98,12 +98,23 @@
     </a>
   </li>
 
-    <li>
+  <li>
     <a href="product_update.php">
       <i class="glyphicon glyphicon-check"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
       <span>Actualización Inventario</span>
     </a>
   </li>
 
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-folder-close"></i>
+       <span>Reportes de Cierres</span>
+      </a>
+      <ul class="nav submenu">
+        <li><a href="caja_cierre_general.php">Cierres por fecha </a></li>
+        <li><a href="caja_cierre_monthly.php">Cierres mensuales</a></li>
+        <li><a href="caja_cierre_daily.php">Cierres diarias</a> </li>
+      </ul>
+  </li>
 
 </ul>
