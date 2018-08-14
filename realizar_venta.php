@@ -15,46 +15,20 @@
  $c_user          = count_by_id('users');
  $products_sold   = find_higest_saleing_product('10');
  $recent_products = find_recent_product_added('5');
- $recent_sales    = find_recent_sale_added('5')
+ $recent_sales    = find_recent_sale_added('5');
+ $cars = array("Volvo", "BMW", "Toyota");
+ $arrlength = count($cars);
 ?>
 <?php include_once('layouts/header.php'); ?>
 <?php
- if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-categorie','product-quantity','desc-unidades','buying-price', 'saleing-price','nombre-proveedor' );
-   validate_fields($req_fields);
-   if(empty($errors)){
-     $p_name  = remove_junk($db->escape($_POST['product-title']));
-     $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
-     $p_prov   = remove_junk($db->escape($_POST['nombre-proveedor']));
-     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-     $p_uni   = remove_junk($db->escape($_POST['desc-unidades']));
-     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-     $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
-     if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-       $media_id = '0';
-     } else {
-       $media_id = remove_junk($db->escape($_POST['product-photo']));
-     }
-     $date    = make_date();
-     $query  = "INSERT INTO products (";
-     $query .=" name,quantity,unidades,buy_price,sale_price,categorie_id,media_id,date,proveedor";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}','{$p_uni}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_prov}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-     if($db->query($query)){
-       $session->msg('s',"Producto agregado exitosamente. ");
-       redirect('add_product.php', false);
-     } else {
-       $session->msg('d',' Lo siento, registro falló.');
-       redirect('product.php', false);
-     }
-
-   } else{
-     $session->msg("d", $errors);
-     redirect('add_product.php',false);
-   }
- }
+ if(isset($_GET['pizz_tam'])){
+    $p_tam  = $_GET['pizz_tam'];
+    $p_tipo  = $_GET['pizz_tipo'];
+    $p_extra  = $_GET['pizz_extra'];
+    $p_form   = $_GET['pizz_forma'];
+    
+   
+  }
 ?>
 
 <div class="row">
@@ -65,7 +39,7 @@
   <!--.......Cuadrados de visualizacion......-->
   <div class="row">
   <!--Seleccion de Productos-->
-  <div class="col-md-8">
+  <div class="col-md-7">
     <div id="cont_categ" class="row">
     <!--Categorias-->
       <?php foreach ($categorias as $cat):?>
@@ -101,7 +75,7 @@
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
             <div class="col-sm-3">
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 16rem;">
                 <?php if($tam['media_id'] === '0'): ?>
                   <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar Producto"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
@@ -139,7 +113,7 @@
         <div id="selc_pizzas_tipo" class="row justify-content-around" style="display: none;">
           <?php foreach ($tipo_pizzas as $tip):?>
             <div class="col-md-3">
-              <div class="card" style="width: 18rem;">
+              <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
                   <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
@@ -199,7 +173,7 @@
     </div>
   </div>
   <!--Factura-->
-  <div class="col-md-4">
+  <div class="col-md-5">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>
@@ -208,25 +182,30 @@
         </strong>
       </div>
       <div class="panel-body">
-
-        <div class="list-group">
-      <!-- <?php foreach ($recent_products as  $recent_product): ?>
-            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
-                <h4 class="list-group-item-heading">
-                 <?php if($recent_product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
-                  <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $recent_product['image'];?>" alt="" />
-                <?php endif;?>
-                <?php echo remove_junk(first_character($recent_product['name']));?>
-                  <span class="label label-warning pull-right">
-                 $<?php echo (int)$recent_product['sale_price']; ?>
-                  </span>
-                </h4>
-                <span class="list-group-item-text pull-right">
-                <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
-              </span>
-      <?php endforeach; ?> -->
+        <table id="tabla_factura" class="table table-striped table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="text-center" style="width:10%">Cantidad</th>
+              <th class="text-justify" style="width:40%">Descrip</th>
+              <th class="text-center" style="width:20%">Precio</th>
+              <th class="text-center" style="width:20%">Total</th>
+              <th class="text-center" style="width:10%"></th>
+            <tr>
+          </thead>
+          <tbody id="tb_factura" >
+            <tr>
+              <!-- <td class="text-center"><input type='number' value='1' min='1' style="width: 60%;"></input></td>
+              <td class="text-justify"><?php echo "Pizza "," $p_tam ","$p_tipo ","Extras:"," $p_extra ",". Para ","$p_form"?></td>
+              <td class="text-center">$Precio</td>
+              <td class="text-center">
+                <span href=""  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </span>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
