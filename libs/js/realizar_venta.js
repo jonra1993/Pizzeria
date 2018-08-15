@@ -1,6 +1,6 @@
 // Progrma de venta de productos 2
+//src="libs/js/realizar_venta.js"
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
-var counter = 0;
 var aux_fila_elim = 0;
   
 function selec_categ(nombre_cat) {
@@ -68,18 +68,20 @@ function ingre_extra(extra){
   //Creacion de nueva fila
   var fila_id=aux_fila_elim++;
   console.log("Cread:"+fila_id);
+  var precio="<?php foreach ($g as $ggg){ echo remove_junk($ggg['price']); }?>";
 
   var newRow = $("<tr id="+fila_id+">");
   var cols = "";
   cols += '<td class="text-center"><input name="cantidad" type="number" value="1" min="1" style="width: 60%;"></td>';
-  cols += '<td class="text-justify"><input name="descrip" type="text" style="width: 100%;" disabled></td>';
-  cols += '<td class="text-center"><input name="precio" type="text"  style="width: 100%;" disabled></td>';
+  cols += '<td class="text-justify">'+categ+","+p_tama+","+p_tipo+""+p_forma+'</td>';
+  cols += '<td id+class="text-center"><input name="precio" type="text"  style="width: 100%;" disabled value='+precio+'></td>';
   cols += '<td class="text-center"><input name="total" type="text"  style="width: 100%;" disabled></td>';
   cols += '<td class="text-center""> <span id="hola" onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
 
   newRow.append(cols);
   $("table.table-striped.table-hover.table-condensed").append(newRow);
-  counter++;
+  
+
   //var win = window.open("realizar_venta.php?"+"&"+"pizz_tam="+p_tama+"&"+"pizz_tipo="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
  }
 
