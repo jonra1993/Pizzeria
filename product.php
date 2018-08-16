@@ -9,21 +9,37 @@
 <?php
 
   if(isset($_POST['hola1'])){
+    $user = current_user();
+    $aux = remove_junk(ucwords($user['username']));
     foreach ($products as $product) {     
       $p_id =  remove_junk($product['id']);
-      $p_date    = make_date();
       $newQuantity=$product['quantity']+remove_junk($db->escape($_POST['hola'.$p_id]));
 
       if($newQuantity!=$product['quantity']){   //solo actualiza si se cambiado el valor
-        $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
-        $query .=" quantity = '{$newQuantity}', date = '{$p_date}' WHERE id =";
-        $query .=" '{$p_id}' ;";
-  
-        if(!$db->query($query)){
-          $session->msg('d',' Lo siento, registro falló.');
-        } 
-      }
+        $p_name  = remove_junk($product['name']);
+        $p_prov   = remove_junk($product['proveedor']);
+        $p_qty   = remove_junk($product['quantity']);
+        $p_uni   = remove_junk($product['unidades']);
+        $p_buy   = remove_junk($product['buy_price']);
+        $p_date    = make_date();
+        $gasto    = ($newQuantity-$product['quantity'])*$p_buy;
 
+        $query2  = "INSERT INTO products_add_records (";
+        $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor`";
+        $query2 .=") VALUES (";
+        $query2 .=" '{$p_name}','{$p_qty}','{$newQuantity}', '{$p_uni}', '{$p_buy}','{$gasto}', '{$p_date}', '{$aux}', '{$p_prov}'";
+        $query2 .=")";
+  
+        if($db->query($query2)){
+          $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
+          $query .=" quantity = '{$newQuantity}', date = '{$p_date}' WHERE id =";
+          $query .=" '{$p_id}' ;";
+            
+          if(!$db->query($query)){
+          } 
+
+        }
+      }
     }
     $session->msg('s',"Cantidad Actualizada");
     redirect('product.php', false);

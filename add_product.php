@@ -18,6 +18,7 @@
      $p_uni   = remove_junk($db->escape($_POST['desc-unidades']));
      $p_buy   = remove_junk($db->escape($_POST['buying-price']));
      $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+
      if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
        $media_id = '0';
      } else {
@@ -31,8 +32,19 @@
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
-       $session->msg('s',"Producto agregado exitosamente. ");
+      $user = current_user();
+      $aux = remove_junk(ucwords($user['username']));
+      $gasto    = $p_qty*$p_buy;
+      $query2  = "INSERT INTO products_add_records (";
+      $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor`";
+      $query2 .=") VALUES (";
+      $query2 .=" '{$p_name}','0','{$p_qty}', '{$p_uni}', '{$p_buy}','{$gasto}', '{$p_date}', '{$aux}', '{$p_prov}'";
+      $query2 .=")";
+      if($db->query($query2)){
+        $session->msg('s',"Producto agregado exitosamente. ");
        redirect('add_product.php', false);
+      }
+       
      } else {
        $session->msg('d',' Lo siento, registro falló.');
        redirect('product.php', false);
@@ -146,7 +158,7 @@
                </div>
               </div>
               <button type="submit" name="add_product" class="btn btn-success">Agregar producto</button>
-              <button type="submit" name="regresar" class="btn btn-danger">Cancelar</button>
+              <button type="submit" name="regresar" class="btn btn-danger">Regresar</button>
 
           </form>
          </div>
