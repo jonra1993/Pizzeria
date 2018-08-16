@@ -60,8 +60,9 @@ else{
   </div>
 </div>
   <div class="row">
-  <div class="col-md-9">
+    <div class="col-md-9">
       <div class="panel panel-default">
+      
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
@@ -92,24 +93,118 @@ else{
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="decimal" class="form-control" name="dinero" placeholder="Importe de apertura">
+                      <input id= "apertura" type="decimal" class="form-control" name="dinero" placeholder="Importe de apertura">
                    </div>
                   </div>
                </div>
               </div>
-              <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php echo remove_junk(ucwords($user['username'])); ?>>
               <button type="submit" name="abrir_caja" class="btn btn-success">Aceptar</button>
-              <button type="submit" name="no_abrir" class="btn btn-danger">Cancelar</button>
-
-              <input style="visibility: hidden" type="text" class="form-control" name="username" value=<?php $x= current_user(); echo remove_junk(ucwords($user['bloqueocaja']));?>>
-
-              
-          </form>
-         </div>
+              <button type="submit" name="no_abrir" class="btn btn-danger">Cancelar</button>            
+            </form>
+          </div>
         </div>
       </div>
+
+      <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>Billetes</span>
+          </strong>
+        </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>                                                             <!--Cabecera dentro de la tabla-->
+                  <tr>
+                      <th>Denominación</th><th class="text-center" style="width: 100px;">Cantidad</th>
+                  </tr>
+              </thead>
+              <tbody> 
+                <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_d"type="number"></td></tr>
+                <tr><td>$5</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_d"type="number"></td></tr>
+                <tr><td>$10</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="diez_d" type="number"></td></tr>
+                <tr><td>$20</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="veinte_d" type="number"></td></tr>
+                <tr><td>$50</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_d" type="number"></td></tr>
+                <tr><td>$100</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_d" type="number"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>
+              <span class="glyphicon glyphicon-th"></span>
+              <span>Monedas</span>
+            </strong>
+          </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>                                                             <!--Cabecera dentro de la tabla-->
+                  <tr>
+                      <th>Denominación</th><th class="text-center" style="width: 100px;">Cantidad</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr><td>1 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_c" type="number"></td></tr>
+                <tr><td>5 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_c" type="number"></td></tr>
+                <tr><td>10 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="diez_c" type="number"></td></tr>
+                <tr><td>25 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="veinte_c" type="number"></td></tr>
+                <tr><td>50 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_c"type="number"></td></tr>
+                <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_c"type="number"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+<script>
+
+function isInputNumber(evt){
+    
+    var ch = String.fromCharCode(evt.which);
+    
+    if(!(/[0-9]/.test(ch))){
+        evt.preventDefault();
+    }
+    
+}
+
+function myFunction() {
+
+  apertura
+  //dolares
+  var cien = document.getElementById("cien_d").value;
+  var cincuenta = document.getElementById("cincuenta_d").value;
+  var veinte = document.getElementById("veinte_d").value;
+  var diez = document.getElementById("diez_d").value;
+  var cinco = document.getElementById("cinco_d").value;;
+  var un = document.getElementById("un_d").value;
+
+  var suma1= (100*cien)+(50*cincuenta)+(20*veinte)+(10*diez)+(5*cinco)+1*un;
+
+  //centavos
+  var cien = document.getElementById("cien_c").value;
+  var cincuenta = document.getElementById("cincuenta_c").value;
+  var veinte = document.getElementById("veinte_c").value;
+  var diez = document.getElementById("diez_c").value;
+  var cinco = document.getElementById("cinco_c").value;;
+  var un = document.getElementById("un_c").value;
+
+  var suma2= 1*cien+0.01*((50*cincuenta)+(25*veinte)+(10*diez)+(5*cinco)+1*un);
+  var k=suma2+suma1;
+  var t=k.toFixed(2);
+  document.getElementById("apertura").value = t;
+
+}
+
+</script>
 
 <?php 
 include_once('layouts/footer.php'); 
