@@ -25,24 +25,22 @@
   </li>
 <!--Lista de productos a vender-->
   <li>
-    <a href="#" class="submenu-toggle">
+    <a href="productovender.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-shopping-cart"></i>
       <span>Productos a vender</span>
     </a>
-    <ul class="nav submenu">
-       <li><a href="productovender.php">Administrar productos a vender</a> </li>
-       <!--li><a href="add_productovender.php">Agregar productos a vender</a> </li-->
-   </ul>
   </li>
 <!--Iventario-->
   <li>
     <a href="#" class="submenu-toggle">
-      <i class=" glyphicon glyphicon-leaf"></i>
+      <i class=" glyphicon glyphicon-check"></i>
       <span>Inventario</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="product.php">Administrar materia prima</a> </li>
-       <li><a href="add_product.php">Agregar materia prima</a> </li>
+      <li><a href="product.php">Manejo de inventario</a> </li>
+      <li><a href="product_update.php">Actualización de inventario</a> </li>
+      <li><a href="#">Reportes de inventario</a> </li>
+
    </ul>
   </li>
 
@@ -54,14 +52,10 @@
   </li>
 
   <li>
-    <a href="#" class="submenu-toggle">
+    <a href="sales.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
        <span>Registro de Ventas</span>
       </a>
-      <ul class="nav submenu">
-         <li><a href="sales.php">Administrar ventas</a> </li>
-         <li><a href="add_sale.php">Agregar venta</a> </li>
-     </ul>
   </li>
   <!-- Realizar una Nueva Venta -->
   <li>
@@ -98,12 +92,7 @@
     </a>
   </li>
 
-  <li>
-    <a href="product_update.php">
-      <i class="glyphicon glyphicon-check"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span>Actualización Inventario</span>
-    </a>
-  </li>
+
 
   <li>
     <a href="#" class="submenu-toggle">
@@ -116,5 +105,12 @@
         <li><a href="caja_cierre_daily.php">Cierres diarias</a> </li>
       </ul>
   </li>
+
+    <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-usd"></i>
+       <span>Ingresos-Egresos</span>
+      </a>
+    </li>
 
 </ul>

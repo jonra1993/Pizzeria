@@ -115,7 +115,9 @@
     var inicial = document.getElementById("i"+id);
     var final = document.getElementById("f"+id).value;
     var utilizado = document.getElementById("utilizado"+id);
-    utilizado.innerHTML = inicial.innerHTML-final;
+    var resta= inicial.innerHTML-final;
+    if(resta>=0) utilizado.innerHTML = ""+resta;
+    else document.getElementById("f"+id).value=""+Number(inicial.innerHTML);
   }
 
   function funct(){
