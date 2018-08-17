@@ -5,7 +5,7 @@
    page_require_level(1);
    $categorias = join_categories_table();
    $tam_pizzas= join_tampizza_table();
-   $tipo_pizzas=join_tipopizza_table();
+   $sabor_pizzas=join_tipopizza_table();
    $extra_pizzas=join_extrapizza_table();
 ?>
 <?php
@@ -16,19 +16,33 @@
  $products_sold   = find_higest_saleing_product('10');
  $recent_products = find_recent_product_added('5');
  $recent_sales    = find_recent_sale_added('5');
- $cars = array("Volvo", "BMW", "Toyota");
- $arrlength = count($cars);
- $g= buscar_precios_table('familiar','normal','mixta'); 
 
+ //$g= buscar_precios_table('familiar','normal','mixta');
+ //Array de copciones de pizza
+ $array_tama=  array('mediana', 'familiar', 'extragrande'); 
+ $array_tipo= array("normal","especial"); 
+ $array_savor= array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
 
+//  foreach ($tam_pizzas as $tama) { 
+//    array_push($array_categ,remove_junk($tama['name']));
+//  }
+//  foreach ($sabor_pizzas as $sabor) { 
+//     array_push($array_savor,$sabor['name']);
+//   }
+//   $aux= current($tam_pizzas[0]);
+  // $g= "buscar_precios_table($array_tama[0],$array_tipo[0],$array_savor[1]);"
+  
+  $g= buscar_precios_table($array_tama[0],$array_tipo[0],$array_savor[1]);
 ?>
 <?php include_once('layouts/header.php'); ?>
 <?php
  if(isset($_GET['pizz_tam'])){
     $p_tam  = $_GET['pizz_tam'];
     $p_tipo  = $_GET['pizz_tipo'];
+    $p_sabor  = $_GET['pizz_sabor'];
     $p_extra  = $_GET['pizz_extra'];
     $p_form   = $_GET['pizz_forma'];
+    $g= buscar_precios_table($p_tam,$p_tipo,$p_sabor);
   }
 ?>
 
@@ -52,8 +66,8 @@
               </a>
             <?php else: ?>
           
-                <a href="#"  onclick="selec_categ('<?php echo remove_junk(ucfirst($cat['name'])); ?>');" title="Seleccionar Categoria"> 
-                  <img class="card-img-top img-responsive" src="uploads/products/<?php echo $cat['image']; ?>" alt="">
+                <a class="text-center" href="#"  onclick="selec_categ('<?php echo remove_junk(ucfirst($cat['name'])); ?>');" title="Seleccionar Categoria"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/<?php echo $cat['image']; ?>" alt=""style="height: 130px; display: block; margin-left: auto;margin-right: auto;">
                 </a>
                 
             <?php endif; ?>
@@ -112,7 +126,7 @@
         </div>
         <!-- Tipo de pizza -->
         <div id="selc_pizzas_tipo" class="row justify-content-around" style="display: none;">
-          <?php foreach ($tipo_pizzas as $tip):?>
+          <?php foreach ($sabor_pizzas as $tip):?>
             <div class="col-md-3">
               <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
@@ -179,7 +193,7 @@
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th-list"></span>
-          <span>Comprobante de venta</span>
+          <span id="txtHint">Comprobante venta</span>
         </strong>
       </div>
       <div class="panel-body">
@@ -191,11 +205,17 @@
               <th class="text-center" style="width:20%">Precio</th>
               <th class="text-center" style="width:20%">Total</th>
               <th class="text-center" style="width:10%"></th>
-            <tr>
+            </tr>
           </thead>
           <tbody id="tb_factura" >
             
           </tbody>
+          <tfoot>
+            <tr>
+              <td>Sum</td>
+              <td>$180</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
@@ -203,32 +223,50 @@
 </div>
 
 <script >
+var venta_aux=[];
+var array_tama=  ['mediana', 'familiar', 'extragrande']; 
+var array_tipo= ["normal","especial"]; 
+var array_savor= ['mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana'];
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
 var aux_fila_elim = 0;
   
 function selec_categ(nombre_cat) {
+  var g=document.getElementById("cont_categ"); //Cotenedor catego boqueo selecion
+  var regr=document.getElementById("funcion_regresar"); //Funcion regresar
+  centrar(regr);
+  //Ajustar boton regresar
+  regr.style.justifyContent= 'left';
+  regr.style.paddingLeft= '3%';
+
   if(nombre_cat=="Pizzas"){
-    var g = document.getElementById("cont_categ");
-    var e = document.getElementById("selc_pizzas_nor_esp");
-    var f = document.getElementById("selc_pizzas_tam");
-    var r=document.getElementById("funcion_regresar");
+    var e = document.getElementById("selc_pizzas_nor_esp"); //Sig Pizzas tipo
+    var f = document.getElementById("selc_pizzas_tam"); //Actual Pizzas Tamano
+    //Cetrar layout a visualizar
     centrar(f);
-    centrar(r);
+    //Regresar a pantalla anterior
+    e.style.display = 'none';
+  }
+  else if (nombre_cat=="Extras") {
+    //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
+    var f = document.getElementById("selc_extra");   //Actual
+    centrar(f);
     r.style.justifyContent= 'left';
     r.style.paddingLeft= '3%';
     //quitar pantalla anterior
-    e.style.display = 'none';
+    //e.style.display = 'none';
+    
   }
   categ=nombre_cat;
   pizza_vent=0;   //Ventana de tamano
-  g.style.pointerEvents="none";
+  g.style.pointerEvents="none";   //Bloqueo de categoria
 }
-
+//---------- Categoria PIZZAS --------------
+//-1)---Tamano PIZZA
 function tam_pizzas(tama){
   if(tama!="Porcion"){
-    var e = document.getElementById("selc_pizzas_nor_esp");
-    var f = document.getElementById("selc_pizzas_tam");
-    var g = document.getElementById("selc_pizzas_tipo");
+    var e = document.getElementById("selc_pizzas_nor_esp"); //ventana se abre
+    var f = document.getElementById("selc_pizzas_tam"); //ventana actual q se cierra
+    var g = document.getElementById("selc_pizzas_tipo");  //ventana siguiente a cerrar en regreso
     centrar(e);
     f.style.display = 'none';
     g.style.display = 'none';
@@ -237,54 +275,64 @@ function tam_pizzas(tama){
   pizza_vent=1;   //Ventana de especial o normal
 }
 
+//-2)---Tipo PIZZA
 function pizzas_normal(){
-  var e = document.getElementById("selc_pizzas_tipo");
-  var f = document.getElementById("selc_pizzas_nor_esp");
-  var g = document.getElementById("selc_extra");
+  var e = document.getElementById("selc_pizzas_tipo");    //Ven se abre
+  var f = document.getElementById("selc_pizzas_nor_esp"); //Ven actual se cierra
+  var g = document.getElementById("selc_pizzas_forma"); //Ven sig cierra REGRESAR
   centrar(e);
   f.style.display = 'none';
   g.style.display = 'none';
+  p_tipo='normal';
   pizza_vent=2;   //Ventana de tipo
 }
 
+//-3)---Sabor PIZZA
 function tip_pizza(tipo){
-  var e = document.getElementById("selc_extra");
+  var e = document.getElementById("selc_pizzas_forma");
   var f = document.getElementById("selc_pizzas_tipo");
-  var g = document.getElementById("selc_pizzas_forma");
   centrar(e);
   f.style.display = 'none';
-  g.style.display = 'none';
-  p_tipo=tipo;
-  pizza_vent=3;   //Ventana de extras
+  p_sabor=tipo;
+  pizza_vent=3;   //Ventana de servir
 }
 
-function ingre_extra(extra){
-  var e = document.getElementById("selc_pizzas_forma");
-  var f = document.getElementById("selc_extra");
-  centrar(e);
-  f.style.display = 'none';
-  p_extras=extra;
-  pizza_vent=4;   //Ventana de servr o llevar
-}
- function forma_servir(forma) {
-  p_forma=forma;
+function forma_servir(forma) {
+  p_forma=forma; 
+  
   //Creacion de nueva fila
   var fila_id=aux_fila_elim++;
-  console.log("Cread:"+fila_id);
   var precio="<?php foreach ($g as $ggg){ echo remove_junk($ggg['price']); }?>";
   var actu='canti_'+fila_id+',precio_'+fila_id+',total'+fila_id;
+
+  // $.ajax({url: "buscar_precio.php", success: function(result){
+  //       alert("An error occured: "+result);
+  //   }});
+
+  // xhttp = new XMLHttpRequest();
+  // xhttp.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     //console.log(this.responseText)
+  //     //document.getElementById("txtHint").innerHTML = this.responseText;
+  //   }
+  // };
+  
+  // xhttp.open("GET", "buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_tipo, true);
+  // xhttp.send();
 
   var newRow = $("<tr id="+fila_id+">");
   var cols = "";
   cols += '<td class="text-center"><input id="canti_'+fila_id+'" name="cantidad" type="number" value="1" min="1" style="width: 60%;" onchange="actu_precio('+fila_id+')"></td>';
-  cols += '<td class="text-justify">'+categ+","+p_tama+","+p_tipo+""+p_forma+'</td>';
-  cols += '<td class="text-center">$<input class="text-center" id="precio_'+fila_id+'" name="precio" type="text" style="width: 70%;" disabled value='+precio+'></td>';
-  cols += '<td class="text-center">$<input class="text-center" id="total'+fila_id+'" name="total" type="text"  style="width: 70%;" disabled value='+precio+'></td>';
+  cols += '<td class="text-justify">'+categ+","+p_tama+","+p_sabor+","+p_tipo+","+p_forma+'</td>';
+  cols += '<td class="text-center">$ <input class="text-center" id="precio_'+fila_id+'" name="precio" type="text" style="width: 70%;" disabled value='+precio+'></td>';
+  cols += '<td class="text-center">$ <input class="text-center" id="total'+fila_id+'" name="total" type="text"  style="width: 70%;" disabled value='+precio+'></td>';
   cols += '<td class="text-center""> <span id="hola" onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
 
   newRow.append(cols);
   $("table.table-striped.table-hover.table-condensed").append(newRow);
-  //var win = window.open("realizar_venta.php?"+"&"+"pizz_tam="+p_tama+"&"+"pizz_tipo="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
+  // var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma::p_forma};
+  // venta_aux.push(venta_pizza);
+  //var win = window.open("realizar_venta.php?"+"num_fila="+fila_id+"$"+"pizz_tam="+p_tama+"&"+"pizz_tipo=normal"+"$"+"pizz_sabor="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
  }
 
 function centrar(id){
@@ -298,7 +346,7 @@ function centrar(id){
 function regresar_carac(){
   switch (pizza_vent) {
     case 1:
-      selec_categ(categ);
+      selec_categ(categ);   
       break;
     case 2:
       tam_pizzas(p_tama)
@@ -329,6 +377,15 @@ function actu_precio(id){
   var cantidad=document.getElementById('canti_'+id).value;
   var precio=document.getElementById('precio_'+id).value;
   document.getElementById('total_'+id).value=cantidad*precio;
+}
+
+//---------- Categoria EXTRAS --------------
+function ingre_extra(extra){
+  //var e = document.getElementById("selc_pizzas_forma");
+  var f = document.getElementById("selc_extra");
+  //centrar(e);
+  f.style.display = 'none';
+  p_extras=extra;
 }
 </script>
 
