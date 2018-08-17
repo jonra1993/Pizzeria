@@ -183,7 +183,6 @@
             </div>
           </div>  
         </div>
-
       </div>
     </div>
   </div>
@@ -212,8 +211,10 @@
           </tbody>
           <tfoot>
             <tr>
-              <td>Sum</td>
-              <td>$180</td>
+              <td></td>
+              <td></td>
+              <th class="text-right">Subtotal</td>
+              <td class="text-center">$ <input class="text-center" id="sub_producto" name="subtotal" type="text"  style="width: 70%;" disabled value='0.00'></td>
             </tr>
           </tfoot>
         </table>
@@ -228,7 +229,7 @@ var array_tama=  ['mediana', 'familiar', 'extragrande'];
 var array_tipo= ["normal","especial"]; 
 var array_savor= ['mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana'];
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
-var aux_fila_elim = 0;
+var fila_id = 0;
   
 function selec_categ(nombre_cat) {
   var g=document.getElementById("cont_categ"); //Cotenedor catego boqueo selecion
@@ -300,8 +301,6 @@ function tip_pizza(tipo){
 function forma_servir(forma) {
   p_forma=forma; 
   
-  //Creacion de nueva fila
-  var fila_id=aux_fila_elim++;
   var precio="<?php foreach ($g as $ggg){ echo remove_junk($ggg['price']); }?>";
   var actu='canti_'+fila_id+',precio_'+fila_id+',total'+fila_id;
 
@@ -322,17 +321,19 @@ function forma_servir(forma) {
 
   var newRow = $("<tr id="+fila_id+">");
   var cols = "";
-  cols += '<td class="text-center"><input id="canti_'+fila_id+'" name="cantidad" type="number" value="1" min="1" style="width: 60%;" onchange="actu_precio('+fila_id+')"></td>';
-  cols += '<td class="text-justify">'+categ+","+p_tama+","+p_sabor+","+p_tipo+","+p_forma+'</td>';
-  cols += '<td class="text-center">$ <input class="text-center" id="precio_'+fila_id+'" name="precio" type="text" style="width: 70%;" disabled value='+precio+'></td>';
-  cols += '<td class="text-center">$ <input class="text-center" id="total'+fila_id+'" name="total" type="text"  style="width: 70%;" disabled value='+precio+'></td>';
-  cols += '<td class="text-center""> <span id="hola" onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
+  cols += '<td class="text-center" style=width: 100%;"><input id="canti_'+fila_id+'" name="cantidad" type="number" value="1" min="1" style="width: 60%;" onchange="actu_precio('+fila_id+')"></td>';
+  cols += '<td class="text-justify" style=width: 100%;">'+categ+" "+p_tama+" "+p_sabor+" "+p_tipo+" "+p_forma+'</td>';
+  cols += '<td class="text-center" style=width: 100%;">$ <input class="text-center" id="precio_'+fila_id+'" name="precio" type="text" style="width: 70%;" disabled value='+precio+'></td>';
+  cols += '<td class="text-center" style=width: 100%;">$ <input class="text-center" id="total_'+fila_id+'" name="total" type="text"  style="width: 70%;" disabled value='+precio+'></td>';
+  cols += '<td class="text-center" style=width: 100%;"> <span onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
 
   newRow.append(cols);
   $("table.table-striped.table-hover.table-condensed").append(newRow);
   // var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma::p_forma};
   // venta_aux.push(venta_pizza);
   //var win = window.open("realizar_venta.php?"+"num_fila="+fila_id+"$"+"pizz_tam="+p_tama+"&"+"pizz_tipo=normal"+"$"+"pizz_sabor="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
+  sum_productos();
+  fila_id++;
  }
 
 function centrar(id){
@@ -376,7 +377,18 @@ function eliminar_fila(tr_id) {
 function actu_precio(id){
   var cantidad=document.getElementById('canti_'+id).value;
   var precio=document.getElementById('precio_'+id).value;
-  document.getElementById('total_'+id).value=cantidad*precio;
+  document.getElementById('total_'+id).value=(cantidad*precio).toFixed(2);
+  sum_productos();
+}
+
+function sum_productos() {
+  var sum=0;
+  for (i=0; i<=fila_id; i++) {
+    var total=document.getElementById('total_'+i).value;
+    sum+=Number(total);
+  }
+  console.log(sum);
+  document.getElementById('sub_producto').value=sum.toFixed(2); 
 }
 
 //---------- Categoria EXTRAS --------------
