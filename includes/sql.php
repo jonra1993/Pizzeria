@@ -469,5 +469,16 @@ function by_dates_cierres_cajas ($start_date,$end_date){
   return $db->query($sql);
 }
 
+function by_dates_Inventario ($start_date,$end_date,$product){ 
+  global $db;
+  $start_date  = date("Y-m-d", strtotime($start_date));
+  $end_date    = date("Y-m-d", strtotime($end_date));
+  $sql  =" SELECT c.name, c.last_quantity, c.new_quantity, c.unidades, c.buy_price, c.gasto, c.date, c.username, c.proveedor";
+  $sql .= " FROM products_add_records c";
+  $sql .= " WHERE (DATE_FORMAT( c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}') AND c.name='{$product}' AND c.gasto>'0'";
+  $sql .= " ORDER BY DATE(c.date) DESC";
+  return $db->query($sql);
+}
+
 ?>
 

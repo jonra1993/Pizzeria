@@ -23,7 +23,7 @@
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Reportes de cierres de caja</span>
+            <span>Reportes de cierres de caja del día (<?php echo  $year.'/'.$month.'/'.$day; ?>)</span>
           </strong>
         </div>
         <div class="panel-body">

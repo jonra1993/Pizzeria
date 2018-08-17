@@ -39,7 +39,7 @@
     <ul class="nav submenu">
       <li><a href="product.php">Manejo de inventario</a> </li>
       <li><a href="product_update.php">Actualización de inventario</a> </li>
-      <li><a href="#">Reportes de inventario</a> </li>
+      <li><a href="product_report.php">Reportes de inventario</a> </li>
 
    </ul>
   </li>
