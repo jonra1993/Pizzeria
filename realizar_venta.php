@@ -92,11 +92,11 @@
             <div class="col-sm-3">
               <div class="card" style="width: 16rem;">
                 <?php if($tam['media_id'] === '0'): ?>
-                  <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar Producto"> 
+                  <a href="#" onclick="tam_pizzas('<?php echo remove_junk($tam['name']); ?>');" title="Seleccionar Producto"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="tam_pizzas('<?php echo remove_junk(ucfirst($tam['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tam['name'])); ?>"> 
+                <a href="#" onclick="tam_pizzas('<?php echo remove_junk($tam['name']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tam['name'])); ?>"> 
                     <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tam['image']; ?>" alt="">
                   </a>
                 <?php endif; ?>
@@ -130,11 +130,11 @@
             <div class="col-md-3">
               <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar Tipo"> 
+                  <a href="#" onclick="tip_pizza('<?php echo remove_junk($tip['name']); ?>');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="tip_pizza('<?php echo remove_junk(ucfirst($tip['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
+                <a href="#" onclick="tip_pizza('<?php echo remove_junk($tip['name']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
                     <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
@@ -150,11 +150,11 @@
             <div class="col-md-3">
               <div class="card" style="width: 18rem;">
                 <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar Extra"> 
+                  <a href="#" onclick="ingre_extra('<?php echo remove_junk($extra['name']); ?>');" title="Seleccionar Extra"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="ingre_extra('<?php echo remove_junk(ucfirst($extra['name'])); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($extra['name'])); ?>"> 
+                <a href="#" onclick="ingre_extra('<?php echo remove_junk($extra['name']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($extra['name'])); ?>"> 
                     <img class="card-img-top img-responsive" src="uploads/products/<?php echo $extra['image']; ?>" alt=""   style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
@@ -303,10 +303,13 @@ function forma_servir(forma) {
   
   var precio="<?php foreach ($g as $ggg){ echo remove_junk($ggg['price']); }?>";
   var actu='canti_'+fila_id+',precio_'+fila_id+',total'+fila_id;
+  var DOMAIN = "http://localhost/Pizzeria/";
 
-  // $.ajax({url: "buscar_precio.php", success: function(result){
-  //       alert("An error occured: "+result);
-  //   }});
+  // "buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor
+
+  $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor, success: function(result){
+        alert("hh: "+result);
+    }});
 
   // xhttp = new XMLHttpRequest();
   // xhttp.onreadystatechange = function() {
@@ -318,7 +321,7 @@ function forma_servir(forma) {
   
   // xhttp.open("GET", "buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_tipo, true);
   // xhttp.send();
-
+  fila_id++;
   var newRow = $("<tr id="+fila_id+">");
   var cols = "";
   cols += '<td class="text-center" style=width: 100%;"><input id="canti_'+fila_id+'" name="cantidad" type="number" value="1" min="1" style="width: 60%;" onchange="actu_precio('+fila_id+')"></td>';
@@ -329,11 +332,10 @@ function forma_servir(forma) {
 
   newRow.append(cols);
   $("table.table-striped.table-hover.table-condensed").append(newRow);
-  // var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma::p_forma};
-  // venta_aux.push(venta_pizza);
+  var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:p_forma};
+  venta_aux.push(venta_pizza);
   //var win = window.open("realizar_venta.php?"+"num_fila="+fila_id+"$"+"pizz_tam="+p_tama+"&"+"pizz_tipo=normal"+"$"+"pizz_sabor="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
   sum_productos();
-  fila_id++;
  }
 
 function centrar(id){
@@ -372,6 +374,7 @@ function regresar_carac(){
 function eliminar_fila(tr_id) {
   //Eliminar fila
   $('#tabla_factura tbody tr#'+tr_id).remove();
+  sum_productos();
 }
 
 function actu_precio(id){
@@ -383,9 +386,11 @@ function actu_precio(id){
 
 function sum_productos() {
   var sum=0;
-  for (i=0; i<=fila_id; i++) {
-    var total=document.getElementById('total_'+i).value;
-    sum+=Number(total);
+  for (i=1; i<=fila_id; i++) {
+    if (document.getElementById('total_'+i)!=null) {
+      var total=document.getElementById('total_'+i).value;
+      sum+=Number(total);
+    }
   }
   console.log(sum);
   document.getElementById('sub_producto').value=sum.toFixed(2); 
