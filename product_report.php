@@ -50,6 +50,9 @@ if(isset($_POST['submit'])){
                 <?php endforeach; ?>
               </select>
             </div>
+            <div class="form-group">
+                 <button style="visibility: hidden" type="submit" name="submit" class="btn btn-primary">Generar reporte de inventario</button>
+            </div>
       </div>
     </div>
   </div>
