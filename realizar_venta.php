@@ -17,11 +17,9 @@
  $recent_products = find_recent_product_added('5');
  $recent_sales    = find_recent_sale_added('5');
 
- //$g= buscar_precios_table('familiar','normal','mixta');
- //Array de copciones de pizza
- $array_tama=  array('mediana', 'familiar', 'extragrande'); 
- $array_tipo= array("normal","especial"); 
- $array_savor= array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
+//  $array_tama=  array('mediana', 'familiar', 'extragrande'); 
+//  $array_tipo= array("normal","especial"); 
+//  $array_savor= array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
 
 //  foreach ($tam_pizzas as $tama) { 
 //    array_push($array_categ,remove_junk($tama['name']));
@@ -32,19 +30,8 @@
 //   $aux= current($tam_pizzas[0]);
   // $g= "buscar_precios_table($array_tama[0],$array_tipo[0],$array_savor[1]);"
   
-  $g= buscar_precios_table($array_tama[0],$array_tipo[0],$array_savor[1]);
 ?>
 <?php include_once('layouts/header.php'); ?>
-<?php
- if(isset($_GET['pizz_tam'])){
-    $p_tam  = $_GET['pizz_tam'];
-    $p_tipo  = $_GET['pizz_tipo'];
-    $p_sabor  = $_GET['pizz_sabor'];
-    $p_extra  = $_GET['pizz_extra'];
-    $p_form   = $_GET['pizz_forma'];
-    $g= buscar_precios_table($p_tam,$p_tipo,$p_sabor);
-  }
-?>
 
 <div class="row">
    <div class="col-md-6">
@@ -145,23 +132,31 @@
           <?php endforeach; ?>
         </div>
         <!-- Ingredientes Extras -->
-        <div id="selc_extra" class="row justify-content-around" style="display: none;">
-          <?php foreach ($extra_pizzas as $extra):?>
-            <div class="col-md-3">
-              <div class="card" style="width: 18rem;">
-                <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" onclick="ingre_extra('<?php echo remove_junk($extra['name']); ?>');" title="Seleccionar Extra"> 
-                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
-                  </a>
-                <?php else: ?>
-                <a href="#" onclick="ingre_extra('<?php echo remove_junk($extra['name']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($extra['name'])); ?>"> 
-                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $extra['image']; ?>" alt=""   style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
-                  </a>
-                <?php endif; ?>
-                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($extra['name'])); ?> </h4>
+        <div id="selc_extra" class="row justify-content-around" style="display: none;" >
+          <div class="row justify-content-around">
+            <?php foreach ($extra_pizzas as $extra):?>
+              <div class="col-md-3">
+                <div class="card" style="width: 18rem;">
+                  <?php if($tip['media_id'] === '0'): ?>
+                    <a href="#" onclick="ingre_extra('<?php echo remove_junk($extra['name']); ?>');" title="Seleccionar Extra"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                    </a>
+                  <?php else: ?>
+                  <a href="#" onclick="ingre_extra('<?php echo remove_junk($extra['name']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($extra['name'])); ?>"> 
+                      <img class="card-img-top img-responsive" src="uploads/products/<?php echo $extra['image']; ?>" alt=""   style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
+                    </a>
+                  <?php endif; ?>
+                  <h4 class="card-title center"> <?php echo remove_junk(ucfirst($extra['name'])); ?> </h4>
+                </div>
               </div>
-            </div>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
+          </div>
+          <div id="fun_cont_extra" class="row" style="display:flex; alignItems:center; justifyContent:right;">
+            <button type="button" class="btn btn-light" style="width: auto" onclick="avanzar_extra()">
+              <i class="glyphicon glyphicon-arrow-right"></i>
+              Continuar
+            </button>
+          </div>
         </div>
 
         <!-- Servirse o llevar-->
@@ -225,11 +220,13 @@
 
 <script >
 var venta_aux=[];
-var array_tama=  ['mediana', 'familiar', 'extragrande']; 
-var array_tipo= ["normal","especial"]; 
-var array_savor= ['mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana'];
+// var array_tama=  ['mediana', 'familiar', 'extragrande']; 
+// var array_tipo= ["normal","especial"]; 
+// var array_savor= ['mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana'];
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
 var fila_id = 0;
+var num_extras = 0;
+var DOMAIN = "http://localhost/Pizzeria/";
   
 function selec_categ(nombre_cat) {
   var g=document.getElementById("cont_categ"); //Cotenedor catego boqueo selecion
@@ -280,7 +277,7 @@ function tam_pizzas(tama){
 function pizzas_normal(){
   var e = document.getElementById("selc_pizzas_tipo");    //Ven se abre
   var f = document.getElementById("selc_pizzas_nor_esp"); //Ven actual se cierra
-  var g = document.getElementById("selc_pizzas_forma"); //Ven sig cierra REGRESAR
+  var g = document.getElementById("selc_extra"); //Ven sig cierra REGRESAR
   centrar(e);
   f.style.display = 'none';
   g.style.display = 'none';
@@ -290,53 +287,51 @@ function pizzas_normal(){
 
 //-3)---Sabor PIZZA
 function tip_pizza(tipo){
-  var e = document.getElementById("selc_pizzas_forma");
+  p_sabor=tipo;
+  var precio=0;
+  //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
+  $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor, success: function(result){
+    precio=Number(result);
+    var descrip= categ+" "+p_tama+" "+p_sabor+" "+p_tipo;
+    agregar_fila(descrip,precio);
+  }}); 
+  //Guardar
+  var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:p_forma};
+  venta_aux.push(venta_pizza);
+
+  var e = document.getElementById("selc_extra");
   var f = document.getElementById("selc_pizzas_tipo");
+  var g = document.getElementById("selc_pizzas_forma"); //Ven sig cierra REGRESAR
   centrar(e);
   f.style.display = 'none';
-  p_sabor=tipo;
+  g.style.display = 'none';
   pizza_vent=3;   //Ventana de servir
+}
+
+function ingre_extra(extra){
+  num_extras++;
+  $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
+    precio=Number(result);
+    alert(precio);
+    var descrip= "Extra "+extra+" en pizza "+p_tama;
+    agregar_fila(descrip,precio);
+  }});
 }
 
 function forma_servir(forma) {
   p_forma=forma; 
-  
-  var precio="<?php foreach ($g as $ggg){ echo remove_junk($ggg['price']); }?>";
-  var actu='canti_'+fila_id+',precio_'+fila_id+',total'+fila_id;
-  var DOMAIN = "http://localhost/Pizzeria/";
-
-  // "buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor
-
-  $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor, success: function(result){
-        alert("hh: "+result);
-    }});
-
-  // xhttp = new XMLHttpRequest();
-  // xhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     //console.log(this.responseText)
-  //     //document.getElementById("txtHint").innerHTML = this.responseText;
-  //   }
-  // };
-  
-  // xhttp.open("GET", "buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_tipo, true);
-  // xhttp.send();
-  fila_id++;
-  var newRow = $("<tr id="+fila_id+">");
-  var cols = "";
-  cols += '<td class="text-center" style=width: 100%;"><input id="canti_'+fila_id+'" name="cantidad" type="number" value="1" min="1" style="width: 60%;" onchange="actu_precio('+fila_id+')"></td>';
-  cols += '<td class="text-justify" style=width: 100%;">'+categ+" "+p_tama+" "+p_sabor+" "+p_tipo+" "+p_forma+'</td>';
-  cols += '<td class="text-center" style=width: 100%;">$ <input class="text-center" id="precio_'+fila_id+'" name="precio" type="text" style="width: 70%;" disabled value='+precio+'></td>';
-  cols += '<td class="text-center" style=width: 100%;">$ <input class="text-center" id="total_'+fila_id+'" name="total" type="text"  style="width: 70%;" disabled value='+precio+'></td>';
-  cols += '<td class="text-center" style=width: 100%;"> <span onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
-
-  newRow.append(cols);
-  $("table.table-striped.table-hover.table-condensed").append(newRow);
-  var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:p_forma};
-  venta_aux.push(venta_pizza);
-  //var win = window.open("realizar_venta.php?"+"num_fila="+fila_id+"$"+"pizz_tam="+p_tama+"&"+"pizz_tipo=normal"+"$"+"pizz_sabor="+p_tipo+"&"+"pizz_extra="+p_extras+"&"+"pizz_forma="+p_forma,"_self");
-  sum_productos();
+  if (p_forma=="Llevar") {
+    var descrip="Caja Pizza "+p_tama;
+    agregar_fila(descrip, 1.0);
  }
+}
+function avanzar_extra() {
+  var e = document.getElementById("selc_pizzas_forma");
+  var f = document.getElementById("selc_extra");
+  centrar(e);
+  f.style.display = 'none';
+  pizza_vent=4;   //Ventana de Forma
+}
 
 function centrar(id){
   id.style.display = 'flex';
@@ -396,14 +391,23 @@ function sum_productos() {
   document.getElementById('sub_producto').value=sum.toFixed(2); 
 }
 
-//---------- Categoria EXTRAS --------------
-function ingre_extra(extra){
-  //var e = document.getElementById("selc_pizzas_forma");
-  var f = document.getElementById("selc_extra");
-  //centrar(e);
-  f.style.display = 'none';
-  p_extras=extra;
+function agregar_fila(descrip, prec) {
+  fila_id++;
+  var newRow = $("<tr id="+fila_id+">");
+  var cols = "";
+  cols += '<td class="text-center" style=width: 100%;"><input id="canti_'+fila_id+'" name="cantidad" type="number" value="1" min="1" style="width: 60%;" onchange="actu_precio('+fila_id+')"></td>';
+  cols += '<td class="text-justify" style=width: 100%;">'+descrip+'</td>';
+  cols += '<td class="text-center" style=width: 100%;">$ <input class="text-center" id="precio_'+fila_id+'" name="precio" type="text" style="width: 70%;" disabled value='+prec.toFixed(2)+'></td>';
+  cols += '<td class="text-center" style=width: 100%;">$ <input class="text-center" id="total_'+fila_id+'" name="total" type="text"  style="width: 70%;" disabled value='+prec.toFixed(2)+'></td>';
+  cols += '<td class="text-center" style=width: 100%;"> <span onclick="eliminar_fila('+fila_id+')"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></span></td>';
+
+  newRow.append(cols);
+  $("table.table-striped.table-hover.table-condensed").append(newRow);
+  
+  sum_productos();
+  
 }
+
 </script>
 
 <?php include_once('layouts/footer.php'); ?>

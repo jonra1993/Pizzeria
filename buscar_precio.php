@@ -29,7 +29,7 @@
   // $qry_result = mysql_query($sql);
 
   $precio=buscar_precios_table($tama,$tipo,$sabor);
-  foreach ($precio as $ggg){ echo remove_junk($ggg['price']); }
+  foreach ($precio as $ggg){ echo ltrim(remove_junk($ggg['price'])); }
 
   // echo $precio;
   
