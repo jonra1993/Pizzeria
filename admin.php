@@ -182,5 +182,12 @@
   </div>
 
 
+<script>
+    var date = "<?php echo make_date(); ?>";
+    var subtotal=130;  
+    var orden = "envio de orden";
+
+  var win = window.open("realizar_venta_pdf.php?"+"user=user"+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden,"_blank"); // will open new tab on document ready
+</script>
 
 <?php include_once('layouts/footer.php'); ?>
