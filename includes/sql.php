@@ -266,6 +266,17 @@ function tableExists($table){
    return find_by_sql($sql);
   }
 
+  function buscar_precios_table($tama,$tipo,$sabor){
+    global $db;
+    $sql  ="SELECT p.price FROM catalogo_pizzas p WHERE p.size = '{$tama}' AND p.type = '{$tipo}' AND p.flavor = '{$sabor}' LIMIT 1";
+   return $db->query($sql);
+  }
+
+  function buscar_preciosextra_table($tama,$extra){
+    global $db;
+    $sql  ="SELECT p.precio FROM catalogo_extras p WHERE p.size = '{$tama}' AND p.ingrediente = '{$extra}' LIMIT 1";
+   return $db->query($sql);
+  }
  /*--------------------------------------------------------------*/
 
   /* JUNTAR BD categorie
