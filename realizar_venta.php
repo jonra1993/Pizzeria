@@ -450,9 +450,7 @@ function actu_precio(id){
   var precio=document.getElementById('precio_'+id).value;
   document.getElementById('total_'+id).value=(cantidad*precio).toFixed(2);
   venta_aux.forEach(element => {
-    alert(cantidad);
     if (element.id==(Number(id)-1)) {
-      alert(cantidad);
       element.canti=cantidad;
     }
   });
