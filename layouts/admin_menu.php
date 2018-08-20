@@ -106,11 +106,18 @@
       </ul>
   </li>
 
-    <li>
+  <li>
+    <a href="caja_ingreso_retiro.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-usd"></i>
+       <span>Ingresos-Retiro de caja</span>
+      </a>
+  </li>
+
+  <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-usd"></i>
        <span>Ingresos-Egresos</span>
       </a>
-    </li>
+  </li>
 
 </ul>

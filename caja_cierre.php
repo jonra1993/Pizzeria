@@ -5,8 +5,14 @@
   page_require_level(2);
 ?>
 <?php
+ $year  = date('Y');
+ $month = date('m');
+ $day = date('d');
+
 $user = current_user();
 $open=find_last_open_box();
+$ingresos_caja = find_sum_ingresos_caja($year,$month,$day);
+$retiros_caja=find_sum_retiros_caja($year,$month,$day);
 
 if(isset($_POST['cerrar_caja'])){
    if(empty($errors)){   
@@ -101,10 +107,10 @@ else{
                 <input readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
               </td></tr>
               <tr><td>Ingreso de efectivo en caja</td><td class="text-center">
-                <input readonly style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value="0"/>
+                <input readonly type="number" style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value=<?php echo remove_junk(ucwords($ingresos_caja['SUM(c.importe)']));?> />
               </td></tr>
               <tr><td>Retiro de efectivo en caja</td><td class="text-center">
-                <input readonly style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value="0"/>
+                <input readonly type="number" style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value=<?php echo remove_junk(ucwords(-$retiros_caja['SUM(c.importe)']));?> />
               </td></tr>
               <tr><td style="background-color:#0099ff">Dinero a entregar</td><td class="text-center">
                 <input readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
@@ -229,7 +235,7 @@ else{
     var rr=parseFloat(s1)
     d_total_v.value=rr.toFixed(2);
 
-    var s2= -d_autoconsumo.value+d_ing_ef_caja.value-d_ret_ef_caja.value;
+    var s2= -d_autoconsumo.value+Number(d_ing_ef_caja.value)-Number(d_ret_ef_caja.value);
 
     //dolares
     var cien = document.getElementById("cien_d").value;

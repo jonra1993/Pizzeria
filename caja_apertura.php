@@ -178,7 +178,6 @@ function isInputNumber(evt){
 
 function myFunction() {
 
-  apertura
   //dolares
   var cien = document.getElementById("cien_d").value;
   var cincuenta = document.getElementById("cincuenta_d").value;

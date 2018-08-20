@@ -3,7 +3,7 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
-  $cierres = join_cierres_cajas();
+  //$cierres = join_cierres_cajas();
 ?>
 <?php
  $year  = date('Y');

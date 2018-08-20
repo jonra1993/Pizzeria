@@ -429,6 +429,32 @@ function  monthlySales($year){
         return null;
     }
   }
+
+  function find_sum_ingresos_caja($year,$month,$day){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    global $db;
+    if(tableExists($table)){
+      $sql = $db->query("SELECT SUM(c.importe) FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND username='{$p_user}' ORDER BY id DESC LIMIT 1 ");
+      if($result = $db->fetch_assoc($sql))
+        return $result;
+      else
+        return null;
+    }
+  }
+
+  function find_sum_retiros_caja($year,$month,$day){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    global $db;
+    if(tableExists($table)){
+      $sql = $db->query("SELECT SUM(c.importe) FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND username='{$p_user}' ");
+      if($result = $db->fetch_assoc($sql))
+        return $result;
+      else
+        return null;
+    }
+  }
      /*--------------------------------------------------------------*/
    /* Function for Finding all valores de cierres
    /* JOIN with categorie  and media database table
