@@ -432,13 +432,29 @@ function  monthlySales($year){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
     global $db;
-    if(tableExists($table)){
-      $sql = $db->query("SELECT * FROM tabla_aperturas_cajas WHERE username='{$p_user}' ORDER BY id DESC LIMIT 1");
-      if($result = $db->fetch_assoc($sql))
-        return $result;
-      else
-        return null;
-    }
+
+    $sql = $db->query("SELECT * FROM tabla_aperturas_cajas WHERE username='{$p_user}' ORDER BY id DESC LIMIT 1");
+    if($result = $db->fetch_assoc($sql))
+      return $result;
+    else
+      return null;
+
+  }
+
+  function find_sum_ingresos_caja($year,$month,$day){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    $sql  =" SELECT SUM(c.importe)";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND username='{$p_user}'";
+    return find_by_sql($sql);
+  }
+
+  function find_sum_retiros_caja($year,$month,$day){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    $sql  =" SELECT SUM(c.importe)";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND username='{$p_user}'";
+    return find_by_sql($sql);
   }
      /*--------------------------------------------------------------*/
    /* Function for Finding all valores de cierres
@@ -476,6 +492,17 @@ function by_dates_cierres_cajas ($start_date,$end_date){
   $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
   $sql .= " FROM tabla_cierres_cajas c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}'";
+  $sql .= " ORDER BY DATE(c.date) DESC";
+  return $db->query($sql);
+}
+
+function by_dates_Inventario ($start_date,$end_date,$product){ 
+  global $db;
+  $start_date  = date("Y-m-d", strtotime($start_date));
+  $end_date    = date("Y-m-d", strtotime($end_date));
+  $sql  =" SELECT c.name, c.last_quantity, c.new_quantity, c.unidades, c.buy_price, c.gasto, c.date, c.username, c.proveedor";
+  $sql .= " FROM products_add_records c";
+  $sql .= " WHERE (DATE_FORMAT( c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}') AND c.name='{$product}' AND c.gasto>'0'";
   $sql .= " ORDER BY DATE(c.date) DESC";
   return $db->query($sql);
 }

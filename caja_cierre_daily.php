@@ -3,7 +3,7 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
-  $cierres = join_cierres_cajas();
+  //$cierres = join_cierres_cajas();
 ?>
 <?php
  $year  = date('Y');
@@ -23,7 +23,7 @@
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Reportes de cierres de caja</span>
+            <span>Reportes de cierres de caja del día (<?php echo  $year.'/'.$month.'/'.$day; ?>)</span>
           </strong>
         </div>
         <div class="panel-body">

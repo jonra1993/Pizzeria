@@ -5,8 +5,31 @@
   page_require_level(2);
 ?>
 <?php
+ $year  = date('Y');
+ $month = date('m');
+ $day = date('d');
+
 $user = current_user();
 $open=find_last_open_box();
+$ingresos_cajas = find_sum_ingresos_caja($year,$month,$day);
+$retiros_cajas=find_sum_retiros_caja($year,$month,$day);
+
+$ingresos_caja=0;
+
+foreach($ingresos_cajas as $tempo){
+  $ingresos_caja=remove_junk(ucwords($tempo['SUM(c.importe)']));
+}
+if($ingresos_caja<=0){
+  $ingresos_caja=0;
+}
+
+$retiros_caja=0;
+foreach($retiros_cajas as $tempo2){
+  $retiros_caja=remove_junk(ucwords($tempo2['SUM(c.importe)']));
+}
+if($retiros_caja>=0)$retiros_caja=0;
+else $retiros_caja=-$retiros_caja;
+
 
 if(isset($_POST['cerrar_caja'])){
    if(empty($errors)){   
@@ -86,7 +109,7 @@ else{
             </thead>
             <tbody>                                                              <!--Cuerpo dentro de la tabla-->
               <tr><td>Apertura de caja</td><td class="text-center" >
-                <input readonly type="number" style="text-align:center" id="apertura_caja" name="apertura_caja" value=<?php echo remove_junk(ucwords($open['dinero_apertura']));?> />
+                <input readonly type="number" style="text-align:center" id="apertura_caja" name="apertura_caja" value='0' />
               </td></tr>
               <tr><td>Cobros en efectivo</td><td class="text-center ">
                 <input readonly style="text-align:center" id="cobros_efectivo" name="cobros_efectivo" value="0"/>
@@ -95,25 +118,25 @@ else{
                 <input readonly style="text-align:center"  id="cobros_tarjeta" name="cobros_tarjeta"  value="0"/>
               </td></tr>
               <tr><td style="background-color:#0099ff">Total de ventas</td><td class="text-center">
-                <input readonly style="text-align:center"   id="total_ventas" name="total_ventas" value="0"  style="color:#0099ff"/>
+                <input type="number" readonly style="text-align:center"   id="total_ventas" name="total_ventas" value="0"  style="color:#0099ff"/>
               </td></tr>
               <tr><td>Autoconsumo</td><td class="text-center">
-                <input readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
+                <input type="number" readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
               </td></tr>
               <tr><td>Ingreso de efectivo en caja</td><td class="text-center">
-                <input readonly style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value="0"/>
+                <input readonly type="number" style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value='0'/>
               </td></tr>
               <tr><td>Retiro de efectivo en caja</td><td class="text-center">
-                <input readonly style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value="0"/>
+                <input readonly type="number" style="text-align:center" id="retiro_ef_caja" name="retiro_ef_caja" value='0'/>
               </td></tr>
               <tr><td style="background-color:#0099ff">Dinero a entregar</td><td class="text-center">
-                <input readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
+                <input type="number" readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
               </td></tr>
               <tr><td  style="background-color:#0099ff">Dinero entregado</td><td class="text-center" >
-                <input readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
+                <input type="number" readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
               </td></tr>
               <tr id="color_saldo"><td id="dinero_sobra_txt">a</td><td class="text-center">
-                <input readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
+                <input type="number" readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
               </td></tr>
             </tbody>
           </table>
@@ -173,7 +196,7 @@ else{
             <tr><td>10 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="diez_c" type="number"></td></tr>
             <tr><td>25 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="veinte_c" type="number"></td></tr>
             <tr><td>50 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_c"type="number"></td></tr>
-            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_c"type="text"></td></tr>
+            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_c"type="number"></td></tr>
           </tbody>
         </table>
       </div>
@@ -185,6 +208,12 @@ else{
 <script>
 
   $(document).ready(function(){
+    var d_apertura =Number("<?php echo remove_junk(ucwords($open['dinero_apertura']));?>");
+    var d_ing_ef_caja=Number("<?php echo $ingresos_caja;?>");
+    var d_ret_ef_caja = Number("<?php echo $retiros_caja;?>");
+    document.getElementById("retiro_ef_caja").value=d_ret_ef_caja.toFixed(2);
+    document.getElementById("ingreso_ef_caja").value=d_ing_ef_caja.toFixed(2);
+    document.getElementById("apertura_caja").value=d_apertura.toFixed(2);
     myFunction();
   });
 
@@ -212,24 +241,23 @@ else{
   function myFunction() {
     var color_saldo = document.getElementById("color_saldo");
 
-    var d_apertura = document.getElementById("apertura_caja");
-    var d_cobro_ef = document.getElementById("cobros_efectivo");
-    var d_cobro_tar = document.getElementById("cobros_tarjeta");
+    var d_apertura = Number(document.getElementById("apertura_caja").value);
+    var d_cobro_ef = Number(document.getElementById("cobros_efectivo").value);
+    var d_cobro_tar = Number(document.getElementById("cobros_tarjeta").value);
     var d_total_v = document.getElementById("total_ventas");
-    var d_autoconsumo = document.getElementById("autoconsumo");
-    var d_ing_ef_caja = document.getElementById("ingreso_ef_caja");
-    var d_ret_ef_caja = document.getElementById("retiro_ef_caja");
+    var d_autoconsumo = Number(document.getElementById("autoconsumo").value);
+    var d_ing_ef_caja = Number(document.getElementById("ingreso_ef_caja").value);
+    var d_ret_ef_caja = Number(document.getElementById("retiro_ef_caja").value);
 
     var d_entregado = document.getElementById("dinero_entregado");
     var d_entregar = document.getElementById("dinero_entregar");
     var d_sobra_txt = document.getElementById("dinero_sobra_txt");
     var d_sobra = document.getElementById("dinero_sobra");
 
-    var s1=d_cobro_ef.value+d_cobro_tar.value;
-    var rr=parseFloat(s1)
-    d_total_v.value=rr.toFixed(2);
+    var s1=d_cobro_ef+d_cobro_tar;
+    d_total_v.value=s1.toFixed(2);
 
-    var s2= -d_autoconsumo.value+d_ing_ef_caja.value-d_ret_ef_caja.value;
+    var s2= -d_autoconsumo+d_ing_ef_caja-d_ret_ef_caja;
 
     //dolares
     var cien = document.getElementById("cien_d").value;
@@ -259,7 +287,7 @@ else{
     d_entregado.value = t;
 
 
-    var tempo=s1+s2-d_cobro_tar.value+d_apertura.value;
+    var tempo=s1+s2-d_cobro_tar+d_apertura;
     var tempo=parseFloat(tempo)
     d_entregar.value = tempo.toFixed(2);
 
