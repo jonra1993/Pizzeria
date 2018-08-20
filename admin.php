@@ -183,11 +183,24 @@
 
 
 <script>
+    var user = "<?php echo $user['username']; ?>";
     var date = "<?php echo make_date(); ?>";
+    var d = new Date();
+    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+    var efectivo=1; //0 con tarjeat, 1 con efectivo
+    var servir=1; //0 llevar, 1 servirse
     var subtotal=130;  
-    var orden = "envio de orden";
+    var orden = [
+      [1,"Pizza porción",1,1],
+      [1,"Pizza mediana",15,15],
+      [2,"Pizza pequeña",1,1],
+      [1,"Pizza mediana piña",17,17],
+      [1,"Pizza familiar piña",17,17],
+      [1,"Pizza mangiare",17,17],
+      [1,"Pizza mediana piña",17,17],
+      ];
 
-  var win = window.open("realizar_venta_pdf.php?"+"user=user"+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden,"_blank"); // will open new tab on document ready
+  var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
 </script>
 
 <?php include_once('layouts/footer.php'); ?>
