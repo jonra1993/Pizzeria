@@ -23,11 +23,11 @@ if(isset($_POST['aceptar'])){
      $query .=") VALUES (";
      $query .=" '{$p_dinero}', '{$p_date}', '{$aux}'";
      $query .="); ";
-
-
     if($db->query($query)){
-      $session->msg('s',"Transacción exitosa");      
-    } else {
+      $session->msg('s',"Transacción exitosa");     
+      redirect('caja_ingreso_retiro.php',false); 
+    } 
+    else {
       $session->msg('d',' Lo siento, registro falló.');
       redirect('caja_ingreso_retiro.php', false);         //Regresar a administrar productos a vender
     }
@@ -38,10 +38,6 @@ if(isset($_POST['aceptar'])){
    }
 }
 if(isset($_POST['cancelar'])) redirect('admin.php', false);
-else{
-  //$p_dinero =null;
-}
-
 ?>
 
 <?php include_once('layouts/header.php'); ?>

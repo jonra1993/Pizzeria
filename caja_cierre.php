@@ -14,8 +14,6 @@ $open=find_last_open_box();
 $ingresos_cajas = find_sum_ingresos_caja($year,$month,$day);
 $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 
-$ingresos_caja=0;
-
 foreach($ingresos_cajas as $tempo){
   $ingresos_caja=remove_junk(ucwords($tempo['SUM(c.importe)']));
 }
@@ -53,12 +51,14 @@ if(isset($_POST['cerrar_caja'])){
      $query .="); ";
      
     if($db->query($query)){
-      $session->msg('s',"Cerrada correctamente");
+      $session->msg('s',"Caja cerrada correctamente");
       $p_id = remove_junk(ucwords($user['id']));
       $query2 = "UPDATE users SET ";        //Insertar la BD en la memoria de usuario
       $query2 .=" bloqueocaja = 0 WHERE id =";
       $query2 .=" '{$p_id}' ;";
       if($db->query($query2)){
+        delete_sum_retiros_caja($year,$month,$day);
+        delete_sum_ingresos_caja($year,$month,$day);
         redirect('admin.php', false);
       } 
       //if($db->query($query2)) redirect('agenpdp.php', false);
