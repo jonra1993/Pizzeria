@@ -214,7 +214,7 @@
             <tr>
               <td></td>
               <td></td>
-              <th class="text-right">IVA <input class="text-center" id="valor_iva" name="iva" type="text"  style="width: 25%;" disabled value='12'> %</td>
+              <th class="text-right">IVA <input class="text-center" id="valor_iva" name="iva" type="text"  style="width: 25%;" disabled value='0'> %</td>
               <td class="text-center">$ <input class="text-center" id="iva" name="iva" type="text"  style="width: 70%;" disabled value='0.00'></td>
             </tr>
             <tr>
@@ -225,6 +225,7 @@
             </tr>
           </tfoot>
         </table>
+        <button id="final_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Finalizar Compra</button>
       </div>
     </div>
   </div>
@@ -348,7 +349,10 @@ function forma_servir(forma) {
  var g = document.getElementById("cont_categ");
  e.style.display = 'none';
  regr.style.display = 'none';
- g.style.pointerEvents="auto"; //Habilitar pulsacion 
+ g.style.pointerEvents="auto"; //Habilitar pulsacion
+
+ var btn_finalizar = document.getElementById("final_compra");
+  centrar(btn_finalizar);
 }
 
 function avanzar_extra() {
@@ -437,6 +441,17 @@ function agregar_fila(descrip, prec) {
   
   sum_productos();
   
+}
+
+function f_final_compra(){
+  var nFilas = $("#tabla_factura tbody tr").length;
+  if (nFilas==0) {
+    alert("No existen productos en la factura");
+    location.reload();
+  }
+  else{
+
+  }
 }
 
 </script>
