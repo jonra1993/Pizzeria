@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-08-2018 a las 15:14:31
+-- Tiempo de generación: 20-08-2018 a las 17:10:45
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -212,7 +212,7 @@ CREATE TABLE `extra_pizzas` (
 INSERT INTO `extra_pizzas` (`id`, `name`, `media_id`) VALUES
 (1, 'Ninguno', 28),
 (2, 'Queso', 37),
-(3, 'champi', 39),
+(3, 'champinones', 39),
 (4, 'Embutidos', 38),
 (5, 'Durazno', 27),
 (6, 'Pina', 12);
@@ -393,7 +393,9 @@ CREATE TABLE `tabla_aperturas_cajas` (
 INSERT INTO `tabla_aperturas_cajas` (`id`, `dinero_apertura`, `date`, `username`) VALUES
 (1, '80.00', '2018-08-16 14:24:03', 'Admin'),
 (2, '98.00', '2018-08-17 10:32:58', 'Admin'),
-(3, '100.00', '2018-08-17 14:39:49', 'Admin');
+(3, '100.00', '2018-08-17 14:39:49', 'Admin'),
+(4, '1.00', '2018-08-20 11:47:36', 'Admin'),
+(5, '1.01', '2018-08-20 11:55:28', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -423,7 +425,10 @@ CREATE TABLE `tabla_cierres_cajas` (
 
 INSERT INTO `tabla_cierres_cajas` (`id`, `dinero_apertura`, `cobros_en_caja`, `cobros_con_tarjeta`, `total_ventas`, `autoconsumo`, `ingreso_efectivo_en_caja`, `retiro_efectivo_en_caja`, `dinero_a_entregar`, `dinero_entregado`, `saldo`, `date`, `username`) VALUES
 (1, '80.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '80.00', '107.00', '27.00', '2018-08-16 14:24:45', 'Admin'),
-(2, '98.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '98.00', '0.00', '-98.00', '2018-08-17 14:35:28', 'Admin');
+(2, '98.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '98.00', '0.00', '-98.00', '2018-08-17 14:35:28', 'Admin'),
+(3, '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '100.00', '0.00', '-100.00', '2018-08-20 11:45:26', 'Admin'),
+(4, '1.00', '0.00', '0.00', '0.00', '0.00', '40.00', '21.81', '19.19', '20.00', '0.81', '2018-08-20 11:50:59', 'Admin'),
+(5, '1.01', '0.00', '0.00', '0.00', '0.00', '40.00', '21.81', '19.20', '0.00', '-19.20', '2018-08-20 11:56:16', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -443,10 +448,8 @@ CREATE TABLE `tabla_ingresos_retiros_cajas` (
 --
 
 INSERT INTO `tabla_ingresos_retiros_cajas` (`id`, `importe`, `date`, `username`) VALUES
-(1, '400.00', '2018-08-19 22:29:54', 'Admin'),
-(5, '-200.00', '2018-08-19 22:54:38', 'Admin'),
-(6, '-100.00', '2018-08-19 22:54:42', 'Admin'),
-(7, '100.00', '2018-08-19 22:54:46', 'Admin');
+(1, '40.00', '2018-08-20 11:49:18', 'Admin'),
+(2, '-21.81', '2018-08-20 11:49:32', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -521,7 +524,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-08-20 10:11:53', 1),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-08-20 10:22:00', 0),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -747,19 +750,19 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT de la tabla `tabla_aperturas_cajas`
 --
 ALTER TABLE `tabla_aperturas_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tabla_cierres_cajas`
 --
 ALTER TABLE `tabla_cierres_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tabla_ingresos_retiros_cajas`
 --
 ALTER TABLE `tabla_ingresos_retiros_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tam_pizzas`
