@@ -345,7 +345,7 @@ function sabor_pizza(tipo,on_regres){
       agregar_fila(descrip,precio);
     }}); 
     //Guardar venta ---------------------------------------------------------------------------
-    var venta_pizza={categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor};
+    var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor};
     venta_aux.push(venta_pizza); 
   }
   var sabor_porcion = document.getElementById("selc_pizzas_sabor_PORCION");
@@ -449,13 +449,18 @@ function actu_precio(id){
   var cantidad=document.getElementById('canti_'+id).value;
   var precio=document.getElementById('precio_'+id).value;
   document.getElementById('total_'+id).value=(cantidad*precio).toFixed(2);
+  venta_aux.forEach(element => {
+    alert(cantidad);
+    if (element.id==(Number(id)-1)) {
+      alert(cantidad);
+      element.canti=cantidad;
+    }
+  });
   sum_productos();
 }
 
 function sum_productos() {
   var porc_iva=Number(document.getElementById('valor_iva').value)/100;
-  
-
   var sum=0;
   for (i=1; i<=fila_id; i++) {
     if (document.getElementById('total_'+i)!=null) {
@@ -496,11 +501,11 @@ function f_final_compra(){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
         // alert(element.tama+ element.canti+ element.tipo+ element.sabor);
-        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor, success: function(result){
-          alert(result);
-        }});
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor
+        });
       }
     });
+
     window.open(DOMAIN+"admin.php","_self")
   }
 }
