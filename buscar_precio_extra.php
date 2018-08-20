@@ -3,8 +3,11 @@
  
   $tama = $_GET['p_tama'];
   $extra = $_GET['p_extra'];
+  if ($extra=='embutidos') {
+    $extra='jamon';
+  }
 
   $precio=buscar_preciosextra_table($tama,$extra);
-  foreach ($precio as $ggg){ echo ltrim(remove_junk($ggg['price'])); }
+  foreach ($precio as $ggg){ echo remove_junk($ggg['precio']); }
 ?>
   

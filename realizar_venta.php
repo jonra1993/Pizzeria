@@ -117,11 +117,11 @@
             <div class="col-md-3">
               <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" onclick="tip_pizza('<?php echo remove_junk($tip['name']); ?>');" title="Seleccionar Tipo"> 
+                  <a href="#" onclick="sabor_pizza('<?php echo remove_junk($tip['name']); ?>','0');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="tip_pizza('<?php echo remove_junk($tip['name']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
+                <a href="#" onclick="sabor_pizza('<?php echo remove_junk($tip['name']); ?>','0');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
                     <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
@@ -132,8 +132,8 @@
           <?php endforeach; ?>
         </div>
         <!-- Ingredientes Extras -->
-        <div id="selc_extra" class="row justify-content-around" style="display: none;" >
-          <div class="row justify-content-around">
+        <div id="selc_extra" class="row" style="display: none;" >
+          <div id="selc_extra2" class="row justify-content-around">
             <?php foreach ($extra_pizzas as $extra):?>
               <div class="col-md-3">
                 <div class="card" style="width: 18rem;">
@@ -151,7 +151,7 @@
               </div>
             <?php endforeach; ?>
           </div>
-          <div id="fun_cont_extra" class="row" style="display:flex; alignItems:center; justifyContent:right;">
+          <div id="fun_cont_extra" class="d-flex flex-row-reverse">
             <button type="button" class="btn btn-light" style="width: auto" onclick="avanzar_extra()">
               <i class="glyphicon glyphicon-arrow-right"></i>
               Continuar
@@ -210,6 +210,18 @@
               <td></td>
               <th class="text-right">Subtotal</td>
               <td class="text-center">$ <input class="text-center" id="sub_producto" name="subtotal" type="text"  style="width: 70%;" disabled value='0.00'></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <th class="text-right">IVA <input class="text-center" id="valor_iva" name="iva" type="text"  style="width: 25%;" disabled value='12'> %</td>
+              <td class="text-center">$ <input class="text-center" id="iva" name="iva" type="text"  style="width: 70%;" disabled value='0.00'></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <th class="text-right">TOTAL</td>
+              <td class="text-center">$ <input class="text-center" id="total_compra" name="total_compra" type="text"  style="width: 70%;" disabled value='0.00'></td>
             </tr>
           </tfoot>
         </table>
@@ -286,23 +298,30 @@ function pizzas_normal(){
 }
 
 //-3)---Sabor PIZZA
-function tip_pizza(tipo){
-  p_sabor=tipo;
+function sabor_pizza(tipo,on_regres){
   var precio=0;
-  //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
-  $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor, success: function(result){
-    precio=Number(result);
-    var descrip= categ+" "+p_tama+" "+p_sabor+" "+p_tipo;
-    agregar_fila(descrip,precio);
-  }}); 
-  //Guardar
-  var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:p_forma};
-  venta_aux.push(venta_pizza);
-
+  if (on_regres==0) {
+    p_sabor=tipo;
+    //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
+    $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo=normal&p_sabor="+p_sabor, success: function(result){
+      precio=Number(result);
+      var descrip= categ+" "+p_tama+" "+p_sabor+" "+p_tipo;
+      agregar_fila(descrip,precio);
+    }}); 
+    //Guardar
+    var venta_pizza={categ:categ,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:p_forma};
+    venta_aux.push(venta_pizza); 
+  }
+  var extra = document.getElementById("selc_extra2");
+  var continuar = document.getElementById("fun_cont_extra");
   var e = document.getElementById("selc_extra");
   var f = document.getElementById("selc_pizzas_tipo");
   var g = document.getElementById("selc_pizzas_forma"); //Ven sig cierra REGRESAR
   centrar(e);
+  centrar(extra);
+  centrar(continuar);
+  continuar.style.justifyContent= 'flex-end';
+  //continuar.style.paddingRight= '3%';
   f.style.display = 'none';
   g.style.display = 'none';
   pizza_vent=3;   //Ventana de servir
@@ -312,7 +331,6 @@ function ingre_extra(extra){
   num_extras++;
   $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
     precio=Number(result);
-    alert(precio);
     var descrip= "Extra "+extra+" en pizza "+p_tama;
     agregar_fila(descrip,precio);
   }});
@@ -324,13 +342,21 @@ function forma_servir(forma) {
     var descrip="Caja Pizza "+p_tama;
     agregar_fila(descrip, 1.0);
  }
+ //Quitar  el contenedor
+ var e = document.getElementById("selc_pizzas_forma");
+ var regr=document.getElementById("funcion_regresar"); 
+ var g = document.getElementById("cont_categ");
+ e.style.display = 'none';
+ regr.style.display = 'none';
+ g.style.pointerEvents="auto"; //Habilitar pulsacion 
 }
+
 function avanzar_extra() {
   var e = document.getElementById("selc_pizzas_forma");
   var f = document.getElementById("selc_extra");
   centrar(e);
   f.style.display = 'none';
-  pizza_vent=4;   //Ventana de Forma
+  pizza_vent=4;   //Ventana de servir
 }
 
 function centrar(id){
@@ -353,7 +379,7 @@ function regresar_carac(){
       pizzas_normal()
       break;
     case 4:
-      tip_pizza(p_tipo);
+      sabor_pizza(p_sabor,1);
       break;
     case 0:
       var g = document.getElementById("cont_categ");
@@ -380,6 +406,9 @@ function actu_precio(id){
 }
 
 function sum_productos() {
+  var porc_iva=Number(document.getElementById('valor_iva').value)/100;
+  
+
   var sum=0;
   for (i=1; i<=fila_id; i++) {
     if (document.getElementById('total_'+i)!=null) {
@@ -387,8 +416,10 @@ function sum_productos() {
       sum+=Number(total);
     }
   }
-  console.log(sum);
   document.getElementById('sub_producto').value=sum.toFixed(2); 
+  document.getElementById('iva').value=(porc_iva*sum).toFixed(2);
+  var valor_iva=Number(document.getElementById('iva').value);
+  document.getElementById('total_compra').value=(valor_iva+sum).toFixed(2);
 }
 
 function agregar_fila(descrip, prec) {
