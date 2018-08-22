@@ -1,5 +1,6 @@
 <?php
   $page_title = 'Admin página de inicio';
+  $selec="Selecciona el sabor del ingrediente";
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
@@ -222,13 +223,13 @@
         </div>
         <!-- Pizza Personalizada -->
         <div id="selc_personalizada" class="row justify-content-around" style="display: none;">
-          <form class="form-horizontal" action="#" onsubmit="ingre_especial(this);">
+          <form class="form-horizontal" action="#" onsubmit="ingre_especial();">
             <?php for ($x = 1; $x <= 4; $x++) { ?>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" style="width: 150px;">Ingrediente <?php echo $x ?></label>
                 <div class="col-md-6">
-                  <select class="form-control" name="ingred_<?php echo $x ?>" style="width: 400px;">
-                    <option value="">Selecciona el sabor del ingrediente</option>
+                  <select class="form-control" id="ingred_<?php echo $x ?>" style="width: 400px;">
+                    <option value=""><? echo $selec?> </option>
                       <?php  foreach ($sabores as $sab): ?>
                         <option value="<?php echo (int)$sab['id'] ?>">
                           <?php echo ucfirst($sab['name']) ?></option>
@@ -381,12 +382,15 @@ function pizzas_normal(tipo){
 //-3)---Sabor PIZZA
 function sabor_pizza(tipo,on_regres){
   var precio=0;
-  if (on_regres==0) {
-    p_sabor=tipo;
+  if (on_regres==0 && tipo!="personalizada") {
+    if(tipo.search("personalizada")!=(-1))
+      p_sabor="personalizada";              //Determinar piza especial sin ingredientes
+    else
+      p_sabor=tipo;
     //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
     $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo="+p_tipo+"&p_sabor="+p_sabor, success: function(result){
       precio=Number(result);
-      var descrip= categ+" "+p_tama+" "+p_tipo+" "+p_sabor;
+      var descrip= categ+" "+p_tama+" "+tipo+" "+p_sabor;
       agregar_fila(descrip,precio);
     }}); 
     //Guardar venta ---------------------------------------------------------------------------
@@ -395,12 +399,16 @@ function sabor_pizza(tipo,on_regres){
   }
   if(tipo=="personalizada")
     var e = document.getElementById("selc_personalizada");
-  else
+  else{
     var e = document.getElementById("selc_extra");
+    var selc_personalizada = document.getElementById("selc_personalizada");
+    selc_personalizada.style.display = 'none';  
+  }
 
   var sabor_porcion = document.getElementById("selc_pizzas_sabor_PORCION");
   var extra = document.getElementById("selc_extra2");
   var continuar = document.getElementById("fun_cont_extra");
+  
   
   var f = document.getElementById("selc_pizzas_sabor");
   var f2 = document.getElementById("selc_pizzas_especiales");
@@ -561,22 +569,26 @@ function f_final_compra(){
 }
 
 function ingre_especial(theForm){
-
-  // var e = document.getElementById("ddlViewBy");
-  // var strUser =theForm.ingred_1.options[theForm.ingred_1.selectedIndex].text;
-  // alert(strUser);
-  // var e = document.getElementById("ddlViewBy");
-  // var strUser = e.options[e.selectedIndex].text;
-  // var reason = "";
-  // reason += validateName(theForm.ingre);
-  // reason += validatePhone(theForm.phone);
-  // reason += validateEmail(theForm.emaile);
-
-  // if (reason != "") {
-  //     alert("Some fields need correction:\n" + reason);
-  // } else {
-  //     simpleCart.checkout();
-  // }
+  var ingre=0;
+  var ingre_esp=[];
+  for(k=1;k<=4;k++){
+    var e = document.getElementById("ingred_"+k);
+    var strUser = e.options[e.selectedIndex].text;
+    if(strUser!='<? echo $selec?>'){
+      ingre++;
+      ingre_esp.push(strUser);
+    }
+  }
+  if(ingre>=2){
+    var str_esp= 'personalizada:';
+    for(l=0;l<ingre_esp.length;l++)
+      str_esp+=("1/"+ingre+" "+ingre_esp[l]+",");
+    sabor_pizza(str_esp,0);
+  }
+  else{
+    ingre_esp=[];
+    alert("Numero de ingredientes insuficientes");
+  }
 }
 
 </script>
