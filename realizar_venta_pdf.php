@@ -6,56 +6,86 @@ include_once("fpdf/fpdf.php");
 // Better table
 function ImprovedTable($pdf,$header,$data,$subtotal)
 {
+    $pdf->setFont("Courier",null,9);
     // Column widths
-    $w = array(8, 40, 13, 13);
+    $q=4;
+    $w = array(4, 48, 11, 11);
     // Header
     for($i=0;$i<count($header);$i++)
-        $pdf->Cell($w[$i],4,$header[$i],1,0,'C');
+        $pdf->Cell($w[$i],4,utf8_decode($header[$i]),0,0,"L");
     $pdf->Ln();
     // Data
-    foreach($data as $row)
-    {
-        $pdf->Cell($w[0],4,$row[0],'LR');
-        $pdf->Cell($w[1],4,$row[1],'LR');
-        $pdf->Cell($w[2],4,number_format($row[2]),'LR',0,'R');
-        $pdf->Cell($w[3],4,number_format($row[3]),'LR',0,'R');
+    $k=(sizeof($data)/4);
+    for ($x = 0; $x < $k; $x++) {
+        $pdf->Cell($w[0],4,utf8_decode($data[$x*$q]),0,0,"L");
+        $pdf->Cell($w[1],4,utf8_decode($data[$x*$q+1]),0,0,"L");
+        $pdf->Cell($w[2],4,utf8_decode($data[$x*$q+2]),0,0,"L");
+        $pdf->Cell($w[3],4,utf8_decode($data[$x*$q+3]),0,0,"L");
         $pdf->Ln();
     }
+
+    global $filas;
     // Closing line
     //footer
-    $pdf->Cell(61,4,"Subtotal",1,0,'c');
-    $pdf->Cell(13,4,$subtotal,1,0,'c');
     $pdf->Ln();
+    $pdf->setFont("Courier","B",11);
+    $pdf->Cell(63,4,"Subtotal","T",0,"C");
+    $pdf->Cell(11,4,$subtotal,"T",0,"L");
+    $pdf->Ln();
+    $pdf->Cell(array_sum($w),0,'',0,1);
+    $pdf->setFont("Courier",null,9);
 
-    $pdf->Cell(array_sum($w),0,'','T');
+    if($_GET["efectivo"]==0) $pdf->Cell(40,4,"Tar",0);
+    else $pdf->Cell(40,4,"Ef",0);
+    if($_GET["servir"]==0) $pdf->Cell(10,4,"Para llevar",0,0,'C');
+    else $pdf->Cell(10,4,"Para servir",0,1,'C');
+   // $pdf->Ln();
+
+
+    
 }
 
 
 //$pdf = new FPDF('P','mm','A4');
-$pdf = new FPDF('P','mm',array(80,80));  //ancho y alto
-$pdf->SetMargins(3,3,3); //LEFT, TOP RIGHT
+$values = explode(",", $_GET["orden"]);
+$filas=80+4*((sizeof($values)/4)-7);
+if($filas<80) $filas=80;
+$pdf = new FPDF('P','mm',array(80,$filas));  //ancho y alto ALTO SIEMPRE MAYO AL ANCHO
+//$pdf->SetMargins(3,3,3,3); //LEFT, TOP RIGHT
 $pdf->AddPage();
+$pdf->SetMargins(3, 3, 3); 
+$pdf->SetAutoPageBreak(false, 3);
 
 $pdf->setFont("Courier","B",11);   //se establece el tipo de letra
-
-$pdf->Cell(0,5,"Orden # xxxx","LBR",1,"C"); //imprime una celda de borse rectangular
+$pdf->Cell(0,5,utf8_decode("Pizzería Amangiare"),"LBRT",1,"C"); //imprime una celda de borse rectangular
 
 $pdf->setFont("Courier",null,9);
+$pdf->Cell(20,4,utf8_decode("Dirección:"),0);
+$pdf->Cell(43,4,"Conocoto, ....",0,1);
+$pdf->Cell(20,4,"Fecha    :",0);
+$pdf->Cell(43,4,$_GET["date"],0,1);
+$pdf->Cell(20,4,"Telf     : ",0);
+$pdf->Cell(43,4,"02-3442096",0,1);
 
-$pdf->Cell(30,5,$_GET["date"],0,1);
 
-$header = array('Cant', 'Desc', 'Precio', 'Total');
+$pdf->setFont("Courier","B",11);   //se establece el tipo de letra
+$pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
 
 
+$header = array('C', 'Descripción', 'Val', 'Tot');
+
+
+/*
 $orden = array
 (
   array(1,utf8_decode("Pizza porción"),1,1),
   array(1,"Pizza mediana",15,15),
   array(2,utf8_decode("Pizza pequeña"),5,10),
   array(1,utf8_decode("Pizza mediana piña"),17,17)
-);
+);*/
 
-ImprovedTable($pdf,$header,$orden,$_GET["subtotal"]);
+
+ImprovedTable($pdf,$header,$values,$_GET["subtotal"]);
 
 //$pdf->Output("Reportes_PDF/notaVenta_".$_GET["user"].$_GET["date1"].".pdf","F");
 $pdf->Output();
