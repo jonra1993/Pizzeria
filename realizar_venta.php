@@ -384,17 +384,17 @@ function sabor_pizza(tipo,on_regres){
   var precio=0;
   if (on_regres==0 && tipo!="personalizada") {
     if(tipo.search("personalizada")!=(-1))
-      p_sabor="personalizada";              //Determinar piza especial sin ingredientes
+      p_sabor="personalizada";              //Determinar piza especial sin ingredien
     else
       p_sabor=tipo;
     //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
     $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo="+p_tipo+"&p_sabor="+p_sabor, success: function(result){
       precio=Number(result);
-      var descrip= categ+" "+p_tama+" "+tipo+" "+p_sabor;
+      var descrip= categ+" "+p_tama+" "+p_tipo+" "+tipo;
       agregar_fila(descrip,precio);
     }}); 
     //Guardar venta ---------------------------------------------------------------------------
-    var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor};
+    var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:0};
     venta_aux.push(venta_pizza); 
   }
   if(tipo=="personalizada")
@@ -436,20 +436,28 @@ function ingre_extra(extra){
 
 function forma_servir(forma) {
   p_forma=forma; 
+  venta_aux.forEach(element => {
+    if (element.id==(Number(fila_id-num_extras)-1)) {   //Es necesario contar el numero de xtras porq tambien generan filas
+      element.forma=p_forma;
+      alert(p_forma);
+    }
+  });
+
   if (p_forma=="llevar"  && !(p_tama=="porcion")) {
     var descrip="Caja Pizza "+p_tama;
     agregar_fila(descrip, 1.0);
- }
- //Quitar  el contenedor
- var e = document.getElementById("selc_pizzas_forma");
- var regr=document.getElementById("funcion_regresar"); 
- var g = document.getElementById("cont_categ");
- e.style.display = 'none';
- regr.style.display = 'none';
- g.style.pointerEvents="auto"; //Habilitar pulsacion
-
- var btn_finalizar = document.getElementById("final_compra");
+  }
+  //Quitar  el contenedor al finalizar
+  var e = document.getElementById("selc_pizzas_forma");
+  var regr=document.getElementById("funcion_regresar"); 
+  var g = document.getElementById("cont_categ");
+  e.style.display = 'none';
+  regr.style.display = 'none';
+  g.style.pointerEvents="auto"; //Habilitar pulsacion
+  var btn_finalizar = document.getElementById("final_compra");
   centrar(btn_finalizar);
+
+  
 }
 
 function avanzar_extra() {
@@ -559,7 +567,7 @@ function f_final_compra(){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
         // alert(element.tama+ element.canti+ element.tipo+ element.sabor);
-        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_forma="+element.forma
         });
       }
     });
