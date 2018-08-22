@@ -13,9 +13,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-         <div class="pull-right">
+         <!--div class="pull-right">
            <a href="add_productovender.php" class="btn btn-primary">Agregar producto a vender</a>
-         </div>
+         </div-->
         </div>
         <div class="panel-body">
           <table class="table table-bordered">

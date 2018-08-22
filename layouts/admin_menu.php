@@ -17,18 +17,24 @@
    </ul>
   </li>
 
-  <li>
+  <!--li>
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
       <span>Categorías</span>
     </a>
-  </li>
+  </li-->
+
 <!--Lista de productos a vender-->
   <li>
-    <a href="productovender.php" class="submenu-toggle">
+    <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-shopping-cart"></i>
-      <span>Productos a vender</span>
+      <span>Catalogo de Productos</span>
     </a>
+    <ul class="nav submenu">
+      <li><a href="catalogo_pizzas.php">Pizzas</a> </li>
+      <li><a href="catalogo_bebidas.php">Bebidas</a> </li>
+      <li><a href="catalogo_extras.php">Extras</a> </li>
+   </ul>
   </li>
 <!--Iventario-->
   <li>
