@@ -1,5 +1,6 @@
 <?php
   $page_title = 'Admin página de inicio';
+  $selec="Selecciona el sabor del ingrediente";
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
@@ -7,6 +8,8 @@
    $tam_pizzas= join_tampizza_table();
    $sabor_pizzas=join_tipopizza_table();
    $extra_pizzas=join_extrapizza_table();
+   $pizzas_espec=join_pizzaespecilal_table();
+   $sabores = find_all('tipo_pizzas');
 ?>
 <?php
  $c_categorie     = count_by_id('categories');
@@ -198,6 +201,46 @@
             </div>
           </div>  
         </div>
+        <!-- Opciones Pizza Especial -->
+        <div id="selc_pizzas_especiales" class="row justify-content-around" style="display: none;">
+          <?php foreach ($pizzas_espec as $especial) :?>
+            <div class="col-md-3">
+              <div class="card" style="width: 16rem;">
+                <?php if($especial['media_id'] === '0'): ?>
+                  <a href="#" onclick="sabor_pizza('<?php echo remove_junk($especial['name']); ?>','0');" title="Seleccionar Tipo"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="sabor_pizza('<?php echo remove_junk($especial['name']); ?>','0');" title="Seleccionar <?php echo remove_junk(ucfirst($especial['name'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $especial['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($especial['name'])); ?> </h4>
+                <p class="card-body"> Ingedientes: <?php echo remove_junk(ucfirst($especial['tipo_descrip'])); ?> </p>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <!-- Pizza Personalizada -->
+        <div id="selc_personalizada" class="row justify-content-around" style="display: none;">
+          <form class="form-horizontal" action="#" onsubmit="ingre_especial();">
+            <?php for ($x = 1; $x <= 4; $x++) { ?>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" style="width: 150px;">Ingrediente <?php echo $x ?></label>
+                <div class="col-md-6">
+                  <select class="form-control" id="ingred_<?php echo $x ?>" style="width: 400px;">
+                    <option value=""><? echo $selec?> </option>
+                      <?php  foreach ($sabores as $sab): ?>
+                        <option value="<?php echo (int)$sab['id'] ?>">
+                          <?php echo ucfirst($sab['name']) ?></option>
+                      <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+            <?php }?>
+            <button type="submit" name="add_cat" class="btn btn-primary">Continuar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -305,9 +348,11 @@ function tam_pizzas(tama){
   if(tama!="porcion"){
     var e = document.getElementById("selc_pizzas_nor_esp"); //SE ABRE:ventana se abre
     var g = document.getElementById("selc_pizzas_sabor");  //SE CIERRA:ventana siguiente en regreso
+    var g2 = document.getElementById("selc_pizzas_especiales");  //SE CIERRA:ventana siguiente en regreso
     centrar(e);
     f.style.display = 'none';
     g.style.display = 'none';
+    g2.style.display = 'none';
     pizza_vent=1;   //Ventana de especial o normal
   }
   else{
@@ -319,13 +364,14 @@ function tam_pizzas(tama){
 
 //-2)---Tipo PIZZA
 function pizzas_normal(tipo){
-  
   var f = document.getElementById("selc_pizzas_nor_esp"); //SE CIERRA:ventana actual
   var g = document.getElementById("selc_extra"); //SE CIERRA:ventana siguiente en regreso
   if (tipo=="porcion") 
     var e = document.getElementById("selc_pizzas_sabor_PORCION");    //SE ABRE:ventana se abre 
+  else if (tipo=="normal")
+    var e = document.getElementById("selc_pizzas_sabor");    //SE ABRE:ventana se abre
   else
-    var e = document.getElementById("selc_pizzas_sabor");    //SE ABRE:ventana se abre 
+    var e = document.getElementById("selc_pizzas_especiales");    //SE ABRE:ventana se abre
   centrar(e);
   f.style.display = 'none';
   g.style.display = 'none';
@@ -336,23 +382,36 @@ function pizzas_normal(tipo){
 //-3)---Sabor PIZZA
 function sabor_pizza(tipo,on_regres){
   var precio=0;
-  if (on_regres==0) {
-    p_sabor=tipo;
+  if (on_regres==0 && tipo!="personalizada") {
+    if(tipo.search("personalizada")!=(-1))
+      p_sabor="personalizada";              //Determinar piza especial sin ingredien
+    else
+      p_sabor=tipo;
     //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
     $.ajax({url: DOMAIN+"buscar_precio.php?p_tama="+p_tama+"&p_tipo="+p_tipo+"&p_sabor="+p_sabor, success: function(result){
       precio=Number(result);
-      var descrip= categ+" "+p_tama+" "+p_tipo+" "+p_sabor;
+      var descrip= categ+" "+p_tama+" "+p_tipo+" "+tipo;
       agregar_fila(descrip,precio);
     }}); 
     //Guardar venta ---------------------------------------------------------------------------
-    var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor};
+    var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:0};
     venta_aux.push(venta_pizza); 
   }
+  if(tipo=="personalizada")
+    var e = document.getElementById("selc_personalizada");
+  else{
+    var e = document.getElementById("selc_extra");
+    var selc_personalizada = document.getElementById("selc_personalizada");
+    selc_personalizada.style.display = 'none';  
+  }
+
   var sabor_porcion = document.getElementById("selc_pizzas_sabor_PORCION");
   var extra = document.getElementById("selc_extra2");
   var continuar = document.getElementById("fun_cont_extra");
-  var e = document.getElementById("selc_extra");
+  
+  
   var f = document.getElementById("selc_pizzas_sabor");
+  var f2 = document.getElementById("selc_pizzas_especiales");
   var g = document.getElementById("selc_pizzas_forma"); //Ven sig cierra REGRESAR
   centrar(e);
   centrar(extra);
@@ -360,6 +419,7 @@ function sabor_pizza(tipo,on_regres){
   // continuar.style.justifyContent= 'flex-end';
   //continuar.style.paddingRight= '3%';
   f.style.display = 'none';
+  f2.style.display = 'none';
   g.style.display = 'none';
   sabor_porcion.style.display = 'none';
   pizza_vent=3;   //Ventana de servir
@@ -376,20 +436,28 @@ function ingre_extra(extra){
 
 function forma_servir(forma) {
   p_forma=forma; 
+  venta_aux.forEach(element => {
+    if (element.id==(Number(fila_id-num_extras)-1)) {   //Es necesario contar el numero de xtras porq tambien generan filas
+      element.forma=p_forma;
+      alert(p_forma);
+    }
+  });
+
   if (p_forma=="llevar"  && !(p_tama=="porcion")) {
     var descrip="Caja Pizza "+p_tama;
     agregar_fila(descrip, 1.0);
- }
- //Quitar  el contenedor
- var e = document.getElementById("selc_pizzas_forma");
- var regr=document.getElementById("funcion_regresar"); 
- var g = document.getElementById("cont_categ");
- e.style.display = 'none';
- regr.style.display = 'none';
- g.style.pointerEvents="auto"; //Habilitar pulsacion
-
- var btn_finalizar = document.getElementById("final_compra");
+  }
+  //Quitar  el contenedor al finalizar
+  var e = document.getElementById("selc_pizzas_forma");
+  var regr=document.getElementById("funcion_regresar"); 
+  var g = document.getElementById("cont_categ");
+  e.style.display = 'none';
+  regr.style.display = 'none';
+  g.style.pointerEvents="auto"; //Habilitar pulsacion
+  var btn_finalizar = document.getElementById("final_compra");
   centrar(btn_finalizar);
+
+  
 }
 
 function avanzar_extra() {
@@ -499,12 +567,35 @@ function f_final_compra(){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
         // alert(element.tama+ element.canti+ element.tipo+ element.sabor);
-        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_forma="+element.forma
         });
       }
     });
 
     window.open(DOMAIN+"admin.php","_self")
+  }
+}
+
+function ingre_especial(theForm){
+  var ingre=0;
+  var ingre_esp=[];
+  for(k=1;k<=4;k++){
+    var e = document.getElementById("ingred_"+k);
+    var strUser = e.options[e.selectedIndex].text;
+    if(strUser!='<? echo $selec?>'){
+      ingre++;
+      ingre_esp.push(strUser);
+    }
+  }
+  if(ingre>=2){
+    var str_esp= 'personalizada:';
+    for(l=0;l<ingre_esp.length;l++)
+      str_esp+=("1/"+ingre+" "+ingre_esp[l]+",");
+    sabor_pizza(str_esp,0);
+  }
+  else{
+    ingre_esp=[];
+    alert("Numero de ingredientes insuficientes");
   }
 }
 
