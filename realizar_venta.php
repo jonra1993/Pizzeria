@@ -120,11 +120,11 @@
             <div class="col-md-3">
               <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
-                  <a href="#" onclick="sabor_pizza('<?php echo remove_junk($tip['name']); ?>','0');" title="Seleccionar Tipo"> 
+                  <a href="#" onclick="sabor_pizza('<?php echo remove_junk($tip['name']); ?>','0','0');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="sabor_pizza('<?php echo remove_junk($tip['name']); ?>','0');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
+                <a href="#" onclick="sabor_pizza('<?php echo remove_junk($tip['name']); ?>','0','0');" title="Seleccionar <?php echo remove_junk(ucfirst($tip['name'])); ?>"> 
                     <img class="card-img-top img-responsive" src="uploads/products/<?php echo $tip['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
@@ -207,11 +207,11 @@
             <div class="col-md-3">
               <div class="card" style="width: 16rem;">
                 <?php if($especial['media_id'] === '0'): ?>
-                  <a href="#" onclick="sabor_pizza('<?php echo remove_junk($especial['name']); ?>','0');" title="Seleccionar Tipo"> 
+                  <a href="#" onclick="sabor_pizza('<?php echo remove_junk($especial['name']); ?>','0','0');" title="Seleccionar Tipo"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
                   </a>
                 <?php else: ?>
-                <a href="#" onclick="sabor_pizza('<?php echo remove_junk($especial['name']); ?>','0');" title="Seleccionar <?php echo remove_junk(ucfirst($especial['name'])); ?>"> 
+                <a href="#" onclick="sabor_pizza('<?php echo remove_junk($especial['name']); ?>','0','0');" title="Seleccionar <?php echo remove_junk(ucfirst($especial['name'])); ?>"> 
                     <img class="card-img-top img-responsive" src="uploads/products/<?php echo $especial['image']; ?>" alt=""  style="height: 100px; display: block; margin-left: auto;margin-right: auto;">
                   </a>
                 <?php endif; ?>
@@ -381,7 +381,7 @@ function pizzas_normal(tipo){
 }
 
 //-3)---Sabor PIZZA
-function sabor_pizza(tipo,on_regres){
+function sabor_pizza(tipo,on_regres,ingre_especial){
   var precio=0;
   if (on_regres==0 && tipo!="personalizada") {
     if(tipo.search("personalizada")!=(-1))
@@ -393,8 +393,10 @@ function sabor_pizza(tipo,on_regres){
       precio=Number(result);
       var descrip= categ+" "+p_tama+" "+p_tipo+" "+tipo;
       agregar_fila(descrip,precio);
+      str_extra+=(ingre_especial.toString());
+      alert(str_extra);
       //Guardar venta ---------------------------------------------------------------------------
-      var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:"",forma:0,precioP:precio};
+      var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:str_extra,forma:"123 ",precioP:precio};
       venta_aux.push(venta_pizza); 
     }}); 
   }
@@ -440,8 +442,10 @@ function ingre_extra(extra){
 function forma_servir(forma) {
   p_forma=forma; 
   venta_aux.forEach(element => {
-    if (element.id==(Number(fila_id-num_extras)-1)) {   //Es necesario contar el numero de xtras porq tambien generan filas
+    //alert(element.id+","+(fila_id-num_extras));
+    if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
       element.forma=p_forma;
+      alert(p_forma);
     }
   });
 
@@ -463,9 +467,10 @@ function forma_servir(forma) {
 }
 
 function avanzar_extra() {
+  alert(str_extra);
   venta_aux.forEach(element => {
-    if (element.id==(Number(fila_id-num_extras)-1)) {   //Es necesario contar el numero de xtras porq tambien generan filas
-      // alert(str_extra);
+    if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
+      alert(str_extra);
       element.extra=str_extra;
     }
   });
@@ -502,7 +507,7 @@ function regresar_carac(){
       pizzas_normal(p_tipo);
       break;
     case 4:     //Ventana de servirse
-      sabor_pizza(p_sabor,1);   //1 determina que esta regresando a la venta anterior
+      sabor_pizza(p_sabor,1,0);   //1 determina que esta regresando a la venta anterior
       break;
     case 0:
       var g = document.getElementById("cont_categ");
@@ -527,9 +532,10 @@ function actu_precio(id){
   var total=(cantidad*precio).toFixed(2);
   document.getElementById('total_'+id).value=total;
   venta_aux.forEach(element => {
-    if (element.id==(Number(id)-1)) {
+    if (element.id==(Number(id))) {
       element.canti=cantidad;
       element.precioP=total;
+      alert(total);
     }
   });
   sum_productos();
@@ -601,7 +607,7 @@ function ingre_especial(theForm){
     var str_esp= 'personalizada:';
     for(l=0;l<ingre_esp.length;l++)
       str_esp+=("1/"+ingre+" "+ingre_esp[l]+",");
-    sabor_pizza(str_esp,0);
+    sabor_pizza(str_esp,0,ingre_esp);
   }
   else{
     ingre_esp=[];
