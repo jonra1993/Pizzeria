@@ -1,5 +1,5 @@
 <?php
-  $page_title = 'Lista de productos';
+  $page_title = 'Catálogo de pizzas';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
@@ -45,10 +45,10 @@
               <td class="text-center"> <?php echo remove_junk($product['price']); ?></td>
               <td class="text-center">
                 <div class="btn-group">
-                  <a href="edit_productovender.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                  <a href="catalogo_edit.php?id=<?php echo (int)$product['id'];?>&url=catalogo_pizzas.php&tabla=catalogo_pizzas" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-edit"></span>
                   </a>
-                    <a href="delete_productovender.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                    <a href="catalogo_delete.php?id=<?php echo (int)$product['id'];?>&url=catalogo_pizzas.php&tabla=catalogo_pizzas" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-trash"></span>
                   </a>
                 </div>

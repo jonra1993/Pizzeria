@@ -165,18 +165,26 @@ INSERT INTO `catalogo_pizzas` (`id`, `size`, `type`, `flavor`, `price`) VALUES
 (36, 'mediana', 'especial', 'tradicionalHawayana', '10.00'),
 (37, 'familiar', 'especial', 'amangiare', '15.00'),
 (38, 'familiar', 'especial', 'tradicionalHawayana', '15.00'),
-(39, 'extragrande', 'especial', 'amangiare', '18.00'),
-(40, 'extragrande', 'especial', 'tradicionalHawayana', '18.00'),
-(41, 'porcion', 'porcion', 'mixta', '1.50'),
-(42, 'porcion', 'porcion', 'pollo', '1.50'),
-(43, 'porcion', 'porcion', 'champinones', '1.50'),
-(44, 'porcion', 'porcion', 'hawayana', '1.50'),
-(45, 'mediana', 'especial', 'tradicionalPollo', '10.00'),
-(46, 'familiar', 'especial', 'tradicionalPollo', '15.00'),
-(47, 'extragrande', 'especial', 'tradicionalPollo', '18.00'),
-(48, 'mediana', 'especial', 'personalizada', '10.00'),
-(49, 'familiar', 'especial', 'personalizada', '15.00'),
-(50, 'extragrande', 'especial', 'personalizada', '18.00');
+(39, 'mediana', 'especial', 'tradicionalPollo', '10.00'),
+(40, 'familiar', 'especial', 'tradicionalPollo', '15.00'),
+(41, 'extragrande', 'especial', 'tradicionalPollo', '18.00'),
+(42, 'mediana', 'especial', 'personalizada', '10.00'),
+(43, 'familiar', 'especial', 'personalizada', '15.00'),
+(44, 'extragrande', 'especial', 'personalizada', '18.00'),
+(45, 'extragrande', 'especial', 'amangiare', '18.00'),
+(46, 'extragrande', 'especial', 'tradicionalHawayana', '18.00'),
+(47, 'porcion', 'porcion', 'mixta', '1.50'),
+(48, 'porcion', 'porcion', 'pollo', '1.50'),
+(49, 'porcion', 'porcion', 'champinones', '1.50'),
+(50, 'porcion', 'porcion', 'hawayana', '1.50'),
+(51, 'xx', 'porcion', 'hawayana', '1.50'),
+(52, 'yy', 'porcion', 'hawayana', '1.50'),
+(53, 'zz', 'porcion', 'hawayana', '1.50'),
+(54, 'kk', 'porcion', 'hawayana', '1.50');
+
+
+
+
 
 -- --------------------------------------------------------
 
