@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-08-2018 a las 19:47:14
+-- Tiempo de generación: 23-08-2018 a las 13:13:17
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -611,24 +611,7 @@ CREATE TABLE `venta_pizzas` (
 --
 
 INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `date`) VALUES
-(1, 1, 'mediana', 'normal', 'mixta', '', '', '0.00', '2018-08-20 14:27:46'),
-(2, 1, 'mediana', 'normal', 'mixta', '', '', '0.00', '2018-08-20 14:32:33'),
-(3, 1, 'porcion', 'porcion', 'mixta', '', '', '0.00', '2018-08-20 15:32:14'),
-(4, 1, 'porcion', 'porcion', 'mixta', '', '', '0.00', '2018-08-20 16:04:55'),
-(5, 1, 'porcion', 'porcion', 'pollo', '', '', '0.00', '2018-08-20 16:06:59'),
-(6, 1, 'porcion', 'porcion', 'hawayana', '', '', '0.00', '2018-08-20 16:08:32'),
-(7, 1, 'porcion', 'porcion', 'mixta', '', '', '0.00', '2018-08-20 16:17:33'),
-(8, 1, 'porcion', 'porcion', 'pollo', '', '', '0.00', '2018-08-20 16:20:17'),
-(9, 1, 'porcion', 'porcion', 'mixta', '', '', '0.00', '2018-08-20 16:21:41'),
-(10, 1, 'porcion', 'porcion', 'mixta', '', '', '0.00', '2018-08-20 16:23:11'),
-(11, 3, 'porcion', 'porcion', 'mixta', '', '', '0.00', '2018-08-20 16:27:54'),
-(12, 4, 'porcion', 'porcion', 'hawayana', '', '', '0.00', '2018-08-20 16:41:50'),
-(13, 3, 'mediana', 'especial', 'tradicionalPollo', '', '', '0.00', '2018-08-21 20:20:41'),
-(14, 1, 'mediana', 'especial', 'personalizada', '', '', '0.00', '2018-08-22 13:28:47'),
-(15, 1, 'mediana', 'especial', 'tradicionalHawayana', '', '', '0.00', '2018-08-22 14:32:09'),
-(16, 1, 'familiar', 'especial', 'tradicionalPollo', '0', '', '0.00', '2018-08-22 14:33:56'),
-(17, 1, 'mediana', 'especial', 'tradicionalPollo', 'llevar', '', '0.00', '2018-08-22 14:38:53'),
-(18, 3, 'familiar', 'especial', 'tradicionalPollo', 'llevar', '', '0.00', '2018-08-22 14:42:05');
+(1, 1, 'mediana', 'normal', 'hawayana', '0', '', '0.00', '2018-08-22 17:15:17');
 
 --
 -- Índices para tablas volcadas
@@ -844,7 +827,7 @@ ALTER TABLE `tam_pizzas`
 -- AUTO_INCREMENT de la tabla `tipo_esp_pizzas`
 --
 ALTER TABLE `tipo_esp_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_pizzas`
@@ -868,7 +851,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

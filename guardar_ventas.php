@@ -6,12 +6,13 @@
   $tipo = $_GET['p_tipo'];
   $sabor = $_GET['p_sabor'];
   $forma = $_GET['p_forma'];
+  $extras = $_GET['p_extras'];
 
   $date    = make_date();
   $query  = "INSERT INTO venta_pizzas (";        //Insertar la BD en donde se va a ingresar los datos
-  $query .=" qty,tam_pizza,tipo_pizza,sabor_pizza,llevar_pizza,date";
+  $query .=" qty,tam_pizza,tipo_pizza,sabor_pizza,llevar_pizza,extras,date";
   $query .=") VALUES (";
-  $query .=" '{$cantidad}', '{$tama}', '{$tipo}', '{$sabor}', '{$forma}', '{$date}'";
+  $query .=" '{$cantidad}', '{$tama}', '{$tipo}', '{$sabor}', '{$forma}', '{$extras}', '{$date}'";
   $query .=")";
   $db->query($query)
 ?>

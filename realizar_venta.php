@@ -302,6 +302,7 @@ var venta_aux=[];
 var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
 var fila_id = 0;
 var num_extras = 0;
+var str_extra="";
 var DOMAIN = "http://localhost/Pizzeria/";
   
 function selec_categ(nombre_cat) {
@@ -392,10 +393,10 @@ function sabor_pizza(tipo,on_regres){
       precio=Number(result);
       var descrip= categ+" "+p_tama+" "+p_tipo+" "+tipo;
       agregar_fila(descrip,precio);
+      //Guardar venta ---------------------------------------------------------------------------
+      var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:"",forma:0,precioP:precio};
+      venta_aux.push(venta_pizza); 
     }}); 
-    //Guardar venta ---------------------------------------------------------------------------
-    var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,forma:0};
-    venta_aux.push(venta_pizza); 
   }
   if(tipo=="personalizada")
     var e = document.getElementById("selc_personalizada");
@@ -427,6 +428,8 @@ function sabor_pizza(tipo,on_regres){
 
 function ingre_extra(extra){
   num_extras++;
+  str_extra+=(extra+",");
+  //Buscar precios de extras y cracion de fila en nota de venta
   $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
     precio=Number(result);
     var descrip= "Extra "+extra+" en pizza "+p_tama;
@@ -439,7 +442,6 @@ function forma_servir(forma) {
   venta_aux.forEach(element => {
     if (element.id==(Number(fila_id-num_extras)-1)) {   //Es necesario contar el numero de xtras porq tambien generan filas
       element.forma=p_forma;
-      alert(p_forma);
     }
   });
 
@@ -461,6 +463,12 @@ function forma_servir(forma) {
 }
 
 function avanzar_extra() {
+  venta_aux.forEach(element => {
+    if (element.id==(Number(fila_id-num_extras)-1)) {   //Es necesario contar el numero de xtras porq tambien generan filas
+      // alert(str_extra);
+      element.extra=str_extra;
+    }
+  });
   var e = document.getElementById("selc_pizzas_forma");
   var f = document.getElementById("selc_extra");
   centrar(e);
@@ -516,10 +524,12 @@ function eliminar_fila(tr_id) {
 function actu_precio(id){
   var cantidad=document.getElementById('canti_'+id).value;
   var precio=document.getElementById('precio_'+id).value;
-  document.getElementById('total_'+id).value=(cantidad*precio).toFixed(2);
+  var total=(cantidad*precio).toFixed(2);
+  document.getElementById('total_'+id).value=total;
   venta_aux.forEach(element => {
     if (element.id==(Number(id)-1)) {
       element.canti=cantidad;
+      element.precioP=total;
     }
   });
   sum_productos();
@@ -566,8 +576,8 @@ function f_final_compra(){
   else{
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
-        // alert(element.tama+ element.canti+ element.tipo+ element.sabor);
-        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_forma="+element.forma
+        alert(element.extra);
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP
         });
       }
     });
