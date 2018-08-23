@@ -2,8 +2,8 @@
   $page_title = 'Catálogo de pizzas';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(2);
-  $catalogoPizzas = join_catalogo_pizzas();
+  page_require_level(2);
+  $catalogoPizzas = buscar_catalogo('catalogo_pizzas');
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">

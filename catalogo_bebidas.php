@@ -2,8 +2,8 @@
   $page_title = 'Catálogo de bedidas';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(2);
-  $catalogoPizzas = join_catalogo_pizzas();
+  page_require_level(2);
+  $catalogoBebidas = buscar_catalogo('catalogo_bebidas');
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -15,7 +15,7 @@
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Catálogo de Pizzas</span>
+          <span>Catálogo de Bebidas</span>
       </strong>
       </div>
       <div class="panel-body">
@@ -23,7 +23,7 @@
           <thead>
             <tr>
               <th class="text-center" style="width: 5%;">#</th>
-              <th class="text-center" style="width: 10%;"> Tipo</th>
+              <th class="text-center" style="width: 10%;"> Marca</th>
               <th class="text-center" style="width: 10%;"> Tamaño</th>
               <th class="text-center" style="width: 10%;"> Sabor </th> 
               <th class="text-center" style="width: 10%;"> Precio </th>
@@ -31,25 +31,27 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($catalogoPizzas as $product):?>
-            <tr>
-              <td class="text-center"> <?php echo remove_junk($product['id']);?></td>
-              <td class="text-center"> <?php echo remove_junk($product['type']); ?></td>
-              <td class="text-center"> <?php echo remove_junk($product['size']); ?></td>
-              <td class="text-center"> <?php echo remove_junk($product['flavor']); ?></td>
-              <td class="text-center"> <?php echo remove_junk($product['price']); ?></td>
-              <td class="text-center">
-                <div class="btn-group">
-                  <a href="catalogo_edit.php?id=<?php echo (int)$product['id'];?>&url=catalogo_pizzas.php" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
-                    <span class="glyphicon glyphicon-edit"></span>
-                  </a>
-                    <a href="delete_productovender.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
-                    <span class="glyphicon glyphicon-trash"></span>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <?php endforeach; ?>
+            <?php if ($catalogoBebidas !=null):?>  
+              <?php foreach ($catalogoBebidas as $product):?>
+                <tr>
+                  <td class="text-center"> <?php echo remove_junk($product['id']);?></td>
+                  <td class="text-center"> <?php echo remove_junk($product['brand']); ?></td>
+                  <td class="text-center"> <?php echo remove_junk($product['size']); ?></td>
+                  <td class="text-center"> <?php echo remove_junk($product['flavor']); ?></td>
+                  <td class="text-center"> <?php echo remove_junk($product['price']); ?></td>
+                  <td class="text-center">
+                    <div class="btn-group">
+                      <a href="catalogo_edit.php?id=<?php echo (int)$product['id'];?>&url=catalogo_bebidas.php&tabla=catalogo_bebidas" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                        <span class="glyphicon glyphicon-edit"></span>
+                      </a>
+                        <a href="catalogo_delete.php?id=<?php echo (int)$product['id'];?>&url=catalogo_bebidas.php&tabla=catalogo_bebidas" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif?>  
           </tbody>
         </table>
     </div>

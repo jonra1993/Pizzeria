@@ -538,10 +538,10 @@ function by_dates_Inventario ($start_date,$end_date,$product){
 }
 
    /*--------------------------------------------------------------*/
-   function join_catalogo_pizzas(){
+   function buscar_catalogo($tabla){
     global $db;
     $sql  =" SELECT *";
-    $sql  .=" FROM catalogo_pizzas";
+    $sql  .=" FROM $tabla";
     $sql  .=" ORDER BY id ASC";
     return find_by_sql($sql);
   }
