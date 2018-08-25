@@ -2,148 +2,111 @@
 <!DOCTYPE html>
   <html lang="en">
     <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php if (!empty($page_title))
            echo remove_junk($page_title);
             elseif(!empty($user))
            echo ucfirst($user['name']);
             else echo "Sistema simple de inventario";?>
     </title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-    
-    <link href="assets/global/plugins/jcrop/css/jquery.Jcrop.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-        
-        <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="assets/adminLTE/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+        folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="assets/adminLTE/dist/css/skins/_all-skins.min.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/morris.js/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/jvectormap/jquery-jvectormap.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="assets/adminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="assets/adminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="libs/css/main.css" />
-    <!-- tablas-->
-  <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="assets/global/plugins/jcrop/css/jquery.Jcrop.min.css" rel="stylesheet" type="text/css" />
-        <!-- END PAGE LEVEL PLUGINS -->
-        <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-       
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
         
-        <!-- END PAGE LEVEL STYLES -->
-        <!-- BEGIN THEME LAYOUT STYLES -->
-        <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
-
-
-        <!-- aniacion -->
-        <link href="assets/animacion.css" rel="stylesheet" type="text/css" id="style_color" /> 
-
-        <!-- opcional <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" /> 
-        -->
-        
-        <script src="./ajax/jquery.min.js"></script>
-
-        <!--libreria de hosting -->
-        <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <!-- libreria rara -->
-      <!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script> -->
-        <link href="https://fonts.googleapis.com/css?family=Bungee|Cambo|Finger+Paint|Frijole|Shadows+Into+Light" rel="stylesheet">
-      <!--  media queris-->
-       <link href="assets/modalmovil.css" rel="stylesheet" type="text/css" /> 
-       
   </head>
 
   <!-- BEGIN HEADER -->
-  <?php  if ($session->isUserLoggedIn(true)): ?>
-  <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-    <div class="page-header navbar navbar-fixed-top">    
+  <?php  //if ($session->isUserLoggedIn(true)): ?>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">   
       <!-- BEGIN HEADER INNER -->
-      <div class="page-header-inner ">
-        <!-- BEGIN LOGO -->
-        <div class="page-logo">
-            <a href="#">
-                <img src="./fotos/logo.png" alt="logo" class="logo-default" /> </a>
-            <div class="menu-toggler sidebar-toggler"> </div>
-        </div>
-        <!-- END LOGO -->
-        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
-        <!-- END RESPONSIVE MENU TOGGLER -->
-        <!-- BEGIN TOP NAVIGATION MENU -->
-        <div class="pull-right clearfix">
-              <ul class="info-menu list-inline list-unstyled">
-                <li class="profile">
-                  <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-                    <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-                    <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item start "><a class="nav-link" href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li>
-                    <li class="nav-item start "><a class="nav-link" href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
-                    <li class="nav-item start " class="last"><a class="nav-link" href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-
-        <div class="top-menu">
-          <div class="pull-right clearfix">
-            <ul class="info-menu list-inline list-unstyled">
-              <li class="profile">
-                <a href="#" class="nav-link nav-toggle">
-                  <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-                  <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
+      <header class="main-header">
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>A</b>LT</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>Admin</b>LTE</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="user-image">
+                  <span span class="hidden-xs"><?php echo remove_junk(ucfirst($user['name'])); ?></span>
                 </a>
-                <ul class="sub-menu">
-                  <li class="nav-item start "><a class="nav-link" href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li>
-                  <li class="nav-item start "><a class="nav-link" href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
-                  <li class="nav-item start " class="last"><a class="nav-link" href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
+                <ul class="dropdown-menu">
+                  <li ><a href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li>
+                  <li ><a href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
+                  <li ><a href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
+                </ul>
                 </ul>
               </li>
             </ul>
-          </div>  
+          </div>
+        </nav>
+      </header>
+        <!-- END HEADER INNER -->
+        <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MENÚ DE NAVEGACIÓN</li>
+            <?php if($user['user_level'] === '1'): ?>
+              <!-- admin menu -->
+            <?php include_once('admin_menu.php');?>       <!--Importa opciones de administrador-->
 
-        </div>
+            <?php elseif($user['user_level'] === '2'): ?>
+              <!-- Special user -->
+            <?php include_once('special_menu.php');?>     <!--Importa opciones de usuario Especial-->
 
-      </div>
-        <!-- END TOP NAVIGATION MENU -->
-    </div>
-      <!-- END HEADER INNER -->
-    <div class="clearfix"> </div>
-    <div class="page-container">
-      <!-- START SIDEBAR -->
-      <div class="page-sidebar-wrapper">
-        <div class="page-sidebar navbar-collapse collapse">
-          <?php if($user['user_level'] === '1'): ?>
-            <!-- admin menu -->
-          <?php include_once('admin_menu.php');?>       <!--Importa opciones de administrador-->
-
-          <?php elseif($user['user_level'] === '2'): ?>
-            <!-- Special user -->
-          <?php include_once('special_menu.php');?>     <!--Importa opciones de usuario Especial-->
-
-          <?php elseif($user['user_level'] === '3'): ?>
-            <!-- User menu -->
-          <?php include_once('user_menu.php');?>        <!--Importa opciones de Usuario-->
-          <?php endif;?>
-        </div>
-      </div> 
-      <!-- END SIDEBAR -->
-      <?php endif;?>
-      <!-- BEGIN CONTENT -->
-      <div class="page-content-wrapper">
-        <!-- BEGIN CONTENT BODY -->
-        <div class="page-content">
+            <?php elseif($user['user_level'] === '3'): ?>
+              <!-- User menu -->
+            <?php include_once('user_menu.php');?>        <!--Importa opciones de Usuario-->
+            <?php endif;?>
+          </ul>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+      <?php// endif;?>  
+          <!-- Main content -->
+      <div class="content-wrapper">
+        <section class="content">
