@@ -87,9 +87,9 @@
                 <td class="text-center"><?php echo count_id();?></td>
                 <td>
                   <?php if($product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
+                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" width="128" height="128">
                   <?php else: ?>
-                    <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
+                    <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" width="128" height="128">
                   <?php endif; ?>
                 </td>
                 <?php if($product['quantity'] <= 2): ?>
