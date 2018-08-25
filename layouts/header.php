@@ -21,8 +21,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="assets/adminLTE/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-        folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="assets/adminLTE/dist/css/skins/_all-skins.min.css">
+        folder instead of downloading all of them to reduce the load. CAMBIA EL TEMA DE FONDO-->
+    <link rel="stylesheet" href="assets/adminLTE/dist/css/skins/_all-skins.css">
     <!-- Morris chart -->
     <link rel="stylesheet" href="assets/adminLTE/bower_components/morris.js/morris.css">
     <!-- jvectormap -->
@@ -37,15 +37,15 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         
   </head>
 
   <!-- BEGIN HEADER -->
   <?php  //if ($session->isUserLoggedIn(true)): ?>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-red sidebar-mini">
     <div class="wrapper">   
       <!-- BEGIN HEADER INNER -->
       <header class="main-header">
