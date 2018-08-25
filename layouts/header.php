@@ -83,7 +83,21 @@
         <!-- END RESPONSIVE MENU TOGGLER -->
         <!-- BEGIN TOP NAVIGATION MENU -->
         <div class="top-menu">
-
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <!--img src="uploads/users/<?php echo $user['image'];?>" alt="logo" class="logo-default"-->
+              <span span class="hidden-xs"><?php echo remove_junk(ucfirst($user['name'])); ?></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li ><a href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li>
+              <li ><a href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
+              <li ><a href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
+            </ul>
+            </ul>
+          </li>
+        </ul>
         </div>
 
         </div>
