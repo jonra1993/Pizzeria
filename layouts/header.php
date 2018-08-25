@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="libs/css/main.css" />
     <!-- tablas-->
   <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -83,38 +82,9 @@
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
         <!-- END RESPONSIVE MENU TOGGLER -->
         <!-- BEGIN TOP NAVIGATION MENU -->
-        <div class="pull-right clearfix">
-              <ul class="info-menu list-inline list-unstyled">
-                <li class="profile">
-                  <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-                    <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-                    <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item start "><a class="nav-link" href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li>
-                    <li class="nav-item start "><a class="nav-link" href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
-                    <li class="nav-item start " class="last"><a class="nav-link" href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-
         <div class="top-menu">
-          <div class="pull-right clearfix">
-            <ul class="info-menu list-inline list-unstyled">
-              <li class="profile">
-                <a href="#" class="nav-link nav-toggle">
-                  <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-                  <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
-                </a>
-                <ul class="sub-menu">
-                  <li class="nav-item start "><a class="nav-link" href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li>
-                  <li class="nav-item start "><a class="nav-link" href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
-                  <li class="nav-item start " class="last"><a class="nav-link" href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>  
+
+        </div>
 
         </div>
 
