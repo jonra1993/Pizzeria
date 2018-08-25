@@ -27,7 +27,7 @@ $page_title = 'Reporte de ventas';
                 </div>
             </div>
             <div class="form-group">
-                 <button type="submit" name="submit" class="btn btn-primary">Generar Reporte</button>
+                <button type="submit" name="submit" class="btn btn-primary">Generar Reporte</button>
             </div>
           </form>
       </div>

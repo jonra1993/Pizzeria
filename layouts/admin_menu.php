@@ -1,130 +1,136 @@
-<ul>
-  <li>
-    <a href="admin.php">
-      <i class="glyphicon glyphicon-home"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span>Panel de control</span>
-    </a>
+<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+  <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+  <li class="sidebar-toggler-wrapper hide">
+    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+    <div class="sidebar-toggler"> </div>
+    <!-- END SIDEBAR TOGGLER BUTTON -->
   </li>
 
-  <li>
-    <a href="#" class="submenu-toggle">
-      <i class="glyphicon glyphicon-user"></i>
-      <span>Accesos</span>
+  <li class="nav-item start ">
+    <a href="admin.php" class="nav-link">
+      <i class="glyphicon glyphicon-home"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span class="title">Panel de control</span>
+      <!--span class="selected"></span-->
+      <!--span class="arrow open"></span-->
     </a>
-    <ul class="nav submenu">
-      <li><a href="group.php">Administrar grupos</a> </li>
-      <li><a href="users.php">Administrar usuarios</a> </li>
+  </li>
+  <li  class="nav-item start">
+    <a href="#"  class="nav-link nav-toggle">
+      <i class="glyphicon glyphicon-user"></i>
+      <span class="title">Accesos</span>
+    </a>
+    <ul class="sub-menu">
+      <li class="nav-item start "><a class="nav-link " href="group.php">Administrar grupos</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="users.php">Administrar usuarios</a> </li>
    </ul>
   </li>
-
   <!--li>
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
-      <span>Categorías</span>
+      <span class="title">Categorías</span>
     </a>
   </li-->
-
-<!--Lista de productos a vender-->
-  <li>
-    <a href="#" class="submenu-toggle">
+  <!--Lista de productos a vender-->
+  <li  class="nav-item start">
+    <a href="#"  class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-shopping-cart"></i>
-      <span>Catalogo de Productos</span>
+      <span class="title">Catalogo de Productos</span>
     </a>
-    <ul class="nav submenu">
-      <li><a href="catalogo_pizzas.php">Pizzas</a> </li>
-      <li><a href="catalogo_bebidas.php">Bebidas</a> </li>
-      <li><a href="catalogo_extras.php">Extras</a> </li>
+    <ul class="sub-menu">
+      <li class="nav-item start "><a class="nav-link "href="catalogo_pizzas.php">Pizzas</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="catalogo_bebidas.php">Bebidas</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="catalogo_extras.php">Extras</a> </li>
    </ul>
   </li>
-<!--Iventario-->
-  <li>
-    <a href="#" class="submenu-toggle">
+  <!--Iventario-->
+  <li  class="nav-item start">
+    <a href="#"  class="nav-link nav-toggle">
       <i class=" glyphicon glyphicon-check"></i>
-      <span>Inventario</span>
+      <span class="title">Inventario</span>
     </a>
-    <ul class="nav submenu">
-      <li><a href="product.php">Manejo de inventario</a> </li>
-      <li><a href="product_update.php">Actualización de inventario</a> </li>
-      <li><a href="product_report.php">Reportes de inventario</a> </li>
+    <ul class="sub-menu">
+      <li class="nav-item start "><a class="nav-link "href="product.php">Manejo de inventario</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="product_update.php">Actualización de inventario</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="product_report.php">Reportes de inventario</a> </li>
 
    </ul>
   </li>
 
-  <li>
-    <a href="media.php" >
+  <li  class="nav-item start">
+    <a href="media.php"  class="nav-link">
       <i class="glyphicon glyphicon-picture"></i>
-      <span>Media</span>
+      <span class="title">Media</span>
     </a>
   </li>
 
-  <li>
-    <a href="sales.php" class="submenu-toggle">
+  <li  class="nav-item start">
+    <a href="sales.php" class="nav-link nav-toggle"  class="nav-link">
       <i class="glyphicon glyphicon-th-list"></i>
-       <span>Registro de Ventas</span>
+       <span class="title">Registro de Ventas</span>
       </a>
   </li>
   <!-- Realizar una Nueva Venta -->
-  <li>
-    <a href="realizar_venta.php">
+  <li  class="nav-item start">
+    <a href="realizar_venta.php" class="nav-link">
       <i class="glyphicon glyphicon-tags"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span>Nueva Venta</span>
+      <span class="title">Nueva Venta</span>
     </a>
   </li>
 
-  <li>
-    <a href="#" class="submenu-toggle">
+  <li class="nav-item start">
+    <a href="#" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-signal"></i>
-       <span>Reporte de ventas</span>
+       <span class="title">Reporte de ventas</span>
       </a>
-      <ul class="nav submenu">
-        <li><a href="sales_report.php">Ventas por fecha </a></li>
-        <li><a href="monthly_sales.php">Ventas mensuales</a></li>
-        <li><a href="daily_sales.php">Ventas diarias</a> </li>
+      <ul class="sub-menu">
+        <li class="nav-item start "><a class="nav-link "href="sales_report.php">Ventas por fecha </a></li>
+        <li class="nav-item start "><a class="nav-link "href="monthly_sales.php">Ventas mensuales</a></li>
+        <li class="nav-item start "><a class="nav-link "href="daily_sales.php">Ventas diarias</a> </li>
       </ul>
   </li>
 
   <!--Apertura y cierre de caja-->
-  <li>
-    <a href="caja_apertura.php">
+  <li  class="nav-item start">
+    <a href="caja_apertura.php" class="nav-link">
       <i class="glyphicon glyphicon-folder-open"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span>Apertura de caja</span>
+      <span class="title">Apertura de caja</span>
     </a>
   </li>
 
-  <li>
-    <a href="caja_cierre.php">
+  <li  class="nav-item start">
+    <a href="caja_cierre.php" class="nav-link">
       <i class="glyphicon glyphicon-folder-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span>Cierre de Caja</span>
+      <span class="title">Cierre de Caja</span>
     </a>
   </li>
 
 
 
-  <li>
-    <a href="#" class="submenu-toggle">
+  <li  class="nav-item start">
+    <a href="#" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-folder-close"></i>
-       <span>Reportes de Cierres</span>
+       <span class="title">Reportes de Cierres</span>
       </a>
-      <ul class="nav submenu">
-        <li><a href="caja_cierre_general.php">Cierres por fecha </a></li>
-        <li><a href="caja_cierre_monthly.php">Cierres mensuales</a></li>
-        <li><a href="caja_cierre_daily.php">Cierres diarias</a> </li>
+      <ul class="sub-menu">
+        <li class="nav-item start "><a class="nav-link "href="caja_cierre_general.php">Cierres por fecha </a></li>
+        <li class="nav-item start "><a class="nav-link "href="caja_cierre_monthly.php">Cierres mensuales</a></li>
+        <li class="nav-item start "><a class="nav-link "href="caja_cierre_daily.php">Cierres diarias</a> </li>
       </ul>
   </li>
 
-  <li>
-    <a href="caja_ingreso_retiro.php" class="submenu-toggle">
+  <li  class="nav-item start">
+    <a href="caja_ingreso_retiro.php" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-usd"></i>
-       <span>Ingresos-Retiro de caja</span>
+       <span class="title">Ingresos-Retiro de caja</span>
       </a>
   </li>
 
-  <li>
-    <a href="#" class="submenu-toggle">
+  <li  class="nav-item start">
+    <a href="#" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-usd"></i>
-       <span>Ingresos-Egresos</span>
+       <span class="title">Ingresos-Egresos</span>
       </a>
   </li>
-
 
 </ul>
+<script type="text/javascript" src="assets/jquery-1.10.2.min.js"></script>
