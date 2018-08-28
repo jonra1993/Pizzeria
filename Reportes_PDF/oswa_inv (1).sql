@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-08-2018 a las 13:13:17
+-- Tiempo de generación: 28-08-2018 a las 03:59:50
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -25,21 +25,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `catalogo_bebidas`
+--
+
+CREATE TABLE `catalogo_bebidas` (
+  `id` int(11) NOT NULL,
+  `size` varchar(20) NOT NULL,
+  `brand` varchar(20) NOT NULL,
+  `flavor` varchar(20) NOT NULL,
+  `price` decimal(25,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `catalogo_bebidas`
+--
+
+INSERT INTO `catalogo_bebidas` (`id`, `size`, `brand`, `flavor`, `price`) VALUES
+(1, 'familiar', 'coca-cola', 'negra', '90.00');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `catalogo_extras`
 --
 
 CREATE TABLE `catalogo_extras` (
   `id` int(11) NOT NULL,
   `size` varchar(20) NOT NULL,
-  `ingrediente` varchar(20) NOT NULL,
-  `precio` decimal(25,2) NOT NULL
+  `flavor` varchar(20) NOT NULL,
+  `price` decimal(25,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `catalogo_extras`
 --
 
-INSERT INTO `catalogo_extras` (`id`, `size`, `ingrediente`, `precio`) VALUES
+INSERT INTO `catalogo_extras` (`id`, `size`, `flavor`, `price`) VALUES
 (1, 'porcion', 'queso', '0.50'),
 (2, 'porcion', 'jamon', '0.50'),
 (3, 'porcion', 'salami', '0.50'),
@@ -165,18 +186,22 @@ INSERT INTO `catalogo_pizzas` (`id`, `size`, `type`, `flavor`, `price`) VALUES
 (36, 'mediana', 'especial', 'tradicionalHawayana', '10.00'),
 (37, 'familiar', 'especial', 'amangiare', '15.00'),
 (38, 'familiar', 'especial', 'tradicionalHawayana', '15.00'),
-(39, 'extragrande', 'especial', 'amangiare', '18.00'),
-(40, 'extragrande', 'especial', 'tradicionalHawayana', '18.00'),
-(41, 'porcion', 'porcion', 'mixta', '1.50'),
-(42, 'porcion', 'porcion', 'pollo', '1.50'),
-(43, 'porcion', 'porcion', 'champinones', '1.50'),
-(44, 'porcion', 'porcion', 'hawayana', '1.50'),
-(45, 'mediana', 'especial', 'tradicionalPollo', '10.00'),
-(46, 'familiar', 'especial', 'tradicionalPollo', '15.00'),
-(47, 'extragrande', 'especial', 'tradicionalPollo', '18.00'),
-(48, 'mediana', 'especial', 'personalizada', '10.00'),
-(49, 'familiar', 'especial', 'personalizada', '15.00'),
-(50, 'extragrande', 'especial', 'personalizada', '18.00');
+(39, 'mediana', 'especial', 'tradicionalPollo', '10.00'),
+(40, 'familiar', 'especial', 'tradicionalPollo', '15.00'),
+(41, 'extragrande', 'especial', 'tradicionalPollo', '18.00'),
+(42, 'mediana', 'especial', 'personalizada', '10.00'),
+(43, 'familiar', 'especial', 'personalizada', '15.00'),
+(44, 'extragrande', 'especial', 'personalizada', '18.00'),
+(45, 'extragrande', 'especial', 'amangiare', '18.00'),
+(46, 'extragrande', 'especial', 'tradicionalHawayana', '18.00'),
+(47, 'porcion', 'porcion', 'mixta', '1.50'),
+(48, 'porcion', 'porcion', 'pollo', '1.50'),
+(49, 'porcion', 'porcion', 'champinones', '1.50'),
+(50, 'porcion', 'porcion', 'hawayana', '1.50'),
+(51, 'xx', 'porcion', 'hawayana', '1.50'),
+(52, 'yy', 'porcion', 'hawayana', '1.50'),
+(53, 'zz', 'porcion', 'hawayana', '1.50'),
+(54, 'kk', 'porcion', 'hawayana', '1.50');
 
 -- --------------------------------------------------------
 
@@ -562,7 +587,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-08-21 19:09:04', 0),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-08-27 22:51:16', 0),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -611,7 +636,9 @@ CREATE TABLE `venta_pizzas` (
 --
 
 INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `date`) VALUES
-(1, 1, 'mediana', 'normal', 'hawayana', '0', '', '0.00', '2018-08-22 17:15:17');
+(1, 1, 'mediana', 'normal', 'hawayana', '0', '', '0.00', '2018-08-22 17:15:17'),
+(2, 1, 'mediana', 'especial', 'personalizada', '0', '', '0.00', '2018-08-27 21:30:10'),
+(3, 2, 'mediana', 'normal', 'pollo', 'llevar', '0', '17.00', '2018-08-27 21:38:01');
 
 --
 -- Índices para tablas volcadas
@@ -621,12 +648,6 @@ INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza
 -- Indices de la tabla `catalogo_extras`
 --
 ALTER TABLE `catalogo_extras`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `catalogo_pizzas`
---
-ALTER TABLE `catalogo_pizzas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -752,12 +773,6 @@ ALTER TABLE `catalogo_extras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
--- AUTO_INCREMENT de la tabla `catalogo_pizzas`
---
-ALTER TABLE `catalogo_pizzas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
-
---
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -851,7 +866,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
