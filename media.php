@@ -42,14 +42,14 @@
         </div>
       </div>
       <div class="panel-body">
-        <table class="table">
+        <table class="table table-bordered">
           <thead>
             <tr>
-              <th class="text-center" style="width: 50px;">#</th>
-              <th class="text-center">Imagen</th>
-              <th class="text-center">Descripción</th>
-              <th class="text-center" style="width: 20%;">Tipo</th>
-              <th class="text-center" style="width: 50px;">Acciones</th>
+              <th class="text-center" style="width: 2%;">#</th>
+              <th class="text-center" style="width: 5%;">Imagen</th>
+              <th class="text-center" style="width: 3%;">Descripción</th>
+              <th class="text-center" style="width: 3%;">Tipo</th>
+              <th class="text-center" style="width: 3%;">Eliminar</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +57,7 @@
             <tr class="list-inline">
               <td class="text-center"><?php echo count_id();?></td>
               <td class="text-center">
-                  <img src="uploads/products/<?php echo $media_file['file_name'];?>" class="img-thumbnail" />
+                  <img src="uploads/products/<?php echo $media_file['file_name'];?>" class="img-avatar img-circle" alt="User Image"  width="100" height="100" />
               </td>
               <td class="text-center">
                 <?php echo $media_file['file_name'];?>

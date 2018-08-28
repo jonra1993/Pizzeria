@@ -14,7 +14,7 @@
     <div class="panel panel-default">
       <!--div class="panel-heading clearfix">
         <div class="pull-right">
-          <a href="add_productovender.php" class="btn btn-primary">Agregar producto al catalogo</>
+          <a href="add_productovender.php" class="btn btn-primary">Agregar producto al catalogo</a>
         </div>
       </div-->
       <div class="panel-heading">
@@ -27,12 +27,12 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th class="text-center" style="width: 5%;">#</th>
-              <th class="text-center" style="width: 10%;"> Tipo</th>
-              <th class="text-center" style="width: 10%;"> Tamaño</th>
-              <th class="text-center" style="width: 10%;"> Sabor </th> 
-              <th class="text-center" style="width: 10%;"> Precio </th>
-              <th class="text-center" style="width: 10%;"> Acción </th>
+              <th class="text-center" style="width: 2%;">#</th>
+              <th class="text-center" style="width: 3%;"> Tipo</th>
+              <th class="text-center" style="width: 3%;"> Tamaño</th>
+              <th class="text-center" style="width: 3%;"> Sabor </th> 
+              <th class="text-center" style="width: 3%;"> Precio </th>
+              <th class="text-center" style="width: 3%;"> Editar </th>
             </tr>
           </thead>
           <tbody>
@@ -48,9 +48,9 @@
                   <a href="catalogo_edit.php?id=<?php echo (int)$product['id'];?>&url=catalogo_pizzas.php&tabla=catalogo_pizzas" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-edit"></span>
                   </a>
-                    <a href="catalogo_delete.php?id=<?php echo (int)$product['id'];?>&url=catalogo_pizzas.php&tabla=catalogo_pizzas" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                  <!--a href="catalogo_delete.php?id=<?php echo (int)$product['id'];?>&url=catalogo_pizzas.php&tabla=catalogo_pizzas" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-trash"></span>
-                  </a>
+                  </a-->
                 </div>
               </td>
             </tr>

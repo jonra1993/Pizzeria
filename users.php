@@ -21,8 +21,10 @@
         <strong>
           <span class="glyphicon glyphicon-th"></span>
           <span>Usuarios</span>
-       </strong>
-         <a href="add_user.php" class="btn btn-info pull-right">Agregar usuario</a>
+        </strong>
+        <div class="pull-right">
+          <a href="add_user.php" class="btn btn-primary">Agregar usuario</a>
+        </div> 
       </div>
      <div class="panel-body">
       <table class="table table-bordered table-striped">

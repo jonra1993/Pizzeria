@@ -19,6 +19,12 @@
       </div>
     </div>
 
+  <script src="assets/adminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript">
+      $('.datepicker').datepicker({
+        autoclose: true
+      })
+  </script> 
     <!-- BEGIN CORE PLUGINS -->
     
     <!--  <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script> -->
@@ -34,6 +40,7 @@
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script src="assets/global/plugins/moment.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
@@ -59,6 +66,7 @@
     
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
+
 
   </body>
 </html>

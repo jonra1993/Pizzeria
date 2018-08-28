@@ -210,11 +210,12 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
   function join_product_table(){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.quantity,p.unidades,p.buy_price,p.sale_price,p.media_id,p.date,p.proveedor,c.name";
-    $sql  .=" AS categorie,m.file_name AS image";
+     $sql  =" SELECT p.id,p.name,p.quantity,p.unidades,p.buy_price,p.sale_price,p.media_id,p.date,p.proveedor_id,";
+    $sql  .=" c.name AS categorie,m.file_name AS image, k.name AS pro";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
     $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+    $sql  .=" LEFT JOIN proveedores k ON k.id = p.proveedor_id";
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);
    }
@@ -526,13 +527,16 @@ function by_dates_cierres_cajas ($start_date,$end_date){
   return $db->query($sql);
 }
 
+
 function by_dates_Inventario ($start_date,$end_date,$product){ 
   global $db;
   $start_date  = date("Y-m-d", strtotime($start_date));
   $end_date    = date("Y-m-d", strtotime($end_date));
-  $sql  =" SELECT c.name, c.last_quantity, c.new_quantity, c.unidades, c.buy_price, c.gasto, c.date, c.username, c.proveedor";
+  $sql  =" SELECT c.name, c.last_quantity, c.new_quantity, c.unidades, c.buy_price, c.gasto, c.date, c.username,";
+  $sql  .=" k.name AS pro";
   $sql .= " FROM products_add_records c";
-  $sql .= " WHERE (DATE_FORMAT( c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}') AND c.name='{$product}' AND c.gasto>'0'";
+  $sql  .=" LEFT JOIN proveedores k ON k.id = c.proveedor_id";
+  $sql .= " WHERE (DATE_FORMAT( c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}') AND c.name='{$product}' AND c.gasto>='0'";
   $sql .= " ORDER BY DATE(c.date) DESC";
   return $db->query($sql);
 }

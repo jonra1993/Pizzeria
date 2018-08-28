@@ -25,7 +25,7 @@
   
         if($db->query($query)){
           $p_name  = remove_junk($product['name']);
-          $p_prov   = remove_junk($product['proveedor']);
+          $p_prov   = remove_junk($product['proveedor_id']);
           $p_qty   = remove_junk($product['quantity']);
           $p_uni   = remove_junk($product['unidades']);
           $p_buy   = remove_junk($product['buy_price']);
@@ -33,7 +33,7 @@
           $gasto    = ($newQuantity-$product['quantity'])*$p_buy;
   
           $query2  = "INSERT INTO products_add_records (";
-          $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor`";
+          $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor_id`";
           $query2 .=") VALUES (";
           $query2 .=" '{$p_name}','{$p_qty}','{$newQuantity}', '{$p_uni}', '{$p_buy}','{$gasto}', '{$p_date}', '{$aux}', '{$p_prov}'";
           $query2 .=")";
@@ -89,15 +89,19 @@
                 <td class="text-center"><?php echo count_id();?></td>
                 <td>
                   <?php if($product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
+                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="User Image"  width="100" height="100">
                   <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
+                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="User Image"  width="100" height="100">
                 <?php endif; ?>
                 </td>
+                <?php if($product['quantity'] <= 2): ?>
+                <td style="background-color:#ff4d5f"> <?php echo remove_junk($product['name']); ?></td>
+                <?php else: ?>
                 <td> <?php echo remove_junk($product['name']); ?></td>
+                <?php endif; ?>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['proveedor']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['pro']); ?></td>
                 <td class="text-center" id="i<?php echo remove_junk($product['id']); ?>"> <?php echo remove_junk($product['quantity']); ?></td>
                 <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" id="f<?php echo remove_junk($product['id']); ?>" min="0" onkeypress="isInputNumber(event)" onchange="myFunction(<?php echo remove_junk($product['id']); ?>)" type="number" class="form-control"></td>
                 <td class="text-center" id="utilizado<?php echo remove_junk($product['id']); ?>"></td>
