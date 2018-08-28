@@ -289,19 +289,18 @@
           </tfoot>
         </table>
         <button id="final_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Finalizar Compra</button>
-        <div class=class="col-md-3">
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+        <div class="row">
+          <div class="form-check text-center">
+            <label class="form-check-label" style="margin-right: 15%;">
+              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked >
               Pago en Efectivo
             </label>
-          </div>
-          <div class="form-check">
             <label class="form-check-label">
               <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
               Pago con tarjeta
             </label>
           </div>
+
         </div>
       </div>
     </div>
