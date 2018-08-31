@@ -302,7 +302,7 @@
               </label>
             </div>
           </div>
-          <img class="card-img-top img-responsive pb-2" id="im_tarjeta" src="fotos/tarjeta.png" alt="" style="width: 40%; margin:auto; display: none;">
+          <img class="card-img-top img-responsive pb-2" id="im_tarjeta" src="fotos/tarjeta.png" alt="" style="width: 30%; margin:auto; display: none;">
           <div class="panel-body" id="tabla_vuelto">
             <table class="table table-striped table-hover table-condensed">
               <tbody> 
