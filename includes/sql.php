@@ -286,7 +286,7 @@ function tableExists($table){
 
   function buscar_preciosextra_table($tama,$extra){
     global $db;
-    $sql  ="SELECT p.precio FROM catalogo_extras p WHERE p.size = '{$tama}' AND p.ingrediente = '{$extra}' LIMIT 1";
+    $sql  ="SELECT p.price FROM catalogo_extras p WHERE p.size = '{$tama}' AND p.flavor = '{$extra}' LIMIT 1";
    return $db->query($sql);
   }
  /*--------------------------------------------------------------*/
