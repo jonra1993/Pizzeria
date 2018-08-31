@@ -8,6 +8,7 @@
 $product = find_by_id('products',(int)$_GET['id']);
 $all_categories = find_all('categories');
 $all_photo = find_all('media');
+$all_proveedores = find_all('proveedores');
 if(!$product){
   $session->msg("d","Missing product id.");
   redirect('product.php');
@@ -17,13 +18,14 @@ if(!$product){
  if(isset($_POST['product'])){
     $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
     validate_fields($req_fields);
-
+    
    if(empty($errors)){
        $p_name  = remove_junk($db->escape($_POST['product-title']));
        $p_cat   = (int)$_POST['product-categorie'];
        $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
        $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+       $p_pro  = (int)$_POST['nombre-proveedor'];
        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
          $media_id = '0';
        } else {
@@ -31,7 +33,7 @@ if(!$product){
        }
        $query   = "UPDATE products SET";
        $query  .=" name ='{$p_name}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}'";
+       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}',proveedor_id='{$p_pro}'";
        $query  .=" WHERE id ='{$product['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){
@@ -48,6 +50,7 @@ if(!$product){
    }
 
  }
+ else if(isset($_POST['regresar'])) redirect('product.php',false);
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -118,8 +121,7 @@ if(!$product){
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="number" class="form-control" name="buying-price" value="<?php echo remove_junk($product['buy_price']);?>">
-                      <span class="input-group-addon">.00</span>
+                      <input type="number" class="form-control" name="buying-price" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" value="<?php echo remove_junk($product['buy_price']);?>">
                    </div>
                   </div>
                  </div>
@@ -130,14 +132,33 @@ if(!$product){
                        <span class="input-group-addon">
                          <i class="glyphicon glyphicon-usd"></i>
                        </span>
-                       <input type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']);?>">
-                       <span class="input-group-addon">.00</span>
+                       <input type="number" class="form-control" name="saleing-price" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" value="<?php echo remove_junk($product['sale_price']);?>">
                     </div>
                    </div>
                   </div>
                </div>
               </div>
-              <button type="submit" name="product" class="btn btn-danger">Actualizar</button>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-briefcase"></i>
+                  </span>
+                  
+                  <select class="form-control" name="nombre-proveedor">
+                    <option value="">Seleccione el proveedor</option>
+                    <?php  foreach ($all_proveedores as $proveedor): ?>
+                      <option value="<?php echo (int)$proveedor['id'];?>" <?php if($product['proveedor_id'] === $proveedor['id']): echo "selected"; endif; ?> >
+                        <?php echo $proveedor['name'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                               
+                </div>
+              </div>
+
+              <button type="submit" name="product" class="btn btn-success">Actualizar</button>
+              <button type="submit" name="regresar" class="btn btn-danger">Cancelar</button>
+
           </form>
          </div>
         </div>

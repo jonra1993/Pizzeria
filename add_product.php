@@ -5,6 +5,7 @@
   page_require_level(2);
   $all_categories = find_all('categories');
   $all_photo = find_all('media');
+  $all_proveedores = find_all('proveedores');
 ?>
 <?php
  if(isset($_POST['add_product'])){
@@ -26,7 +27,7 @@
      }
      $date    = make_date();
      $query  = "INSERT INTO products (";
-     $query .=" name,quantity,unidades,buy_price,sale_price,categorie_id,media_id,date,proveedor";
+     $query .=" name,quantity,unidades,buy_price,sale_price,categorie_id,media_id,date,proveedor_id";
      $query .=") VALUES (";
      $query .=" '{$p_name}', '{$p_qty}','{$p_uni}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_prov}'";
      $query .=")";
@@ -36,7 +37,7 @@
       $aux = remove_junk(ucwords($user['username']));
       $gasto    = $p_qty*$p_buy;
       $query2  = "INSERT INTO products_add_records (";
-      $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor`";
+      $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor_id`";
       $query2 .=") VALUES (";
       $query2 .=" '{$p_name}','0','{$p_qty}', '{$p_uni}', '{$p_buy}','{$gasto}', '{$p_date}', '{$aux}', '{$p_prov}'";
       $query2 .=")";
@@ -149,16 +150,28 @@
                   </div>
                 </div>
               </div>
+
+
+
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-briefcase"></i>
                   </span>
-                  <input type="text" class="form-control" name="nombre-proveedor" placeholder="Proveedor">
-               </div>
+                  
+                  <select class="form-control" name="nombre-proveedor">
+                    <option value="">Seleccione el proveedor</option>
+                    <?php  foreach ($all_proveedores as $proveedor): ?>
+                      <option value="<?php echo (int)$proveedor['id'] ?>">
+                        <?php echo $proveedor['name'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                               
+                </div>
               </div>
+
               <button type="submit" name="add_product" class="btn btn-success">Agregar producto</button>
-              <button type="submit" name="regresar" class="btn btn-danger">Regresar</button>
+              <button type="submit" name="regresar" class="btn btn-danger">Cancelar</button>
 
           </form>
          </div>

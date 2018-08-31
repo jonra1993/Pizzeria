@@ -51,7 +51,7 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th class="text-center" style="width: 10%;"> Fecha </th>
+                <th class="text-center" style="width: 15%;"> Fecha </th>
                 <th class="text-center" style="width: 10%;"> Usuario </th>
                 <th class="text-center" style="width: 10%;"> Monto de Apertura </th>
                 <th class="text-center" style="width: 10%;"> Cobros en Efectivo</th>

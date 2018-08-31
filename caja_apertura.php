@@ -93,7 +93,7 @@ else{
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input id= "apertura" type="decimal" class="form-control" name="dinero" placeholder="Importe de apertura">
+                      <input id= "apertura" type="number" class="form-control" name="dinero" placeholder="Valor de apertura" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
                    </div>
                   </div>
                </div>
@@ -175,6 +175,17 @@ function isInputNumber(evt){
     }
     
 }
+
+function isInputNumber2(evt){
+    
+    var ch = String.fromCharCode(evt.which);
+    
+    if(!(/[0-9.]/.test(ch))){
+        evt.preventDefault();
+    }
+    
+}
+
 
 function myFunction() {
 

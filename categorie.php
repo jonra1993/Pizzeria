@@ -95,9 +95,9 @@
                     <td><?php echo remove_junk(ucfirst($cat['name'])); ?></td>
                     <td>
                       <?php if($cat['media_id'] === '0'): ?>
-                          <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
+                          <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="User Image"  width="100" height="100">
                         <?php else: ?>
-                        <img class="img-avatar img-circle" src="uploads/products/<?php echo $cat['image']; ?>" alt="">
+                        <img class="img-avatar img-circle" src="uploads/products/<?php echo $cat['image']; ?>" alt="User Image"  width="100" height="100">
                       <?php endif; ?>
                     </td>
                     <td class="text-center">

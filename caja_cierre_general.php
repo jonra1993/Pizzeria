@@ -42,13 +42,13 @@ $page_title = 'Reporte de ventas';
             <label class="form-label">Rango de fechas</label>
               <div class="input-group">
                 <?php if ($cierres != null):?>
-                  <input type="text" class="datepicker form-control" name="start-date" value=<?php echo $start_date; ?> required>
+                  <input type="text" class="datepicker form-control" name="start-date" value=<?php echo $start_date; ?> required autocomplete="off">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-menu-right"></i></span>
-                  <input type="text" class="datepicker form-control" name="end-date" value=<?php echo $end_date; ?> required>                 
+                  <input type="text" class="datepicker form-control" name="end-date" value=<?php echo $end_date; ?> required autocomplete="off">                 
                 <?php else:?>
-                  <input type="text" class="datepicker form-control" name="start-date" Placeholder='Desde' required>
+                  <input type="text" class="datepicker form-control" name="start-date" Placeholder='Desde' required autocomplete="off">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-menu-right"></i></span>
-                  <input type="text" class="datepicker form-control" name="end-date" Placeholder='Hasta' required>
+                  <input type="text" class="datepicker form-control" name="end-date" Placeholder='Hasta' required autocomplete="off">
                   <?php endif; ?>
               </div>
             </div>
@@ -76,7 +76,7 @@ $page_title = 'Reporte de ventas';
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th class="text-center" style="width: 10%;"> Fecha </th>
+              <th class="text-center" style="width: 15%;"> Fecha </th>
               <th class="text-center" style="width: 10%;"> Usuario </th>
               <th class="text-center" style="width: 10%;"> Monto de Apertura </th>
               <th class="text-center" style="width: 10%;"> Cobros en Efectivo</th>

@@ -68,7 +68,7 @@ if(!$product){
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon-th-large"></i>
                 </span>
-                <input readonly type="text" class="form-control" name="product-title" value="<?php echo "Pizza ".remove_junk($product['size']).",".remove_junk($product['flavor']);?>">
+                <input readonly type="text" class="form-control" name="product-title" value="<?php echo remove_junk($product['size']).",".remove_junk($product['flavor']);?>">
               </div>
             </div>
             <div class="col-md-4">

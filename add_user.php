@@ -52,11 +52,11 @@
           <form method="post" action="add_user.php">
             <div class="form-group">
                 <label for="name">Nombre</label>
-                <input type="text" class="form-control" name="full-name" placeholder="Nombre completo" required>
+                <input type="text" class="form-control" name="full-name" placeholder="Nombre completo" required autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="username">Usuario</label>
-                <input type="text" class="form-control" name="username" placeholder="Nombre de usuario">
+                <input type="text" class="form-control" name="username" placeholder="Nombre de usuario" autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>

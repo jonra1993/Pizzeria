@@ -74,7 +74,7 @@ if(isset($_POST['cancelar'])) redirect('admin.php', false);
               </div>
               <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                <input id= "ingres_retiro" type="decimal" class="form-control" name="dinero" placeholder="Importe">
+                <input id= "ingres_retiro" type="number" class="form-control" name="dinero" placeholder="Valor"  step="0.01" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
               </div>
             </div>
           </div>

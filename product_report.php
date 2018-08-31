@@ -63,13 +63,13 @@ if(isset($_POST['submit'])){
               <label class="form-label">Rango de fechas</label>
               <div class="input-group">
                 <?php if ($inv != null):?>
-                  <input type="text" class="datepicker form-control" name="start-date" value=<?php echo $start_date; ?> required>
+                  <input type="text" class="datepicker form-control" name="start-date" value=<?php echo $start_date; ?> required autocomplete="off">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-menu-right"></i></span>
-                  <input type="text" class="datepicker form-control" name="end-date" value=<?php echo $end_date; ?> required>                 
+                  <input type="text" class="datepicker form-control" name="end-date" value=<?php echo $end_date; ?> required autocomplete="off">                 
                 <?php else:?>
-                  <input type="text" class="datepicker form-control" name="start-date" Placeholder='Desde' required>
+                  <input type="text" class="datepicker form-control" name="start-date" Placeholder='Desde' required autocomplete="off">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-menu-right"></i></span>
-                  <input type="text" class="datepicker form-control" name="end-date" Placeholder='Hasta' required>
+                  <input type="text" class="datepicker form-control" name="end-date" Placeholder='Hasta' required autocomplete="off">
                   <?php endif; ?>
               </div>
             </div>
@@ -108,7 +108,7 @@ if(isset($_POST['submit'])){
                     <tr>
                       <td class="text-center"> <?php echo read_date($i['date']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['username']); ?></td>
-                      <td class="text-center"> <?php echo remove_junk($i['proveedor']); ?></td>
+                      <td class="text-center"> <?php echo remove_junk($i['pro']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['unidades']); ?></td>
                       <td class="text-center" id="da<?php echo remove_junk($i['id']); ?>"> <?php echo remove_junk($i['last_quantity']); ?></td>
                       <td class="text-center" id="cc<?php echo remove_junk($i['id']); ?>"> <?php echo remove_junk($i['new_quantity']); ?></td>

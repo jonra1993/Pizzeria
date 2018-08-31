@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-08-2018 a las 03:59:50
+-- Tiempo de generación: 28-08-2018 a las 22:29:34
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -336,20 +336,21 @@ CREATE TABLE `products` (
   `categorie_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL,
-  `proveedor` varchar(100) DEFAULT NULL
+  `proveedor_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `proveedor`) VALUES
-(1, 'Harina', '4', 'costal', '25.00', '32.00', 4, 20, '2018-08-21 23:40:25', 'Falimensa'),
-(2, 'Queso', '11', 'bloque', '12.00', '15.00', 4, 21, '2018-08-16 15:01:38', 'Machachi'),
-(3, 'Aceite', '7', 'Cajas', '10.00', '18.00', 4, 22, '2018-08-16 15:01:51', 'Ales'),
-(4, 'dona', '25', 'gr', '5.00', '6.00', 4, 2, '2018-08-16 15:02:00', 'jonathan'),
-(5, 'ricas2', '25', 'gr', '45.00', '50.00', 3, 9, '2018-08-16 15:12:04', 'mia'),
-(7, 'celular', '27', 'gr', '12.00', '14.00', 2, 17, '2018-08-16 15:15:44', 'jonathan');
+INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`) VALUES
+(1, 'Harina', '1', 'costal', '25.98', '32.00', 4, 20, '2018-08-28 17:28:31', 1),
+(2, 'Queso', '1', 'bloque', '12.00', '15.00', 4, 21, '2018-08-28 17:28:31', 1),
+(3, 'Aceite', '2', 'Cajas', '10.00', '18.00', 4, 22, '2018-08-28 17:24:13', 4),
+(4, 'dona', '25', 'gr', '5.00', '6.00', 4, 2, '2018-08-16 15:02:00', 1),
+(5, 'ricas2', '25', 'gr', '45.00', '50.00', 3, 9, '2018-08-16 15:12:04', 1),
+(7, 'celular', '27', 'gr', '12.00', '14.00', 2, 17, '2018-08-16 15:15:44', 1),
+(8, 'Pizza mediana,mixta', '3', 'gr', '12.00', '15.00', 2, 5, '2018-08-28 17:15:00', 1);
 
 -- --------------------------------------------------------
 
@@ -367,35 +368,44 @@ CREATE TABLE `products_add_records` (
   `gasto` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `username` varchar(20) NOT NULL,
-  `proveedor` varchar(100) DEFAULT NULL
+  `proveedor_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `products_add_records`
 --
 
-INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`, `date`, `username`, `proveedor`) VALUES
-(1, 'ricas2', '0', '10', 'gr', '45.00', '0.00', '2018-08-16 14:40:47', 'Admin', 'mia'),
-(2, '', '', '10', '', '0.00', '0.00', '0000-00-00 00:00:00', 'Admin', ''),
-(5, 'Harina', '4', '5', 'costal', '25.00', '0.00', '2018-08-16 15:00:36', 'Admin', 'Falimensa'),
-(6, 'Queso', '10', '11', 'bloque', '12.00', '0.00', '2018-08-16 15:01:38', 'Admin', 'Machachi'),
-(7, 'Aceite', '6', '7', 'Cajas', '10.00', '0.00', '2018-08-16 15:01:51', 'Admin', 'Ales'),
-(8, 'dona', '23', '25', 'gr', '5.00', '0.00', '2018-08-16 15:02:00', 'Admin', 'jonathan'),
-(13, 'Harina', '9', '11', 'costal', '25.00', '0.00', '2018-08-16 15:07:17', 'Admin', 'Falimensa'),
-(14, 'ricas2', '21', '23', 'gr', '45.00', '90.00', '2018-08-16 15:10:35', 'Admin', 'mia'),
-(15, 'ricas2', '23', '24', 'gr', '45.00', '45.00', '2018-08-16 15:11:14', 'Admin', 'mia'),
-(16, 'ricas2', '24', '25', 'gr', '45.00', '45.00', '2018-08-16 15:12:04', 'Admin', 'mia'),
-(17, 'celular', '0', '', 'gr', '12.00', '36.00', '0000-00-00 00:00:00', 'Admin', 'jonathan'),
-(18, 'celular', '0', '23', 'gr', '12.00', '276.00', '0000-00-00 00:00:00', 'Admin', 'jonathan'),
-(19, 'celular', '23', '27', 'gr', '12.00', '48.00', '2018-08-16 15:15:44', 'Admin', 'jonathan'),
-(20, 'Harina', '11', '4', 'costal', '25.00', '-175.00', '2018-08-16 15:20:59', 'Admin', 'Falimensa'),
-(21, 'Harina', '4', '2', 'costal', '25.00', '-50.00', '2018-08-17 09:54:02', 'Admin', 'Falimensa'),
-(22, 'Harina', '2', '5', 'costal', '25.00', '75.00', '2018-08-17 09:54:35', 'Admin', 'Falimensa'),
-(23, 'Harina', '5', '9', 'costal', '25.00', '100.00', '2018-08-17 14:31:58', 'Admin', 'Falimensa'),
-(24, 'Harina', '9', '7', 'costal', '25.00', '-50.00', '2018-08-21 23:39:16', 'Admin', 'Falimensa'),
-(25, 'Harina', '7', '9', 'costal', '25.00', '50.00', '2018-08-21 23:39:38', 'Admin', 'Falimensa'),
-(26, 'Harina', '9', '2', 'costal', '25.00', '-175.00', '2018-08-21 23:39:55', 'Admin', 'Falimensa'),
-(27, 'Harina', '2', '4', 'costal', '25.00', '50.00', '2018-08-21 23:40:25', 'Admin', 'Falimensa');
+INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`, `date`, `username`, `proveedor_id`) VALUES
+(1, 'Harina', '6', '11', 'costal', '25.98', '129.90', '2018-08-28 17:24:03', 'Admin', 1),
+(2, 'Queso', '13', '15', 'bloque', '12.00', '24.00', '2018-08-28 17:24:03', 'Admin', 1),
+(3, 'Aceite', '5', '7', 'Cajas', '10.00', '20.00', '2018-08-28 17:24:03', 'Admin', 4),
+(4, 'Harina', '11', '7', 'costal', '25.98', '-103.92', '2018-08-28 17:24:13', 'Admin', 1),
+(5, 'Queso', '15', '2', 'bloque', '12.00', '-156.00', '2018-08-28 17:24:13', 'Admin', 1),
+(6, 'Aceite', '7', '2', 'Cajas', '10.00', '-50.00', '2018-08-28 17:24:13', 'Admin', 4),
+(7, 'Harina', '7', '1', 'costal', '25.98', '-155.88', '2018-08-28 17:28:31', 'Admin', 1),
+(8, 'Queso', '2', '1', 'bloque', '12.00', '-12.00', '2018-08-28 17:28:31', 'Admin', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proveedores`
+--
+
+CREATE TABLE `proveedores` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `address` varchar(20) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `cellphone` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+
+INSERT INTO `proveedores` (`id`, `name`, `address`, `phone`, `cellphone`) VALUES
+(1, 'Firmesa', 'H street and E stree', '3442096', '979191234'),
+(4, 'Cuda', 'EEuuu', '0934455559', '098771771');
 
 -- --------------------------------------------------------
 
@@ -438,7 +448,10 @@ INSERT INTO `tabla_aperturas_cajas` (`id`, `dinero_apertura`, `date`, `username`
 (7, '50.00', '2018-08-20 12:17:27', 'Admin'),
 (8, '50.00', '2018-08-20 16:32:46', 'Admin'),
 (9, '1.00', '2018-08-20 16:33:34', 'Admin'),
-(10, '35.00', '2018-08-21 23:37:42', 'Admin');
+(10, '35.00', '2018-08-21 23:37:42', 'Admin'),
+(11, '90.00', '2018-08-28 10:25:23', 'Admin'),
+(12, '0.00', '2018-08-28 14:46:39', 'Admin'),
+(13, '23.00', '2018-08-28 15:04:31', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -476,7 +489,10 @@ INSERT INTO `tabla_cierres_cajas` (`id`, `dinero_apertura`, `cobros_en_caja`, `c
 (7, '50.00', '0.00', '0.00', '0.00', '0.00', '20.00', '10.00', '60.00', '100.00', '40.00', '2018-08-20 16:32:34', 'Admin'),
 (8, '50.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '40.00', '60.00', '20.00', '2018-08-20 16:33:21', 'Admin'),
 (9, '1.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1.00', '100.00', '99.00', '2018-08-21 23:37:18', 'Admin'),
-(10, '35.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '35.00', '103.00', '68.00', '2018-08-21 23:38:33', 'Admin');
+(10, '35.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '35.00', '103.00', '68.00', '2018-08-21 23:38:33', 'Admin'),
+(11, '90.00', '0.00', '0.00', '0.00', '0.00', '20.00', '10.00', '100.00', '100.00', '0.00', '2018-08-28 10:25:51', 'Admin'),
+(12, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '40.01', '40.01', '2018-08-28 14:46:53', 'Admin'),
+(13, '23.00', '0.00', '0.00', '0.00', '0.00', '24.45', '67.89', '-20.44', '500.00', '520.44', '2018-08-28 15:05:20', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -587,7 +603,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-08-27 22:51:16', 0),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-08-28 14:09:54', 0),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -696,6 +712,13 @@ ALTER TABLE `products_add_records`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `proveedores`
+--
+ALTER TABLE `proveedores`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indices de la tabla `sales`
 --
 ALTER TABLE `sales`
@@ -800,13 +823,19 @@ ALTER TABLE `productovender`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `products_add_records`
 --
 ALTER TABLE `products_add_records`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `proveedores`
+--
+ALTER TABLE `proveedores`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `sales`
@@ -818,19 +847,19 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT de la tabla `tabla_aperturas_cajas`
 --
 ALTER TABLE `tabla_aperturas_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tabla_cierres_cajas`
 --
 ALTER TABLE `tabla_cierres_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tabla_ingresos_retiros_cajas`
 --
 ALTER TABLE `tabla_ingresos_retiros_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tam_pizzas`

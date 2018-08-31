@@ -57,6 +57,13 @@
   </li>
 
   <li  class="nav-item start">
+    <a href="Proveedores.php"  class="nav-link">
+      <i class="glyphicon glyphicon-tasks"></i>
+      <span class="title">Proveedores</span>
+    </a>
+  </li>
+
+  <li  class="nav-item start">
     <a href="media.php"  class="nav-link">
       <i class="glyphicon glyphicon-picture"></i>
       <span class="title">Media</span>

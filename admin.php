@@ -20,128 +20,123 @@
      <?php echo display_msg($msg); ?>
    </div>
 </div>
-  <!--.......Cuadrados de visualizacion......-->
-  <div class="row">
+<!-- Info boxes -->
+<div class="row">
   <!--Usuarios-->
-    <div class="col-md-3">
-       <div class="panel panel-box clearfix">
-         <div class="panel-icon pull-left bg-green">
-          <i class="glyphicon glyphicon-user"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_user['total']; ?> </h2>    <!--Lee # de usuarios-->
-          <p class="text-muted">Usuarios</p>
-        </div>
-       </div>
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-user"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Usuarios</span>
+        <span class="info-box-number"><?php  echo $c_user['total']; ?><small>%</small></span>
+      </div>
     </div>
-    <!--Categorias-->
-    <div class="col-md-3">
-       <div class="panel panel-box clearfix">
-         <div class="panel-icon pull-left bg-red">
-          <i class="glyphicon glyphicon-list"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>   <!--Lee # de Categorias-->
-          <p class="text-muted">Categorías</p>
-        </div>
-       </div>
+  </div>
+  <!--Categorias-->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-list"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Categorías</span>
+        <span class="info-box-number"><?php  echo $c_categorie['total']; ?><small>%</small></span>
+      </div>
     </div>
-    <!--Procductos-->
-    <div class="col-md-3">
-       <div class="panel panel-box clearfix">
-         <div class="panel-icon pull-left bg-blue">
-          <i class="glyphicon glyphicon-shopping-cart"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_product['total']; ?> </h2>
-          <p class="text-muted">Productos</p>
-        </div>
-       </div>
+  </div>
+  <!--Procductos-->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-blue"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Productos</span>
+        <span class="info-box-number"><?php  echo $c_product['total']; ?><small>%</small></span>
+      </div>
     </div>
-    <!--Ventas-->
-    <div class="col-md-3">
-       <div class="panel panel-box clearfix">
-         <div class="panel-icon pull-left bg-yellow">
-          <i class="glyphicon glyphicon-usd"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_sale['total']; ?></h2>
-          <p class="text-muted">Ventas</p>
-        </div>
-       </div>
+  </div>
+  <!--Ventas-->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-usd"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Ventas</span>
+        <span class="info-box-number"><?php  echo $c_sale['total']; ?><small>%</small></span>
+      </div>
     </div>
+  </div>
 </div>
-  <!--.......Detalle de productos......-->
-  <div class="row">
+<!-- /.row -->
+
+<!--.......Detalle de productos......-->
+<div class="row">
   <!--Productos mas vedidos-->
-   <div class="col-md-4">
-     <div class="panel panel-default">
-       <div class="panel-heading">
-         <strong>
-           <span class="glyphicon glyphicon-th"></span>
-           <span>Productos más vendidos</span>
-         </strong>
-       </div>
-       <div class="panel-body">
-         <table class="table table-striped table-bordered table-condensed">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+          <span>Productos más vendidos</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-bordered table-condensed">
           <thead>
-           <tr>
-             <th>Título</th>
-             <th>Total vendido</th>
-             <th>Cantidad total</th>
-           <tr>
+            <tr>
+              <th class="text-center">Título</th>
+              <th class="text-center">Total vendido</th>
+              <th class="text-center">Cantidad total</th>
+            </tr>
           </thead>
           <tbody>
-            <?php foreach ($products_sold as  $product_sold): ?>
-              <tr>
-                <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
-                <td><?php echo (int)$product_sold['totalSold']; ?></td>
-                <td><?php echo (int)$product_sold['totalQty']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <tbody>
-         </table>
-       </div>
-     </div>
-   </div>
-   <!--Ultimas Ventas-->
-   <div class="col-md-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <strong>
-            <span class="glyphicon glyphicon-th"></span>
-            <span>ÚLTIMAS VENTAS</span>
-          </strong>
-        </div>
-        <div class="panel-body">
-          <table class="table table-striped table-bordered table-condensed">
-       <thead>
-         <tr>
-           <th class="text-center" style="width: 50px;">#</th>
-           <th>Producto</th>
-           <th>Fecha</th>
-           <th>Venta total</th>
-         </tr>
-       </thead>
-       <tbody>
-         <?php foreach ($recent_sales as  $recent_sale): ?>
-         <tr>
-           <td class="text-center"><?php echo count_id();?></td>
-           <td>
-            <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">    <!--Redireccionamiento a editar producto en el item especifico-->
-             <?php echo remove_junk(first_character($recent_sale['name'])); ?>
-           </a>
-           </td>
-           <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-           <td>$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
-        </tr>
-
-       <?php endforeach; ?>
-       </tbody>
-     </table>
+          <?php foreach ($products_sold as  $product_sold): ?>
+            <tr>
+              <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
+              <td><?php echo (int)$product_sold['totalSold']; ?></td>
+              <td><?php echo (int)$product_sold['totalQty']; ?></td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
     </div>
-   </div>
   </div>
+
+  <!--Ultimas Ventas-->
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+          <span>Últimas ventas</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th class="text-center" style="width: 50px;">#</th>
+              <th>Producto</th>
+              <th>Fecha</th>
+              <th>Venta total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($recent_sales as  $recent_sale): ?>
+            <tr>
+              <td class="text-center"><?php echo count_id();?></td>
+              <td>
+              <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">    <!--Redireccionamiento a editar producto en el item especifico-->
+                <?php echo remove_junk(first_character($recent_sale['name'])); ?>
+              </a>
+              </td>
+              <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+              <td>$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <!--Productos recientes-->
   <div class="col-md-4">
     <div class="panel panel-default">
@@ -152,37 +147,30 @@
         </strong>
       </div>
       <div class="panel-body">
-
         <div class="list-group">
-      <?php foreach ($recent_products as  $recent_product): ?>
-            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
-                <h4 class="list-group-item-heading">
-                 <?php if($recent_product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
-                  <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $recent_product['image'];?>" alt="" />
+          <?php foreach ($recent_products as  $recent_product): ?>
+            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo(int)$recent_product['id'];?>">
+              <h4 class="list-group-item-heading">
+                <?php if($recent_product['media_id'] === '0'): ?>
+                  <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="User Image"  width="100" height="100">
+                <?php else: ?>
+                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $recent_product['image'];?>" alt="User Image"  width="100" height="100" />
                 <?php endif;?>
                 <?php echo remove_junk(first_character($recent_product['name']));?>
-                  <span class="label label-warning pull-right">
-                 $<?php echo (int)$recent_product['sale_price']; ?>
-                  </span>
-                </h4>
-                <span class="list-group-item-text pull-right">
-                <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
-              </span>
-          </a>
-      <?php endforeach; ?>
+                  <span class="label label-warning pull-right">$<?php echo (int)$recent_product['sale_price']; ?></span>
+              </h4>
+              <span class="list-group-item-text pull-right"><?php echo remove_junk(first_character($recent_product['categorie'])); ?></span>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </div>
     </div>
   </div>
- </div>
+
 </div>
- </div>
-  <div class="row">
-
-  </div>
 
 
-<script>
+<!--script>
     var user = "<?php echo $user['username']; ?>";
     var date = "<?php echo make_date(); ?>";
     var d = new Date();
@@ -221,6 +209,6 @@
   var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
   var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
 
-</script>
+</script-->
 
 <?php include_once('layouts/footer.php'); ?>
