@@ -289,30 +289,32 @@
           </tfoot>
         </table>
         <button id="final_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Finalizar Compra</button>
-        <div class="row"  style="padding-top: 5%;">
-          <div class="form-check text-center">
-            <label class="form-check-label" style="margin-right: 15%;">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="forma_pago('efectivo');">
-              Pago en Efectivo
-            </label>
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onclick="forma_pago('tarjeta');">
-              Pago con tarjeta
-            </label>
+        <div class="row" id="cont_vuelto" style="display: none;">
+          <div class="row"  style="padding-top: 5%;">
+            <div class="form-check text-center">
+              <label class="form-check-label" style="margin-right: 15%;">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="forma_pago('efectivo');">
+                Pago en Efectivo
+              </label>
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onclick="forma_pago('tarjeta');">
+                Pago con tarjeta
+              </label>
+            </div>
           </div>
-        </div>
-        <img class="card-img-top img-responsive pb-2" id="im_tarjeta" src="fotos/tarjeta.png" alt="" style="width: 40%; margin:auto; display: none;">
-        <div class="panel-body" id="tabla_vuelto">
-          <table class="table table-striped table-hover table-condensed">
-            <tbody> 
-              <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" style="width: 25%;" onchange="actu_vuelto()"></td></tr>
-              <tr><td class="text-right">Vuelto</td><td class="text-center">$ <input id="in_vuelto" class="text-center"  type="number" value="0.00" min="0" style="width: 25%;" disabled></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="text-center">
-          <button id="final_compra" type="button" class="btn btn-success" onclick="f_final_compra()" >Continuar</button>
-          <button id="final_compra" type="button" class="btn btn-danger" onclick="f_final_compra()" >Cancelar Compra</button>
+          <img class="card-img-top img-responsive pb-2" id="im_tarjeta" src="fotos/tarjeta.png" alt="" style="width: 40%; margin:auto; display: none;">
+          <div class="panel-body" id="tabla_vuelto">
+            <table class="table table-striped table-hover table-condensed">
+              <tbody> 
+                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" style="width: 25%;" onchange="actu_vuelto()"></td></tr>
+                <tr><td class="text-right">Vuelto</td><td class="text-center">$ <input id="in_vuelto" class="text-center"  type="number" value="0.00" min="0" style="width: 25%;" disabled></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-center">
+            <button id="f_continuar" type="button" class="btn btn-success" onclick="f_continuar(1)" >Continuar</button>
+            <button id="f_cancelar" type="button" class="btn btn-danger" onclick="f_continuar(0)" >Cancelar Compra</button>
+          </div>
         </div>
       </div>
     </div>
@@ -456,8 +458,10 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
 function ingre_extra(extra){
   num_extras++;
   str_extra+=(extra+",");
+  // alert(str_extra);
   //Buscar precios de extras y cracion de fila en nota de venta
   $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
+    // alert(result);
     precio=Number(result);
     var descrip= "Extra "+extra+" en pizza "+p_tama;
     agregar_fila(descrip,precio);
@@ -605,6 +609,7 @@ function f_final_compra(){
     location.reload();
   }
   else{
+    document.getElementById('cont_vuelto').style.display='block';
     // venta_aux.forEach(element => {
     //   if(element.categ=="Pizzas"){
     //     alert(element.extra);
@@ -614,7 +619,7 @@ function f_final_compra(){
     // });
     
 
-    //window.open(DOMAIN+"admin.php","_self")
+    //
   }
 }
 
@@ -661,6 +666,21 @@ function forma_pago(forma){
     tabla_vuelto.style.display='none';
     centrar(im_tarjeta);
   }
+}
+
+function f_continuar(conti){
+  if(conti==1){
+    venta_aux.forEach(element => {
+      if(element.categ=="Pizzas"){
+        alert(element.extra);
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP
+        });
+      }
+    });
+    window.open(DOMAIN+"admin.php","_self");
+  }
+  else
+    window.open(DOMAIN+"admin.php","_self");
 }
 
 </script>

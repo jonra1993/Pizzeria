@@ -8,6 +8,6 @@
   }
 
   $precio=buscar_preciosextra_table($tama,$extra);
-  foreach ($precio as $ggg){ echo remove_junk($ggg['precio']); }
+  foreach ($precio as $ggg){ echo remove_junk($ggg['price']); }
 ?>
   
