@@ -6,7 +6,7 @@ include_once("fpdf/fpdf.php");
 // Better table
 function ImprovedTable($pdf,$header,$data,$subtotal)
 {
-    $pdf->setFont("Courier",null,9);
+    $pdf->setFont("Courier","B",9);
     // Column widths
     $q=4;
     $w = array(4, 48, 11, 11);
@@ -33,7 +33,7 @@ function ImprovedTable($pdf,$header,$data,$subtotal)
     $pdf->Cell(11,4,$subtotal,"T",0,"L");
     $pdf->Ln();
     $pdf->Cell(array_sum($w),0,'',0,1);
-    $pdf->setFont("Courier",null,9);
+    $pdf->setFont("Courier","B",9);
 
     if($_GET["efectivo"]==0) $pdf->Cell(40,4,"Tar",0);
     else $pdf->Cell(40,4,"Ef",0);
@@ -53,13 +53,13 @@ if($filas<80) $filas=80;
 $pdf = new FPDF('P','mm',array(80,$filas));  //ancho y alto ALTO SIEMPRE MAYO AL ANCHO
 //$pdf->SetMargins(3,3,3,3); //LEFT, TOP RIGHT
 $pdf->AddPage();
-$pdf->SetMargins(3, 3, 3); 
+$pdf->SetMargins(3, 1, 3); 
 $pdf->SetAutoPageBreak(false, 3);
 
 $pdf->setFont("Courier","B",11);   //se establece el tipo de letra
 $pdf->Cell(0,5,utf8_decode("Pizzería Amangiare"),"LBRT",1,"C"); //imprime una celda de borse rectangular
 
-$pdf->setFont("Courier",null,9);
+$pdf->setFont("Courier","B",9);
 $pdf->Cell(20,4,utf8_decode("Dirección:"),0);
 $pdf->Cell(43,4,"Conocoto, ....",0,1);
 $pdf->Cell(20,4,"Fecha    :",0);
