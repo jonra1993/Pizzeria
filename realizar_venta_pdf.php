@@ -83,7 +83,7 @@ if($filas<80) $filas=80;
 $pdf = new FPDF('P','mm',array(80,$filas));  //ancho y alto ALTO SIEMPRE MAYO AL ANCHO
 //$pdf->SetMargins(3,3,3,3); //LEFT, TOP RIGHT
 $pdf->AddPage();
-$pdf->SetMargins(3, 1, 3); 
+$pdf->SetMargins(3, 3, 3); 
 $pdf->SetAutoPageBreak(false, 3);
 
 $pdf->setFont("Courier","B",11);   //se establece el tipo de letra
@@ -104,22 +104,11 @@ $pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
 
 $header = array('C', 'Descripción', 'Val', 'Tot');
 
-
-/*
-$orden = array
-(
-  array(1,utf8_decode("Pizza porción"),1,1),
-  array(1,"Pizza mediana",15,15),
-  array(2,utf8_decode("Pizza pequeña"),5,10),
-  array(1,utf8_decode("Pizza mediana piña"),17,17)
-);*/
-
-
 ImprovedTable($pdf,$header,$values,$_GET["subtotal"]);
 
 //$pdf->Output("Reportes_PDF/notaVenta_".$_GET["user"].$_GET["date1"].".pdf","F");
 
-$pdf->AddPage();
+/*$pdf->AddPage();
 $pdf->SetMargins(3, 3, 3); 
 $pdf->SetAutoPageBreak(false, 3);
 
@@ -132,7 +121,7 @@ $pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
 
 $header = array('Cantidad', 'Descripción');
 
-ImprovedTable1($pdf,$header,$values);
+ImprovedTable1($pdf,$header,$values);*/
 
 $pdf->Output();
 
