@@ -108,7 +108,7 @@ ImprovedTable($pdf,$header,$values,$_GET["subtotal"]);
 
 //$pdf->Output("Reportes_PDF/notaVenta_".$_GET["user"].$_GET["date1"].".pdf","F");
 
-/*$pdf->AddPage();
+$pdf->AddPage();
 $pdf->SetMargins(3, 3, 3); 
 $pdf->SetAutoPageBreak(false, 3);
 
@@ -121,7 +121,7 @@ $pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
 
 $header = array('Cantidad', 'Descripción');
 
-ImprovedTable1($pdf,$header,$values);*/
+ImprovedTable1($pdf,$header,$values);
 
 $pdf->Output();
 

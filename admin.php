@@ -188,21 +188,6 @@
       [1,"Pizza mediana piña",17,17],
       [1,"Pizza familiar piña",17,17],
       [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza porción",1,1],
-      [1,"Pizza mediana",15,15],
-      [2,"Pizza pequeña",1,1],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza familiar piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
       [1,"Pizza mediana piña",17,17]
       ];
 
