@@ -4,7 +4,7 @@ include_once("fpdf/fpdf.php");
 //require('fpdf/fpdf.php');
 
 // Better table
-function ImprovedTable($pdf,$header,$data)
+function ImprovedTable1($pdf,$header,$data)
 {
     $pdf->setFont("Courier","B",9);
     // Column widths
@@ -56,7 +56,7 @@ $pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
 
 $header = array('Cantidad', 'Descripción');
 
-ImprovedTable($pdf,$header,$values);
+ImprovedTable1($pdf,$header,$values);
 
 //$pdf->Output("Reportes_PDF/notaVenta_".$_GET["user"].$_GET["date1"].".pdf","F");
 $pdf->Output();
