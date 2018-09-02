@@ -20,6 +20,7 @@
  $recent_products = find_recent_product_added('5');
  $recent_sales    = find_recent_sale_added('5');
 
+
 //  $array_tama=  array('mediana', 'familiar', 'extragrande'); 
 //  $array_tipo= array("normal","especial"); 
 //  $array_savor= array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
@@ -38,7 +39,7 @@
 
 <div class="row">
    <div class="col-md-6">
-     <?php echo display_msg($msg); ?>
+    <?php echo display_msg($msg); ?>
    </div>
 </div>
   <!--.......Cuadrados de visualizacion......-->
@@ -689,13 +690,24 @@ function f_continuar(conti){
   if(aux==0){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
-        alert(element.extra);
+        // alert(element.extra);
         $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago
         });
       }
     });
-    alert(p_pago);
-    window.open(DOMAIN+"admin.php","_self");
+    
+    var srt_get="num="+venta_aux.length;
+    alert(srt_get);
+    var cont=0;      //Contador de numero de elementos
+    venta_aux.forEach(element => {
+      srt_get+="&c_canti"+cont+"="+element.canti;
+      srt_get+="&c_descrip"+cont+"="+element.categ+" "+element.tama+" "+element.tipo+" "+element.sabor+" "+element.forma;
+      srt_get+="&c_precio"+cont+"="+element.precioP;
+      cont++;
+    });
+    alert(srt_get);
+
+    window.open(DOMAIN+"admin.php?"+srt_get,"_self");
   }
   
 }

@@ -11,13 +11,33 @@
  $c_user          = count_by_id('users');
  $products_sold   = find_higest_saleing_product('10');
  $recent_products = find_recent_product_added('5');
- $recent_sales    = find_recent_sale_added('5')
+ $recent_sales    = find_recent_sale_added('5');
+ $array_tama=  array('mediana', 'familiar', 'extragrande'); 
+ $prueba="a";
+ $prueba="c";
+ $item_compr= array();
+ $lista_items=array();
+
+ if(isset($_GET['num'])) {
+  $prueba="b";
+  $num_items=$_GET['num'];
+  for($k=0;$k<$num_items;$k++){
+    array_push($item_compr,$_GET['c_canti'.$k],$_GET['c_descrip'.$k],$_GET['c_precio'.$k]);
+    array_push($lista_items,$item_compr);
+    $item_compr= array();
+  }
+}
 ?>
 <?php include_once('layouts/header.php'); ?>
 
 <div class="row">
    <div class="col-md-6">
-     <?php echo display_msg($msg); ?>
+     <?php echo $lista_items[0][0];
+     echo $lista_items[0][1];
+     echo $lista_items[0][2];
+    //  echo $lista_items[1][0];
+    //  echo $lista_items[1][1];
+    //  echo $lista_items[1][2];?>
    </div>
 </div>
 <!-- Info boxes -->
@@ -171,40 +191,43 @@
 
 
 <script>
-    var user = "<?php echo $user['username']; ?>";
-    var date = "<?php echo make_date(); ?>";
-    var d = new Date();
-    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
-    
-    var efectivo=1; //0 con tarjeat, 1 con efectivo
-    var servir=1; //0 llevar, 1 servirse
+  var user = "<?php echo $user['username']; ?>";
+  var date = "<?php echo make_date(); ?>";
+  var d = new Date();
+  var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+  
+  var efectivo=1; //0 con tarjeat, 1 con efectivo
+  var servir=1; //0 llevar, 1 servirse
 
-    var subtotal=130;
+  var subtotal=130;
+  var  num_item=Number(<?php echo $num_items;?>);
+  
 
-    var orden = [
-      [1,"Pizza porción",1,1],
-      [1,"Pizza mediana",15,15],
-      [2,"Pizza pequeña",1,1],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza familiar piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza porción",1,1],
-      [1,"Pizza mediana",15,15],
-      [2,"Pizza pequeña",1,1],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza familiar piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza mediana piña",17,17]
-      ];
+  var orden = [
+    ['<?php echo $lista_items[0][0];?>','<?php echo $lista_items[0][1];?>','<?php echo $lista_items[0][2];?>'],
+    [1,"Pizza porción",1,1],
+    [1,"Pizza mediana",15,15],
+    [2,"Pizza pequeña",1,1],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza familiar piña",17,17],
+    [1,"Pizza mangiare",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza mangiare",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza porción",1,1],
+    [1,"Pizza mediana",15,15],
+    [2,"Pizza pequeña",1,1],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza familiar piña",17,17],
+    [1,"Pizza mangiare",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza mangiare",17,17],
+    [1,"Pizza mediana piña",17,17],
+    [1,"Pizza mediana piña",17,17]
+  ];
 
   var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
   var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
