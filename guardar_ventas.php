@@ -8,12 +8,13 @@
   $forma = $_GET['p_forma'];
   $extras = $_GET['p_extras'];
   $precio = $_GET['p_precio'];
+  $pago = $_GET['p_pago'];
 
   $date    = make_date();
   $query  = "INSERT INTO venta_pizzas (";        //Insertar la BD en donde se va a ingresar los datos
-  $query .=" qty,tam_pizza,tipo_pizza,sabor_pizza,llevar_pizza,extras,price,date";
+  $query .=" qty,tam_pizza,tipo_pizza,sabor_pizza,llevar_pizza,extras,price,forma_pago,date";
   $query .=") VALUES (";
-  $query .=" '{$cantidad}', '{$tama}', '{$tipo}', '{$sabor}', '{$forma}', '{$extras}', '{$precio}', '{$date}'";
+  $query .=" '{$cantidad}', '{$tama}', '{$tipo}', '{$sabor}', '{$forma}', '{$extras}', '{$precio}', '{$pago}', '{$date}'";
   $query .=")";
   $db->query($query)
 ?>
