@@ -14,6 +14,19 @@ $page_title = 'Reporte de ventas';
       $start_date   = remove_junk($db->escape($_POST['start-date']));
       $end_date     = remove_junk($db->escape($_POST['end-date']));
       $cierres      = by_dates_cierres_cajas($start_date,$end_date);
+
+      $da=0;
+      $cc=0;
+      $ct=0; 
+      $de=0;
+      $s=0;
+      foreach ($cierres as $c){
+        $da=$da+(float)remove_junk($c['dinero_apertura']);
+        $cc=$cc+(float)remove_junk($c['cobros_en_caja']);
+        $ct=$ct+(float)remove_junk($c['cobros_con_tarjeta']);
+        $de=$de+(float)remove_junk($c['dinero_entregado']);
+        $s=$s+(float)remove_junk($c['saldo']);
+      }
  
     else:
       $session->msg("d", $errors);
@@ -98,16 +111,14 @@ $page_title = 'Reporte de ventas';
             </tr>
             <?php endforeach; ?>
           </tbody>
-          <tfoo>
-            <tr>
-              <th class="text-center" style="width: 10%;" colspan="2"> Total </th>
-              <th class="text-center" style="width: 10%;" id="dinero_apertura"> </th>
-              <th class="text-center" style="width: 10%;" id="cobros_en_caja"> </th>
-              <th class="text-center" style="width: 10%;" id="cobros_con_tarjeta"> </th>
-              <th class="text-center" style="width: 10%;" id="dinero_entregado"> </th>
-              <th class="text-center" style="width: 10%;" id="saldo"> </th>
-            </tr>
-          </tfoo>
+          <tr>
+            <th class="text-center" style="width: 10%;" colspan="2"> Total </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$da, 2, '.', '')?> </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$cc, 2, '.', '')?> </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$ct, 2, '.', '')?> </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$de, 2, '.', '')?> </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$s, 2, '.', '')?> </th>
+          </tr>
         </table>
       </div>
     </div>
@@ -116,44 +127,5 @@ $page_title = 'Reporte de ventas';
 
 </div>
 
-
-
-
-
-
-<script>
-myFunction();
-
-  function myFunction() {
-    "<?php if ($cierres != null):?>";
-      var da = document.getElementById('dinero_apertura');
-      var cc = document.getElementById('cobros_en_caja');
-      var ct = document.getElementById('cobros_con_tarjeta');
-      var de = document.getElementById('dinero_entregado');
-      var s = document.getElementById('saldo');
-
-      var da1=0;
-      var cc1=0;
-      var ct1=0; 
-      var de1=0;
-      var s1=0;
-      "<?php foreach ($cierres as $cierre):?>";
-        var id = "<?php echo $cierre['id']; ?>";
-        
-        da1 = da1 + Number(document.getElementById("da"+id).innerHTML);
-        cc1 = cc1 + Number(document.getElementById("cc"+id).innerHTML);
-        ct1 = ct1 + Number(document.getElementById("ct"+id).innerHTML);
-        de1 = de1 + Number(document.getElementById("de"+id).innerHTML);
-        s1 = s1 + Number(document.getElementById("s"+id).innerHTML);
-      "<?php endforeach ?>";
-      da.innerHTML =da1.toFixed(2);;
-      cc.innerHTML =cc1.toFixed(2);;
-      ct.innerHTML =ct1.toFixed(2);;
-      de.innerHTML =de1.toFixed(2);;
-      s.innerHTML =s1.toFixed(2);;
-    "<?php endif;?>";
-  }
-
-</script>
 
 <?php include_once('layouts/footer.php'); ?>

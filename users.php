@@ -20,7 +20,7 @@
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Usuarios</span>
+          <span>Administrador de usuarios</span>
         </strong>
         <div class="pull-right">
           <a href="add_user.php" class="btn btn-primary">Agregar usuario</a>
@@ -33,7 +33,7 @@
             <th class="text-center" style="width: 50px;">#</th>
             <th>Nombre </th>
             <th>Usuario</th>
-            <th class="text-center" style="width: 15%;">Rol de usuario</th>
+            <th class="text-center" style="width: 15%;">Grupo</th>
             <th class="text-center" style="width: 10%;">Estado</th>
             <th style="width: 20%;">Último login</th>
             <th class="text-center" style="width: 100px;">Acciones</th>
@@ -56,11 +56,11 @@
            <td><?php echo read_date($a_user['last_login'])?></td>
            <td class="text-center">
              <div class="btn-group">
-                <a href="edit_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
-                  <i class="glyphicon glyphicon-pencil"></i>
-               </a>
-                <a href="delete_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
-                  <i class="glyphicon glyphicon-remove"></i>
+                <a href="edit_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-info" data-toggle="tooltip" title="Editar">
+                  <i class="glyphicon glyphicon-edit"></i>
+                </a>
+                <a onclick="return confirmDelete();" href="delete_user.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                  <i class="glyphicon glyphicon-trash"></i>
                 </a>
                 </div>
            </td>
@@ -72,4 +72,18 @@
     </div>
   </div>
 </div>
+
+<script>
+
+function confirmDelete() 
+{
+  var confirmar = confirm("¿Realmente desea eliminar el usuario? ");
+  if (confirmar) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
+</script>
   <?php include_once('layouts/footer.php'); ?>

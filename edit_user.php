@@ -27,9 +27,10 @@
             $sql = "UPDATE users SET name ='{$name}', username ='{$username}',user_level='{$level}',status='{$status}' WHERE id='{$db->escape($id)}'";
          $result = $db->query($sql);
           if($result && $db->affected_rows() === 1){
-            $session->msg('s',"Acount Updated ");
-            redirect('edit_user.php?id='.(int)$e_user['id'], false);
-          } else {
+            $session->msg('s',"Cuenta actualizada ");
+            redirect('users.php');
+          } 
+          else {
             $session->msg('d',' Lo siento no se actualizó los datos.');
             redirect('edit_user.php?id='.(int)$e_user['id'], false);
           }
@@ -38,6 +39,7 @@
       redirect('edit_user.php?id='.(int)$e_user['id'],false);
     }
   }
+  else if(isset($_POST['cancel'])) redirect('users.php',false);
 ?>
 <?php
 // Update user password
@@ -51,10 +53,10 @@ if(isset($_POST['update-pass'])) {
           $sql = "UPDATE users SET password='{$h_pass}' WHERE id='{$db->escape($id)}'";
        $result = $db->query($sql);
         if($result && $db->affected_rows() === 1){
-          $session->msg('s',"Se ha actualizado la contraseña del usuario. ");
-          redirect('edit_user.php?id='.(int)$e_user['id'], false);
+          $session->msg('s',"Se ha actualizado la contraseña de ".remove_junk(ucwords($e_user['name'])));
+          redirect('users.php');
         } else {
-          $session->msg('d','No se pudo actualizar la contraseña de usuario..');
+          $session->msg('d','No se pudo actualizar la contraseña del usuario..');
           redirect('edit_user.php?id='.(int)$e_user['id'], false);
         }
   } else {
@@ -72,7 +74,7 @@ if(isset($_POST['update-pass'])) {
        <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          Actualiza cuenta <?php echo remove_junk(ucwords($e_user['name'])); ?>
+          Actualiza cuenta de <?php echo remove_junk(ucwords($e_user['name'])); ?>
         </strong>
        </div>
        <div class="panel-body">
@@ -101,7 +103,8 @@ if(isset($_POST['update-pass'])) {
                 </select>
             </div>
             <div class="form-group clearfix">
-                    <button type="submit" name="update" class="btn btn-info">Actualizar</button>
+              <button type="submit" name="update" class="btn btn-success">Actualizar</button>
+              <button type="submit" name="cancel" class="btn btn-danger">Cancelar</button>
             </div>
         </form>
        </div>
@@ -113,7 +116,7 @@ if(isset($_POST['update-pass'])) {
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          Cambiar <?php echo remove_junk(ucwords($e_user['name'])); ?> contraseña
+          Cambiar contraseña de <?php echo remove_junk(ucwords($e_user['name'])); ?>
         </strong>
       </div>
       <div class="panel-body">
@@ -123,7 +126,7 @@ if(isset($_POST['update-pass'])) {
                 <input type="password" class="form-control" name="password" placeholder="Ingresa la nueva contraseña" required>
           </div>
           <div class="form-group clearfix">
-                  <button type="submit" name="update-pass" class="btn btn-danger pull-right">Cambiar</button>
+            <button type="submit" name="update-pass" class="btn btn-success pull-right">Cambiar</button>
           </div>
         </form>
       </div>

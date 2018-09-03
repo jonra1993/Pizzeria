@@ -18,6 +18,11 @@ if(isset($_POST['submit'])){
     $end_date     = remove_junk($db->escape($_POST['end-date']));
     $inv      = by_dates_Inventario($start_date,$end_date,$option);
 
+    $total=0;
+    foreach ($inv as $i){
+      $total=$total+(float)remove_junk($i['gasto']);
+    }
+
   else:
     $session->msg("d", $errors);
     redirect('product_report.php', false);
@@ -110,41 +115,23 @@ if(isset($_POST['submit'])){
                       <td class="text-center"> <?php echo remove_junk($i['username']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['pro']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['unidades']); ?></td>
-                      <td class="text-center" id="da<?php echo remove_junk($i['id']); ?>"> <?php echo remove_junk($i['last_quantity']); ?></td>
-                      <td class="text-center" id="cc<?php echo remove_junk($i['id']); ?>"> <?php echo remove_junk($i['new_quantity']); ?></td>
+                      <td class="text-center" > <?php echo remove_junk($i['last_quantity']); ?></td>
+                      <td class="text-center" > <?php echo remove_junk($i['new_quantity']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['buy_price']); ?></td>
-                      <td class="text-center" id="gg<?php echo remove_junk($i['id']); ?>"> <?php echo remove_junk($i['gasto']); ?></td>
+                      <td class="text-center"> <?php echo remove_junk($i['gasto']); ?></td>
                     </tr>
                   <?php endforeach; ?>
               </tbody>
-              <tfoo>
-                <tr>
-                  <th class="text-center" style="width: 10%;" colspan="7"> Total </th>
-                  <th class="text-center" style="width: 10%;" id="gas"> </th>
-                </tr>
-              </tfoo>
+              <tr>
+                <th class="text-center" style="width: 10%;" colspan="7"> Total $</th>
+                <th class="text-center" style="width: 10%;" id="gas"><?php echo number_format((float)$total, 2, '.', '')?></th>
+              </tr>
+
             </table>
           </div>
         </div>
       </div>
     <?php endif; ?>
 </div>
-
-<script>
-myFunction();
-
-  function myFunction() {
-    "<?php if ($inv != null):?>";
-      var gas = document.getElementById('gas');
-      var gg=0;
-      "<?php foreach ($inv as $i):?>";
-        var id = "<?php echo $i['id']; ?>";
-        gg = gg + Number(document.getElementById("gg"+id).innerHTML);
-      "<?php endforeach ?>";
-      gas.innerHTML =gg.toFixed(2);;
-    "<?php endif;?>";
-  }
-
-</script>
 
 <?php include_once('layouts/footer.php'); ?>

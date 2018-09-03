@@ -10,7 +10,9 @@
  $c_sale          = count_by_id('sales');
  $c_user          = count_by_id('users');
  $products_sold   = find_higest_saleing_product('10');
- $recent_products = find_recent_product_added('5');
+
+ $recent_products = find_bajostock_product();
+
  $recent_sales    = find_recent_sale_added('5');
  $array_tama=  array('mediana', 'familiar', 'extragrande'); 
  $prueba="a";
@@ -32,7 +34,9 @@
 
 <div class="row">
    <div class="col-md-6">
-     <?php echo $lista_items[0][0];
+     <?php
+     echo display_msg($msg); 
+     echo $lista_items[0][0];
      echo $lista_items[0][1];
      echo $lista_items[0][2];
     //  echo $lista_items[1][0];
@@ -48,17 +52,17 @@
       <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-user"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Usuarios</span>
-        <span class="info-box-number"><?php  echo $c_user['total']; ?><small>%</small></span>
+        <span class="info-box-number"><?php  echo $c_user['total']; ?></span>
       </div>
     </div>
   </div>
-  <!--Categorias-->
+  <!--Ventas-->
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-list"></i></span>
+      <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-usd"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Categorías</span>
-        <span class="info-box-number"><?php  echo $c_categorie['total']; ?><small>%</small></span>
+        <span class="info-box-text">Ventas diarias</span>
+        <span class="info-box-number"><small>$</small><?php  echo $c_sale['total']; ?></span>
       </div>
     </div>
   </div>
@@ -68,20 +72,21 @@
       <span class="info-box-icon bg-blue"><i class="glyphicon glyphicon-shopping-cart"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Productos</span>
-        <span class="info-box-number"><?php  echo $c_product['total']; ?><small>%</small></span>
+        <span class="info-box-number"><?php  echo $c_product['total']; ?></span>
       </div>
     </div>
   </div>
-  <!--Ventas-->
+  <!--Categorias-->
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-usd"></i></span>
+      <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-list"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Ventas</span>
-        <span class="info-box-number"><?php  echo $c_sale['total']; ?><small>%</small></span>
+        <span class="info-box-text">Contador de ordenes</span>
+        <span class="info-box-number"><?php  echo $c_categorie['total']; ?></span>
       </div>
     </div>
   </div>
+
 </div>
 <!-- /.row -->
 
@@ -120,7 +125,7 @@
   </div>
 
   <!--Ultimas Ventas-->
-  <div class="col-md-4">
+  <div class="col-md-5">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>
@@ -158,18 +163,18 @@
   </div>
 
   <!--Productos recientes-->
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Productos recientemente añadidos</span>
+          <span>Productos con bajo stock</span>
         </strong>
       </div>
       <div class="panel-body">
         <div class="list-group">
           <?php foreach ($recent_products as  $recent_product): ?>
-            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo(int)$recent_product['id'];?>">
+            <a class="list-group-item clearfix" href="product.php">
               <h4 class="list-group-item-heading">
                 <?php if($recent_product['media_id'] === '0'): ?>
                   <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="User Image"  width="100" height="100">
@@ -177,7 +182,7 @@
                   <img class="img-avatar img-circle" src="uploads/products/<?php echo $recent_product['image'];?>" alt="User Image"  width="100" height="100" />
                 <?php endif;?>
                 <?php echo remove_junk(first_character($recent_product['name']));?>
-                  <span class="label label-warning pull-right">$<?php echo (int)$recent_product['sale_price']; ?></span>
+                  <span class="label label-warning pull-right"><?php echo (int)$recent_product['quantity']; ?></span>
               </h4>
               <span class="list-group-item-text pull-right"><?php echo remove_junk(first_character($recent_product['categorie'])); ?></span>
             </a>
@@ -186,36 +191,7 @@
       </div>
     </div>
   </div>
-
 </div>
 
-
-<!--script>
-    var user = "<?php //echo $user['username']; ?>";
-    var date = "<?php //echo make_date(); ?>";
-    var d = new Date();
-    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
-    
-    var efectivo=1; //0 con tarjeat, 1 con efectivo
-    var servir=1; //0 llevar, 1 servirse
-
-  var subtotal=130;
-  var  num_item=Number(<?php echo $num_items;?>);
-  
-
-    var orden = [
-      [1,"Pizza porción",1,1],
-      [1,"Pizza mediana",15,15],
-      [2,"Pizza pequeña",1,1],
-      [1,"Pizza mediana piña",17,17],
-      [1,"Pizza familiar piña",17,17],
-      [1,"Pizza mangiare",17,17],
-      [1,"Pizza mediana piña",17,17]
-      ];
-
-  var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
-  //var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
-
-</script>
 
 <?php include_once('layouts/footer.php'); ?>

@@ -60,11 +60,11 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
         <div class="col-md-5 ml-auto mr-auto">
           <div class="card card-login card-plain">
             <form method="post" action="auth.php" class="clearfix">
-              <div class="card-header text-center">
+              <!--div class="card-header text-center">
                 <div class="logo-container">
                   <img src="assets/img/now-logo.png" alt="">
                 </div>
-              </div>
+              </div-->
               <div class="card-body">
                 <div class="input-group no-border input-lg">
                   <div class="input-group-prepend">
@@ -72,7 +72,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
                       <i class="now-ui-icons users_circle-08"></i>
                     </span>
                   </div>
-                  <input type="name" class="form-control" name="username" placeholder="Nombre se usuario" required>
+                  <input type="name" class="form-control" name="username" placeholder="Nombre se usuario" required autocomplete="off">
                 </div>
                 <div class="input-group no-border input-lg">
                   <div class="input-group-prepend">

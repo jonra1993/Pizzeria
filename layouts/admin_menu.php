@@ -15,14 +15,14 @@
     </a>
   </li>
   <li  class="nav-item start">
-    <a href="#"  class="nav-link nav-toggle">
+    <a href="users.php"  class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-user"></i>
-      <span class="title">Accesos</span>
+      <span class="title">Administrador de usuarios</span>
     </a>
-    <ul class="sub-menu">
+    <!--ul class="sub-menu">
       <li class="nav-item start "><a class="nav-link " href="group.php">Administrar grupos</a> </li>
       <li class="nav-item start "><a class="nav-link "href="users.php">Administrar usuarios</a> </li>
-   </ul>
+   </ul-->
   </li>
   <!--li>
     <a href="categorie.php" >
@@ -34,7 +34,7 @@
   <li  class="nav-item start">
     <a href="#"  class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-shopping-cart"></i>
-      <span class="title">Catalogo de Productos</span>
+      <span class="title">Catalogo de productos</span>
     </a>
     <ul class="sub-menu">
       <li class="nav-item start "><a class="nav-link "href="catalogo_pizzas.php">Pizzas</a> </li>
@@ -73,14 +73,14 @@
   <li  class="nav-item start">
     <a href="sales.php" class="nav-link nav-toggle"  class="nav-link">
       <i class="glyphicon glyphicon-th-list"></i>
-       <span class="title">Registro de Ventas</span>
+       <span class="title">Registro de ventas</span>
       </a>
   </li>
   <!-- Realizar una Nueva Venta -->
   <li  class="nav-item start">
     <a href="realizar_venta.php" class="nav-link">
       <i class="glyphicon glyphicon-tags"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span class="title">Nueva Venta</span>
+      <span class="title">Nueva venta</span>
     </a>
   </li>
 
@@ -107,7 +107,7 @@
   <li  class="nav-item start">
     <a href="caja_cierre.php" class="nav-link">
       <i class="glyphicon glyphicon-folder-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span class="title">Cierre de Caja</span>
+      <span class="title">Cierre de caja</span>
     </a>
   </li>
 
@@ -116,7 +116,7 @@
   <li  class="nav-item start">
     <a href="#" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-folder-close"></i>
-       <span class="title">Reportes de Cierres</span>
+       <span class="title">Reportes de cierres</span>
       </a>
       <ul class="sub-menu">
         <li class="nav-item start "><a class="nav-link "href="caja_cierre_general.php">Cierres por fecha </a></li>
@@ -128,14 +128,14 @@
   <li  class="nav-item start">
     <a href="caja_ingreso_retiro.php" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-usd"></i>
-       <span class="title">Ingresos-Retiro de caja</span>
+       <span class="title">Ingresos-retiro de caja</span>
       </a>
   </li>
 
   <li  class="nav-item start">
     <a href="prueba_impresora.php" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-usd"></i>
-       <span class="title">Prueba Impresora</span>
+       <span class="title">Prueba impresora</span>
       </a>
   </li>
 

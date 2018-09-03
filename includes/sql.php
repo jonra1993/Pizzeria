@@ -352,6 +352,18 @@ function tableExists($table){
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
    return find_by_sql($sql);
  }
+
+ function find_bajostock_product(){
+  global $db;
+  $sql   = " SELECT p.quantity,p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
+  $sql  .= "m.file_name AS image FROM products p";
+  $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
+  $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
+  $sql  .= " WHERE p.quantity <= 2";
+  $sql  .= " ORDER BY p.id DESC";
+  return find_by_sql($sql);
+}
+
  /*--------------------------------------------------------------*/
  /* Function for Find Highest saleing Product
  /*--------------------------------------------------------------*/

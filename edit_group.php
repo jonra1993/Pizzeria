@@ -28,7 +28,7 @@
          if($result && $db->affected_rows() === 1){
           //sucess
           $session->msg('s',"Grupo se ha actualizado! ");
-          redirect('edit_group.php?id='.(int)$e_group['id'], false);
+          redirect('group.php');
         } else {
           //failed
           $session->msg('d','Lamentablemente no se ha actualizado el grupo!');

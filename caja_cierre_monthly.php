@@ -73,17 +73,15 @@
               </tr>
              <?php endforeach; ?>
             </tbody>
-            <tfoo>
-              <tr>
-                <th class="text-center" style="width: 10%;" colspan="2"> Total </th>
-                <th class="text-center" style="width: 10%;" id="dinero_apertura"> </th>
-                <th class="text-center" style="width: 10%;" id="cobros_en_caja"> </th>
-                <th class="text-center" style="width: 10%;" id="cobros_con_tarjeta"> </th>
-                <th class="text-center" style="width: 10%;" id="dinero_entregado"> </th>
-                <th class="text-center" style="width: 10%;" id="saldo"> </th>
+            <tr>
+              <th class="text-center" style="width: 10%;" colspan="2"> Total </th>
+              <th class="text-center" style="width: 10%;" id="dinero_apertura"> </th>
+              <th class="text-center" style="width: 10%;" id="cobros_en_caja"> </th>
+              <th class="text-center" style="width: 10%;" id="cobros_con_tarjeta"> </th>
+              <th class="text-center" style="width: 10%;" id="dinero_entregado"> </th>
+              <th class="text-center" style="width: 10%;" id="saldo"> </th>
 
-              </tr>
-            </tfoo>
+            </tr>
           </table>
         </div>
       </div>
