@@ -44,8 +44,8 @@
           <tr>
            <td class="text-center"><?php echo count_id();?></td>
            <td><?php echo remove_junk(ucwords($a_user['name']))?></td>
-           <td><?php echo remove_junk(ucwords($a_user['username']))?></td>
-           <td class="text-center"><?php echo remove_junk(ucwords($a_user['group_name']))?></td>
+           <td><?php echo remove_junk(($a_user['username']))?></td>
+           <td><?php echo remove_junk(ucwords($a_user['group_name']))?></td>
            <td class="text-center">
            <?php if($a_user['status'] === '1'): ?>
             <span class="label label-success"><?php echo "Activo"; ?></span>

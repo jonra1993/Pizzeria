@@ -174,7 +174,7 @@
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Productos con bajo stock</span>
+          <span>Productos con stock bajo</span>
         </strong>
       </div>
       <div class="panel-body">

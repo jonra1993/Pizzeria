@@ -46,7 +46,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
   }
 
 
-  if($session->isUserLoggedIn(true)) { redirect('home.php', false);}
+  if($session->isUserLoggedIn(true))  redirect('home.php', false);
 ?>
 <?php //include_once('layouts/header.php'); ?>
 <!DOCTYPE html>
