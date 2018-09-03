@@ -100,7 +100,7 @@
         <!-- BEGIN LOGO -->
         <div class="page-logo">
             <a href="#">
-                <img src="./fotos/logo.png" alt="logo" class="logo-default" /> </a>
+                <img src="./fotos/logo1.png" alt="logo" class="img-responsive logo-default" style="width: 37%;"/> </a>
             <div class="menu-toggler sidebar-toggler"> </div>
         </div>
         <!-- END LOGO -->

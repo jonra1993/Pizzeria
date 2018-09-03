@@ -11,13 +11,33 @@
  $c_user          = count_by_id('users');
  $products_sold   = find_higest_saleing_product('10');
  $recent_products = find_recent_product_added('5');
- $recent_sales    = find_recent_sale_added('5')
+ $recent_sales    = find_recent_sale_added('5');
+ $array_tama=  array('mediana', 'familiar', 'extragrande'); 
+ $prueba="a";
+ $prueba="c";
+ $item_compr= array();
+ $lista_items=array();
+
+ if(isset($_GET['num'])) {
+  $prueba="b";
+  $num_items=$_GET['num'];
+  for($k=0;$k<$num_items;$k++){
+    array_push($item_compr,$_GET['c_canti'.$k],$_GET['c_descrip'.$k],$_GET['c_precio'.$k]);
+    array_push($lista_items,$item_compr);
+    $item_compr= array();
+  }
+}
 ?>
 <?php include_once('layouts/header.php'); ?>
 
 <div class="row">
    <div class="col-md-6">
-     <?php echo display_msg($msg); ?>
+     <?php echo $lista_items[0][0];
+     echo $lista_items[0][1];
+     echo $lista_items[0][2];
+    //  echo $lista_items[1][0];
+    //  echo $lista_items[1][1];
+    //  echo $lista_items[1][2];?>
    </div>
 </div>
 <!-- Info boxes -->
@@ -179,7 +199,9 @@
     var efectivo=1; //0 con tarjeat, 1 con efectivo
     var servir=1; //0 llevar, 1 servirse
 
-    var subtotal=130;
+  var subtotal=130;
+  var  num_item=Number(<?php echo $num_items;?>);
+  
 
     var orden = [
       [1,"Pizza porción",1,1],
@@ -194,6 +216,6 @@
   var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
   //var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
 
-</script-->
+</script>
 
 <?php include_once('layouts/footer.php'); ?>

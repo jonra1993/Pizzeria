@@ -20,6 +20,7 @@
  $recent_products = find_recent_product_added('5');
  $recent_sales    = find_recent_sale_added('5');
 
+
 //  $array_tama=  array('mediana', 'familiar', 'extragrande'); 
 //  $array_tipo= array("normal","especial"); 
 //  $array_savor= array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
@@ -38,7 +39,7 @@
 
 <div class="row">
    <div class="col-md-6">
-     <?php echo display_msg($msg); ?>
+    <?php echo display_msg($msg); ?>
    </div>
 </div>
   <!--.......Cuadrados de visualizacion......-->
@@ -306,7 +307,7 @@
           <div class="panel-body" id="tabla_vuelto">
             <table class="table table-striped table-hover table-condensed">
               <tbody> 
-                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" style="width: 25%;" onchange="actu_vuelto()"></td></tr>
+                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" step=".01"  style="width: 25%;" onchange="actu_vuelto()"></td></tr>
                 <tr><td class="text-right">Vuelto</td><td class="text-center">$ <input id="in_vuelto" class="text-center"  type="number" value="0.00" min="0" style="width: 25%;" disabled></td></tr>
               </tbody>
             </table>
@@ -326,7 +327,7 @@ var venta_aux=[];
 // var array_tama=  ['mediana', 'familiar', 'extragrande']; 
 // var array_tipo= ["normal","especial"]; 
 // var array_savor= ['mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana'];
-var categ, p_tama, p_tipo, p_extras, p_forma, pizza_vent='0';
+var categ, p_tama, p_tipo, p_extras, p_forma, p_pago, pizza_vent='0';
 var fila_id = 0;
 var num_extras = 0;
 var str_extra="";
@@ -411,8 +412,10 @@ function pizzas_normal(tipo){
 function sabor_pizza(tipo,on_regres,ingre_especial){
   var precio=0;
   if (on_regres==0 && tipo!="personalizada") {
-    if(tipo.search("personalizada")!=(-1))
+    if(tipo.search("personalizada")!=(-1)){
       p_sabor="personalizada";              //Determinar piza especial sin ingredien
+      str_extra+=(ingre_especial.toString());
+    }
     else
       p_sabor=tipo;
     //Requrimiento de precio a BD se demora mas que la siguiente linea secuencial
@@ -420,10 +423,10 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
       precio=Number(result);
       var descrip= categ+" "+p_tama+" "+p_tipo+" "+tipo;
       agregar_fila(descrip,precio);
-      str_extra+=(ingre_especial.toString());
+      
       // alert(str_extra);
       //Guardar venta ---------------------------------------------------------------------------
-      var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:str_extra,forma:"123 ",precioP:precio};
+      var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:str_extra,forma:"123 ",precioP:precio,fpago:"pago"};
       venta_aux.push(venta_pizza); 
     }}); 
   }
@@ -648,11 +651,11 @@ function ingre_especial(theForm){
 
 function actu_vuelto(){
   var total = document.getElementById('total_compra').value;
-  // document.getElementById('total_compra').value=total.toFixed(2);
-  
+
   var efectivo = document.getElementById('in_efectivo').value;
   document.getElementById('in_vuelto').value=(efectivo-total).toFixed(2);
-  
+  //Mantener 2 decimales
+  efectivo = parseFloat(efectivo).toFixed(2);
 }
 
 function forma_pago(forma){
@@ -669,18 +672,44 @@ function forma_pago(forma){
 }
 
 function f_continuar(conti){
+  var aux=0;            //Auxiliar q permite determinar si se debe cargar los datos a la  BD o no
+  var efect=document.getElementById('in_vuelto').value;
   if(conti==1){
+    if(Math.sign(efect)!=-1){
+      p_pago="efectivo";
+    }
+    else{
+      alert("Valor de efectivo incorrecto");
+      aux=1;
+    }
+  }
+  else{
+    p_pago="tarjeta";
+  }
+
+  if(aux==0){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
-        alert(element.extra);
-        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP
+        // alert(element.extra);
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago
         });
       }
     });
-    window.open(DOMAIN+"admin.php","_self");
+    
+    var srt_get="num="+venta_aux.length;
+    alert(srt_get);
+    var cont=0;      //Contador de numero de elementos
+    venta_aux.forEach(element => {
+      srt_get+="&c_canti"+cont+"="+element.canti;
+      srt_get+="&c_descrip"+cont+"="+element.categ+" "+element.tama+" "+element.tipo+" "+element.sabor+" "+element.forma;
+      srt_get+="&c_precio"+cont+"="+element.precioP;
+      cont++;
+    });
+    alert(srt_get);
+
+    window.open(DOMAIN+"admin.php?"+srt_get,"_self");
   }
-  else
-    window.open(DOMAIN+"admin.php","_self");
+  
 }
 
 </script>
