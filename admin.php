@@ -170,9 +170,9 @@
 </div>
 
 
-<script>
-    var user = "<?php echo $user['username']; ?>";
-    var date = "<?php echo make_date(); ?>";
+<!--script>
+    var user = "<?php //echo $user['username']; ?>";
+    var date = "<?php //echo make_date(); ?>";
     var d = new Date();
     var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
     
@@ -194,6 +194,6 @@
   var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
   //var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
 
-</script>
+</script-->
 
 <?php include_once('layouts/footer.php'); ?>
