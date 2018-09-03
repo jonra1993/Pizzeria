@@ -97,9 +97,9 @@ $pdf->Cell(43,4,$_GET["date"],0,1);
 $pdf->Cell(20,4,"Telf     : ",0);
 $pdf->Cell(43,4,"02-3442096",0,1);
 
-
+$numOrden=$_GET["numorden"];
 $pdf->setFont("Courier","B",11);   //se establece el tipo de letra
-$pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
+$pdf->Cell(0,5,"Orden #".$numOrden,0,1,"C"); //imprime una celda de borse rectangular
 
 
 $header = array('C', 'Descripción', 'Val', 'Tot');
@@ -116,7 +116,7 @@ $pdf->setFont("Courier","B",9);
 $pdf->Cell(60,4,"Fecha: ".$_GET["date"],0,1);
 
 $pdf->setFont("Courier","B",12);   //se establece el tipo de letra
-$pdf->Cell(0,5,"Orden # xxxx",0,1,"C"); //imprime una celda de borse rectangular
+$pdf->Cell(0,5,"Orden #".$numOrden,0,1,"C"); //imprime una celda de borse rectangular
 
 
 $header = array('Cantidad', 'Descripción');

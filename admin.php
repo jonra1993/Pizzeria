@@ -5,6 +5,12 @@
    page_require_level(1);
 ?>
 <?php
+ $cc = find_conta('contador');
+ $contador;
+ foreach($cc as $c){
+  $contador=$c['conta'];
+}
+
  $c_categorie     = count_by_id('categories');
  $c_product       = count_by_id('products');
  $c_sale          = count_by_id('sales');
@@ -76,13 +82,13 @@
       </div>
     </div>
   </div>
-  <!--Categorias-->
+  <!--Contador-->
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
       <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-list"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Contador de ordenes</span>
-        <span class="info-box-number"><?php  echo $c_categorie['total']; ?></span>
+        <span class="info-box-number"><?php  echo $contador; ?></span>
       </div>
     </div>
   </div>
@@ -193,5 +199,28 @@
   </div>
 </div>
 
+<script>
+  var user = "<?php echo $user['username']; ?>";
+  var date = "<?php echo make_date(); ?>";
+  var d = new Date();
+  var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+  
+  var efectivo=1; //0 con tarjeat, 1 con efectivo
+  var servir=1; //0 llevar, 1 servirse
+  var numorden=25;
+  var subtotal=130;
+  var  num_item=Number(<?php echo $num_items;?>);
+  
+
+  var orden = [
+    <?php foreach ($lista_items as $list):?>
+      ['<?php echo $list[0];?>','<?php echo $list[1];?>','<?php echo $list[2];?>'],
+     <?php endforeach;?>
+  ];
+
+  var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
+  //var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
+
+</script>
 
 <?php include_once('layouts/footer.php'); ?>

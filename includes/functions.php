@@ -97,6 +97,10 @@ function read_date($str){
 function make_date(){
   return strftime("%Y-%m-%d %H:%M:%S", time());
 }
+
+function make_date2(){
+  return strftime("%Y-%m-%d", time());
+}
 /*--------------------------------------------------------------*/
 /* Function for  Readable date time
 /*--------------------------------------------------------------*/

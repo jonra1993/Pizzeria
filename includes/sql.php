@@ -11,6 +11,15 @@ function find_all($table) {
      return find_by_sql("SELECT * FROM ".$db->escape($table));
    }
 }
+
+function find_conta($table) {
+  global $db;
+  if(tableExists($table))
+  {
+    return find_by_sql("SELECT p.date, p.conta FROM ".$db->escape($table)." p WHERE id=1 LIMIT 1");
+  }
+}
+
 /*--------------------------------------------------------------*/
 /* Function for Perform queries
 /*--------------------------------------------------------------*/
