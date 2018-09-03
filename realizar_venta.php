@@ -468,6 +468,8 @@ function ingre_extra(extra){
     precio=Number(result);
     var descrip= "Extra "+extra+" en pizza "+p_tama;
     agregar_fila(descrip,precio);
+    var venta_extra={id:fila_id,categ:"extra",canti:1,tama:p_tama,extra:extra,precioP:precio};
+    venta_aux.push(venta_extra);
   }});
 }
 
@@ -484,6 +486,8 @@ function forma_servir(forma) {
   if (p_forma=="llevar"  && !(p_tama=="porcion")) {
     var descrip="Caja Pizza "+p_tama;
     agregar_fila(descrip, 1.0);
+    var venta_forma={id:fila_id,categ:"forma_pizza",canti:1,tama:p_tama,precioP:1};
+    venta_aux.push(venta_forma);
   }
   //Quitar  el contenedor al finalizar
   var e = document.getElementById("selc_pizzas_forma");
@@ -701,7 +705,22 @@ function f_continuar(conti){
     var cont=0;      //Contador de numero de elementos
     venta_aux.forEach(element => {
       srt_get+="&c_canti"+cont+"="+element.canti;
-      srt_get+="&c_descrip"+cont+"="+element.categ+" "+element.tama+" "+element.tipo+" "+element.sabor+" "+element.forma;
+      var descripP="";
+      if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
+        if(element.forma=="llevar"){
+          descripP=element.tama+" "+element.sabor+" L";
+        }
+        else{
+          descripP=element.tama+" "+element.sabor+" S";
+        }
+      }
+      else if(element.categ=="extra"){
+        var descripP="Extra "+element.extra+" en "+element.tama;
+      }
+      else if (element.categ=="forma_pizza") {
+        var descripP="Caja pizza "+element.tama;
+      }
+      srt_get+="&c_descrip"+cont+"="+descripP;
       srt_get+="&c_precio"+cont+"="+element.precioP;
       cont++;
     });
