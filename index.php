@@ -29,7 +29,24 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
 */
   ob_start();
   require_once('includes/load.php');                                    //importa archivos de include
-  if($session->isUserLoggedIn(true)) { redirect('home.php', false);}
+  
+  $d = make_date2();
+  $cc = find_conta('contador');
+  $ddd;
+  
+  foreach($cc as $c){
+    $ddd=$c['date'];
+  }
+
+  if($d!=$ddd){   //solo actualiza si se cambiado el valor
+    $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
+    $query .=" conta = 0, date = '{$d}' WHERE id = 1;";
+    if($db->query($query)){
+    }
+  }
+
+
+  if($session->isUserLoggedIn(true))  redirect('home.php', false);
 ?>
 <?php //include_once('layouts/header.php'); ?>
 <!DOCTYPE html>
@@ -60,11 +77,11 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
         <div class="col-md-5 ml-auto mr-auto">
           <div class="card card-login card-plain">
             <form method="post" action="auth.php" class="clearfix">
-              <div class="card-header text-center">
+              <!--div class="card-header text-center">
                 <div class="logo-container">
                   <img src="assets/img/now-logo.png" alt="">
                 </div>
-              </div>
+              </div-->
               <div class="card-body">
                 <div class="input-group no-border input-lg">
                   <div class="input-group-prepend">
@@ -72,7 +89,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
                       <i class="now-ui-icons users_circle-08"></i>
                     </span>
                   </div>
-                  <input type="name" class="form-control" name="username" placeholder="Nombre se usuario" required>
+                  <input type="name" class="form-control" name="username" placeholder="Nombre se usuario" required autocomplete="off">
                 </div>
                 <div class="input-group no-border input-lg">
                   <div class="input-group-prepend">

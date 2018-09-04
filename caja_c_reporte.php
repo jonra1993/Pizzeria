@@ -11,7 +11,7 @@ $pdf->setFont("Courier","B",11);   //se establece el tipo de letra
 
 $pdf->Cell(0,5,"Reporte de cierre de caja","LBR",1,"C"); //imprime una celda de borse rectangular
 
-$pdf->setFont("Courier",null,9);
+$pdf->setFont("Courier","B",9);
 
 $pdf->Cell(30,5,$_GET["date"],0,1);
 

@@ -74,7 +74,7 @@ if(isset($_POST['cerrar_caja'])){
      redirect('caja_cierre.php',false);
    }
 }
-if(isset($_POST['no_cerrar'])) redirect('admin.php', false);
+if(isset($_POST['no_cerrar'])) $a=1;//redirect('admin.php', false);
 
 else{
   if($user['bloqueocaja']==false){

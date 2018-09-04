@@ -8,7 +8,7 @@
 
 <?php
 
-  if(isset($_POST['hola1'])){
+  if($_GET['hello']==1){
     $user = current_user();
     $aux = remove_junk(ucwords($user['username']));
     foreach ($products as $product) {     
@@ -81,7 +81,7 @@
               </tr>
             </thead>
             <tbody>
-            <form method="post" action="product.php" class="clearfix" id="get_form">
+            <form method="post" action="product.php?hello=1" class="clearfix" id="get_form">
               <?php foreach ($products as $product):?>
               <tr>
                 <td class="text-center"><?php echo count_id();?></td>
@@ -113,7 +113,7 @@
                     <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                     <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                    <a onclick="return confirmDelete();" href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-trash"></span>
                     </a>
                   </div>
@@ -129,6 +129,15 @@
   </div>
 
 <script>
+
+  function confirmDelete() {
+      var confirmar = confirm("¿Realmente desea eliminar el producto? ");
+      if (confirmar) {
+          return true;
+      } else {
+          return false;
+      }
+  }
 
   function isInputNumber(evt){
       

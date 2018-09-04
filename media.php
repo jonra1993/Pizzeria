@@ -6,18 +6,17 @@
 ?>
 <?php $media_files = find_all('media');?>
 <?php
-  if(isset($_POST['submit'])) {
-  $photo = new Media();
-  $photo->upload($_FILES['file_upload']);
-    if($photo->process_media()){
-        $session->msg('s','Imagen subida al servidor.');
-        redirect('media.php');
-    } else{
-      $session->msg('d',join($photo->errors));
+if(isset($_POST['submit'])) {
+$photo = new Media();
+$photo->upload($_FILES['file_upload']);
+if($photo->process_media()){
+      $session->msg('s','Imagen subida al servidor.');
       redirect('media.php');
-    }
-
+} else{
+    $session->msg('d',join($photo->errors));
+    redirect('media.php');
   }
+}
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -66,7 +65,7 @@
                 <?php echo $media_file['file_type'];?>
               </td>
               <td class="text-center">
-                <a href="delete_media.php?id=<?php echo (int) $media_file['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar">
+                <a onclick="return confirmDelete();" href="delete_media.php?id=<?php echo (int) $media_file['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar">
                   <span class="glyphicon glyphicon-trash"></span>
                 </a>
               </td>
@@ -79,4 +78,14 @@
   </div>
 </div>
 
+<script>
+  function confirmDelete() {
+      var confirmar = confirm("¿Realmente desea eliminar el producto? ");
+      if (confirmar) {
+          return true;
+      } else {
+          return false;
+      }
+  }
+</script>
 <?php include_once('layouts/footer.php'); ?>

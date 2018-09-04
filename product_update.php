@@ -10,7 +10,7 @@
 
 <?php
 
-  if(isset($_POST['hola1'])){
+  if($_GET['hello']==1){
     $user = current_user();
     $aux = remove_junk(ucwords($user['username']));
     foreach ($products as $product) {     
@@ -83,7 +83,7 @@
               </tr>
             </thead>
             <tbody>
-            <form method="post" action="product_update.php" class="clearfix" id="get_form">
+            <form method="post" action="product_update.php?hello=1" class="clearfix" id="get_form">
               <?php foreach ($products as $product):?>
               <tr>
                 <td class="text-center"><?php echo count_id();?></td>

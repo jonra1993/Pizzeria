@@ -11,7 +11,8 @@
  <div class="col-md-12">
     <div class="panel">
       <div class="jumbotron text-center">
-         <h1>Esta es su nueva página de inicio</h1>
+         <h1>Bienvenido a pizzería Amangiare</h1>
+         <h2>Acceso exitoso</h2>
      
       </div>
     </div>

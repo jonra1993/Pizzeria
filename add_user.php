@@ -25,7 +25,7 @@
         if($db->query($query)){
           //sucess
           $session->msg('s'," Cuenta de usuario ha sido creada");
-          redirect('add_user.php', false);
+          redirect('users.php',false);
         } else {
           //failed
           $session->msg('d',' No se pudo crear la cuenta.');
@@ -36,6 +36,7 @@
       redirect('add_user.php',false);
    }
  }
+ else if(isset($_POST['cancel'])) redirect('users.php',false);
 ?>
 <?php include_once('layouts/header.php'); ?>
   <?php echo display_msg($msg); ?>
@@ -52,7 +53,7 @@
           <form method="post" action="add_user.php">
             <div class="form-group">
                 <label for="name">Nombre</label>
-                <input type="text" class="form-control" name="full-name" placeholder="Nombre completo" required autocomplete="off">
+                <input type="text" class="form-control" name="full-name" placeholder="Nombre completo" autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="username">Usuario</label>
@@ -60,7 +61,7 @@
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" class="form-control" name ="password"  placeholder="Contraseña">
+                <input type="password" class="form-control" name ="password" placeholder="Contraseña">
             </div>
             <div class="form-group">
               <label for="level">Rol de usuario</label>
@@ -71,7 +72,9 @@
                 </select>
             </div>
             <div class="form-group clearfix">
-              <button type="submit" name="add_user" class="btn btn-primary">Guardar</button>
+              <button type="submit" name="add_user" class="btn btn-success">Guardar</button>
+              <button type="submit" name="cancel" class="btn btn-danger">Cancelar</button>
+
             </div>
         </form>
         </div>
