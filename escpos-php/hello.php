@@ -1,5 +1,4 @@
 <?php
-
 /*--------------------------------------------------------------*/
 /* Function for redirect
 /*--------------------------------------------------------------*/
@@ -13,7 +12,6 @@ function redirect($url, $permanent = false)
     exit();
 }
 
-/* Change to the correct path if you copy this example! */
 require __DIR__ . '/autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
@@ -22,82 +20,80 @@ use Mike42\Escpos\CapabilityProfiles\DefaultCapabilityProfile;
 use Mike42\Escpos\CapabilityProfiles\SimpleCapabilityProfile;
 use Mike42\Escpos\CapabilityProfile;
 
+class item
+{
+	private $name;
+	private $price;
+	private $dollarSign;
+	private $qty;
+
+	public function __construct($name = '',  $qty = '', $price = '', $dollarSign = false)
+	{
+		$this -> name = $name;
+		$this -> qty = $qty;
+		$this -> price = $price;
+		$this -> dollarSign = $dollarSign;
+	}
+	
+	public function __toString()
+	{
+		
+		$nameCols = 36;
+		$qtyCols = 5;
+		$priceCols = 7;
+
+		if ($this -> dollarSign) {
+			$nameCols = $nameCols / 2 - $priceCols / 2;
+		}
+		$left = str_pad($this -> name, $nameCols) ;
+		$middle = str_pad($this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		
+		$sign = ($this -> dollarSign ? '$ ' : '');
+		$right = str_pad($sign . $this -> price, $priceCols, ' ', STR_PAD_LEFT);
+		return "$left$middle$right\n";
+	}
+}
+
+class itemcocina
+{
+	private $name;
+	private $price;
+	private $llevar;
+	public function __construct($llevar=false,$name = '',  $qty = '')
+	{
+		$this -> name = $name;
+		$this -> qty = $qty;
+		$this -> llevar = $llevar;
+	}
+	
+	public function __toString()
+	{
+		
+		$nameCols = 35;
+		$qtyCols = 10;
+		$m = 3;
+		
+		if($this -> llevar) $left = str_pad('*'.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		else $left = str_pad($this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		$middle = str_pad(' ', $m, ' ', STR_PAD_LEFT) ;
+		$right = str_pad($this -> name, $nameCols);
+		return "$left$middle$right\n";
+	}
+}
+
 try {
-    // Enter the share name for your USB printer here
-    $connector = new WindowsPrintConnector("pos-80");
-    //$connector = new FilePrintConnector("/dev/usb/lp0"); raspberry
-    //$profile = CapabilityProfile::load("default"); // Works for Epson printers
-    $profile = CapabilityProfile::load("simple");
-    /* Print a "Hello world" receipt" */
-    $printer = new Printer($connector,$profile);
-    /* Initialize */
-    //$printer -> initialize();
-    /* Pulse */
-    $printer -> pulse();
-    //inicia la factura
-    /* A wrapper to do organise item names & prices into columns */
-    class item
-    {
-        private $name;
-        private $price;
-        private $dollarSign;
-        private $qty;
-
-        public function __construct($name = '',  $qty = '', $price = '', $dollarSign = false)
-        {
-            $this -> name = $name;
-            $this -> qty = $qty;
-            $this -> price = $price;
-            $this -> dollarSign = $dollarSign;
-        }
-        
-        public function __toString()
-        {
-            
-            $nameCols = 36;
-            $qtyCols = 5;
-            $priceCols = 7;
-
-            if ($this -> dollarSign) {
-                $nameCols = $nameCols / 2 - $priceCols / 2;
-            }
-            $left = str_pad($this -> name, $nameCols) ;
-            $middle = str_pad($this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
-            
-            $sign = ($this -> dollarSign ? '$ ' : '');
-            $right = str_pad($sign . $this -> price, $priceCols, ' ', STR_PAD_LEFT);
-            return "$left$middle$right\n";
-        }
-    }
-
-    class itemcocina
-    {
-        private $name;
-        private $price;
-        private $llevar;
-        public function __construct($llevar=false,$name = '',  $qty = '')
-        {
-            $this -> name = $name;
-            $this -> qty = $qty;
-            $this -> llevar = $llevar;
-        }
-        
-        public function __toString()
-        {
-            
-            $nameCols = 35;
-            $qtyCols = 10;
-            $m = 3;
-            
-            if($this -> llevar) $left = str_pad('*'.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
-            else $left = str_pad($this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
-            $middle = str_pad(' ', $m, ' ', STR_PAD_LEFT) ;
-            $right = str_pad($this -> name, $nameCols);
-            return "$left$middle$right\n";
-        }
-    }
-    
-    /* Information for the receipt */
+	//$connector = new WindowsPrintConnector("pos-80");
+	$connector = new FilePrintConnector("/dev/usb/lp0");
+	$printer = new Printer($connector);
+	/* Initialize */
+	$printer -> initialize();
+	/* Text */
+	$printer -> text("Hello world\n");
+	/* Pulse */
+	$printer -> pulse();
+	/* Always close the printer! On some PrintConnectors, no actual
+	 * data is sent until the printer is closed. */
+	    /* Information for the receipt */
     $values = explode(",", $_GET["orden"]);
     $items = array();
     $k=(sizeof($values)/4);
@@ -164,7 +160,7 @@ try {
  
     /* Cut */
     $printer -> feed(1);
-    $printer -> cut();   
+    //$printer -> cut();   
 
     /* Name of shop */
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -191,17 +187,22 @@ try {
         $printer -> text($item);
     }
     //efectivo o tarjeta
-    if($_GET["efectivo"]==0) $printer -> text("Tar\n");
-    else $printer -> text("Ef\n");
+    //if($_GET["efectivo"]==0) $printer -> text("Tar\n");
+    //else $printer -> text("Ef\n");
     /* Cut */
     $printer -> feed(1);
-    $printer -> cut();   
-    
-    /* Close printer */
-    $printer -> close();
+    //$printer -> cut();   
 
-    redirect('../admin.php',false);  //cambiar a donde se quiere que vaya venta
-} 
-catch (Exception $e) {
-    echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+
+	$printer -> close();
+	
+	redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
+
 }
+catch (Exception $e) {
+    echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
+}
+
+redirect('../admin.php?status=noImpreso',false); 
+
+?>
