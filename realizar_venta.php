@@ -336,6 +336,7 @@ var categ, p_tama, p_tipo, p_extras, p_forma, p_pago, pizza_vent='0';
 var fila_id = 0;
 var num_extras = 0;
 var str_extra="";
+var pagoTotal=1; 
 var DOMAIN = "http://localhost/Pizzeria/";
   
 function selec_categ(nombre_cat) {
@@ -673,30 +674,33 @@ function forma_pago(forma){
   if (forma=="efectivo") {
     tabla_vuelto.style.display='block';
     im_tarjeta.style.display='none';
+    pagoTotal=1;    //Bandera de pago en efectivo
   }
   else{
     tabla_vuelto.style.display='none';
     centrar(im_tarjeta);
+    pagoTotal=0;    //Bandera de pago en tarjeta
   }
 }
 
 function f_continuar(conti){
   var aux=0;            //Auxiliar q permite determinar si se debe cargar los datos a la  BD o no
-  var efect=document.getElementById('in_vuelto').value;
+  var efect=document.getElementById('in_efectivo').value;
+  var total=document.getElementById('total_compra').value;
   if(conti==1){
-    if(Math.sign(efect)!=-1){
-      p_pago="efectivo";
+    if(pagoTotal==1){
+      if(Number(efect)>=Number(total)){
+        p_pago="efectivo";
+      }
+      else{
+        alert("Valor de efectivo incorrecto");
+        aux=1;
+      }
     }
-    else{
-      alert("Valor de efectivo incorrecto");
-      aux=1;
-    }
-  }
-  else{
+    else
     p_pago="tarjeta";
-  }
 
-  if(aux==0){
+    if(aux==0){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
         // alert(element.extra);
@@ -740,6 +744,10 @@ function f_continuar(conti){
     
 
     window.open(DOMAIN+"admin.php?"+srt_get,"_self");
+  }
+  }
+  else{
+    window.open(DOMAIN+"realizar_venta.php","_self");
   }
   
 }
