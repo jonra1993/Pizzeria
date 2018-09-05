@@ -287,6 +287,17 @@ function tableExists($table){
    return find_by_sql($sql);
   }
 
+  function join_bebidas_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.size,p.flavor,p.media_id,";
+   $sql  .=" m.file_name AS image";
+   $sql  .=" FROM catalogo_bebidas p";                    //Definir la base de datos necesaria
+   #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+  }
+
   function buscar_precios_table($tama,$tipo,$sabor){
     global $db;
     $sql  ="SELECT p.price FROM catalogo_pizzas p WHERE p.size = '{$tama}' AND p.type = '{$tipo}' AND p.flavor = '{$sabor}' LIMIT 1";

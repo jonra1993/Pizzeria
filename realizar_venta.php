@@ -4,11 +4,14 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
+   //Catergoria pizzas
    $categorias = join_categories_table();
    $tam_pizzas= join_tampizza_table();
    $sabor_pizzas=join_tipopizza_table();
    $extra_pizzas=join_extrapizza_table();
    $pizzas_espec=join_pizzaespecilal_table();
+   //categoria Bebidas
+   $bebidas=join_bebidas_table();
    $sabores = find_all('tipo_pizzas');
    $cc = find_conta('contador');
    $contador;
@@ -82,6 +85,26 @@
           Regresar
           </button>
         </div>
+        <!-- Categoria Bebidas -->
+        <div id="selc_bebidas" class="row" style="display: none;">
+          <?php foreach ($bebidas as $beb):?>
+            <div class="col-sm-3">
+              <div class="card" style="width: 16rem;">
+                <?php if($beb['media_id'] === '0'): ?>
+                  <a href="#" onclick="tam_pizzas('<?php echo remove_junk($beb['size']); ?>');" title="Seleccionar Producto"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="tam_pizzas('<?php echo remove_junk($beb['size']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($beb['size'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $beb['image']; ?>" alt="">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($beb['size']));?>  <?php echo remove_junk(ucfirst($beb['flavor'])); ?> </h4>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        
         <!-- Presentacion de opciones -->
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
@@ -355,9 +378,9 @@ function selec_categ(nombre_cat) {
     //Regresar a pantalla anterior
     e.style.display = 'none';
   }
-  else if (nombre_cat=="Extras") {
+  else if (nombre_cat=="Bebidas") {
     //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
-    var f = document.getElementById("selc_extra");   //Actual
+    var f = document.getElementById("selc_bebidas");   //Actual
     centrar(f);
     r.style.justifyContent= 'left';
     r.style.paddingLeft= '3%';
@@ -699,7 +722,7 @@ function f_continuar(conti){
     }
     else
     p_pago="tarjeta";
-
+    //CARAGAR A BD DE VENTA PIZZAS
     if(aux==0){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
@@ -709,6 +732,7 @@ function f_continuar(conti){
       }
     });
     
+    //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
     var srt_get="num="+venta_aux.length;
     alert(srt_get);
     var cont=0;      //Contador de numero de elementos
