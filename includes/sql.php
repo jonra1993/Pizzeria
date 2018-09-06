@@ -287,6 +287,17 @@ function tableExists($table){
    return find_by_sql($sql);
   }
 
+  function join_ingredientes_table(){
+    global $db;
+    $sql  =" SELECT p.id,p.nombre, p.price, p.media_id,";
+   $sql  .=" m.file_name AS image";
+   $sql  .=" FROM catalogo_ingredientes p";                    //Definir la base de datos necesaria
+   #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+  }
+
   function join_bebidas_table(){
     global $db;
     $sql  =" SELECT p.id,p.size,p.flavor,p.media_id,";
@@ -307,6 +318,18 @@ function tableExists($table){
   function buscar_preciosextra_table($tama,$extra){
     global $db;
     $sql  ="SELECT p.price FROM catalogo_extras p WHERE p.size = '{$tama}' AND p.flavor = '{$extra}' LIMIT 1";
+   return $db->query($sql);
+  }
+
+  function buscar_preciosbebida_table($size,$flavor){
+    global $db;
+    $sql  ="SELECT p.price FROM catalogo_bebidas p WHERE p.size = '{$size}' AND p.flavor = '{$flavor}' LIMIT 1";
+   return $db->query($sql);
+  }
+
+  function buscar_preciosingredientes_table($nombre){
+    global $db;
+    $sql  ="SELECT p.price FROM catalogo_ingredientes p WHERE p.nombre = '{$nombre}' LIMIT 1";
    return $db->query($sql);
   }
  /*--------------------------------------------------------------*/
