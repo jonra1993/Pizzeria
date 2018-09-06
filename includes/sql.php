@@ -410,49 +410,36 @@ function find_recent_sale_added($limit){
 /*--------------------------------------------------------------*/
 /* Function for Generate sales report by two dates
 /*--------------------------------------------------------------*/
-function find_sale_by_dates($start_date,$end_date){
+function datesSales_pizzas ($start_date,$end_date){ 
   global $db;
   $start_date  = date("Y-m-d", strtotime($start_date));
   $end_date    = date("Y-m-d", strtotime($end_date));
-  $sql  = "SELECT s.date, p.name,p.sale_price,p.buy_price,";
-  $sql .= "COUNT(s.product_id) AS total_records,";
-  $sql .= "SUM(s.qty) AS total_sales,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price,";
-  $sql .= "SUM(p.buy_price * s.qty) AS total_buying_price ";
-  $sql .= "FROM sales s ";
-  $sql .= "LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " WHERE s.date BETWEEN '{$start_date}' AND '{$end_date}'";
-  $sql .= " GROUP BY DATE(s.date),p.name";
-  $sql .= " ORDER BY DATE(s.date) DESC";
+  $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.llevar_pizza,c.extras,c.price,c.date";
+  $sql .= " FROM venta_pizzas c";
+  $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}'";
+  $sql .= " ORDER BY DATE(c.date) DESC";
   return $db->query($sql);
 }
+
 /*--------------------------------------------------------------*/
 /* Function for Generate Daily sales report
 /*--------------------------------------------------------------*/
-function  dailySales($year,$month){
+function  dailySales_pizzas($year,$month,$day){
   global $db;
-  $sql  = "SELECT s.qty,";
-  $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}'";
-  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.product_id";
+  $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.llevar_pizza,c.extras,c.price,c.date";
+  $sql .= " FROM venta_pizzas c";
+  $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
+  //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '2018-08-27'";
   return find_by_sql($sql);
 }
+
 /*--------------------------------------------------------------*/
 /* Function for Generate Monthly sales report
 /*--------------------------------------------------------------*/
-function  monthlySales($year){
-  global $db;
-  $sql  = "SELECT s.qty,";
-  $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " WHERE DATE_FORMAT(s.date, '%Y' ) = '{$year}'";
-  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%c' ),s.product_id";
-  $sql .= " ORDER BY date_format(s.date, '%c' ) ASC";
+function monthlySales ($year,$month){ 
+  $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.llevar_pizza,c.extras,c.price,c.date";
+  $sql .= " FROM venta_pizzas c";
+  $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m' ) = '{$year}-{$month}'";
   return find_by_sql($sql);
 }
 

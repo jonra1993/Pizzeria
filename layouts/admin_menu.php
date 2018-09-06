@@ -70,12 +70,12 @@
     </a>
   </li>
 
-  <li  class="nav-item start">
+  <!--li  class="nav-item start">
     <a href="sales.php" class="nav-link nav-toggle"  class="nav-link">
       <i class="glyphicon glyphicon-th-list"></i>
        <span class="title">Registro de ventas</span>
       </a>
-  </li>
+  </li-->
   <!-- Realizar una Nueva Venta -->
   <li  class="nav-item start">
     <a href="realizar_venta.php" class="nav-link">
@@ -91,8 +91,8 @@
       </a>
       <ul class="sub-menu">
         <li class="nav-item start "><a class="nav-link "href="sales_report.php">Ventas por fecha </a></li>
-        <li class="nav-item start "><a class="nav-link "href="monthly_sales.php">Ventas mensuales</a></li>
-        <li class="nav-item start "><a class="nav-link "href="daily_sales.php">Ventas diarias</a> </li>
+        <li class="nav-item start "><a class="nav-link "href="sales_montly.php">Ventas mensuales</a></li>
+        <li class="nav-item start "><a class="nav-link "href="sales_daily.php">Ventas diarias</a> </li>
       </ul>
   </li>
 
