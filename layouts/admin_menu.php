@@ -57,7 +57,7 @@
   </li>
 
   <li  class="nav-item start">
-    <a href="Proveedores.php"  class="nav-link">
+    <a href="proveedores.php"  class="nav-link">
       <i class="glyphicon glyphicon-tasks"></i>
       <span class="title">Proveedores</span>
     </a>
