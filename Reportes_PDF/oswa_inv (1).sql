@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-09-2018 a las 22:39:09
+-- Tiempo de generación: 07-09-2018 a las 04:23:43
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -31,17 +31,29 @@ SET time_zone = "+00:00";
 CREATE TABLE `catalogo_bebidas` (
   `id` int(11) NOT NULL,
   `size` varchar(20) NOT NULL,
-  `brand` varchar(20) NOT NULL,
   `flavor` varchar(20) NOT NULL,
-  `price` decimal(25,2) NOT NULL
+  `price` decimal(25,2) NOT NULL,
+  `media_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `catalogo_bebidas`
 --
 
-INSERT INTO `catalogo_bebidas` (`id`, `size`, `brand`, `flavor`, `price`) VALUES
-(1, 'familiar', 'coca-cola', 'negra', '90.00');
+INSERT INTO `catalogo_bebidas` (`id`, `size`, `flavor`, `price`, `media_id`) VALUES
+(1, 'vaso', 'fruit', '0.30', 0),
+(2, '1/2 litro', 'fruit', '0.50', 0),
+(3, '1 +1/2 litro', 'fruit', '1.75', 0),
+(4, '3 litro', 'fruit', '2.75', 0),
+(5, '1/2 litro', 'coca-cola', '0.75', 0),
+(6, '1+1/2 litro', 'coca-cola', '2.00', 0),
+(7, '3 litro', 'coca-cola', '3.00', 0),
+(8, '1/2 litro', 'pepsi', '0.60', 0),
+(9, '1+1/2 litro', 'pepsi', '1.80', 0),
+(10, '3 litro', 'pepsi', '2.85', 0),
+(11, '850 ml', 'pilsener', '1.75', 0),
+(12, '850 ml', 'budweiser', '1.50', 0),
+(13, 'vaso', 'jugo', '1.75', 0);
 
 -- --------------------------------------------------------
 
@@ -129,6 +141,28 @@ INSERT INTO `catalogo_extras` (`id`, `size`, `flavor`, `price`) VALUES
 (66, 'extragrande', 'cebolla', '4.00'),
 (67, 'extragrande', 'pimiento_verde', '4.00'),
 (68, 'extragrande', 'pimiento_rojo', '4.00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catalogo_ingredientes`
+--
+
+CREATE TABLE `catalogo_ingredientes` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `media_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `catalogo_ingredientes`
+--
+
+INSERT INTO `catalogo_ingredientes` (`id`, `nombre`, `price`, `media_id`) VALUES
+(1, 'quesoEspecial', '15.00', 12),
+(2, 'quesoNormal', '12.00', 7),
+(3, 'embutidos', '7.50', 8);
 
 -- --------------------------------------------------------
 
@@ -241,7 +275,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 28, '2018-09-03');
+(1, 31, '2018-09-05');
 
 -- --------------------------------------------------------
 
@@ -657,7 +691,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-03 14:05:11', 0),
+(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-05 20:24:04', 0),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -715,9 +749,21 @@ INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza
 --
 
 --
+-- Indices de la tabla `catalogo_bebidas`
+--
+ALTER TABLE `catalogo_bebidas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `catalogo_extras`
 --
 ALTER TABLE `catalogo_extras`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `catalogo_ingredientes`
+--
+ALTER TABLE `catalogo_ingredientes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -850,10 +896,22 @@ ALTER TABLE `venta_pizzas`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `catalogo_bebidas`
+--
+ALTER TABLE `catalogo_bebidas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT de la tabla `catalogo_extras`
 --
 ALTER TABLE `catalogo_extras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
+--
+-- AUTO_INCREMENT de la tabla `catalogo_ingredientes`
+--
+ALTER TABLE `catalogo_ingredientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -949,7 +1007,7 @@ ALTER TABLE `tipo_pizzas`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `user_groups`
