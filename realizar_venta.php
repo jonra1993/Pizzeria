@@ -4,11 +4,17 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
+   //Catergoria pizzas
    $categorias = join_categories_table();
    $tam_pizzas= join_tampizza_table();
    $sabor_pizzas=join_tipopizza_table();
    $extra_pizzas=join_extrapizza_table();
    $pizzas_espec=join_pizzaespecilal_table();
+  
+   //categoria Bebidas
+   $bebidas=join_bebidas_table();
+   $ingredientes=join_ingredientes_table();
+
    $sabores = find_all('tipo_pizzas');
    $cc = find_conta('contador');
    $contador;
@@ -82,6 +88,46 @@
           Regresar
           </button>
         </div>
+        <!-- Categoria Bebidas -->
+        <div id="selc_bebidas" class="row" style="display: none;">
+          <?php foreach ($bebidas as $beb):?>
+            <div class="col-sm-3">
+              <div class="card" style="width: 16rem;">
+                <?php if($beb['media_id'] === '0'): ?>
+                  <a href="#" onclick="f_bebidas('<?php echo remove_junk($beb['size']); ?>','<?php echo remove_junk($beb['flavor']); ?>');" title="Seleccionar Producto"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="f_bebidas('<?php echo remove_junk($beb['size']); ?>','<?php echo remove_junk($beb['flavor']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($beb['size'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $beb['image']; ?>" alt="">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($beb['size']));?>  <?php echo remove_junk(ucfirst($beb['flavor'])); ?> </h4>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- Categoria Ingrediantes -->
+        <div id="selc_ingredientes" class="row" style="display: none;">
+          <?php foreach ($ingredientes as $ingre):?>
+            <div class="col-sm-3">
+              <div class="card" style="width: 16rem;">
+                <?php if($ingre['media_id'] === '0'): ?>
+                  <a href="#" onclick="f_ingred('<?php echo remove_junk($ingre['nombre']); ?>');" title="Seleccionar Producto"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="f_ingred('<?php echo remove_junk($ingre['nombre']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($ingre['size'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $ingre['image']; ?>" alt="">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($ingre['nombre']));?></h4>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        
         <!-- Presentacion de opciones -->
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
@@ -336,6 +382,7 @@ var categ, p_tama, p_tipo, p_extras, p_forma, p_pago, pizza_vent='0';
 var fila_id = 0;
 var num_extras = 0;
 var str_extra="";
+var pagoTotal=1; 
 var DOMAIN = "http://localhost/Pizzeria/";
   
 function selec_categ(nombre_cat) {
@@ -354,15 +401,20 @@ function selec_categ(nombre_cat) {
     //Regresar a pantalla anterior
     e.style.display = 'none';
   }
-  else if (nombre_cat=="Extras") {
+  else if (nombre_cat=="Bebidas") {
     //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
-    var f = document.getElementById("selc_extra");   //Actual
+    var f = document.getElementById("selc_bebidas");   //Actual
     centrar(f);
-    r.style.justifyContent= 'left';
-    r.style.paddingLeft= '3%';
-    //quitar pantalla anterior
-    //e.style.display = 'none';
-    
+    // r.style.justifyContent= 'left';
+    // r.style.paddingLeft= '3%';    
+  }
+  
+  else if (nombre_cat=="Ingredientes") {
+    //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
+    var f = document.getElementById("selc_ingredientes");   //Actual
+    centrar(f);
+    // r.style.justifyContent= 'left';
+    // r.style.paddingLeft= '3%';    
   }
   categ=nombre_cat;
   pizza_vent=0;   //Ventana de tamano
@@ -454,8 +506,6 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
   centrar(e);
   centrar(extra);
   centrar(continuar);
-  // continuar.style.justifyContent= 'flex-end';
-  //continuar.style.paddingRight= '3%';
   f.style.display = 'none';
   f2.style.display = 'none';
   g.style.display = 'none';
@@ -466,7 +516,7 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
 function ingre_extra(extra){
   num_extras++;
   str_extra+=(extra+",");
-  // alert(str_extra);
+
   //Buscar precios de extras y cracion de fila en nota de venta
   $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
     // alert(result);
@@ -622,16 +672,6 @@ function f_final_compra(){
   }
   else{
     document.getElementById('cont_vuelto').style.display='block';
-    // venta_aux.forEach(element => {
-    //   if(element.categ=="Pizzas"){
-    //     alert(element.extra);
-    //     $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP
-    //     });
-    //   }
-    // });
-    
-
-    //
   }
 }
 
@@ -673,30 +713,33 @@ function forma_pago(forma){
   if (forma=="efectivo") {
     tabla_vuelto.style.display='block';
     im_tarjeta.style.display='none';
+    pagoTotal=1;    //Bandera de pago en efectivo
   }
   else{
     tabla_vuelto.style.display='none';
     centrar(im_tarjeta);
+    pagoTotal=0;    //Bandera de pago en tarjeta
   }
 }
 
 function f_continuar(conti){
   var aux=0;            //Auxiliar q permite determinar si se debe cargar los datos a la  BD o no
-  var efect=document.getElementById('in_vuelto').value;
+  var efect=document.getElementById('in_efectivo').value;
+  var total=document.getElementById('total_compra').value;
   if(conti==1){
-    if(Math.sign(efect)!=-1){
-      p_pago="efectivo";
+    if(pagoTotal==1){
+      if(Number(efect)>=Number(total)){
+        p_pago="efectivo";
+      }
+      else{
+        alert("Valor de efectivo incorrecto");
+        aux=1;
+      }
     }
-    else{
-      alert("Valor de efectivo incorrecto");
-      aux=1;
-    }
-  }
-  else{
+    else
     p_pago="tarjeta";
-  }
-
-  if(aux==0){
+    //CARAGAR A BD DE VENTA PIZZAS
+    if(aux==0){
     venta_aux.forEach(element => {
       if(element.categ=="Pizzas"){
         // alert(element.extra);
@@ -743,7 +786,46 @@ function f_continuar(conti){
 
     window.open(DOMAIN+"admin.php?"+srt_get,"_self");
   }
+  }
+  else{
+    window.open(DOMAIN+"realizar_venta.php","_self");
+  }
   
+}
+
+function f_bebidas(size, flavor){
+  // alert(size+flavor);
+  // Buscar precios de extras y cracion de fila en nota de venta
+
+  $.ajax({url: DOMAIN+"buscar_precio_bebidas.php?p_size="+size+"&p_flavor="+flavor, success: function(result){
+    alert(result);
+    precio=Number(result);
+    var descrip= size+" de "+flavor;
+    agregar_fila(descrip,precio);
+    var venta_bebida={id:fila_id,categ:"bebida",canti:1,tama:size,sabor:flavor,precioP:precio};
+    venta_aux.push(venta_bebida);
+  }});
+
+  // $.ajax({url: DOMAIN+"buscar_precio_bebidas.php?p_size="+size+"&p_flavor="+flavor, success: function(result){
+  //   alert(result);
+  //   precio=Number(result);
+  //   
+  //   agregar_fila(descrip,precio);
+    
+  // }});
+}
+
+function f_ingred(nombre){
+  alert(nombre);
+  $.ajax({url: DOMAIN+"buscar_precio_ingredi.php?p_nombre="+nombre, success: function(result){
+    alert(result);
+    precio=Number(result);
+    var descrip= nombre;
+    agregar_fila(descrip,precio);
+    // var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,p_nombre:nombre,precioP:precio};
+    // venta_aux.push(venta_ingre);
+  }});
+
 }
 
 </script>
