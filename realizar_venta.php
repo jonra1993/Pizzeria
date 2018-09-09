@@ -290,7 +290,7 @@
                 </div>
               </div>
             <?php }?>
-            <button type="submit" name="add_cat" class="btn btn-primary">Continuar</button>
+            <button type="submit" class="btn btn-primary">Continuar</button>
           </form>
         </div>
       </div>
@@ -752,6 +752,16 @@ function f_continuar(conti){
         $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago
         });
       }
+      else if(element.categ=="bebida"){
+        // alert(element.extra);
+        $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.size+"&p_sabor="+element.flavor+"&p_precio="+element.precioP
+        });
+      }
+      else if(element.categ=="ingredientes"){
+        // alert(element.extra);
+        $.ajax({url: DOMAIN+"guardar_ventas_ingrediente.php?p_canti="+element.canti+"&p_nombre="+element.p_nombre+"&p_precio="+element.precioP
+        });
+      }
     });
     
     //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
@@ -814,6 +824,8 @@ function f_bebidas(size, flavor){
     agregar_fila(descrip,precio);
     var venta_bebida={id:fila_id,categ:"bebida",canti:1,tama:size,sabor:flavor,precioP:precio};
     venta_aux.push(venta_bebida);
+    var btn_finalizar = document.getElementById("final_compra");
+    centrar(btn_finalizar);
   }});
 }
 
@@ -829,10 +841,11 @@ function f_ingred(nombre){
     precio=Number(result);
     var descrip= nombre;
     agregar_fila(descrip,precio);
-    // var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,p_nombre:nombre,precioP:precio};
-    // venta_aux.push(venta_ingre);
+    var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,p_nombre:nombre,precioP:precio};
+    venta_aux.push(venta_ingre);
+    var btn_finalizar = document.getElementById("final_compra");
+    centrar(btn_finalizar);
   }});
-
 }
 
 </script>
