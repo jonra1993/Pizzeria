@@ -812,6 +812,8 @@ function f_continuar(conti){
 function f_bebidas(size, flavor){
   var f = document.getElementById("selc_bebidas");   //Actual
   var r = document.getElementById("funcion_regresar");
+  var g = document.getElementById("cont_categ");
+  g.style.pointerEvents="auto"; //Habilitar pulsacion
   f.style.display="none";
   r.style.display = 'none';
   
@@ -833,6 +835,8 @@ function f_bebidas(size, flavor){
 function f_ingred(nombre){
   var f = document.getElementById("selc_ingredientes");   //Actual
   var r = document.getElementById("funcion_regresar");
+  var g = document.getElementById("cont_categ");
+  g.style.pointerEvents="auto"; //Habilitar pulsacion
   f.style.display="none";
   r.style.display = 'none';
 
