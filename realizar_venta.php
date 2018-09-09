@@ -92,7 +92,7 @@
         <div id="selc_bebidas" class="row" style="display: none;">
           <?php foreach ($bebidas as $beb):?>
             <div class="col-sm-3">
-              <div class="card" style="width: 16rem;">
+              <div class="card" style="width: 16rem; ">
                 <?php if($beb['media_id'] === '0'): ?>
                   <a href="#" onclick="f_bebidas('<?php echo remove_junk($beb['size']); ?>','<?php echo remove_junk($beb['flavor']); ?>');" title="Seleccionar Producto"> 
                   <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
@@ -375,9 +375,6 @@
 
 <script >
 var venta_aux=[];
-// var array_tama=  ['mediana', 'familiar', 'extragrande']; 
-// var array_tipo= ["normal","especial"]; 
-// var array_savor= ['mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana'];
 var categ, p_tama, p_tipo, p_extras, p_forma, p_pago, pizza_vent='0';
 var fila_id = 0;
 var num_extras = 0;
@@ -400,24 +397,22 @@ function selec_categ(nombre_cat) {
     centrar(f);
     //Regresar a pantalla anterior
     e.style.display = 'none';
+    pizza_vent=0;   //Ventana de tamano
   }
   else if (nombre_cat=="Bebidas") {
     //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
     var f = document.getElementById("selc_bebidas");   //Actual
     centrar(f);
-    // r.style.justifyContent= 'left';
-    // r.style.paddingLeft= '3%';    
+    pizza_vent=5; 
   }
   
   else if (nombre_cat=="Ingredientes") {
     //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
     var f = document.getElementById("selc_ingredientes");   //Actual
-    centrar(f);
-    // r.style.justifyContent= 'left';
-    // r.style.paddingLeft= '3%';    
+    centrar(f);  
+    pizza_vent=6;  
   }
   categ=nombre_cat;
-  pizza_vent=0;   //Ventana de tamano
   g.style.pointerEvents="none";   //Bloqueo de categoria
 }
 //---------- Categoria PIZZAS --------------
@@ -435,10 +430,12 @@ function tam_pizzas(tama){
     var e = document.getElementById("selc_pizzas_nor_esp"); //SE ABRE:ventana se abre
     var g = document.getElementById("selc_pizzas_sabor");  //SE CIERRA:ventana siguiente en regreso
     var g2 = document.getElementById("selc_pizzas_especiales");  //SE CIERRA:ventana siguiente en regreso
+    
     centrar(e);
     f.style.display = 'none';
     g.style.display = 'none';
     g2.style.display = 'none';
+    // g3.style.display = 'none';
     pizza_vent=1;   //Ventana de especial o normal
   }
   else{
@@ -459,8 +456,10 @@ function pizzas_normal(tipo){
   else
     var e = document.getElementById("selc_pizzas_especiales");    //SE ABRE:ventana se abre
   centrar(e);
+  var g3 = document.getElementById("selc_personalizada"); 
   f.style.display = 'none';
   g.style.display = 'none';
+  g3.style.display = 'none';
   p_tipo=tipo;
   pizza_vent=2;   //Ventana de sabor
 }
@@ -480,8 +479,7 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
       precio=Number(result);
       var descrip= categ+" "+p_tama+" "+p_tipo+" "+tipo;
       agregar_fila(descrip,precio);
-      
-      // alert(str_extra);
+
       //Guardar venta ---------------------------------------------------------------------------
       var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:str_extra,forma:"123 ",precioP:precio,fpago:"pago"};
       venta_aux.push(venta_pizza); 
@@ -498,7 +496,6 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
   var sabor_porcion = document.getElementById("selc_pizzas_sabor_PORCION");
   var extra = document.getElementById("selc_extra2");
   var continuar = document.getElementById("fun_cont_extra");
-  
   
   var f = document.getElementById("selc_pizzas_sabor");
   var f2 = document.getElementById("selc_pizzas_especiales");
@@ -531,10 +528,8 @@ function ingre_extra(extra){
 function forma_servir(forma) {
   p_forma=forma; 
   venta_aux.forEach(element => {
-    //alert(element.id+","+(fila_id-num_extras));
     if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
       element.forma=p_forma;
-      // alert(p_forma);
     }
   });
 
@@ -553,15 +548,11 @@ function forma_servir(forma) {
   g.style.pointerEvents="auto"; //Habilitar pulsacion
   var btn_finalizar = document.getElementById("final_compra");
   centrar(btn_finalizar);
-
-  
 }
 
 function avanzar_extra() {
-  // alert(str_extra);
   venta_aux.forEach(element => {
     if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
-      // alert(str_extra);
       element.extra=str_extra;
     }
   });
@@ -581,6 +572,8 @@ function centrar(id){
 }
 
 function regresar_carac(){
+  var r = document.getElementById("funcion_regresar");
+  var z=document.getElementById("cont_categ");
   switch (pizza_vent) {
     case 1:     //Ventana de tipo
       selec_categ(categ);   
@@ -603,10 +596,23 @@ function regresar_carac(){
     case 0:
       var g = document.getElementById("cont_categ");
       var f = document.getElementById("selc_pizzas_tam");
-      var r = document.getElementById("funcion_regresar");
+      
       g.style.pointerEvents="auto"; //Habilitar categorias
       f.style.display = 'none';     //Desaparecer caracteristicas pizzas
       r.style.display = 'none';
+      break;
+    case 5:       //Regresar bebidas
+      var g = document.getElementById("selc_bebidas");
+      r.style.display = 'none';
+      g.style.display="none";
+      z.style.pointerEvents="auto"; //Habilitar pulsacion
+      break;
+
+    case 6:       //Regresar ingredientes
+      var f = document.getElementById("selc_ingredientes");
+      r.style.display = 'none';
+      f.style.display="none";
+      z.style.pointerEvents="auto"; //Habilitar pulsacion
       break;
   }
 }
@@ -794,6 +800,11 @@ function f_continuar(conti){
 }
 
 function f_bebidas(size, flavor){
+  var f = document.getElementById("selc_bebidas");   //Actual
+  var r = document.getElementById("funcion_regresar");
+  f.style.display="none";
+  r.style.display = 'none';
+  
   // alert(size+flavor);
   // Buscar precios de extras y cracion de fila en nota de venta
 
@@ -805,17 +816,14 @@ function f_bebidas(size, flavor){
     var venta_bebida={id:fila_id,categ:"bebida",canti:1,tama:size,sabor:flavor,precioP:precio};
     venta_aux.push(venta_bebida);
   }});
-
-  // $.ajax({url: DOMAIN+"buscar_precio_bebidas.php?p_size="+size+"&p_flavor="+flavor, success: function(result){
-  //   alert(result);
-  //   precio=Number(result);
-  //   
-  //   agregar_fila(descrip,precio);
-    
-  // }});
 }
 
 function f_ingred(nombre){
+  var f = document.getElementById("selc_ingredientes");   //Actual
+  var r = document.getElementById("funcion_regresar");
+  f.style.display="none";
+  r.style.display = 'none';
+
   alert(nombre);
   $.ajax({url: DOMAIN+"buscar_precio_ingredi.php?p_nombre="+nombre, success: function(result){
     alert(result);
