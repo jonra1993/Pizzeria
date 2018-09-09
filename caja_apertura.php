@@ -93,7 +93,7 @@ else{
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input id= "apertura" type="number" class="form-control" name="dinero" placeholder="Valor de apertura" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
+                      <input id= "apertura" type="number" class="form-control" name="dinero" placeholder="Valor de apertura" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
                    </div>
                   </div>
                </div>

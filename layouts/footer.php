@@ -7,17 +7,18 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="libs/js/functions.js"></script-->
 
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
     <!--footer-->
-    <div style="background-color:#1b3603;" class="page-footer azul">
+    <!--div style="background-color:#a34b24;" class="page-footer">
       <div style="text-align:center">
         <div class="page-footer-inner"> <?php echo  $hoy2 = date("Y"); ?> &copy; <?php echo $nameadmin ?>
           <a  title="Contacta con +58 0426-8734726" target="_blank"><?php echo $nameadmin ?>. Desarrollado por xxxxx</a>
         </div>
-          </div>     
-      <div class="scroll-to-top">
-          <i class="icon-arrow-up"></i>
-      </div>
-    </div>
+      </div>     
+
+    </div-->
 
   <script src="assets/adminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
   <script type="text/javascript">

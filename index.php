@@ -61,8 +61,8 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link href="assets/css/monserrat.css" rel="stylesheet" />
+  <link href="assets/css/fontawesome.css" rel="stylesheet">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />  
@@ -72,7 +72,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
   <div class="page-header clear-filter" filter-color="orange">
     <div class="page-header-image" style="background-image:url(assets/img/login1.jpg)"></div>
     <div class="content">
-      <h3 class="nav-link">Pizzería Amangiare</h3>
+      <h3 class="nav-link"  style="color: #421b0e; font-weight: bold;" >Pizzería Amangiare</h3>
       <div class="container">
         <div class="col-md-5 ml-auto mr-auto">
           <div class="card card-login card-plain">
@@ -111,6 +111,11 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 ml-auto mr-auto text-center">
+        <?php echo display_msg($msg);?>
       </div>
     </div>
     <footer class="footer">
