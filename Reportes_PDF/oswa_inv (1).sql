@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-09-2018 a las 04:23:43
+-- Tiempo de generación: 09-09-2018 a las 03:21:52
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -41,19 +41,19 @@ CREATE TABLE `catalogo_bebidas` (
 --
 
 INSERT INTO `catalogo_bebidas` (`id`, `size`, `flavor`, `price`, `media_id`) VALUES
-(1, 'vaso', 'fruit', '0.30', 0),
-(2, '1/2 litro', 'fruit', '0.50', 0),
-(3, '1 +1/2 litro', 'fruit', '1.75', 0),
-(4, '3 litro', 'fruit', '2.75', 0),
-(5, '1/2 litro', 'coca-cola', '0.75', 0),
-(6, '1+1/2 litro', 'coca-cola', '2.00', 0),
-(7, '3 litro', 'coca-cola', '3.00', 0),
-(8, '1/2 litro', 'pepsi', '0.60', 0),
-(9, '1+1/2 litro', 'pepsi', '1.80', 0),
-(10, '3 litro', 'pepsi', '2.85', 0),
-(11, '850 ml', 'pilsener', '1.75', 0),
-(12, '850 ml', 'budweiser', '1.50', 0),
-(13, 'vaso', 'jugo', '1.75', 0);
+(1, 'vaso', 'fruit', '0.30', 50),
+(2, '1/2 litro', 'fruit', '0.50', 51),
+(3, '1 +1/2 litro', 'fruit', '1.75', 52),
+(4, '3 litro', 'fruit', '2.75', 53),
+(5, '1/2 litro', 'coca-cola', '0.75', 56),
+(6, '1+1/2 litro', 'coca-cola', '2.00', 55),
+(7, '3 litro', 'coca-cola', '3.00', 67),
+(8, '1/2 litro', 'pepsi', '0.60', 66),
+(9, '1+1/2 litro', 'pepsi', '1.80', 59),
+(10, '3 litro', 'pepsi', '2.85', 60),
+(11, '850 ml', 'pilsener', '1.75', 61),
+(12, '850 ml', 'budweiser', '1.50', 62),
+(13, 'vaso', 'jugo', '1.75', 63);
 
 -- --------------------------------------------------------
 
@@ -160,9 +160,9 @@ CREATE TABLE `catalogo_ingredientes` (
 --
 
 INSERT INTO `catalogo_ingredientes` (`id`, `nombre`, `price`, `media_id`) VALUES
-(1, 'quesoEspecial', '15.00', 12),
-(2, 'quesoNormal', '12.00', 7),
-(3, 'embutidos', '7.50', 8);
+(1, 'quesoEspecial', '15.00', 68),
+(2, 'quesoNormal', '12.00', 69),
+(3, 'embutidos', '7.50', 38);
 
 -- --------------------------------------------------------
 
@@ -275,7 +275,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 31, '2018-09-05');
+(1, 35, '2018-09-08');
 
 -- --------------------------------------------------------
 
@@ -349,7 +349,23 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 (44, 'espec_trad_hawa.png', 'image/png'),
 (45, 'espec_personalizar.png', 'image/png'),
 (48, 's.jpg', 'image/jpeg'),
-(49, 'yo.jpg', 'image/jpeg');
+(49, 'yo.jpg', 'image/jpeg'),
+(50, 'beb_vasoSabores.png', 'image/png'),
+(51, 'beb_0.5Sabores.png', 'image/png'),
+(52, 'beb_1.5Sabores.png', 'image/png'),
+(53, 'beb_3Sabores.png', 'image/png'),
+(54, 'beb_vasoNegra.png', 'image/png'),
+(55, 'beb_1.5Coca.png', 'image/png'),
+(56, 'beb_0.5Coca.png', 'image/png'),
+(59, 'beb_1.5Pepsi.png', 'image/png'),
+(60, 'beb_3Pepsi.png', 'image/png'),
+(61, 'beb_pilsener.png', 'image/png'),
+(62, 'bebidas_bud.png', 'image/png'),
+(63, 'beb_jugo.png', 'image/png'),
+(66, 'beb_0.5Pepsi.png', 'image/png'),
+(67, 'beb_3Coca.png', 'image/png'),
+(68, 'ingre_quesoesp.png', 'image/png'),
+(69, 'ingre_quesono.png', 'image/png');
 
 -- --------------------------------------------------------
 
@@ -691,7 +707,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-05 20:24:04', 0),
+(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-08 21:57:02', 0),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -716,6 +732,35 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 (1, 'Administrador', 1, 1),
 (2, 'Vendedor Autorizado', 2, 1),
 (3, 'Vendedor', 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `venta_bebidas`
+--
+
+CREATE TABLE `venta_bebidas` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `qty` int(11) NOT NULL,
+  `tam_bebida` varchar(25) NOT NULL,
+  `sabor_bebida` varchar(50) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `venta_ingredientes`
+--
+
+CREATE TABLE `venta_ingredientes` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `qty` int(11) NOT NULL,
+  `nombre_ingre` varchar(25) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -886,6 +931,18 @@ ALTER TABLE `user_groups`
   ADD UNIQUE KEY `group_level` (`group_level`);
 
 --
+-- Indices de la tabla `venta_bebidas`
+--
+ALTER TABLE `venta_bebidas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `venta_ingredientes`
+--
+ALTER TABLE `venta_ingredientes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
@@ -935,7 +992,7 @@ ALTER TABLE `extra_pizzas`
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `productovender`
@@ -1014,6 +1071,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `venta_bebidas`
+--
+ALTER TABLE `venta_bebidas`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `venta_ingredientes`
+--
+ALTER TABLE `venta_ingredientes`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
