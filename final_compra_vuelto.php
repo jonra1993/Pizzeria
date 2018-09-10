@@ -29,15 +29,15 @@ if(isset($_GET['p_efect'])) {
 </div>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="container">
     <div class="panel">
-      <div class="panel-body">
+      <div class="panel-body text-center">
         <h1>Efectivo <span class="label label-warning"><?php echo $efectivo;?></span></h1>
         <h1>Vuelto <span class="label label-success"><?php echo $vuelto;?></span></h1>
         <h4>Pago <?php echo $forma;?></h4>
             
-            <div class="form-group" >
-              <button type="button" class="btn btn-primary" onclick="f_final()">Finalizar</button>
+            <div class="form-group text-center" >
+              <button type="button" class="btn btn-lg btn-block btn-primary" onclick="f_final()">Finalizar</button>
             </div>
       </div>
     </div>
