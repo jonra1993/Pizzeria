@@ -52,7 +52,6 @@
               </tr>
              <?php endforeach; ?>
             </tbody>
-            <tfoo>
               <tr>
                 <th class="text-center" style="width: 10%;" colspan="2"> Total </th>
                 <th class="text-center" style="width: 10%;" id="dinero_apertura"> </th>
@@ -62,7 +61,6 @@
                 <th class="text-center" style="width: 10%;" id="saldo"> </th>
 
               </tr>
-            </tfoo>
           </table>
         </div>
       </div>

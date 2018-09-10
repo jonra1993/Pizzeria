@@ -20,7 +20,7 @@
    $contador;
    foreach($cc as $c){
     $contador=$c['conta'];
-  }
+    }
 ?>
 <?php
  $c_categorie     = count_by_id('categories');
@@ -834,12 +834,7 @@ function f_continuar(conti){
     srt_get+="TOTAL,"+totalCompra;
     alert(srt_get);
 
-    <?php
-    $contador++;
-    $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
-    $query .=" conta = '{$contador}' WHERE id = 1;";
-    if($db->query($query)){}
-    ?>
+
     
 
     window.open(DOMAIN+"admin.php?"+srt_get,"_self");

@@ -83,12 +83,12 @@ class itemcocina
 
 try {
 	//$connector = new WindowsPrintConnector("pos-80");
-	$connector = new FilePrintConnector("/dev/usb/lp0");
+	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
 	/* Text */
-	$printer -> text("Hello world\n");
+	//$printer -> text("Hello world\n");
 	/* Pulse */
 	$printer -> pulse();
 	/* Always close the printer! On some PrintConnectors, no actual
