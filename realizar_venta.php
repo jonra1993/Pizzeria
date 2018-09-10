@@ -123,6 +123,7 @@
                   </a>
                 <?php endif; ?>
                 <h4 class="card-title center"> <?php echo remove_junk(ucfirst($ingre['nombre']));?></h4>
+                <p class="card-body"> Precio: $<?php echo remove_junk(ucfirst($ingre['price'])); ?> </p>
               </div>
             </div>
           <?php endforeach; ?>
@@ -831,13 +832,12 @@ function f_continuar(conti){
       // cont++;
     });
     var totalCompra=document.getElementById('total_compra').value;
+    var efectivo=document.getElementById('in_efectivo').value;
+    var vuelto=document.getElementById('in_vuelto').value;
     srt_get+="TOTAL,"+totalCompra;
     alert(srt_get);
 
-
-    
-
-    window.open(DOMAIN+"admin.php?"+srt_get,"_self");
+    window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago+"&p_desVenta="+srt_get,"_self");
   }
   }
   else{
