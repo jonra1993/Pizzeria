@@ -32,8 +32,8 @@ if(isset($_GET['p_efect'])) {
   <div class="container">
     <div class="panel">
       <div class="panel-body text-center">
-        <h1>Efectivo <span class="label label-warning"><?php echo $efectivo;?></span></h1>
-        <h1>Vuelto <span class="label label-success"><?php echo $vuelto;?></span></h1>
+        <h1>Efectivo <span class="label label-warning"><?php echo number_format((float)$efectivo, 2, '.', '');?></span></h1>
+        <h1>Vuelto <span class="label label-success"><?php echo number_format((float)$vuelto, 2, '.', '');?></span></h1>
         <h4>Pago <?php echo $forma;?></h4>
             
             <div class="form-group text-center" >

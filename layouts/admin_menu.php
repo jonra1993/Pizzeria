@@ -63,12 +63,12 @@
     </a>
   </li>
 
-  <li  class="nav-item start">
+  <!--li  class="nav-item start">
     <a href="media.php"  class="nav-link">
       <i class="glyphicon glyphicon-picture"></i>
       <span class="title">Media</span>
     </a>
-  </li>
+  </li-->
 
   <!--li  class="nav-item start">
     <a href="sales.php" class="nav-link nav-toggle"  class="nav-link">
