@@ -4,7 +4,7 @@
   $tama = $_GET['p_tama'];
   $extra = $_GET['p_extra'];
   if ($extra=='embutidos') {
-    $extra='jamon';
+    $extra='salami';
   }
 
   $precio=buscar_preciosextra_table($tama,$extra);

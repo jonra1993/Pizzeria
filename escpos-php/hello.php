@@ -194,9 +194,10 @@ try {
     //$printer -> cut();   
 
 
-	$printer -> close();
+    $printer -> close();
+    redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
 	
-	redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
+	// redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
 
 }
 catch (Exception $e) {

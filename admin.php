@@ -26,15 +26,15 @@
  $item_compr= array();
  $lista_items=array();
 
- if(isset($_GET['num'])) {
-  $prueba="b";
-  $num_items=$_GET['num'];
-  for($k=0;$k<$num_items;$k++){
-    array_push($item_compr,$_GET['c_canti'.$k],$_GET['c_descrip'.$k],$_GET['c_precio'.$k]);
-    array_push($lista_items,$item_compr);
-    $item_compr= array();
-  }
-}
+//  if(isset($_GET['num'])) {
+//   $prueba="b";
+//   $num_items=$_GET['num'];
+//   for($k=0;$k<$num_items;$k++){
+//     array_push($item_compr,$_GET['c_canti'.$k],$_GET['c_descrip'.$k],$_GET['c_precio'.$k]);
+//     array_push($lista_items,$item_compr);
+//     $item_compr= array();
+//   }
+//}
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -42,9 +42,9 @@
    <div class="col-md-6">
      <?php
      echo display_msg($msg); 
-     echo $lista_items[0][0];
-     echo $lista_items[0][1];
-     echo $lista_items[0][2];
+    //  echo $lista_items[0][0];
+    //  echo $lista_items[0][1];
+    //  echo $lista_items[0][2];
     //  echo $lista_items[1][0];
     //  echo $lista_items[1][1];
     //  echo $lista_items[1][2];?>

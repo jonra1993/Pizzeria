@@ -7,7 +7,7 @@
 
   $date    = make_date();
   $query  = "INSERT INTO venta_ingredientes (";        //Insertar la BD en donde se va a ingresar los datos
-  $query .=" qty,nombre_ingre,price";
+  $query .=" qty,nombre_ingre,price,date";
   $query .=") VALUES (";
   $query .=" '{$cantidad}', '{$nombre}', '{$precio}', '{$date}'";
   $query .=")";

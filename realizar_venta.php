@@ -123,6 +123,7 @@
                   </a>
                 <?php endif; ?>
                 <h4 class="card-title center"> <?php echo remove_junk(ucfirst($ingre['nombre']));?></h4>
+                <p class="card-body"> Precio: $<?php echo remove_junk(ucfirst($ingre['price'])); ?> </p>
               </div>
             </div>
           <?php endforeach; ?>
@@ -275,7 +276,7 @@
         </div>
         <!-- Pizza Personalizada -->
         <div id="selc_personalizada" class="row justify-content-around" style="display: none;">
-          <form class="form-horizontal" action="#" onsubmit="ingre_especial();">
+          <form class="form-horizontal" onsubmit="ingre_especial();">
             <?php for ($x = 1; $x <= 4; $x++) { ?>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" style="width: 150px;">Ingrediente <?php echo $x ?></label>
@@ -290,7 +291,7 @@
                 </div>
               </div>
             <?php }?>
-            <button type="submit" class="btn btn-primary">Continuar</button>
+            <button type="submit" class="btn btn-primary" style="width: auto">Continuar</button>
           </form>
         </div>
       </div>
@@ -470,7 +471,7 @@ function sabor_pizza(tipo,on_regres,ingre_especial){
   if (on_regres==0 && tipo!="personalizada") {
     if(tipo.search("personalizada")!=(-1)){
       p_sabor="personalizada";              //Determinar piza especial sin ingredien
-      str_extra+=(ingre_especial.toString());
+      str_extra+=(ingre_especial.toString())+",";
     }
     else
       p_sabor=tipo;
@@ -681,7 +682,7 @@ function f_final_compra(){
   }
 }
 
-function ingre_especial(theForm){
+function ingre_especial(){
   var ingre=0;
   var ingre_esp=[];
   for(k=1;k<=4;k++){
@@ -689,7 +690,7 @@ function ingre_especial(theForm){
     var strUser = e.options[e.selectedIndex].text;
     if(strUser!='<? echo $selec?>'){
       ingre++;
-      ingre_esp.push(strUser);
+      ingre_esp.push(strUser);        //Ingresar ingredientes de personalizada en array ingre_esp
     }
   }
   if(ingre>=2){
@@ -702,6 +703,7 @@ function ingre_especial(theForm){
     ingre_esp=[];
     alert("Numero de ingredientes insuficientes");
   }
+  event.preventDefault();     //Evitar refresh de pagina tras submit
 }
 
 function actu_vuelto(){
@@ -728,87 +730,6 @@ function forma_pago(forma){
   }
 }
 
-function f_continuar(conti){
-  var aux=0;            //Auxiliar q permite determinar si se debe cargar los datos a la  BD o no
-  var efect=document.getElementById('in_efectivo').value;
-  var total=document.getElementById('total_compra').value;
-  if(conti==1){
-    if(pagoTotal==1){
-      if(Number(efect)>=Number(total)){
-        p_pago="efectivo";
-      }
-      else{
-        alert("Valor de efectivo incorrecto");
-        aux=1;
-      }
-    }
-    else
-    p_pago="tarjeta";
-    //CARAGAR A BD DE VENTA PIZZAS
-    if(aux==0){
-    venta_aux.forEach(element => {
-      if(element.categ=="Pizzas"){
-        // alert(element.extra);
-        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago
-        });
-      }
-      else if(element.categ=="bebida"){
-        // alert(element.extra);
-        $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.size+"&p_sabor="+element.flavor+"&p_precio="+element.precioP
-        });
-      }
-      else if(element.categ=="ingredientes"){
-        // alert(element.extra);
-        $.ajax({url: DOMAIN+"guardar_ventas_ingrediente.php?p_canti="+element.canti+"&p_nombre="+element.p_nombre+"&p_precio="+element.precioP
-        });
-      }
-    });
-    
-    <?php
-    $contador++;
-    $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
-    $query .=" conta = '{$contador}' WHERE id = 1;";
-    if($db->query($query)){}
-    ?>
-    
-    var srt_get="num="+venta_aux.length;
-    alert(srt_get);
-    var cont=0;      //Contador de numero de elementos
-    venta_aux.forEach(element => {
-      srt_get+="&c_canti"+cont+"="+element.canti;
-      var descripP="";
-      if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
-        if(element.forma=="llevar"){
-          descripP=element.tama+" "+element.sabor+" L";
-        }
-        else{
-          descripP=element.tama+" "+element.sabor+" S";
-        }
-      }
-      else if(element.categ=="extra"){
-        var descripP="Extra "+element.extra+" en "+element.tama;
-      }
-      else if (element.categ=="forma_pizza") {
-        var descripP="Caja pizza "+element.tama;
-      }
-      srt_get+="&c_descrip"+cont+"="+descripP;
-      srt_get+="&c_precio"+cont+"="+element.precioP;
-      cont++;
-    });
-    alert(srt_get);
-
-
-    
-
-    window.open(DOMAIN+"admin.php?"+srt_get,"_self");
-  }
-  }
-  else{
-    window.open(DOMAIN+"realizar_venta.php","_self");
-  }
-  
-}
-
 function f_bebidas(size, flavor){
   var f = document.getElementById("selc_bebidas");   //Actual
   var r = document.getElementById("funcion_regresar");
@@ -817,11 +738,10 @@ function f_bebidas(size, flavor){
   f.style.display="none";
   r.style.display = 'none';
   
-  // alert(size+flavor);
   // Buscar precios de extras y cracion de fila en nota de venta
 
   $.ajax({url: DOMAIN+"buscar_precio_bebidas.php?p_size="+size+"&p_flavor="+flavor, success: function(result){
-    alert(result);
+    // alert(result);
     precio=Number(result);
     var descrip= size+" de "+flavor;
     agregar_fila(descrip,precio);
@@ -840,17 +760,90 @@ function f_ingred(nombre){
   f.style.display="none";
   r.style.display = 'none';
 
-  alert(nombre);
+  // alert(nombre);
   $.ajax({url: DOMAIN+"buscar_precio_ingredi.php?p_nombre="+nombre, success: function(result){
-    alert(result);
+    // alert(result);
     precio=Number(result);
     var descrip= nombre;
     agregar_fila(descrip,precio);
-    var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,p_nombre:nombre,precioP:precio};
+    var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,v_nombre:nombre,precioP:precio};
     venta_aux.push(venta_ingre);
     var btn_finalizar = document.getElementById("final_compra");
     centrar(btn_finalizar);
   }});
+}
+
+function f_continuar(conti){
+  var aux=0;            //Auxiliar q permite determinar si se debe cargar los datos a la  BD o no
+  var efect=document.getElementById('in_efectivo').value;
+  var total=document.getElementById('total_compra').value;
+  if(conti==1){
+    if(pagoTotal==1){
+      if(Number(efect)>=Number(total)){
+        p_pago="efectivo";
+      }
+      else{
+        alert("Valor de efectivo incorrecto");
+        aux=1;
+      }
+    }
+    else
+      p_pago="tarjeta";
+
+    //CARAGAR A BD DE VENTA PIZZAS
+    if(aux==0){
+    venta_aux.forEach(element => {
+      if(element.categ=="Pizzas"){
+        $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago
+        });
+      }
+      else if(element.categ=="bebida"){
+        $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP
+        });
+      }
+      else if(element.categ=="ingredientes"){
+        $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP
+        });
+      }
+    });
+    
+    //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
+    var srt_get="num="+venta_aux.length+",";
+    alert(srt_get);
+    // var cont=0;      //Contador de numero de elementos
+    venta_aux.forEach(element => {
+      srt_get+=(element.categ+","+element.canti+",");
+
+      if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
+        srt_get+=(element.tama+","+element.tipo+","+element.sabor+","+element.precioP+",");//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
+      }
+      else if(element.categ=="extra"){
+        srt_get+=(element.tama+","+element.extra+","+element.precioP+",");
+      }
+      else if (element.categ=="forma_pizza") {
+        srt_get+=(element.tama+","+element.precioP+",");
+      }
+      else if (element.categ=="bebida") {
+        srt_get+=(element.tama+","+element.sabor+","+element.precioP)+",";
+      }
+      else if (element.categ=="ingredientes") {
+        srt_get+=(element.v_nombre+","+element.precioP+",");
+      }
+      // cont++;
+    });
+    var totalCompra=document.getElementById('total_compra').value;
+    var efectivo=document.getElementById('in_efectivo').value;
+    var vuelto=document.getElementById('in_vuelto').value;
+    srt_get+="TOTAL,"+totalCompra;
+    alert(srt_get);
+
+    window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago+"&p_desVenta="+srt_get,"_self");
+  }
+  }
+  else{
+    window.open(DOMAIN+"realizar_venta.php","_self");
+  }
+  
 }
 
 </script>
