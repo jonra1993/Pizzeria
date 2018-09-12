@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-09-2018 a las 02:08:11
+-- Tiempo de generación: 12-09-2018 a las 01:03:40
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -275,7 +275,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 0, '2018-09-10');
+(1, 0, '2018-09-11');
 
 -- --------------------------------------------------------
 
@@ -365,7 +365,20 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 (66, 'beb_0.5Pepsi.png', 'image/png'),
 (67, 'beb_3Coca.png', 'image/png'),
 (68, 'ingre_quesoesp.png', 'image/png'),
-(69, 'ingre_quesono.png', 'image/png');
+(69, 'ingre_quesono.png', 'image/png'),
+(70, 'ingr_tocino.jpg', 'image/jpeg'),
+(71, 'ing_mortadela.jpg', 'image/jpeg'),
+(72, 'ingr_aceite.png', 'image/png'),
+(73, 'ingr_carne.jpg', 'image/jpeg'),
+(74, 'ingr_champinones.jpg', 'image/jpeg'),
+(75, 'ingr_durazno.jpg', 'image/jpeg'),
+(76, 'ingr_jamon.PNG', 'image/png'),
+(77, 'ingr_levadura.jpg', 'image/jpeg'),
+(78, 'ingr_peperoni.jpg', 'image/jpeg'),
+(79, 'ingr_piÃ±a.jpg', 'image/jpeg'),
+(80, 'ingr_pollo.jpg', 'image/jpeg'),
+(81, 'ingr_salami.jpg', 'image/jpeg'),
+(82, 'ingr_salsa.jpg', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -415,16 +428,21 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`) VALUES
-(1, 'Harina', '2', 'costal', '25.98', '32.00', 4, 20, '2018-09-03 10:41:26', 1),
-(2, 'Queso', '1', 'bloque', '12.00', '15.00', 4, 21, '2018-09-03 10:47:32', 1),
-(3, 'Aceite', '1', 'Cajas', '10.00', '18.00', 4, 22, '2018-09-03 10:47:33', 4),
-(4, 'dona', '25', 'gr', '5.00', '6.00', 4, 2, '2018-08-16 15:02:00', 1),
-(5, 'ricas2', '25', 'gr', '45.00', '50.00', 3, 9, '2018-08-16 15:12:04', 1),
-(7, 'celular', '27', 'gr', '12.00', '14.00', 2, 17, '2018-08-16 15:15:44', 1),
-(14, 'aaa', '12', 'gr', '12.00', '45.00', 2, 48, '2018-09-03 16:46:00', 1),
-(15, 'gghf', '12', '34', '12.00', '45.00', 2, 49, '2018-09-03 16:46:33', 4),
-(16, 'dfdff', '45', '78', '12.00', '56.00', 2, 0, '2018-09-03 16:47:17', 1),
-(17, 'sds', '23', 'gr', '12.00', '13.00', 2, 0, '2018-09-03 16:47:42', 1);
+(19, 'Harina', '2', 'Kg', '0.70', '0.70', 4, 20, '2018-09-11 18:31:30', 1),
+(20, 'Queso', '1', 'Kg', '4.20', '4.20', 4, 21, '2018-09-11 16:47:41', 1),
+(21, 'JamÃ³n', '1', 'Kg', '5.50', '5.50', 4, 76, '2018-09-11 16:48:36', 1),
+(22, 'Mortadela', '1', 'Kg', '3.12', '3.12', 4, 71, '2018-09-11 16:49:54', 1),
+(23, 'Salami', '1', 'Kg', '5.50', '5.50', 4, 81, '2018-09-11 16:50:25', 1),
+(24, 'Peperoni', '1', 'Kg', '5.50', '5.50', 4, 78, '2018-09-11 16:52:46', 1),
+(25, 'Salsa', '1', 'Balde', '2.00', '2.00', 4, 82, '2018-09-11 16:53:16', 1),
+(26, 'PiÃ±a', '1', 'Unidad', '1.50', '1.50', 4, 79, '2018-09-11 16:53:52', 1),
+(27, 'Durazno', '1', 'latas', '2.60', '2.60', 4, 75, '2018-09-11 16:54:19', 1),
+(28, 'Pollo', '1', '5.00', '5.00', '5.00', 4, 80, '2018-09-11 16:55:11', 1),
+(29, 'ChampiÃ±ones', '1', 'Kg', '6.15', '6.15', 4, 74, '2018-09-11 16:56:22', 1),
+(30, 'Carne', '1', 'Kg', '5.60', '5.60', 4, 73, '2018-09-11 16:56:55', 1),
+(31, 'Tocino', '1', 'Kg', '9.50', '9.50', 4, 70, '2018-09-11 16:57:31', 1),
+(32, 'Aceite', '1', '1.38', '1.38', '1.38', 4, 72, '2018-09-11 16:58:18', 1),
+(33, 'Levadura', '1', 'Kg', '6.50', '6.50', 4, 77, '2018-09-11 16:58:52', 1);
 
 -- --------------------------------------------------------
 
@@ -450,38 +468,23 @@ CREATE TABLE `products_add_records` (
 --
 
 INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`, `date`, `username`, `proveedor_id`) VALUES
-(1, 'Harina', '6', '11', 'costal', '25.98', '129.90', '2018-08-28 17:24:03', 'Admin', 1),
-(2, 'Queso', '13', '15', 'bloque', '12.00', '24.00', '2018-08-28 17:24:03', 'Admin', 1),
-(3, 'Aceite', '5', '7', 'Cajas', '10.00', '20.00', '2018-08-28 17:24:03', 'Admin', 4),
-(4, 'Harina', '11', '7', 'costal', '25.98', '-103.92', '2018-08-28 17:24:13', 'Admin', 1),
-(5, 'Queso', '15', '2', 'bloque', '12.00', '-156.00', '2018-08-28 17:24:13', 'Admin', 1),
-(6, 'Aceite', '7', '2', 'Cajas', '10.00', '-50.00', '2018-08-28 17:24:13', 'Admin', 4),
-(7, 'Harina', '7', '1', 'costal', '25.98', '-155.88', '2018-08-28 17:28:31', 'Admin', 1),
-(8, 'Queso', '2', '1', 'bloque', '12.00', '-12.00', '2018-08-28 17:28:31', 'Admin', 1),
-(9, 'Harina', '1', '1', 'costal', '25.98', '0.00', '2018-09-03 08:26:34', 'Admin', 1),
-(10, 'Harina', '1', '4', 'costal', '25.98', '77.94', '2018-09-03 08:29:02', 'Admin', 1),
-(11, 'Harina', '4', '5', 'costal', '25.98', '25.98', '2018-09-03 08:29:06', 'Admin', 1),
-(12, 'Queso', '1', '5', 'bloque', '12.00', '48.00', '2018-09-03 08:29:12', 'Admin', 1),
-(13, 'Aceite', '2', '3', 'Cajas', '10.00', '10.00', '2018-09-03 08:29:19', 'Admin', 4),
-(14, 'Harina', '5', '3', 'costal', '25.98', '-51.96', '2018-09-03 08:29:49', 'Admin', 1),
-(15, 'Harina', '3', '1', 'costal', '25.98', '-51.96', '2018-09-03 08:29:54', 'Admin', 1),
-(16, 'Queso', '5', '3', 'bloque', '12.00', '-24.00', '2018-09-03 08:30:35', 'Admin', 1),
-(17, 'Harina', '1', '4', 'costal', '25.98', '77.94', '2018-09-03 08:33:42', 'Admin', 1),
-(18, 'Harina', '4', '5', 'costal', '25.98', '25.98', '2018-09-03 08:33:46', 'Admin', 1),
-(19, 'Harina', '5', '6', 'costal', '25.98', '25.98', '2018-09-03 09:12:28', 'Admin', 1),
-(20, 'Harina', '6', '7', 'costal', '25.98', '25.98', '2018-09-03 09:15:43', 'Admin', 1),
-(21, 'Harina', '7', '2', 'costal', '25.98', '-129.90', '2018-09-03 10:41:26', 'Admin', 1),
-(22, 'Queso', '3', '1', 'bloque', '12.00', '-24.00', '2018-09-03 10:47:32', 'Admin', 1),
-(23, 'Aceite', '3', '1', 'Cajas', '10.00', '-20.00', '2018-09-03 10:47:33', 'Admin', 4),
-(24, 'WWW', '0', '12', 'GR', '23.00', '276.00', '0000-00-00 00:00:00', 'Admin', 1),
-(25, 'aaaa', '0', '12', 'gr', '34.00', '408.00', '0000-00-00 00:00:00', 'Admin', 1),
-(26, 'sss', '0', '23', 'gr', '12.00', '276.00', '0000-00-00 00:00:00', 'Admin', 1),
-(27, 'xxxa', '0', '12', 'cm', '12.00', '144.00', '0000-00-00 00:00:00', 'Admin', 1),
-(28, 'erew', '0', '12', '34', '12.00', '144.00', '0000-00-00 00:00:00', 'Admin', 1),
-(29, 'aaa', '0', '12', 'gr', '12.00', '144.00', '0000-00-00 00:00:00', 'Admin', 1),
-(30, 'gghf', '0', '12', '34', '12.00', '144.00', '0000-00-00 00:00:00', 'Admin', 4),
-(31, 'dfdff', '0', '45', '78', '12.00', '540.00', '0000-00-00 00:00:00', 'Admin', 1),
-(32, 'sds', '0', '23', 'gr', '12.00', '276.00', '0000-00-00 00:00:00', 'Admin', 1);
+(1, 'Harina', '0', '1', 'Kg', '35.00', '35.00', '0000-00-00 00:00:00', 'Admin', 1),
+(2, 'Harina', '0', '1', 'Kg', '0.70', '0.70', '0000-00-00 00:00:00', 'Admin', 1),
+(3, 'Queso', '0', '1', 'Kg', '4.20', '4.20', '0000-00-00 00:00:00', 'Admin', 1),
+(4, 'JamÃ³n', '0', '1', 'Kg', '5.50', '5.50', '0000-00-00 00:00:00', 'Admin', 1),
+(5, 'Mortadela', '0', '1', 'Kg', '3.12', '3.12', '0000-00-00 00:00:00', 'Admin', 1),
+(6, 'Salami', '0', '1', 'Kg', '5.50', '5.50', '0000-00-00 00:00:00', 'Admin', 1),
+(7, 'Peperoni', '0', '1', 'Kg', '5.50', '5.50', '0000-00-00 00:00:00', 'Admin', 1),
+(8, 'Salsa', '0', '1', 'Balde', '2.00', '2.00', '0000-00-00 00:00:00', 'Admin', 1),
+(9, 'PiÃ±a', '0', '1', 'Unidad', '1.50', '1.50', '0000-00-00 00:00:00', 'Admin', 1),
+(10, 'Durazno', '0', '1', 'latas', '2.60', '2.60', '0000-00-00 00:00:00', 'Admin', 1),
+(11, 'Pollo', '0', '1', 'Unidades', '5.00', '5.00', '0000-00-00 00:00:00', 'Admin', 1),
+(12, 'ChampiÃ±ones', '0', '1', 'Kg', '6.15', '6.15', '0000-00-00 00:00:00', 'Admin', 1),
+(13, 'Carne', '0', '1', 'Kg', '5.60', '5.60', '0000-00-00 00:00:00', 'Admin', 1),
+(14, 'Tocino', '0', '1', 'Kg', '9.50', '9.50', '0000-00-00 00:00:00', 'Admin', 1),
+(15, 'Aceite', '0', '1', 'litro', '1.38', '1.38', '0000-00-00 00:00:00', 'Admin', 1),
+(16, 'Levadura', '0', '1', 'Kg', '6.50', '6.50', '0000-00-00 00:00:00', 'Admin', 1),
+(17, 'Harina', '1', '2', 'Kg', '0.70', '0.70', '2018-09-11 18:31:30', 'Admin', 1);
 
 -- --------------------------------------------------------
 
@@ -707,7 +710,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-10 14:21:04', 0),
+(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-11 16:09:14', 0),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -769,7 +772,12 @@ INSERT INTO `venta_bebidas` (`id`, `qty`, `tam_bebida`, `sabor_bebida`, `price`,
 (14, 1, '3 litro', 'coca-cola', '3.00', '2018-09-09 22:11:20'),
 (15, 1, '1/2 litro', 'fruit', '0.50', '2018-09-10 15:09:44'),
 (16, 1, '1/2 litro', 'fruit', '0.50', '2018-09-10 15:25:54'),
-(17, 1, 'vaso', 'fruit', '0.30', '2018-09-10 15:25:54');
+(17, 1, 'vaso', 'fruit', '0.30', '2018-09-10 15:25:54'),
+(18, 1, 'vaso', 'fruit', '0.30', '2018-09-10 22:01:56'),
+(19, 1, '850 ml', 'pilsener', '1.75', '2018-09-10 22:01:56'),
+(20, 1, '3 litro', 'coca-cola', '3.00', '2018-09-10 22:01:56'),
+(21, 1, '1/2 litro', 'fruit', '0.50', '2018-09-11 18:05:05'),
+(22, 1, '3 litro', 'coca-cola', '3.00', '2018-09-11 18:05:05');
 
 -- --------------------------------------------------------
 
@@ -804,7 +812,11 @@ INSERT INTO `venta_ingredientes` (`id`, `qty`, `nombre_ingre`, `price`, `date`) 
 (12, 1, 'quesoEspecial', '15.00', '2018-09-10 15:09:44'),
 (13, 1, 'embutidos', '7.50', '2018-09-10 15:25:54'),
 (14, 1, 'embutidos', '7.50', '2018-09-10 15:37:55'),
-(15, 1, 'quesoNormal', '12.00', '2018-09-10 15:56:58');
+(15, 1, 'quesoNormal', '12.00', '2018-09-10 15:56:58'),
+(16, 1, 'embutidos', '7.50', '2018-09-10 22:01:56'),
+(17, 1, 'quesoEspecial', '15.00', '2018-09-10 22:01:56'),
+(18, 1, 'quesoNormal', '12.00', '2018-09-10 22:05:40'),
+(19, 1, 'embutidos', '7.50', '2018-09-11 18:05:05');
 
 -- --------------------------------------------------------
 
@@ -844,7 +856,13 @@ INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza
 (12, 1, 'extragrande', 'especial', 'amangiare', 'llevar', 'champinones,', '18.00', 'efectivo', '2018-09-09 22:11:20'),
 (13, 1, 'familiar', 'normal', 'hawayana', 'llevar', 'queso,', '13.00', 'efectivo', '2018-09-10 14:41:07'),
 (14, 1, 'mediana', 'especial', 'tradicionalPollo', 'llevar', 'champinones,', '10.00', 'efectivo', '2018-09-10 15:09:44'),
-(15, 1, 'extragrande', 'especial', 'amangiare', 'llevar', 'queso,', '18.00', 'efectivo', '2018-09-10 15:25:54');
+(15, 1, 'extragrande', 'especial', 'amangiare', 'llevar', 'queso,', '18.00', 'efectivo', '2018-09-10 15:25:54'),
+(16, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Pollo,Vegetariana,pina,', '10.00', 'efectivo', '2018-09-10 21:56:28'),
+(17, 1, 'familiar', 'normal', 'pollo', 'llevar', 'pina,', '13.00', 'efectivo', '2018-09-10 21:59:54'),
+(18, 1, 'porcion', 'porcion', 'hawayana', 'servirse', '', '1.50', 'efectivo', '2018-09-10 22:01:56'),
+(19, 1, 'familiar', 'normal', 'pollo', 'llevar', 'pina,', '13.00', 'efectivo', '2018-09-10 22:01:56'),
+(20, 1, 'familiar', 'normal', 'napolitana', 'llevar', 'pina,', '13.00', 'efectivo', '2018-09-10 22:05:40'),
+(21, 1, 'mediana', 'normal', 'vegetariana', 'llevar', 'durazno,', '8.50', 'efectivo', '2018-09-11 17:13:54');
 
 --
 -- Índices para tablas volcadas
@@ -1049,7 +1067,7 @@ ALTER TABLE `extra_pizzas`
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT de la tabla `productovender`
@@ -1061,13 +1079,13 @@ ALTER TABLE `productovender`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `products_add_records`
 --
 ALTER TABLE `products_add_records`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -1133,19 +1151,19 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `venta_bebidas`
 --
 ALTER TABLE `venta_bebidas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
