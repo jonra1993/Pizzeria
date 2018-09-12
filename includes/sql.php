@@ -444,12 +444,12 @@ function find_recent_sale_added($limit){
 /*--------------------------------------------------------------*/
 /* Function for Generate sales report by two dates
 /*--------------------------------------------------------------*/
-function datesSales_pizzas ($start_date,$end_date){ 
+function datesSales ($start_date,$end_date,$tabla){ 
   global $db;
   $start_date  = date("Y-m-d", strtotime($start_date));
   $end_date    = date("Y-m-d", strtotime($end_date));
-  $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.llevar_pizza,c.extras,c.price,c.date";
-  $sql .= " FROM venta_pizzas c";
+  $sql  =" SELECT *";
+  $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}'";
   $sql .= " ORDER BY DATE(c.date) DESC";
   return $db->query($sql);
@@ -458,10 +458,10 @@ function datesSales_pizzas ($start_date,$end_date){
 /*--------------------------------------------------------------*/
 /* Function for Generate Daily sales report
 /*--------------------------------------------------------------*/
-function  dailySales_pizzas($year,$month,$day){
+function  dailySales($year,$month,$day,$tabla){
   global $db;
-  $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.llevar_pizza,c.extras,c.price,c.date";
-  $sql .= " FROM venta_pizzas c";
+  $sql  =" SELECT *";
+  $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
   //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '2018-08-27'";
   return find_by_sql($sql);
@@ -470,9 +470,10 @@ function  dailySales_pizzas($year,$month,$day){
 /*--------------------------------------------------------------*/
 /* Function for Generate Monthly sales report
 /*--------------------------------------------------------------*/
-function monthlySales ($year,$month){ 
-  $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.llevar_pizza,c.extras,c.price,c.date";
-  $sql .= " FROM venta_pizzas c";
+function monthlySales ($year,$month,$tabla){ 
+  global $db;
+  $sql  =" SELECT *";
+  $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m' ) = '{$year}-{$month}'";
   return find_by_sql($sql);
 }
