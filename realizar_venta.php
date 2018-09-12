@@ -537,7 +537,7 @@ function forma_servir(forma) {
   if (p_forma=="llevar"  && !(p_tama=="porcion")) {
     var descrip="Caja Pizza "+p_tama;
     agregar_fila(descrip, 1.0);
-    var venta_forma={id:fila_id,categ:"forma_pizza",canti:1,tama:p_tama,precioP:1};
+    var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:p_tama,precioP:1};
     venta_aux.push(venta_forma);
   }
   //Quitar  el contenedor al finalizar
@@ -808,28 +808,31 @@ function f_continuar(conti){
     });
     
     //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
-    var srt_get="num="+venta_aux.length+",";
-    alert(srt_get);
-    // var cont=0;      //Contador de numero de elementos
+    var srt_get="";
     venta_aux.forEach(element => {
-      srt_get+=(element.categ+","+element.canti+",");
+      srt_get+=(element.canti+","+element.categ+" ");
 
       if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
-        srt_get+=(element.tama+","+element.tipo+","+element.sabor+","+element.precioP+",");//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
+        srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
+        if(element.forma=="llevar")
+          srt_get+=" L";
+        else
+          srt_get+=" S";
       }
       else if(element.categ=="extra"){
-        srt_get+=(element.tama+","+element.extra+","+element.precioP+",");
+        srt_get+=(element.tama+" "+element.extra);
       }
-      else if (element.categ=="forma_pizza") {
-        srt_get+=(element.tama+","+element.precioP+",");
+      else if (element.categ=="Caja_pizza") {
+        srt_get+=(element.tama);
       }
       else if (element.categ=="bebida") {
-        srt_get+=(element.tama+","+element.sabor+","+element.precioP)+",";
+        srt_get+=(element.tama+" "+element.sabor);
       }
       else if (element.categ=="ingredientes") {
-        srt_get+=(element.v_nombre+","+element.precioP+",");
+        srt_get+=(element.v_nombre);
       }
-      // cont++;
+      srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
+
     });
     var totalCompra=document.getElementById('total_compra').value;
     var efectivo=document.getElementById('in_efectivo').value;
