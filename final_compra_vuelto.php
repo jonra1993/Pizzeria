@@ -12,11 +12,17 @@ if(isset($_GET['p_efect'])) {
     $compra=$_GET['p_desVenta'];
     $forma=$_GET['p_pago'];
     
-    // for($k=0;$k<$num_items;$k++){
-    //   array_push($item_compr,$_GET['c_canti'.$k],$_GET['c_descrip'.$k],$_GET['c_precio'.$k]);
-    //   array_push($lista_items,$item_compr);
-    //   $item_compr= array();
-    // }
+    $cc = find_conta('contador');
+    $contador;
+    foreach($cc as $c){
+     $contador=$c['conta'];
+    }
+
+    $contador++;
+    $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
+    $query .=" conta = '{$contador}' WHERE id = 1;";
+    if($db->query($query)){}
+    
   }
 ?>
 
@@ -32,8 +38,8 @@ if(isset($_GET['p_efect'])) {
   <div class="container">
     <div class="panel">
       <div class="panel-body text-center">
-        <h1>Efectivo <span class="label label-warning"><?php echo $efectivo;?></span></h1>
-        <h1>Vuelto <span class="label label-success"><?php echo $vuelto;?></span></h1>
+        <h1>Efectivo <span class="label label-warning"><?php echo number_format((float)$efectivo, 2, '.', '');?></span></h1>
+        <h1>Vuelto <span class="label label-success"><?php echo number_format((float)$vuelto, 2, '.', '');?></span></h1>
         <h4>Pago <?php echo $forma;?></h4>
             
             <div class="form-group text-center" >

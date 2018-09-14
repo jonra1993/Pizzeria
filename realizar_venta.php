@@ -839,6 +839,17 @@ function f_continuar(conti){
     var vuelto=document.getElementById('in_vuelto').value;
     alert(srt_get);
 
+    var user = "<?php echo $user['username']; ?>";
+    var date = "<?php echo make_date(); ?>";
+    var d = new Date();
+    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+    
+    var e=0; //0 con tarjeat, 1 con efectivo
+    var servir=1; //0 llevar, 1 servirse
+    var servir = [0,1,1,1,1];
+    var numorden='<?php echo $contador?>';
+
+/*
     //Funcion de imprimir
     $.ajax({url: DOMAIN+"prueba_impresora.php?p_desVenta="+srt_get+"&p_subtotal="+totalCompra, success: function(result){
       alert(result);
@@ -849,9 +860,12 @@ function f_continuar(conti){
       // venta_aux.push(venta_ingre);
       // var btn_finalizar = document.getElementById("final_compra");
       // centrar(btn_finalizar);
-    }});
+    }});*/
 
-    window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_self");
+    var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+srt_get+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
+
+
+    //window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_self");
   }
   }
   else{

@@ -43,7 +43,7 @@
       $query2 .=")";
       if($db->query($query2)){
         $session->msg('s',"Producto agregado exitosamente. ");
-       redirect('add_product.php', false);
+       redirect('product.php', false);
       }
        
      } else {
@@ -83,7 +83,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-title" placeholder="Descripción">
+                  <input type="text" class="form-control" name="product-title" autocomplete="off" placeholder="Descripción">
                </div>
               </div>
               <div class="form-group">
@@ -116,7 +116,7 @@
                     <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                     </span>
-                    <input type="number" class="form-control" name="product-quantity" placeholder="Cantidad">
+                    <input type="number" class="form-control" name="product-quantity" autocomplete="off" placeholder="Cantidad">
                   </div>
                  </div>
                  <div class="col-md-8">
@@ -137,7 +137,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="decimal" class="form-control" name="buying-price" placeholder="Precio de compra">
+                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="buying-price" placeholder="Precio de compra">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -145,7 +145,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="decimal" class="form-control" name="saleing-price" placeholder="Precio de venta">
+                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="saleing-price" placeholder="Precio de venta">
                     </div>
                   </div>
                 </div>

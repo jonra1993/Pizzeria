@@ -7,30 +7,29 @@ $page_title = 'Reporte de Inventario';
 ?>
 
 <?php
+  if(isset($_POST['submit'])){
+    $req_dates = array('start-date','end-date');
+    $option   = remove_junk($db->escape($_POST['selector']));
+    validate_fields($req_dates);
 
-if(isset($_POST['submit'])){
-  $req_dates = array('start-date','end-date');
-  $option   = remove_junk($db->escape($_POST['selector']));
-  validate_fields($req_dates);
+    if(empty($errors)):
+      $start_date   = remove_junk($db->escape($_POST['start-date']));
+      $end_date     = remove_junk($db->escape($_POST['end-date']));
+      $inv      = by_dates_Inventario($start_date,$end_date,$option);
 
-  if(empty($errors)):
-    $start_date   = remove_junk($db->escape($_POST['start-date']));
-    $end_date     = remove_junk($db->escape($_POST['end-date']));
-    $inv      = by_dates_Inventario($start_date,$end_date,$option);
+      $total=0;
+      foreach ($inv as $i){
+        $total=$total+(float)remove_junk($i['gasto']);
+      }
 
-    $total=0;
-    foreach ($inv as $i){
-      $total=$total+(float)remove_junk($i['gasto']);
-    }
+    else:
+      $session->msg("d", $errors);
+      redirect('product_report.php', false);
+    endif;
 
-  else:
-    $session->msg("d", $errors);
-    redirect('product_report.php', false);
-  endif;
-
-} else {
-  $inv =null;
-}
+  } else {
+    $inv =null;
+  }
 ?>
 
 <?php include_once('layouts/header.php'); ?>
@@ -101,9 +100,9 @@ if(isset($_POST['submit'])){
                   <th class="text-center" style="width: 15%;"> Fecha </th>
                   <th class="text-center" style="width: 10%;"> Usuario </th>
                   <th class="text-center" style="width: 10%;"> Proveedor</th>
-                  <th class="text-center" style="width: 10%;"> Unidades</th>
                   <th class="text-center" style="width: 10%;"> Cantidad anterior </th>
                   <th class="text-center" style="width: 10%;"> Nueva Cantidad</th>
+                  <th class="text-center" style="width: 10%;"> Unidades</th>
                   <th class="text-center" style="width: 10%;"> Precio de compra</th>
                   <th class="text-center" style="width: 10%;"> Gasto </th>
                 </tr>
@@ -114,9 +113,9 @@ if(isset($_POST['submit'])){
                       <td class="text-center"> <?php echo read_date($i['date']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['username']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['pro']); ?></td>
-                      <td class="text-center"> <?php echo remove_junk($i['unidades']); ?></td>
                       <td class="text-center" > <?php echo remove_junk($i['last_quantity']); ?></td>
                       <td class="text-center" > <?php echo remove_junk($i['new_quantity']); ?></td>
+                      <td class="text-center"> <?php echo remove_junk($i['unidades']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['buy_price']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($i['gasto']); ?></td>
                     </tr>
