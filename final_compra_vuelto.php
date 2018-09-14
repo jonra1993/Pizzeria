@@ -12,11 +12,17 @@ if(isset($_GET['p_efect'])) {
     $compra=$_GET['p_desVenta'];
     $forma=$_GET['p_pago'];
     
-    // for($k=0;$k<$num_items;$k++){
-    //   array_push($item_compr,$_GET['c_canti'.$k],$_GET['c_descrip'.$k],$_GET['c_precio'.$k]);
-    //   array_push($lista_items,$item_compr);
-    //   $item_compr= array();
-    // }
+    $cc = find_conta('contador');
+    $contador;
+    foreach($cc as $c){
+     $contador=$c['conta'];
+    }
+
+    $contador++;
+    $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
+    $query .=" conta = '{$contador}' WHERE id = 1;";
+    if($db->query($query)){}
+    
   }
 ?>
 

@@ -82,8 +82,9 @@ class itemcocina
 }
 
 try {
-	//$connector = new WindowsPrintConnector("pos-80");
-	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
+
+	$connector = new WindowsPrintConnector("pos-80");
+	//$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
@@ -160,7 +161,7 @@ try {
  
     /* Cut */
     $printer -> feed(1);
-    //$printer -> cut();   
+    $printer -> cut();   
 
     /* Name of shop */
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -191,19 +192,26 @@ try {
     //else $printer -> text("Ef\n");
     /* Cut */
     $printer -> feed(1);
-    //$printer -> cut();   
+    $printer -> cut();   
 
 
     $printer -> close();
-    redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
+
+    $p_pago=$_GET["p_pago"];
+    $p_vuelto=$_GET["p_vuelto"];
+    $p_efect=$_GET["p_efect"];
+
+        //window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_self");
+
+    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$p_efect.'&p_vuelto='.$p_vuelto.'&p_pago='.$p_pago,false);  //cambiar a donde se quiere que vaya venta
 	
-	// redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
+	//redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
 
 }
 catch (Exception $e) {
     echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
 }
 
-redirect('../admin.php?status=noImpreso',false); 
+redirect('../realizar_venta.php?status=noImpreso',false); 
 
 ?>
