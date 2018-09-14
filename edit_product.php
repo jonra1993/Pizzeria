@@ -25,7 +25,7 @@ if(!$product){
        $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
        $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
-       $p_unidades  = remove_junk($db->escape($_POST['saleing-price']));
+       $p_unidades  = remove_junk($db->escape($_POST['product-unidades']));
        $p_pro  = (int)$_POST['nombre-proveedor'];
        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
          $media_id = '0';
