@@ -840,7 +840,19 @@ function f_continuar(conti){
     srt_get+="TOTAL,"+totalCompra;
     alert(srt_get);
 
-    window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago+"&p_desVenta="+srt_get,"_self");
+    //Funcion de imprimir
+    $.ajax({url: DOMAIN+"prueba_impresora.php?p_desVenta="+srt_get, success: function(result){
+      alert(result);
+      // precio=Number(result);
+      // var descrip= nombre;
+      // agregar_fila(descrip,precio);
+      // var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,v_nombre:nombre,precioP:precio};
+      // venta_aux.push(venta_ingre);
+      // var btn_finalizar = document.getElementById("final_compra");
+      // centrar(btn_finalizar);
+    }});
+
+    window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_self");
   }
   }
   else{
