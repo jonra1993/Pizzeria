@@ -10,10 +10,10 @@
 ?>
 
 <?php
-  if(isset($_POST['submit'])){  
-    $option   = remove_junk($db->escape($_POST['selector']));
+  if(isset($_GET['sel'])){  
+    $selector=$_GET['sel'];
     if(empty($errors)){
-      switch ($option) {
+      switch ($selector) {
         case 'Pizzas':
           $ventas = dailySales($year,$month,$day,'venta_pizzas');
           break;
@@ -30,7 +30,8 @@
       redirect('sales_daily.php', false);
     }
   } else {
-    $ventas =null;
+    $ventas = dailySales($year,$month,$day,'venta_pizzas');
+    $selector='Pizzas';
   }
 ?>
 
@@ -42,26 +43,21 @@
     </div>
 
     <div class="col-md-12">
-      <form class="form-group" class="clearfix" method="post" action="sales_daily.php">
         <div class="col-md-6">
           <div class="panel">
             <div class="panel-body">     
               <label for="exampleFormControlSelect1">Seleccione la categoría</label>
-              <select class="form-control" name="selector" required>
-                <option></option>
+              <select class="form-control" id="selector" onchange="nuevo();" required>
+                <option><?php echo remove_junk($selector); ?></option>
                 <?php foreach ($categorias as $cat):?>
-                  <option><?php echo remove_junk($cat['name']); ?></option>
+                  <?php if(remove_junk($cat['name'])!=remove_junk($selector)):?>
+                    <option><?php echo remove_junk($cat['name']);?></option>
+                  <?php endif?>
                 <?php endforeach; ?>
               </select>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <button type="submit" name="submit" class="btn btn-primary">Generar reporte</button>
-          </div> 
-        </div>
-      </form>
     </div>
 
     <?php if ($ventas != null):?>    
@@ -70,10 +66,10 @@
           <div class="panel-heading clearfix">
             <strong>
               <span class="glyphicon glyphicon-th"></span>
-              <span>Reportes de ventas de <?php echo  $option;?> del día (<?php echo  $year.'/'.$month.'/'.$day; ?>)</span>
+              <span>Reportes de ventas de <?php echo  $selector;?> del día (<?php echo  $year.'/'.$month.'/'.$day; ?>)</span>
             </strong>
           </div>
-          <?php switch($option): 
+          <?php switch($selector): 
             case 'Pizzas': ?>
               <div class="panel-body">
                 <table class="table table-bordered">
@@ -186,6 +182,12 @@ myFunction();
 
     "<?php endforeach ?>";
     s.innerHTML =pri.toFixed(2);
+  }
+
+  function nuevo(){
+    var sel=document.getElementById('selector').value;
+    var win = window.open("sales_daily.php?"+"sel="+sel,"_SELF"); // will open new tab on document ready
+
   }
 
 </script>
