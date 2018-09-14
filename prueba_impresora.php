@@ -5,6 +5,8 @@
    page_require_level(3);
    if(isset($_GET['p_desVenta'])) {
     $venta=$_GET['p_desVenta'];
+    $subtotal=$_GET['p_subtotal'];
+
    }
 ?>
 
@@ -22,7 +24,7 @@
     var efectivo=0; //0 con tarjeat, 1 con efectivo
     var servir=1; //0 llevar, 1 servirse
 
-    var subtotal=orden[orden.length - 1];;
+    var subtotal="<?php echo $user['subtotal']; ?>";
     var numorden=25;
 
     for (i = 0; i < Number(orden1.length)/4; i++) { 

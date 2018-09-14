@@ -837,11 +837,10 @@ function f_continuar(conti){
     var totalCompra=document.getElementById('total_compra').value;
     var efectivo=document.getElementById('in_efectivo').value;
     var vuelto=document.getElementById('in_vuelto').value;
-    srt_get+="TOTAL,"+totalCompra;
     alert(srt_get);
 
     //Funcion de imprimir
-    $.ajax({url: DOMAIN+"prueba_impresora.php?p_desVenta="+srt_get, success: function(result){
+    $.ajax({url: DOMAIN+"prueba_impresora.php?p_desVenta="+srt_get+"&p_subtotal="+totalCompra, success: function(result){
       alert(result);
       // precio=Number(result);
       // var descrip= nombre;
