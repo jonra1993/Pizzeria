@@ -482,6 +482,20 @@ function monthlySales ($year,$month,$tabla){
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/
 
+
+  function VentasRealizadas ($start_date,$tabla,$forma_pago){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username'])); 
+    global $db;
+    $start_date  = date("Y-m-d", strtotime($start_date));
+    $sql  =" SELECT *";
+    $sql .= " FROM $tabla c";
+    //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.username='{$p_user}'";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.forma_pago='{$forma_pago}'";
+    $sql .= " ORDER BY DATE(c.date) DESC";
+    return $db->query($sql);
+  }
+
   function find_last_open_box(){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
@@ -499,7 +513,7 @@ function monthlySales ($year,$month,$tabla){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
     $sql  =" SELECT SUM(c.importe)";
-    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
     return find_by_sql($sql);
   }
 
@@ -507,7 +521,7 @@ function monthlySales ($year,$month,$tabla){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
     $sql  =" SELECT SUM(c.importe)";
-    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
     return find_by_sql($sql);
   }
 

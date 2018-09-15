@@ -81,7 +81,7 @@
         <div id="funcion_regresar" class="row" style="display: none;">
           <button type="button" class="btn btn-success" style="width: auto" onclick="regresar_carac()">
             <i class="glyphicon glyphicon-arrow-left"></i>
-          Regresar
+            Regresar
           </button>
         </div>
         <!-- Categoria Bebidas -->
