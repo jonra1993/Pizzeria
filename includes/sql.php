@@ -410,12 +410,11 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  /* Function for Find Highest saleing Product
  /*--------------------------------------------------------------*/
- function find_higest_saleing_product($limit){
+ function find_higest_saleing_pizzas($limit,$tama){
    global $db;
-   $sql  = "SELECT p.name, COUNT(s.product_id) AS totalSold, SUM(s.qty) AS totalQty";
-   $sql .= " FROM sales s";
-   $sql .= " LEFT JOIN products p ON p.id = s.product_id ";
-   $sql .= " GROUP BY s.product_id";
+   $sql  = "SELECT s.sabor_pizza AS nam, COUNT(s.sabor_pizza) AS totalSold, SUM(s.qty) AS totalQty, SUM(s.price) AS totalprice";
+   $sql .= " FROM venta_pizzas s WHERE s.tam_pizza='{$tama}'" ;
+   $sql .= " GROUP BY s.sabor_pizza";
    $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
    return $db->query($sql);
  }

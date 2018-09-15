@@ -36,7 +36,9 @@
     $c_product       = count_by_id('products');
     $c_sale          = count_by_id('sales');
     $c_user          = count_by_id('users');
-    $products_sold   = find_higest_saleing_product('10');
+    $products_sold_mediana   = find_higest_saleing_pizzas('3','mediana');
+    $products_sold_familiar   = find_higest_saleing_pizzas('3','familiar');
+    $products_sold_extragrande   = find_higest_saleing_pizzas('3','extragrande');
 
     $recent_products = find_bajostock_product();
 
@@ -73,7 +75,7 @@
         <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-usd"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">Ventas diarias</span>
-          <span class="info-box-number"><small>$</small><?php  echo $ventasDiarias; ?></span>
+          <span class="info-box-number"><small >$</small><?php  echo number_format((float)$ventasDiarias, 2, '.', ''); ?></span>
         </div>
       </div>
     </div>
@@ -109,24 +111,80 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Pizzas más vendidas</span>
+            <span>Pizzas extragrande más vendidas</span>
           </strong>
         </div>
         <div class="panel-body">
           <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>
-                <th class="text-center">Título</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Sabor</th>
                 <th class="text-center">Total vendido</th>
-                <th class="text-center">Cantidad total</th>
               </tr>
             </thead>
             <tbody>
-            <?php foreach ($products_sold as  $product_sold): ?>
+            <?php foreach ($products_sold_extragrande as  $product_sold): ?>
               <tr>
-                <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
-                <td><?php echo (int)$product_sold['totalSold']; ?></td>
-                <td><?php echo (int)$product_sold['totalQty']; ?></td>
+                <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
+                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>   
+              </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>Pizzas familiar más vendidas</span>
+          </strong>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Sabor</th>
+                <th class="text-center">Total vendido</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($products_sold_familiar as  $product_sold): ?>
+              <tr>
+                <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
+                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>Pizzas medianas más vendidas</span>
+          </strong>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Sabor</th>
+                <th class="text-center">Total vendido</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($products_sold_mediana as  $product_sold): ?>
+              <tr>
+                <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
+                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>
               </tr>
             <?php endforeach; ?>
             </tbody>
