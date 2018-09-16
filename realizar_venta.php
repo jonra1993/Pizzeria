@@ -507,7 +507,7 @@
     btn_regre.style.display = 'none';     //Desaparecer boton regresar de ingredientes extras
     sabor_porcion.style.display = 'none';
     //Titulo de ventana
-    titu_regre.innerText = "Seleccionar ingrediente extra";
+    titu_regre.innerText = "Seleccionar ingrediente e xtra";
     pizza_vent=3;   //Ventana de servir
   }
 
@@ -537,8 +537,13 @@
 
     if (p_forma=="llevar"  && !(p_tama=="porcion")) {
       var descrip="Caja Pizza "+p_tama;
-      agregar_fila(descrip, 1.0);
-      var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:p_tama,precioP:1};
+      if(p_tama=="mediana")
+        var precio_caja=1;
+      else 
+        var precio_caja=1.25;
+      
+      agregar_fila(descrip, precio_caja);
+      var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:p_tama,precioP:precio_caja};
       venta_aux.push(venta_forma);
     }
     //Quitar  el contenedor al finalizar
