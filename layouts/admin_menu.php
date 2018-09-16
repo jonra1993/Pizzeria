@@ -97,19 +97,22 @@
   </li>
 
   <!--Apertura y cierre de caja-->
-  <li  class="nav-item start">
-    <a href="caja_apertura.php" class="nav-link">
-      <i class="glyphicon glyphicon-folder-open"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span class="title">Apertura de caja</span>
-    </a>
-  </li>
-
-  <li  class="nav-item start">
-    <a href="caja_cierre.php" class="nav-link">
-      <i class="glyphicon glyphicon-folder-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
-      <span class="title">Cierre de caja</span>
-    </a>
-  </li>
+  <?php $user = current_user();?> 
+  <?php if($user['bloqueocaja']==false):?>
+    <li  class="nav-item start">
+      <a href="caja_apertura.php" class="nav-link">
+        <i class="glyphicon glyphicon-folder-open"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+        <span class="title">Apertura de caja</span>
+      </a>
+    </li>
+  <?php else:?>
+    <li  class="nav-item start">
+      <a href="caja_cierre.php" class="nav-link">
+        <i class="glyphicon glyphicon-folder-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+        <span class="title">Cierre de caja</span>
+      </a>
+    </li>
+  <?php endif;?>
 
 
 

@@ -5,7 +5,17 @@
     page_require_level(1);
   ?>
   <?php
+    $d = make_date2();
     $cc = find_conta('contador');
+  
+    if($d!=$cc[0]['date']){   //solo actualiza si se cambiado el valor
+      $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
+      $query .=" conta = 0, date = '{$d}' WHERE id = 1;";
+      if($db->query($query)){
+      }
+    }
+
+
     $contador=$cc[0]['conta'];
     
     $year  = date('Y');
@@ -223,9 +233,9 @@
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
-                <th>Producto</th>
                 <th>Fecha</th>
-                <th>Venta total</th>
+                <th>Usuario</th>
+                <th>Valor de venta</th>
               </tr>
             </thead>
             <tbody>
