@@ -68,7 +68,7 @@
             Regresar
           </button>
           <div class='col-sm-8 text-center'>
-            <h2 id='titulo_regresar' class='text-center text-white' style="color: #F8F8F8; font-weight: bold;">Example </h2>
+            <h2 id='titulo_regresar' class='text-center text-white' style="color: #213041; font-weight: bold;">Example </h2>
           </div>
         </div>
         <!-- Categoria Bebidas -->
@@ -387,7 +387,7 @@
       //Regresar a pantalla anterior
       e.style.display = 'none';
       //titulo de categoria
-      titu_regre.innerText = "Seleccionar Tamaño Pizza";
+      titu_regre.innerText = "Seleccionar tamaño de pizza";
       pizza_vent=0;   //Ventana de tamano
     }
     else if (nombre_cat=="Bebidas") {
@@ -395,7 +395,7 @@
       var f = document.getElementById("selc_bebidas");   //Actual
       centrar(f);
       //titulo de categoria
-      titu_regre.innerText = "Seleccionar Bebida";
+      titu_regre.innerText = "Seleccionar bebida";
       pizza_vent=5; 
     }
     
@@ -404,7 +404,7 @@
       var f = document.getElementById("selc_ingredientes");   //Actual
       centrar(f);
       //titulo de categoria
-      titu_regre.innerText = "Seleccionar Ingrediente";  
+      titu_regre.innerText = "Seleccionar ingrediente";  
       pizza_vent=6;  
     }
     categ=nombre_cat;
@@ -438,7 +438,7 @@
       pizzas_normal(tama);
     }
     //titulo de categoria
-    titu_regre.innerText = "Seleccionar Tipo Pizza";
+    titu_regre.innerText = "Seleccionar tipo de pizza";
   }
 
   //-2)---Tipo PIZZA
@@ -458,7 +458,7 @@
     g3.style.display = 'none';
     p_tipo=tipo;
     //titulo de categoria
-    titu_regre.innerText = "Seleccionar Sabor Pizza";
+    titu_regre.innerText = "Seleccionar sabor de pizza";
     pizza_vent=2;   //Ventana de sabor
   }
 
@@ -507,7 +507,7 @@
     btn_regre.style.display = 'none';     //Desaparecer boton regresar de ingredientes extras
     sabor_porcion.style.display = 'none';
     //Titulo de ventana
-    titu_regre.innerText = "Seleccionar Ingrediente Extra";
+    titu_regre.innerText = "Seleccionar ingrediente extra";
     pizza_vent=3;   //Ventana de servir
   }
 
