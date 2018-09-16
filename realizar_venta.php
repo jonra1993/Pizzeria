@@ -27,20 +27,6 @@
  $recent_products = find_recent_product_added('5');
  $recent_sales    = find_recent_sale_added('5');
 
-
-//  $array_tama=  array('mediana', 'familiar', 'extragrande'); 
-//  $array_tipo= array("normal","especial"); 
-//  $array_savor= array('mixta', 'carne','tocino', 'pollo','hawayana', 'napolitana','mexicana', 'criolla','tropical','vegana','vegetariana');
-
-//  foreach ($tam_pizzas as $tama) { 
-//    array_push($array_categ,remove_junk($tama['name']));
-//  }
-//  foreach ($sabor_pizzas as $sabor) { 
-//     array_push($array_savor,$sabor['name']);
-//   }
-//   $aux= current($tam_pizzas[0]);
-  // $g= "buscar_precios_table($array_tama[0],$array_tipo[0],$array_savor[1]);"
-  
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -63,11 +49,9 @@
                <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
               </a>
             <?php else: ?>
-          
                 <a class="text-center" href="#"  onclick="selec_categ('<?php echo remove_junk(ucfirst($cat['name'])); ?>');" title="Seleccionar Categoria"> 
                   <img class="card-img-top img-responsive" src="uploads/products/<?php echo $cat['image']; ?>" alt=""style="height: 130px; display: block; margin-left: auto;margin-right: auto;">
                 </a>
-                
             <?php endif; ?>
             <h4 class="card-title center"> <?php echo remove_junk(ucfirst($cat['name'])); ?> </h4>    <!--Lee nombres de categrias-->
           </div>
@@ -79,10 +63,13 @@
       <div id="selec_productos" class="container-fluid text-center" style="background-color: #A3ABA7;">
         <!-- regresar -->
         <div id="funcion_regresar" class="row" style="display: none;">
-          <button type="button" class="btn btn-success" style="width: auto" onclick="regresar_carac()">
+          <button id="btn_regresar" type="button" class="btn btn-success" style="width: auto" onclick="regresar_carac()">
             <i class="glyphicon glyphicon-arrow-left"></i>
             Regresar
           </button>
+          <div class='col-sm-8 text-center'>
+            <h2 id='titulo_regresar' class='text-center text-white' style="color: #213041; font-weight: bold;">Example </h2>
+          </div>
         </div>
         <!-- Categoria Bebidas -->
         <div id="selc_bebidas" class="row" style="display: none;">
@@ -337,7 +324,7 @@
             </tr>
           </tfoot>
         </table>
-        <button id="final_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Finalizar Compra</button>
+        <button id="final_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Continuar</button>
         <div class="row" id="cont_vuelto" style="display: none;">
           <div class="row"  style="padding-top: 5%;">
             <div class="form-check text-center">
@@ -361,7 +348,7 @@
             </table>
           </div>
           <div class="text-center">
-            <button id="f_continuar" type="button" class="btn btn-success" onclick="f_continuar(1)" >Continuar</button>
+            <button id="f_continuar" type="button" class="btn btn-success" onclick="f_continuar(1)" >Finalizar Compra</button>
             <button id="f_cancelar" type="button" class="btn btn-danger" onclick="f_continuar(0)" >Cancelar Compra</button>
           </div>
         </div>
@@ -378,6 +365,9 @@
   var str_extra="";
   var pagoTotal=1; 
   var DOMAIN = "http://localhost/Pizzeria/";
+
+  var titu_regre=document.getElementById("titulo_regresar"); //Titulo regresar 
+  var btn_regre=document.getElementById("btn_regresar");    //Boton regresar
     
   function selec_categ(nombre_cat) {
     var g=document.getElementById("cont_categ"); //Cotenedor catego boqueo selecion
@@ -387,6 +377,8 @@
     regr.style.justifyContent= 'left';
     regr.style.paddingLeft= '3%';
 
+    btn_regre.style.display = 'flex';
+
     if(nombre_cat=="Pizzas"){
       var e = document.getElementById("selc_pizzas_nor_esp"); //Sig Pizzas tipo
       var f = document.getElementById("selc_pizzas_tam"); //Actual Pizzas Tamano
@@ -394,19 +386,25 @@
       centrar(f);
       //Regresar a pantalla anterior
       e.style.display = 'none';
+      //titulo de categoria
+      titu_regre.innerText = "Seleccionar tamaño de pizza";
       pizza_vent=0;   //Ventana de tamano
     }
     else if (nombre_cat=="Bebidas") {
       //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
       var f = document.getElementById("selc_bebidas");   //Actual
       centrar(f);
+      //titulo de categoria
+      titu_regre.innerText = "Seleccionar bebida";
       pizza_vent=5; 
     }
     
     else if (nombre_cat=="Ingredientes") {
       //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
       var f = document.getElementById("selc_ingredientes");   //Actual
-      centrar(f);  
+      centrar(f);
+      //titulo de categoria
+      titu_regre.innerText = "Seleccionar ingrediente";  
       pizza_vent=6;  
     }
     categ=nombre_cat;
@@ -439,7 +437,8 @@
       f.style.display = 'none';
       pizzas_normal(tama);
     }
-    
+    //titulo de categoria
+    titu_regre.innerText = "Seleccionar tipo de pizza";
   }
 
   //-2)---Tipo PIZZA
@@ -458,6 +457,8 @@
     g.style.display = 'none';
     g3.style.display = 'none';
     p_tipo=tipo;
+    //titulo de categoria
+    titu_regre.innerText = "Seleccionar sabor de pizza";
     pizza_vent=2;   //Ventana de sabor
   }
 
@@ -503,7 +504,10 @@
     f.style.display = 'none';
     f2.style.display = 'none';
     g.style.display = 'none';
+    btn_regre.style.display = 'none';     //Desaparecer boton regresar de ingredientes extras
     sabor_porcion.style.display = 'none';
+    //Titulo de ventana
+    titu_regre.innerText = "Seleccionar ingrediente extra";
     pizza_vent=3;   //Ventana de servir
   }
 
@@ -520,6 +524,7 @@
       var venta_extra={id:fila_id,categ:"extra",canti:1,tama:p_tama,extra:extra,precioP:precio};
       venta_aux.push(venta_extra);
     }});
+    
   }
 
   function forma_servir(forma) {
@@ -832,7 +837,7 @@
         var totalCompra=document.getElementById('total_compra').value;
         var efectivo=document.getElementById('in_efectivo').value;
         var vuelto=document.getElementById('in_vuelto').value;
-        alert(srt_get);
+        //alert(srt_get);
 
         var user = "<?php echo $user['username']; ?>";
         var date = "<?php echo make_date(); ?>";

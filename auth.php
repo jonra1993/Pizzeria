@@ -11,7 +11,7 @@ if(empty($errors)){
     //create session with id
      $session->login($user_id);
     //Update Sign in time
-     updateLastLogIn($user_id);
+    updateLastLogIn($user_id);
      //$session->msg("s", "Bienvenido a Pizzeria Amangiare.");
      redirect('home.php',false);
 
