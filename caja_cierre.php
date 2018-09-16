@@ -14,6 +14,51 @@ $open=find_last_open_box();
 $ingresos_cajas = find_sum_ingresos_caja($year,$month,$day);
 $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 
+//ventas ene fectivo
+$ventasPizzas = VentasRealizadas($open['date'],'venta_pizzas','efectivo');
+//$ventasBebidas = VentasRealizadas($open['date'],'venta_bebidas','efectivo');
+//$ventasIngredientes = VentasRealizadas($open['date'],'venta_ingredientes','efectivo');
+
+$total1=0;
+$total2=0;
+$total3=0;
+
+foreach ($ventasPizzas as $vP){
+  $total1=$total1+(float)remove_junk($vP['price']);
+}
+/*foreach ($ventasBebidas as $vB){
+  $total2=$total2+(float)remove_junk($vB['price']);
+}
+foreach ($ventasIngredientes as $vI){
+  $total3=$total3+(float)remove_junk($vI['price']);
+}*/
+
+$ventasRealizadas_e=$total1+$total2+$total3;
+
+//ventas con tarjeta
+$ventasPizzas_t = VentasRealizadas($open['date'],'venta_pizzas','tarjeta');
+//$ventasBebidas_t = VentasRealizadas($open['date'],'venta_bebidas','tarjeta');
+//$ventasIngredientes_t = VentasRealizadas($open['date'],'venta_ingredientes','tarjeta');
+
+$total1=0;
+$total2=0;
+$total3=0;
+
+foreach ($ventasPizzas_t as $vP){
+  $total1=$total1+(float)remove_junk($vP['price']);
+}
+/*foreach ($ventasBebidas_t as $vB){
+  $total2=$total2+(float)remove_junk($vB['price']);
+}
+foreach ($ventasIngredientes_t as $vI){
+  $total3=$total3+(float)remove_junk($vI['price']);
+}*/
+//falata sumar cajas y extras
+$ventasRealizadas_t=$total1+$total2+$total3;
+
+
+
+
 foreach($ingresos_cajas as $tempo){
   $ingresos_caja=remove_junk(ucwords($tempo['SUM(c.importe)']));
 }
@@ -112,13 +157,13 @@ else{
                 <input readonly type="number" style="text-align:center" id="apertura_caja" name="apertura_caja" value='0' />
               </td></tr>
               <tr><td>Cobros en efectivo</td><td class="text-center ">
-                <input readonly style="text-align:center" id="cobros_efectivo" name="cobros_efectivo" value="0"/>
+                <input readonly type="number" style="text-align:center" id="cobros_efectivo" name="cobros_efectivo" value='0' />
               </td></tr>
               <tr><td>Cobros con tarjeta</td><td class="text-center">
-                <input readonly style="text-align:center"  id="cobros_tarjeta" name="cobros_tarjeta"  value="0"/>
+                <input readonly type="number" style="text-align:center" id="cobros_tarjeta" name="cobros_tarjeta" value='0'/>
               </td></tr>
-              <tr><td style="background-color:#0099ff">Total de ventas</td><td class="text-center">
-                <input type="number" readonly style="text-align:center"   id="total_ventas" name="total_ventas" value="0"  style="color:#0099ff"/>
+              <tr><td style="background-color:#0099ff">Total vendido</td><td class="text-center">
+                <input type="number" readonly style="text-align:center"   id="total_ventas" name="total_ventas" value=''  style="color:#0099ff"/>
               </td></tr>
               <tr><td>Autoconsumo</td><td class="text-center">
                 <input type="number" readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
@@ -211,9 +256,13 @@ else{
     var d_apertura =Number("<?php echo remove_junk(ucwords($open['dinero_apertura']));?>");
     var d_ing_ef_caja=Number("<?php echo $ingresos_caja;?>");
     var d_ret_ef_caja = Number("<?php echo $retiros_caja;?>");
+    var cobros_efe = Number("<?php echo $ventasRealizadas_e;?>");
+    var cobros_tar = Number("<?php echo $ventasRealizadas_t;?>");
     document.getElementById("retiro_ef_caja").value=d_ret_ef_caja.toFixed(2);
     document.getElementById("ingreso_ef_caja").value=d_ing_ef_caja.toFixed(2);
     document.getElementById("apertura_caja").value=d_apertura.toFixed(2);
+    document.getElementById("cobros_efectivo").value=cobros_efe.toFixed(2);
+    document.getElementById("cobros_tarjeta").value=cobros_tar.toFixed(2);
     myFunction();
   });
 
@@ -224,8 +273,8 @@ else{
     var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
     
     var data = $("#get_order_data").serialize(); 
-    var win = window.open("caja_c_reporte.php?"+data+"&"+"user="+user+"&"+"date1="+date1+"&"+"date="+date,"_blank"); // will open new tab on document ready
-    win.focus();
+    //var win = window.open("caja_c_reporte.php?"+data+"&"+"user="+user+"&"+"date1="+date1+"&"+"date="+date,"_blank"); // will open new tab on document ready
+    //win.focus();
 	});
 
   function isInputNumber(evt){

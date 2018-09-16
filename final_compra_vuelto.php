@@ -52,8 +52,7 @@ if(isset($_GET['p_efect'])) {
 <script >
 function f_final(){
   var DOMAIN = "http://localhost/Pizzeria/";
-  
-  window.open(DOMAIN+"admin.php","_self");
+  window.open(DOMAIN+"realizar_venta.php","_self");
 }
 </script>
 <?php include_once('layouts/footer.php'); ?>

@@ -410,12 +410,11 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  /* Function for Find Highest saleing Product
  /*--------------------------------------------------------------*/
- function find_higest_saleing_product($limit){
+ function find_higest_saleing_pizzas($limit,$tama){
    global $db;
-   $sql  = "SELECT p.name, COUNT(s.product_id) AS totalSold, SUM(s.qty) AS totalQty";
-   $sql .= " FROM sales s";
-   $sql .= " LEFT JOIN products p ON p.id = s.product_id ";
-   $sql .= " GROUP BY s.product_id";
+   $sql  = "SELECT s.sabor_pizza AS nam, COUNT(s.sabor_pizza) AS totalSold, SUM(s.qty) AS totalQty, SUM(s.price) AS totalprice";
+   $sql .= " FROM venta_pizzas s WHERE s.tam_pizza='{$tama}'" ;
+   $sql .= " GROUP BY s.sabor_pizza";
    $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
    return $db->query($sql);
  }
@@ -483,6 +482,20 @@ function monthlySales ($year,$month,$tabla){
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/
 
+
+  function VentasRealizadas ($start_date,$tabla,$forma_pago){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username'])); 
+    global $db;
+    $start_date  = date("Y-m-d", strtotime($start_date));
+    $sql  =" SELECT *";
+    $sql .= " FROM $tabla c";
+    //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.username='{$p_user}'";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.forma_pago='{$forma_pago}'";
+    $sql .= " ORDER BY DATE(c.date) DESC";
+    return $db->query($sql);
+  }
+
   function find_last_open_box(){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
@@ -500,7 +513,7 @@ function monthlySales ($year,$month,$tabla){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
     $sql  =" SELECT SUM(c.importe)";
-    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
     return find_by_sql($sql);
   }
 
@@ -508,7 +521,7 @@ function monthlySales ($year,$month,$tabla){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
     $sql  =" SELECT SUM(c.importe)";
-    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
     return find_by_sql($sql);
   }
 

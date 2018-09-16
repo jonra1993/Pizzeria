@@ -97,7 +97,7 @@
                       <th class="text-center" style="width: 5%;"> Cantidad </th>
                       <th class="text-center" style="width: 20%;"> Descripción </th>
                       <th class="text-center" style="width: 10%;"> Extras</th>
-                      <th class="text-center" style="width: 5%;"> Servir</th>
+                      <th class="text-center" style="width: 5%;"> Para llevar</th>
                       <th class="text-center" style="width: 10%;"> Valor</th>
                     </tr>
                   </thead>
@@ -107,8 +107,20 @@
                       <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
                       <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
                       <td > Pizza <?php echo remove_junk($sale['tam_pizza'])?> <?php echo remove_junk($sale['sabor_pizza']); ?></td>
-                      <td class="text-center"> <?php echo remove_junk($sale['extras']); ?></td>
-                      <td class="text-center"> <?php echo remove_junk($sale['llevar_pizza']); ?></td>
+                      <td class="text-center">
+                        <?php if (remove_junk($sale['extras'])!==''): ?>
+                        <div class="checkbox">
+                          <label><input onclick="return false;" type="checkbox" value="" checked></label>
+                        </div>
+                        <?php endif; ?>
+                      </td>
+                      <td class="text-center">
+                        <?php if (remove_junk($sale['llevar_pizza'])!=='llevar'): ?>
+                        <div class="checkbox">
+                          <label><input onclick="return false;" type="checkbox" value="" checked></label>
+                        </div>
+                        <?php endif; ?>
+                      </td>
                       <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> <?php echo remove_junk($sale['price']); ?></td>
                     </tr>
                   <?php endforeach; ?>
