@@ -32,13 +32,8 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
   
   $d = make_date2();
   $cc = find_conta('contador');
-  $ddd;
-  
-  foreach($cc as $c){
-    $ddd=$c['date'];
-  }
 
-  if($d!=$ddd){   //solo actualiza si se cambiado el valor
+  if($d!=$cc[0]['date']){   //solo actualiza si se cambiado el valor
     $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
     $query .=" conta = 0, date = '{$d}' WHERE id = 1;";
     if($db->query($query)){
