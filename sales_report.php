@@ -140,7 +140,7 @@ $page_title = 'Reporte de ventas';
                       <?php
                         $p_llevar=0; 
                         if(remove_junk($sale['llevar_pizza'])=='llevar'){
-                          if(remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
+                          if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
                           else $p_llevar=1.00;
                         }
                         $val_e=0;
