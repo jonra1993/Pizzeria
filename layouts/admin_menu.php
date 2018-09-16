@@ -85,7 +85,7 @@
       <span class="title">Nueva venta</span>
     </a>
   </li>
-  <?php else:?>
+<?php endif;?>
 
 
   <li class="nav-item start">
