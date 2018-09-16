@@ -462,7 +462,14 @@ function  dailySales($year,$month,$day,$tabla){
   $sql  =" SELECT *";
   $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
-  //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '2018-08-27'";
+  $sql .= " ORDER BY DATE(c.date) DESC";
+  return find_by_sql($sql);
+}
+
+function  costoExtra($tam){
+  global $db;
+  $sql  ="SELECT price FROM catalogo_extras";
+  $sql .= " WHERE size='{$tam}' ORDER BY id DESC LIMIT 1";
   return find_by_sql($sql);
 }
 
@@ -474,6 +481,7 @@ function monthlySales ($year,$month,$tabla){
   $sql  =" SELECT *";
   $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m' ) = '{$year}-{$month}'";
+  $sql .= " ORDER BY DATE(c.date) DESC";
   return find_by_sql($sql);
 }
 
@@ -487,11 +495,11 @@ function monthlySales ($year,$month,$tabla){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username'])); 
     global $db;
-    $start_date  = date("Y-m-d", strtotime($start_date));
+    $start_date  = date("Y-m-d H:i:s", strtotime($start_date));
     $sql  =" SELECT *";
     $sql .= " FROM $tabla c";
     //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.username='{$p_user}'";
-    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.forma_pago='{$forma_pago}'";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d %H:%i:%s' ) >= '{$start_date}' AND c.forma_pago='{$forma_pago}'";
     $sql .= " ORDER BY DATE(c.date) DESC";
     return $db->query($sql);
   }
