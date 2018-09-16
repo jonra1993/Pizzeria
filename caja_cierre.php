@@ -24,7 +24,19 @@ $total2=0;
 $total3=0;
 
 foreach ($ventasPizzas as $vP){
-  $total1=$total1+(float)remove_junk($vP['price']);
+  $p_llevar=0;
+  if(remove_junk($vP['llevar_pizza'])=='llevar'){
+    if(remove_junk($vP['tam_pizza'])=='extragrande') $p_llevar=1.25;
+    else $p_llevar=1.00;
+  }
+  $val_e=0;
+  $p_extras = explode(",", $vP['extras']);
+  if(!$p_extras==''){
+    $cos=costoExtra($vP['tam_pizza']);
+    $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
+    
+  }
+  $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
 }
 /*foreach ($ventasBebidas as $vB){
   $total2=$total2+(float)remove_junk($vB['price']);
@@ -45,7 +57,19 @@ $total2=0;
 $total3=0;
 
 foreach ($ventasPizzas_t as $vP){
-  $total1=$total1+(float)remove_junk($vP['price']);
+  $p_llevar=0;
+  if(remove_junk($vP['llevar_pizza'])=='llevar'){
+    if(remove_junk($vP['tam_pizza'])=='extragrande') $p_llevar=1.25;
+    else $p_llevar=1.00;
+  }
+  $val_e=0;
+  $p_extras = explode(",", $vP['extras']);
+  if(!$p_extras==''){
+    $cos=costoExtra($vP['tam_pizza']);
+    $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
+    
+  }
+  $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
 }
 /*foreach ($ventasBebidas_t as $vB){
   $total2=$total2+(float)remove_junk($vB['price']);

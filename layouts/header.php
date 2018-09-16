@@ -3,7 +3,11 @@
   <html lang="en">
     <head>
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="shortcut  icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="shortcut  icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php if (!empty($page_title))
            echo remove_junk($page_title);

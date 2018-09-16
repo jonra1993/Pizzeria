@@ -53,8 +53,9 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+  <link rel="shortcut  icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+  <link rel="shortcut  icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Inicio de sesión
