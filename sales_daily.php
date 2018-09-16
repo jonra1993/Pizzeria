@@ -43,21 +43,21 @@
     </div>
 
     <div class="col-md-12">
-        <div class="col-md-6">
-          <div class="panel">
-            <div class="panel-body">     
-              <label for="exampleFormControlSelect1">Seleccione la categoría</label>
-              <select class="form-control" id="selector" onchange="nuevo();" required>
-                <option><?php echo remove_junk($selector); ?></option>
-                <?php foreach ($categorias as $cat):?>
-                  <?php if(remove_junk($cat['name'])!=remove_junk($selector)):?>
-                    <option><?php echo remove_junk($cat['name']);?></option>
-                  <?php endif?>
-                <?php endforeach; ?>
-              </select>
-            </div>
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-body">     
+            <label for="exampleFormControlSelect1">Seleccione la categoría</label>
+            <select class="form-control" id="selector" onchange="nuevo();" required>
+              <option><?php echo remove_junk($selector); ?></option>
+              <?php foreach ($categorias as $cat):?>
+                <?php if(remove_junk($cat['name'])!=remove_junk($selector)):?>
+                  <option><?php echo remove_junk($cat['name']);?></option>
+                <?php endif?>
+              <?php endforeach; ?>
+            </select>
           </div>
         </div>
+      </div>
     </div>
 
     <?php if ($ventas != null):?>    

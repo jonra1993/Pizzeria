@@ -77,12 +77,16 @@
       </a>
   </li-->
   <!-- Realizar una Nueva Venta -->
+  <?php $user = current_user();?> 
+  <?php if($user['bloqueocaja']==true):?>
   <li  class="nav-item start">
     <a href="realizar_venta.php" class="nav-link">
       <i class="glyphicon glyphicon-tags"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
       <span class="title">Nueva venta</span>
     </a>
   </li>
+  <?php else:?>
+
 
   <li class="nav-item start">
     <a href="#" class="nav-link nav-toggle">
@@ -97,7 +101,7 @@
   </li>
 
   <!--Apertura y cierre de caja-->
-  <?php $user = current_user();?> 
+
   <?php if($user['bloqueocaja']==false):?>
     <li  class="nav-item start">
       <a href="caja_apertura.php" class="nav-link">

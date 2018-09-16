@@ -255,6 +255,19 @@
           </table>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="panel">
+          <div>     
+            <label>Pizzas: </label>
+          </div>
+          <div>     
+            <label>Bebidas: </label>
+          </div>
+          <div>     
+            <label>Ingredientes</label>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!--Productos recientes-->
