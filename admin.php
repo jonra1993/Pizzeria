@@ -154,7 +154,7 @@
               <tr>
                 <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
                 <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
-                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>   
+                <td class="text-center">$ <?php echo number_format((float)$product_sold['totalprice'], 2, '.', ''); ?></td>   
               </tr>
             <?php endforeach; ?>
             </tbody>
@@ -182,7 +182,7 @@
               <tr>
                 <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
                 <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
-                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>
+                <td class="text-center">$ <?php echo number_format((float)$product_sold['totalprice'], 2, '.', ''); ?></td>   
               </tr>
             <?php endforeach; ?>
             </tbody>
@@ -210,7 +210,7 @@
               <tr>
                 <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
                 <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
-                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>
+                <td class="text-center">$ <?php echo number_format((float)$product_sold['totalprice'], 2, '.', ''); ?></td>   
               </tr>
             <?php endforeach; ?>
             </tbody>
