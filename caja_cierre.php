@@ -25,8 +25,8 @@ $total3=0;
 
 foreach ($ventasPizzas as $vP){
   $p_llevar=0;
-  if(remove_junk($vP['llevar_pizza'])=='llevar'){
-    if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
+  if((remove_junk($vP['llevar_pizza'])!='servirse')&&($vP['llevar_pizza']!='servirse')){
+    if(remove_junk($vP['tam_pizza'])=='familiar'||remove_junk($vP['tam_pizza'])=='extragrande') $p_llevar=1.25;
     else $p_llevar=1.00;
   }
   $val_e=0;
@@ -58,8 +58,8 @@ $total3=0;
 
 foreach ($ventasPizzas_t as $vP){
   $p_llevar=0;
-  if(remove_junk($vP['llevar_pizza'])=='llevar'){
-    if(remove_junk($vP['tam_pizza'])=='extragrande') $p_llevar=1.25;
+  if((remove_junk($vP['llevar_pizza'])!='servirse')&&($vP['llevar_pizza']!='servirse')){
+    if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
     else $p_llevar=1.00;
   }
   $val_e=0;
