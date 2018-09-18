@@ -68,7 +68,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
   <div class="page-header clear-filter" filter-color="orange">
     <div class="page-header-image" style="background-image:url(assets/img/login1.jpg)"></div>
     <div class="content">
-      <h3 class="nav-link"  style="color: #421b0e; font-weight: bold;" >Pizzería Amangiare</h3>
+      <h1 class="nav-link"  style="color: #ffffff; font-weight: bold;" >Pizzería Amangiare</h1>
       <div class="container">
         <div class="col-md-5 ml-auto mr-auto">
           <div class="card card-login card-plain">

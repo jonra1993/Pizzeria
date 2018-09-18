@@ -564,7 +564,7 @@
     venta_aux.forEach(element => {
       if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
         element.extra=str_e; 
-        alert(str_e);
+        // alert(str_e);
       }
     });
     var e = document.getElementById("selc_pizzas_forma");
@@ -846,7 +846,9 @@
         var totalCompra=document.getElementById('total_compra').value;
         var efectivo=document.getElementById('in_efectivo').value;
         var vuelto=document.getElementById('in_vuelto').value;
-        //alert(srt_get);
+        
+        var str_get2=srt_get.slice(0, -1);
+
 
         var user = "<?php echo $user['username']; ?>";
         var date = "<?php echo make_date(); ?>";
@@ -857,7 +859,7 @@
         var servir=1; //0 llevar, 1 servirse
         //var servir = [0,1,1,1,1];
         var numorden='<?php echo $contador?>';
-        //var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+srt_get+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
+        //var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+srt_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
         window.open(DOMAIN+"realizar_venta.php","_self");
         
       }
