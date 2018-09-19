@@ -630,7 +630,10 @@
 
   function eliminar_fila(tr_id) {
     //Eliminar fila
-    $('#tabla_factura tbody tr#'+tr_id).remove();
+    alert(venta_aux);
+    $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
+    venta_aux.splice(tr_id, 1)        //Eliminar array de venta_aux
+    alert(venta_aux);
     sum_productos();
   }
 
@@ -799,19 +802,21 @@
       }
       else p_pago="tarjeta";
 
+      var user = "<?php echo $user['username']; ?>";        //Determinar el usuario que ejecuta la venta
+
       //CARGAR A BD DE VENTA PIZZAS
       if(aux==0){
         venta_aux.forEach(element => {
           if(element.categ=="Pizzas"){
-            $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago
+            $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
             });
           }
           else if(element.categ=="bebida"){
-            $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP
+            $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
             });
           }
           else if(element.categ=="ingredientes"){
-            $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP
+            $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
             });
           }
         });
@@ -850,7 +855,7 @@
         var str_get2=srt_get.slice(0, -1);
 
 
-        var user = "<?php echo $user['username']; ?>";
+        
         var date = "<?php echo make_date(); ?>";
         var d = new Date();
         var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
