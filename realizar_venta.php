@@ -632,7 +632,7 @@
     //Eliminar fila
     alert(venta_aux);
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
-    venta_aux.splice(tr_id, 1)        //Eliminar array de venta_aux
+    venta_aux.splice((tr_id-1), 1)        //Eliminar array de venta_aux
     alert(venta_aux);
     sum_productos();
   }
