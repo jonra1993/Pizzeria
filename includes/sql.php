@@ -614,5 +614,15 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     return find_by_sql($sql);
   }
 
+  //Contador de produtos
+  function contador_masas ($tama,$lista){ 
+    global $db;
+    $sql  =" SELECT sum(qty)";
+    $sql .= " FROM $lista c";
+    $sql .= " WHERE c.tam_pizza = '{$tama}' LIMIT 1";
+    return $db->query($sql);
+  }
+
+
 ?>
 

@@ -75,6 +75,20 @@
     $item_compr= array();
     $lista_items=array();
 
+    //Contador de productos
+    //Contador de Masas
+    $masa_porcion=contador_masas('porcion','venta_pizzas');
+    foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
+    $masa_mediana=contador_masas('mediana','venta_pizzas');
+    foreach ($masa_mediana as $mediana){ $v_masa_mediana=remove_junk($mediana['sum(qty)']); if($v_masa_mediana==NULL)$v_masa_familiar=0;}
+    $masa_familiar=contador_masas('familiar','venta_pizzas');
+    foreach ($masa_familiar as $familiar){ $v_masa_familiar=remove_junk($familiar['sum(qty)']);if($v_masa_familiar==NULL)$v_masa_familiar=0;}
+    $masa_extragrande=contador_masas('extragrande','venta_pizzas');
+    foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
+   
+    $masa_totales=(0.5*$v_masa_mediana)+(0.125*$v_masa_porcion)+$v_masa_familiar+$v_masa_extragrande;
+
+
    include_once('layouts/header.php'); 
   ?>
 
@@ -122,6 +136,16 @@
         <div class="info-box-content">
           <span class="info-box-text">Contador de ordenes</span>
           <span class="info-box-number"><?php  echo $contador; ?></span>
+        </div>
+      </div>
+    </div>
+    <!--Masas utilizadas-->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-gray"><i class="glyphicon glyphicon-adjust"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">Masas utilizadas</span>
+          <span class="info-box-number"><?php echo $masa_totales; ?></span>
         </div>
       </div>
     </div>
