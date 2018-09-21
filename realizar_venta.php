@@ -777,7 +777,7 @@
     $.ajax({url: DOMAIN+"buscar_precio_ingredi.php?p_nombre="+nombre, success: function(result){
       // alert(result);
       precio=Number(result);
-      var descrip= nombre;
+      var descrip= nombre.replace(/(^|\s)\S/g, l => l.toUpperCase());         //Poner en mayuscula primera letra
       agregar_fila(descrip,precio);
       var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,v_nombre:nombre,precioP:precio};
       venta_aux.push(venta_ingre);
@@ -833,17 +833,17 @@
             else
               srt_get+=" S";
           }
-          else if(element.categ=="extra"){
+          else if(element.categ=="Extra"){
             srt_get+=(element.tama+" "+element.extra);
           }
           else if (element.categ=="Caja_pizza") {
             srt_get+=(element.tama);
           }
-          else if (element.categ=="bebida") {
+          else if (element.categ=="Bebida") {
             srt_get+=(element.tama+" "+element.sabor);
           }
-          else if (element.categ=="ingredientes") {
-            srt_get+=(element.v_nombre);
+          else if (element.categ=="Ingredientes") {
+            srt_get+=(element.v_nombre);         //Poner en mayuscula primera letra);
           }
           srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
 
