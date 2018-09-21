@@ -499,7 +499,7 @@ function monthlySales ($year,$month,$tabla){
     $sql  =" SELECT *";
     $sql .= " FROM $tabla c";
     //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.username='{$p_user}'";
-    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d %H:%i:%s' ) >= '{$start_date}' AND c.forma_pago='{$forma_pago}'";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d %H:%i:%s' ) >= '{$start_date}' AND c.forma_pago='{$forma_pago}' AND c.user='{$p_user}'";
     $sql .= " ORDER BY DATE(c.date) DESC";
     return $db->query($sql);
   }

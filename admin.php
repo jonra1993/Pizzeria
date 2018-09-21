@@ -38,13 +38,13 @@
         else $p_llevar=1.00;
       }
       $val_e=0;
-      $p_extras = explode(",", $vP['extras']);
-      if(!$p_extras==''){
+      if($vP['extras']!=null){
+        $p_extras = explode(",", $vP['extras']);
         $cos=costoExtra($vP['tam_pizza']);
-        $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
-        
-      }
-      $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
+        $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
+      }        
+  
+      $total1=$total1+(float)remove_junk($vP['price'])+(float)$p_llevar+(float)$val_e;
     }
 
     foreach ($ventasBebidas as $vB){
@@ -86,8 +86,8 @@
     $masa_extragrande=contador_masas('extragrande','venta_pizzas');
     foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
    
-    $masa_totales=(0.5*$v_masa_mediana)+(0.125*$v_masa_porcion)+$v_masa_familiar+$v_masa_extragrande;
-
+    $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande;
+    //$masa_totales=0;
 
    include_once('layouts/header.php'); 
   ?>
