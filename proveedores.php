@@ -46,7 +46,7 @@
                 <a href="proveedores_edit.php?id=<?php echo (int)$proveedor['id'];?>&url=proveedores.php&tabla=proveedores" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                   <span class="glyphicon glyphicon-edit"></span>
                 </a>
-                <a href="proveedores_delete.php?id=<?php echo (int)$proveedor['id'];?>&url=proveedores.php&tabla=proveedores" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                <a onclick="return confirmDelete();" href="proveedores_delete.php?id=<?php echo (int)$proveedor['id'];?>&url=proveedores.php&tabla=proveedores" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                   <span class="glyphicon glyphicon-trash"></span>
                 </a>
               </div>
@@ -60,4 +60,16 @@
   </div>
 </div>
 
+<script>
+
+function confirmDelete() {
+    var confirmar = confirm("¿Realmente desea eliminar el producto? ");
+    if (confirmar) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+</script>
 <?php include_once('layouts/footer.php'); ?>
