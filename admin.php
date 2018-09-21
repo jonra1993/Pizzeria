@@ -279,17 +279,32 @@
           </table>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="panel">
-          <div>     
-            <label>Pizzas: </label>
-          </div>
-          <div>     
-            <label>Bebidas: </label>
-          </div>
-          <div>     
-            <label>Ingredientes</label>
-          </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>Ventas diarias</span>
+          </strong>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>Total</th>
+                <th>Pizzas</th>
+                <th>Bebidas</th>
+                <th>Ingredientes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$<?php echo number_format((float)$ventasDiarias, 2, '.', '');?></td>
+                <td>$<?php echo number_format((float)$total1, 2, '.', ''); ?></td>
+                <td>$<?php echo number_format((float)$total2, 2, '.', ''); ?></td>
+                <td>$<?php echo number_format((float)$total3, 2, '.', ''); ?></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

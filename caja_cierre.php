@@ -14,6 +14,18 @@ $open=find_last_open_box();
 $ingresos_cajas = find_sum_ingresos_caja($year,$month,$day);
 $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 
+$ventasRealizadas_e=0;
+$ventasRealizadas_t=0;
+$efectivo=VentasRealizadas($open['date'],'venta_general','efectivo');
+foreach ($efectivo as $vB){
+  $ventasRealizadas_e=$ventasRealizadas_e+(float)remove_junk($vB['price']);
+}
+
+$tarjeta=VentasRealizadas($open['date'],'venta_general','tarjeta');
+foreach ($tarjeta as $vB){
+  $ventasRealizadas_t=$ventasRealizadas_t+(float)remove_junk($vB['price']);
+}
+/*
 //ventas ene fectivo
 $ventasPizzas = VentasRealizadas($open['date'],'venta_pizzas','efectivo');
 $ventasBebidas = VentasRealizadas($open['date'],'venta_bebidas','efectivo');
@@ -80,7 +92,7 @@ foreach ($ventasIngredientes_t as $vI){
 //falata sumar cajas y extras
 $ventasRealizadas_t=$total1+$total2+$total3;
 
-
+*/
 
 
 foreach($ingresos_cajas as $tempo){
@@ -173,7 +185,7 @@ else{
           <table class="table table-bordered table-striped table-hover">
             <thead>                                                             <!--Cabecera dentro de la tabla-->
                 <tr>
-                    <th>Descripción</th><th class="text-center" style="width: 100px;">    Valor    </th>
+                    <th>Descripción</th><th class="text-center" style="width: 100px;">    Valor [$]    </th>
                 </tr>
             </thead>
             <tbody>                                                              <!--Cuerpo dentro de la tabla-->

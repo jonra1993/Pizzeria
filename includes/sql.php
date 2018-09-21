@@ -504,6 +504,7 @@ function monthlySales ($year,$month,$tabla){
     return $db->query($sql);
   }
 
+
   function find_last_open_box(){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
