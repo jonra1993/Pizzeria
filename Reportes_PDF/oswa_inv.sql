@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-09-2018 a las 17:03:24
+-- Tiempo de generación: 21-09-2018 a las 17:17:49
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -821,33 +821,6 @@ CREATE TABLE `venta_bebidas` (
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `venta_bebidas`
---
-
-INSERT INTO `venta_bebidas` (`id`, `qty`, `tam_bebida`, `sabor_bebida`, `price`, `date`, `user`, `forma_pago`) VALUES
-(6, 1, '1/2 litro', 'coca-cola', '0.75', '2018-09-21 10:43:12', 'admin', 'efectivo'),
-(7, 1, '3 litro', 'coca-cola', '3.00', '2018-09-21 10:43:12', 'admin', 'efectivo'),
-(8, 1, 'vaso', 'jugo', '1.75', '2018-09-21 10:43:12', 'admin', 'efectivo'),
-(9, 1, 'taza', 'agua aromatica', '0.50', '2018-09-21 10:43:12', 'admin', 'efectivo'),
-(10, 2, '3 litro', 'fruit', '5.50', '2018-09-21 10:44:09', 'admin', 'tarjeta'),
-(11, 1, '1.5 litro', 'coca-cola', '2.00', '2018-09-21 10:44:09', 'admin', 'tarjeta'),
-(12, 1, '1/2 litro', 'pepsi', '0.60', '2018-09-21 10:44:09', 'admin', 'tarjeta'),
-(13, 1, '3 litro', 'coca-cola', '3.00', '2018-09-21 10:44:58', 'admin', 'tarjeta'),
-(14, 3, 'vaso', 'jugo', '5.25', '2018-09-21 10:44:58', 'admin', 'tarjeta'),
-(15, 1, '850 ml', 'pilsener', '1.75', '2018-09-21 10:45:53', 'admin', 'efectivo'),
-(16, 1, '1.5 litro', 'coca-cola', '2.00', '2018-09-21 10:45:53', 'admin', 'efectivo'),
-(17, 1, '3 litro', 'coca-cola', '3.00', '2018-09-21 10:45:53', 'admin', 'efectivo'),
-(18, 1, 'taza', 'cafe', '0.50', '2018-09-21 10:45:53', 'admin', 'efectivo'),
-(19, 1, '3 litro', 'coca-cola', '3.00', '2018-09-21 10:46:54', 'admin', 'efectivo'),
-(20, 1, '1/2 litro', 'fruit', '0.50', '2018-09-21 10:46:54', 'admin', 'efectivo'),
-(21, 1, '1.5 litro', 'coca-cola', '2.00', '2018-09-21 10:46:54', 'admin', 'efectivo'),
-(22, 1, '3 litro', 'coca-cola', '3.00', '2018-09-21 11:43:30', 'admin', 'efectivo'),
-(23, 1, '1/2 litro', 'fruit', '0.50', '2018-09-21 11:43:30', 'admin', 'efectivo'),
-(24, 1, 'vaso', 'fruit', '0.30', '2018-09-21 11:43:30', 'admin', 'efectivo'),
-(25, 1, '3 litro', 'coca-cola', '3.00', '2018-09-21 11:45:28', 'admin', 'efectivo'),
-(26, 1, 'taza', 'agua aromatica', '0.50', '2018-09-21 11:45:28', 'admin', 'efectivo');
-
 -- --------------------------------------------------------
 
 --
@@ -881,21 +854,6 @@ CREATE TABLE `venta_ingredientes` (
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `venta_ingredientes`
---
-
-INSERT INTO `venta_ingredientes` (`id`, `qty`, `nombre_ingre`, `price`, `date`, `user`, `forma_pago`) VALUES
-(6, 1, 'quesoEspecial', '15.00', '2018-09-21 10:47:27', 'admin', 'tarjeta'),
-(7, 1, 'embutidos', '7.50', '2018-09-21 10:47:27', 'admin', 'tarjeta'),
-(8, 1, 'quesoNormal', '12.00', '2018-09-21 10:47:27', 'admin', 'tarjeta'),
-(9, 1, 'quesoEspecial', '15.00', '2018-09-21 10:48:11', 'admin', 'efectivo'),
-(10, 1, 'quesoEspecial', '15.00', '2018-09-21 10:48:37', 'admin', 'tarjeta'),
-(11, 1, 'quesoNormal', '12.00', '2018-09-21 10:48:37', 'admin', 'tarjeta'),
-(12, 1, 'embutidos', '7.50', '2018-09-21 11:43:30', 'admin', 'efectivo'),
-(13, 1, 'quesoEspecial', '15.00', '2018-09-21 11:45:28', 'admin', 'efectivo'),
-(14, 1, 'embutidos', '7.50', '2018-09-21 11:45:28', 'admin', 'efectivo');
-
 -- --------------------------------------------------------
 
 --
@@ -915,60 +873,6 @@ CREATE TABLE `venta_pizzas` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `venta_pizzas`
---
-
-INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
-(28, 1, 'mediana', 'normal', 'pollo', 'llevar', 'embutidos', '8.50', 'tarjeta', '2018-09-21 11:04:01', 'admin'),
-(29, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:35', 'admin'),
-(30, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:37', 'admin'),
-(31, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:39', 'admin'),
-(32, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:40', 'admin'),
-(33, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:40', 'admin'),
-(34, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:40', 'admin'),
-(35, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:40', 'admin'),
-(36, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:40', 'admin'),
-(37, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:40', 'admin'),
-(38, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:41', 'admin'),
-(39, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:41', 'admin'),
-(40, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:41', 'admin'),
-(41, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:41', 'admin'),
-(42, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:41', 'admin'),
-(43, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:42', 'admin'),
-(44, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:45', 'admin'),
-(45, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:46', 'admin'),
-(46, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:46', 'admin'),
-(47, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:46', 'admin'),
-(48, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:46', 'admin'),
-(49, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:57', 'admin'),
-(50, 1, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', 'durazno', '10.00', 'tarjeta', '2018-09-21 11:13:57', 'admin'),
-(51, 1, 'mediana', 'normal', 'vegetariana', 'llevar', 'durazno', '8.50', 'tarjeta', '2018-09-21 11:14:05', 'admin'),
-(52, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:14:59', 'admin'),
-(53, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:12', 'admin'),
-(54, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:12', 'admin'),
-(55, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:13', 'admin'),
-(56, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:13', 'admin'),
-(57, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:13', 'admin'),
-(58, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:14', 'admin'),
-(59, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:14', 'admin'),
-(60, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:14', 'admin'),
-(61, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:14', 'admin'),
-(62, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:14', 'admin'),
-(63, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:15', 'admin'),
-(64, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:15', 'admin'),
-(65, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Hawayana,pina', '10.00', 'tarjeta', '2018-09-21 11:16:15', 'admin'),
-(66, 1, 'mediana', 'normal', 'hawayana', 'llevar', 'pina', '8.50', 'tarjeta', '2018-09-21 11:16:27', 'admin'),
-(67, 1, 'mediana', 'normal', 'hawayana', 'llevar', 'champinones,embutidos,pina', '8.50', 'tarjeta', '2018-09-21 11:34:56', 'admin'),
-(68, 1, 'porcion', 'porcion', 'hawayana', 'llevar', 'champinones', '1.50', 'tarjeta', '2018-09-21 11:42:17', 'admin'),
-(69, 1, 'mediana', 'normal', 'hawayana', 'llevar', 'champinones,pina,embutidos', '8.50', 'efectivo', '2018-09-21 11:43:30', 'admin'),
-(70, 1, 'extragrande', 'normal', 'napolitana', '123 ', 'champinones,pina,embutidos,', '15.00', 'efectivo', '2018-09-21 11:43:30', 'admin'),
-(71, 1, 'porcion', 'porcion', 'hawayana', 'servirse', 'embutidos,pina', '1.50', 'efectivo', '2018-09-21 11:45:27', 'admin'),
-(72, 1, 'extragrande', 'especial', 'personalizada', '123 ', 'embutidos,pina,Carne,Tocino,Carne,', '18.00', 'efectivo', '2018-09-21 11:45:28', 'admin'),
-(73, 1, 'porcion', 'porcion', 'pollo', 'llevar', 'pina,durazno', '1.50', 'efectivo', '2018-09-21 11:46:40', 'admin'),
-(74, 1, 'familiar', 'normal', 'pollo', 'llevar', 'embutidos,champinones,pina', '13.00', 'efectivo', '2018-09-21 11:47:37', 'admin'),
-(75, 1, 'mediana', 'normal', 'napolitana', 'llevar', 'champinones,pina,durazno,queso', '8.50', 'efectivo', '2018-09-21 11:48:22', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -1293,7 +1197,7 @@ ALTER TABLE `venta_bebidas`
 -- AUTO_INCREMENT de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
@@ -1305,7 +1209,7 @@ ALTER TABLE `venta_ingredientes`
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- Restricciones para tablas volcadas

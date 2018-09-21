@@ -243,7 +243,7 @@
       </div>
     </div>
 
-    <!--Ultimas Ventas-->
+    <!-- Ventas diarias-->
     <div class="col-md-5">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -256,23 +256,19 @@
           <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th>Fecha</th>
-                <th>Usuario</th>
-                <th>Valor de venta</th>
+                <th class="text-center">Orden N°</th>
+                <th class="text-center">Fecha</th>
+                <th class="text-center">Usuario</th>
+                <th class="text-center">Valor de venta</th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($recent_sales as  $recent_sale): ?>
               <tr>
-                <td class="text-center"><?php echo count_id();?></td>
-                <td>
-                <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">    <!--Redireccionamiento a editar producto en el item especifico-->
-                  <?php echo remove_junk(first_character($recent_sale['name'])); ?>
-                </a>
-                </td>
-                <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-                <td>$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($recent_sale['orden'])); ?></td>
+                <td class="text-center"><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($recent_sale['user'])); ?></td>
+                <td class="text-center">$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
               </tr>
               <?php endforeach; ?>
             </tbody>
@@ -290,18 +286,18 @@
           <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>
-                <th>Total</th>
-                <th>Pizzas</th>
-                <th>Bebidas</th>
-                <th>Ingredientes</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">Pizzas</th>
+                <th class="text-center">Bebidas</th>
+                <th class="text-center">Ingredientes</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>$<?php echo number_format((float)$ventasDiarias, 2, '.', '');?></td>
-                <td>$<?php echo number_format((float)$total1, 2, '.', ''); ?></td>
-                <td>$<?php echo number_format((float)$total2, 2, '.', ''); ?></td>
-                <td>$<?php echo number_format((float)$total3, 2, '.', ''); ?></td>
+                <td class="text-center">$<?php echo number_format((float)$ventasDiarias, 2, '.', '');?></td>
+                <td class="text-center">$<?php echo number_format((float)$total1, 2, '.', ''); ?></td>
+                <td class="text-center">$<?php echo number_format((float)$total2, 2, '.', ''); ?></td>
+                <td class="text-center">$<?php echo number_format((float)$total3, 2, '.', ''); ?></td>
               </tr>
             </tbody>
           </table>
