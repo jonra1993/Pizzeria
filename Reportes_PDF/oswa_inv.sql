@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-09-2018 a las 14:15:43
+-- Tiempo de generación: 21-09-2018 a las 17:17:49
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -107,7 +107,7 @@ INSERT INTO `catalogo_bebidas` (`id`, `size`, `flavor`, `price`, `media_id`) VAL
 (12, '850 ml', 'budweiser', '1.50', 62),
 (13, 'vaso', 'jugo', '1.75', 63),
 (14, 'taza', 'cafe', '0.50', 85),
-(15, 'taza', 'aguaAromatica', '0.50', 84);
+(15, 'taza', 'agua aromatica', '0.50', 84);
 
 -- --------------------------------------------------------
 
@@ -326,7 +326,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 0, '2018-09-19');
+(1, 0, '2018-09-21');
 
 -- --------------------------------------------------------
 
@@ -778,7 +778,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`) VALUES
-(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-19 09:13:26', 1),
+(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-09-21 10:37:25', 1),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0);
 
@@ -821,13 +821,22 @@ CREATE TABLE `venta_bebidas` (
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `venta_bebidas`
+-- Estructura de tabla para la tabla `venta_general`
 --
 
-INSERT INTO `venta_bebidas` (`id`, `qty`, `tam_bebida`, `sabor_bebida`, `price`, `date`, `user`, `forma_pago`) VALUES
-(2, 1, '1/2 litro', 'fruit', '0.50', '2018-09-19 09:14:02', 'admin', 'efectivo'),
-(3, 2, '3 litro', 'fruit', '5.50', '2018-09-19 09:14:02', 'admin', 'efectivo');
+CREATE TABLE `venta_general` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `orden` int(11) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `pagado` decimal(25,2) NOT NULL,
+  `vuelto` decimal(25,2) NOT NULL,
+  `date` datetime NOT NULL,
+  `user` varchar(25) NOT NULL,
+  `forma_pago` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -844,14 +853,6 @@ CREATE TABLE `venta_ingredientes` (
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `venta_ingredientes`
---
-
-INSERT INTO `venta_ingredientes` (`id`, `qty`, `nombre_ingre`, `price`, `date`, `user`, `forma_pago`) VALUES
-(2, 1, 'quesoNormal', '12.00', '2018-09-19 09:14:02', 'admin', 'efectivo'),
-(3, 2, 'embutidos', '15.00', '2018-09-19 09:14:02', 'admin', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -872,13 +873,6 @@ CREATE TABLE `venta_pizzas` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `venta_pizzas`
---
-
-INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
-(1, 1, 'mediana', 'normal', 'mixta', 'llevar', 'queso', '8.50', 'efectivo', '2018-09-19 09:14:02', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -1040,6 +1034,12 @@ ALTER TABLE `venta_bebidas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `venta_general`
+--
+ALTER TABLE `venta_general`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
@@ -1191,19 +1191,25 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `venta_bebidas`
 --
 ALTER TABLE `venta_bebidas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `venta_general`
+--
+ALTER TABLE `venta_general`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- Restricciones para tablas volcadas

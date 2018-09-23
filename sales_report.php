@@ -130,7 +130,7 @@ $page_title = 'Reporte de ventas';
                       <?php endif; ?>
                     </td>
                     <td class="text-center">
-                      <?php if (remove_junk($sale['llevar_pizza'])=='llevar'): ?>
+                      <?php if(remove_junk($sale['llevar_pizza'])!='servirse'): ?>
                       <div class="checkbox">
                         <label><input onclick="return false;" type="checkbox" value="" checked></label>
                       </div>
@@ -139,7 +139,7 @@ $page_title = 'Reporte de ventas';
                     <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> 
                       <?php
                         $p_llevar=0; 
-                        if(remove_junk($sale['llevar_pizza'])=='llevar'){
+                        if((remove_junk($vP['llevar_pizza'])!='servirse')&&($vP['llevar_pizza']!='servirse')){
                           if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
                           else $p_llevar=1.00;
                         }
@@ -147,7 +147,7 @@ $page_title = 'Reporte de ventas';
                         $p_extras = explode(",", $sale['extras']);
                         if(!$p_extras==''){
                           $cos=costoExtra($sale['tam_pizza']);
-                          $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
+                          $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
                           
                         }
                         $total1=(float)remove_junk($sale['price'])+$p_llevar+$val_e;

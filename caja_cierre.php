@@ -14,10 +14,22 @@ $open=find_last_open_box();
 $ingresos_cajas = find_sum_ingresos_caja($year,$month,$day);
 $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 
+$ventasRealizadas_e=0;
+$ventasRealizadas_t=0;
+$efectivo=VentasRealizadas($open['date'],'venta_general','efectivo');
+foreach ($efectivo as $vB){
+  $ventasRealizadas_e=$ventasRealizadas_e+(float)remove_junk($vB['price']);
+}
+
+$tarjeta=VentasRealizadas($open['date'],'venta_general','tarjeta');
+foreach ($tarjeta as $vB){
+  $ventasRealizadas_t=$ventasRealizadas_t+(float)remove_junk($vB['price']);
+}
+/*
 //ventas ene fectivo
 $ventasPizzas = VentasRealizadas($open['date'],'venta_pizzas','efectivo');
-//$ventasBebidas = VentasRealizadas($open['date'],'venta_bebidas','efectivo');
-//$ventasIngredientes = VentasRealizadas($open['date'],'venta_ingredientes','efectivo');
+$ventasBebidas = VentasRealizadas($open['date'],'venta_bebidas','efectivo');
+$ventasIngredientes = VentasRealizadas($open['date'],'venta_ingredientes','efectivo');
 
 $total1=0;
 $total2=0;
@@ -25,32 +37,32 @@ $total3=0;
 
 foreach ($ventasPizzas as $vP){
   $p_llevar=0;
-  if(remove_junk($vP['llevar_pizza'])=='llevar'){
-    if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
+  if($vP['llevar_pizza']!='servirse' && $vP['tam_pizza']!='porcion'){
+    if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
     else $p_llevar=1.00;
   }
   $val_e=0;
-  $p_extras = explode(",", $vP['extras']);
-  if(!$p_extras==''){
+  if($vP['extras']!=null){
+    $p_extras = explode(",", $vP['extras']);
     $cos=costoExtra($vP['tam_pizza']);
-    $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
-    
-  }
-  $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
+    $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
+  }        
+
+  $total1=$total1+(float)remove_junk($vP['price'])+(float)$p_llevar+(float)$val_e;
 }
-/*foreach ($ventasBebidas as $vB){
+foreach ($ventasBebidas as $vB){
   $total2=$total2+(float)remove_junk($vB['price']);
 }
 foreach ($ventasIngredientes as $vI){
   $total3=$total3+(float)remove_junk($vI['price']);
-}*/
+}
 
 $ventasRealizadas_e=$total1+$total2+$total3;
 
 //ventas con tarjeta
 $ventasPizzas_t = VentasRealizadas($open['date'],'venta_pizzas','tarjeta');
-//$ventasBebidas_t = VentasRealizadas($open['date'],'venta_bebidas','tarjeta');
-//$ventasIngredientes_t = VentasRealizadas($open['date'],'venta_ingredientes','tarjeta');
+$ventasBebidas_t = VentasRealizadas($open['date'],'venta_bebidas','tarjeta');
+$ventasIngredientes_t = VentasRealizadas($open['date'],'venta_ingredientes','tarjeta');
 
 $total1=0;
 $total2=0;
@@ -58,29 +70,29 @@ $total3=0;
 
 foreach ($ventasPizzas_t as $vP){
   $p_llevar=0;
-  if(remove_junk($vP['llevar_pizza'])=='llevar'){
-    if(remove_junk($vP['tam_pizza'])=='extragrande') $p_llevar=1.25;
+  if((remove_junk($vP['llevar_pizza'])!='servirse')&&($vP['llevar_pizza']!='servirse')){
+    if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
     else $p_llevar=1.00;
   }
   $val_e=0;
   $p_extras = explode(",", $vP['extras']);
-  if(!$p_extras==''){
+  if($p_extras!=''){
     $cos=costoExtra($vP['tam_pizza']);
-    $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
+    $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
     
   }
   $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
 }
-/*foreach ($ventasBebidas_t as $vB){
+foreach ($ventasBebidas_t as $vB){
   $total2=$total2+(float)remove_junk($vB['price']);
 }
 foreach ($ventasIngredientes_t as $vI){
   $total3=$total3+(float)remove_junk($vI['price']);
-}*/
+}
 //falata sumar cajas y extras
 $ventasRealizadas_t=$total1+$total2+$total3;
 
-
+*/
 
 
 foreach($ingresos_cajas as $tempo){
@@ -173,7 +185,7 @@ else{
           <table class="table table-bordered table-striped table-hover">
             <thead>                                                             <!--Cabecera dentro de la tabla-->
                 <tr>
-                    <th>Descripción</th><th class="text-center" style="width: 100px;">    Valor    </th>
+                    <th>Descripción</th><th class="text-center" style="width: 100px;">    Valor [$]    </th>
                 </tr>
             </thead>
             <tbody>                                                              <!--Cuerpo dentro de la tabla-->

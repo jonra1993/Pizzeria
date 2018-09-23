@@ -33,18 +33,18 @@
 
     foreach ($ventasPizzas as $vP){
       $p_llevar=0;
-      if(remove_junk($vP['llevar_pizza'])=='llevar'){
-        if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
+      if($vP['llevar_pizza']!='servirse' && $vP['tam_pizza']!='porcion'){
+        if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
         else $p_llevar=1.00;
       }
       $val_e=0;
-      $p_extras = explode(",", $vP['extras']);
-      if(!$p_extras==''){
+      if($vP['extras']!=null){
+        $p_extras = explode(",", $vP['extras']);
         $cos=costoExtra($vP['tam_pizza']);
-        $val_e=$cos[0]['price']*(count($p_extras)-1);  //resta 1 porque hay una comma luego de extras
-        
-      }
-      $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
+        $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
+      }        
+  
+      $total1=$total1+(float)remove_junk($vP['price'])+(float)$p_llevar+(float)$val_e;
     }
 
     foreach ($ventasBebidas as $vB){
@@ -86,8 +86,8 @@
     $masa_extragrande=contador_masas('extragrande','venta_pizzas');
     foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
    
-    $masa_totales=(0.5*$v_masa_mediana)+(0.125*$v_masa_porcion)+$v_masa_familiar+$v_masa_extragrande;
-
+    $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande;
+    //$masa_totales=0;
 
    include_once('layouts/header.php'); 
   ?>
@@ -178,7 +178,7 @@
               <tr>
                 <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
                 <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
-                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>   
+                <td class="text-center">$ <?php echo number_format((float)$product_sold['totalprice'], 2, '.', ''); ?></td>   
               </tr>
             <?php endforeach; ?>
             </tbody>
@@ -206,7 +206,7 @@
               <tr>
                 <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
                 <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
-                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>
+                <td class="text-center">$ <?php echo number_format((float)$product_sold['totalprice'], 2, '.', ''); ?></td>   
               </tr>
             <?php endforeach; ?>
             </tbody>
@@ -234,7 +234,7 @@
               <tr>
                 <td class="text-center"><?php echo (int)$product_sold['totalQty']; ?></td>
                 <td class="text-center"><?php echo remove_junk(first_character($product_sold['nam'])); ?></td>
-                <td class="text-center">$ <?php echo (int)$product_sold['totalprice']; ?></td>
+                <td class="text-center">$ <?php echo number_format((float)$product_sold['totalprice'], 2, '.', ''); ?></td>   
               </tr>
             <?php endforeach; ?>
             </tbody>
@@ -243,7 +243,7 @@
       </div>
     </div>
 
-    <!--Ultimas Ventas-->
+    <!-- Ventas diarias-->
     <div class="col-md-5">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -256,40 +256,51 @@
           <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th>Fecha</th>
-                <th>Usuario</th>
-                <th>Valor de venta</th>
+                <th class="text-center">Orden N°</th>
+                <th class="text-center">Fecha</th>
+                <th class="text-center">Usuario</th>
+                <th class="text-center">Valor de venta</th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($recent_sales as  $recent_sale): ?>
               <tr>
-                <td class="text-center"><?php echo count_id();?></td>
-                <td>
-                <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">    <!--Redireccionamiento a editar producto en el item especifico-->
-                  <?php echo remove_junk(first_character($recent_sale['name'])); ?>
-                </a>
-                </td>
-                <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-                <td>$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($recent_sale['orden'])); ?></td>
+                <td class="text-center"><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+                <td class="text-center"><?php echo remove_junk(first_character($recent_sale['user'])); ?></td>
+                <td class="text-center">$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
               </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="panel">
-          <div>     
-            <label>Pizzas: </label>
-          </div>
-          <div>     
-            <label>Bebidas: </label>
-          </div>
-          <div>     
-            <label>Ingredientes</label>
-          </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>Ventas diarias</span>
+          </strong>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="text-center">Total</th>
+                <th class="text-center">Pizzas</th>
+                <th class="text-center">Bebidas</th>
+                <th class="text-center">Ingredientes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">$<?php echo number_format((float)$ventasDiarias, 2, '.', '');?></td>
+                <td class="text-center">$<?php echo number_format((float)$total1, 2, '.', ''); ?></td>
+                <td class="text-center">$<?php echo number_format((float)$total2, 2, '.', ''); ?></td>
+                <td class="text-center">$<?php echo number_format((float)$total3, 2, '.', ''); ?></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

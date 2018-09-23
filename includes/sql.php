@@ -434,9 +434,8 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
 function find_recent_sale_added($limit){
   global $db;
-  $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+  $sql  = "SELECT s.id,s.orden,s.price,s.date,s.user";
+  $sql .= " FROM venta_general s";
   $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
@@ -499,10 +498,11 @@ function monthlySales ($year,$month,$tabla){
     $sql  =" SELECT *";
     $sql .= " FROM $tabla c";
     //$sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$start_date}' AND c.username='{$p_user}'";
-    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d %H:%i:%s' ) >= '{$start_date}' AND c.forma_pago='{$forma_pago}'";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d %H:%i:%s' ) >= '{$start_date}' AND c.forma_pago='{$forma_pago}' AND c.user='{$p_user}'";
     $sql .= " ORDER BY DATE(c.date) DESC";
     return $db->query($sql);
   }
+
 
   function find_last_open_box(){
     $current_user = current_user();
