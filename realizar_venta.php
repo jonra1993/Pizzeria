@@ -448,6 +448,9 @@
     }
     //titulo de categoria
     titu_regre.innerText = "Seleccione el tipo de pizza";
+    //Inicializacion parametros extra
+    num_extras=0;
+    str_extra="";
   }
 
   //-2)---Tipo PIZZA
@@ -488,7 +491,7 @@
         agregar_fila(descrip,precio);
 
         //Guardar venta ---------------------------------------------------------------------------
-        var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:str_extra,forma:"123 ",precioP:precio,fpago:"pago"};
+        var venta_pizza={id:fila_id,categ:categ,canti:1,tama:p_tama,tipo:p_tipo,sabor:p_sabor,extra:str_extra,forma:"123",precioP:precio,fpago:"pago"};
         venta_aux.push(venta_pizza); 
       }}); 
     }
@@ -523,6 +526,7 @@
   function ingre_extra(extra){
     num_extras++;
     str_extra+=(extra+",");
+    alert(str_extra);
 
     //Buscar precios de extras y cracion de fila en nota de venta
     $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
@@ -541,6 +545,7 @@
     venta_aux.forEach(element => {
       if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
         element.forma=p_forma;
+        alert("forma");
       }
     });
 
@@ -569,11 +574,12 @@
   }
 
   function avanzar_extra() {
-    var str_e=str_extra.slice(0, -1);
+    var str_e=str_extra.slice(0, -1);         //Elimina la coma
+
     venta_aux.forEach(element => {
       if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
         element.extra=str_e; 
-        // alert(str_e);
+        alert(str_e);
       }
     });
     var e = document.getElementById("selc_pizzas_forma");
@@ -641,8 +647,11 @@
     //Eliminar fila
     alert(venta_aux);
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
-    venta_aux.splice((tr_id-1), 1)        //Eliminar array de venta_aux
-    alert(venta_aux);
+    venta_aux.forEach(element => {
+      if(element.id==tr_id)
+        venta_aux.splice((tr_id-1), 1)        //Eliminar array de venta_aux
+      alert(element.id);
+    });
     sum_productos();
   }
 
@@ -786,7 +795,7 @@
     $.ajax({url: DOMAIN+"buscar_precio_ingredi.php?p_nombre="+nombre, success: function(result){
       // alert(result);
       precio=Number(result);
-      var descrip= nombre;
+      var descrip= nombre.replace(/(^|\s)\S/g, l => l.toUpperCase());         //Poner en mayuscula primera letra
       agregar_fila(descrip,precio);
       var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,v_nombre:nombre,precioP:precio};
       venta_aux.push(venta_ingre);
@@ -842,17 +851,17 @@
             else
               srt_get+=" S";
           }
-          else if(element.categ=="extra"){
+          else if(element.categ=="Extra"){
             srt_get+=(element.tama+" "+element.extra);
           }
           else if (element.categ=="Caja_pizza") {
             srt_get+=(element.tama);
           }
-          else if (element.categ=="bebida") {
+          else if (element.categ=="Bebida") {
             srt_get+=(element.tama+" "+element.sabor);
           }
-          else if (element.categ=="ingredientes") {
-            srt_get+=(element.v_nombre);
+          else if (element.categ=="Ingredientes") {
+            srt_get+=(element.v_nombre);         //Poner en mayuscula primera letra);
           }
           srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
 
