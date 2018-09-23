@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-09-2018 a las 17:17:49
+-- Tiempo de generación: 23-09-2018 a las 22:24:02
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -326,7 +326,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 0, '2018-09-21');
+(1, 0, '2018-09-23');
 
 -- --------------------------------------------------------
 
@@ -430,7 +430,8 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 (82, 'ingr_salsa.jpg', 'image/jpeg'),
 (83, 'sabor_mexicana1.png', 'image/png'),
 (84, 'taza_aromatica1.png', 'image/png'),
-(85, 'taza_cafe1.png', 'image/png');
+(85, 'taza_cafe1.png', 'image/png'),
+(86, 'masas.jpg', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -480,6 +481,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`) VALUES
+(1, 'Masas', '1', 'Unidad', '0.00', '0.00', 2, 86, '2018-09-23 17:15:16', 0),
 (19, 'Harina', '1', 'Kg', '0.70', '0.70', 4, 20, '2018-09-14 20:20:21', 1),
 (20, 'Queso', '11', 'Kg', '4.20', '4.20', 4, 21, '2018-09-14 20:19:38', 1),
 (21, 'JamÃ³n', '13', 'Kg', '5.50', '5.50', 4, 76, '2018-09-14 20:19:38', 7),
@@ -554,7 +556,8 @@ INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity
 (32, 'Carne', '1', '7', 'Kg', '5.60', '33.60', '2018-09-14 20:19:39', 'Admin', 1),
 (33, 'Tocino', '1', '9', 'Kg', '9.50', '76.00', '2018-09-14 20:19:39', 'Admin', 1),
 (34, 'Levadura', '1', '4', 'Kg', '6.50', '19.50', '2018-09-14 20:20:01', 'Admin', 1),
-(35, 'Harina', '51', '1', 'Kg', '0.70', '-35.00', '2018-09-14 20:20:21', 'Admin', 1);
+(35, 'Harina', '51', '1', 'Kg', '0.70', '-35.00', '2018-09-14 20:20:21', 'Admin', 1),
+(36, 'Masas', '0', '1', 'Unidad', '10.00', '10.00', '0000-00-00 00:00:00', 'Admin', 1);
 
 -- --------------------------------------------------------
 
@@ -821,6 +824,22 @@ CREATE TABLE `venta_bebidas` (
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `venta_bebidas`
+--
+
+INSERT INTO `venta_bebidas` (`id`, `qty`, `tam_bebida`, `sabor_bebida`, `price`, `date`, `user`, `forma_pago`) VALUES
+(6, 4, '3 litro', 'fruit', '11.00', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(7, 4, '1/2 litro', 'fruit', '2.00', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(8, 1, '1.5 litro', 'coca-cola', '2.00', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(9, 1, '1/2 litro', 'coca-cola', '0.75', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(10, 1, 'vaso', 'jugo', '1.75', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(11, 3, '850 ml', 'pilsener', '5.25', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(12, 2, 'taza', 'agua aromatica', '1.00', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(13, 2, '1.5 litro', 'pepsi', '3.60', '2018-09-23 15:40:17', 'admin', 'tarjeta'),
+(14, 1, '3 litro', 'coca-cola', '3.00', '2018-09-23 15:48:56', 'admin', 'tarjeta'),
+(15, 1, '1/2 litro', 'fruit', '0.50', '2018-09-23 15:48:56', 'admin', 'tarjeta');
+
 -- --------------------------------------------------------
 
 --
@@ -837,6 +856,16 @@ CREATE TABLE `venta_general` (
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_general`
+--
+
+INSERT INTO `venta_general` (`id`, `orden`, `price`, `pagado`, `vuelto`, `date`, `user`, `forma_pago`) VALUES
+(1, 0, '33.60', '0.00', '0.00', '2018-09-23 15:35:02', 'admin', 'tarjeta'),
+(2, 0, '26.85', '0.00', '0.00', '2018-09-23 15:39:12', 'admin', 'tarjeta'),
+(3, 0, '18.50', '0.00', '0.00', '2018-09-23 15:44:55', 'admin', 'tarjeta'),
+(4, 0, '41.75', '45.00', '3.25', '2018-09-23 15:48:56', 'admin', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -873,6 +902,15 @@ CREATE TABLE `venta_pizzas` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_pizzas`
+--
+
+INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
+(83, 1, 'familiar', 'normal', 'criolla', '123 ', '', '15.00', 'tarjeta', '2018-09-23 15:48:56', 'admin'),
+(84, 1, 'familiar', 'especial', 'tradicionalHawayana', '123 ', 'champinones,pina,embutidos,durazno,', '15.00', 'efectivo', '2018-09-23 15:49:45', 'admin'),
+(85, 1, 'mediana', 'normal', 'hawayana', 'servirse', 'champinones,pina,embutidos,durazno', '8.50', 'efectivo', '2018-09-23 15:49:45', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -1107,7 +1145,7 @@ ALTER TABLE `extra_pizzas`
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT de la tabla `productovender`
@@ -1119,13 +1157,13 @@ ALTER TABLE `productovender`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `products_add_records`
 --
 ALTER TABLE `products_add_records`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -1191,25 +1229,25 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `venta_bebidas`
 --
 ALTER TABLE `venta_bebidas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- Restricciones para tablas volcadas
