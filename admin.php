@@ -170,7 +170,7 @@
               <tr>
                 <th class="text-center">Cantidad</th>
                 <th class="text-center">Sabor</th>
-                <th class="text-center">Total vendido</th>
+                <th class="text-center">Valor vendido</th>
               </tr>
             </thead>
             <tbody>
@@ -198,7 +198,7 @@
               <tr>
                 <th class="text-center">Cantidad</th>
                 <th class="text-center">Sabor</th>
-                <th class="text-center">Total vendido</th>
+                <th class="text-center">Valor vendido</th>
               </tr>
             </thead>
             <tbody>
@@ -226,7 +226,7 @@
               <tr>
                 <th class="text-center">Cantidad</th>
                 <th class="text-center">Sabor</th>
-                <th class="text-center">Total vendido</th>
+                <th class="text-center">Valor vendido</th>
               </tr>
             </thead>
             <tbody>
