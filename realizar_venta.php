@@ -368,6 +368,7 @@
 
 <script >
   var venta_aux=[];
+  var item_eliminados=[];
   var categ, p_tama, p_tipo, p_extras, p_forma, p_pago, pizza_vent='0';
   var fila_id = 0;
   var num_extras = 0;
@@ -526,7 +527,7 @@
   function ingre_extra(extra){
     num_extras++;
     str_extra+=(extra+",");
-    alert(str_extra);
+    // alert(str_extra);
 
     //Buscar precios de extras y cracion de fila en nota de venta
     $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
@@ -545,7 +546,6 @@
     venta_aux.forEach(element => {
       if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
         element.forma=p_forma;
-        alert("forma");
       }
     });
 
@@ -579,7 +579,7 @@
     venta_aux.forEach(element => {
       if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
         element.extra=str_e; 
-        alert(str_e);
+        //alert(str_e);
       }
     });
     var e = document.getElementById("selc_pizzas_forma");
@@ -645,13 +645,15 @@
 
   function eliminar_fila(tr_id) {
     //Eliminar fila
-    alert(venta_aux);
+    // alert(venta_aux);
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
-    venta_aux.forEach(element => {
-      if(element.id==tr_id)
-        venta_aux.splice((tr_id-1), 1)        //Eliminar array de venta_aux
-      alert(element.id);
-    });
+    item_eliminados.push(tr_id);
+    // venta_aux.forEach(element => {
+    //   if(element.id==tr_id)
+    //     venta_aux.splice((tr_id-1), 1)        //Eliminar array de venta_aux
+    //   alert(element.id);
+    // });
+    alert(item_eliminados);
     sum_productos();
   }
 
@@ -825,17 +827,21 @@
       //CARGAR A BD DE VENTA PIZZAS
       if(aux==0){
         venta_aux.forEach(element => {
-          if(element.categ=="Pizzas"){
-            $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
-            });
-          }
-          else if(element.categ=="bebida"){
-            $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
-            });
-          }
-          else if(element.categ=="ingredientes"){
-            $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
-            });
+          var aux_eli=item_eliminados.indexOf(element.id);
+          if(aux_eli<0){
+            alert(element.id);
+            if(element.categ=="Pizzas"){
+              $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
+              });
+            }
+            else if(element.categ=="bebida"){
+              $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
+              });
+            }
+            else if(element.categ=="ingredientes"){
+              $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
+              });
+            }
           }
         });
       
