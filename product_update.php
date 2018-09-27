@@ -6,6 +6,9 @@
   // Checkin What level user has permission to view this page
    page_require_level(2);
   $products = join_product_table();
+  $sabor_pizzas=join_tipopizza_table();
+  $pizzas_espec=join_pizzaespecilal_table();
+  $tam_pizzas= join_tampizza_table();
 ?>
 
 <?php
@@ -46,7 +49,29 @@
     $session->msg('s',"Cantidad Actualizada");
     redirect('product_update.php', false);
   }
+  //-----CONTADOR DE PRODUCTOS
+  //Contador de Masas
+  $masa_porcion=contador_masas('porcion','venta_pizzas');
+  foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
+  $masa_mediana=contador_masas('mediana','venta_pizzas');
+  foreach ($masa_mediana as $mediana){ $v_masa_mediana=remove_junk($mediana['sum(qty)']); if($v_masa_mediana==NULL)$v_masa_familiar=0;}
+  $masa_familiar=contador_masas('familiar','venta_pizzas');
+  foreach ($masa_familiar as $familiar){ $v_masa_familiar=remove_junk($familiar['sum(qty)']);if($v_masa_familiar==NULL)$v_masa_familiar=0;}
+  $masa_extragrande=contador_masas('extragrande','venta_pizzas');
+  foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
+ 
+  $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande;
 
+  //SABORES
+  foreach ($sabor_pizzas as $sab) {
+    $nombre_sab=remove_junk($sab['name']); 
+    foreach ($tam_pizzas as $tam) {
+      $nombre_tam=remove_junk($tam['name']);
+      ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
+      foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
+    }
+    ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor;
+  }
 ?>
 
 
@@ -77,7 +102,7 @@
                 <th class="text-center" style="width: 10%;"> Proveedor </th>
                 <th class="text-center" style="width: 10%;"> Stock Inicial</th>
                 <th class="text-center" style="width: 10%;"> Stock Final </th>
-                <th class="text-center" style="width: 10%;"> Stock Utilizado </th>
+                <th class="text-center" style="width: 10%;"> Stock Utilizado Aprox </th>
                 <th class="text-center" style="width: 10%;"> Fecha </th>
                 <th class="text-center" style="width: 10%;"> Acciones </th>
               </tr>
@@ -104,7 +129,7 @@
                 <td class="text-center"> <?php echo remove_junk($product['pro']); ?></td>
                 <td class="text-center" id="i<?php echo remove_junk($product['id']); ?>"> <?php echo remove_junk($product['quantity']); ?></td>
                 <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" id="f<?php echo remove_junk($product['id']); ?>" min="0" onkeypress="isInputNumber(event)" onchange="myFunction(<?php echo remove_junk($product['id']); ?>)" type="number" class="form-control"></td>
-                <td class="text-center" id="utilizado<?php echo remove_junk($product['id']); ?>"></td>
+                <td class="text-center" id="aprox_<?php echo remove_junk($product['name']); ?>"></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
@@ -124,6 +149,20 @@
   </div>
 
 <script>
+  var masas_mixta="<?php echo $v_masa_mixta?>";
+  var masas_hawayana="<?php echo $v_masa_hawayana?>";
+  var masas_pollo="<?php echo $v_masa_pollo?>";
+  var masas_vegetariana="<?php echo $v_masa_vegetariana?>";
+  var masas_carne="<?php echo $v_masa_carne?>";
+  var masas_tocino="<?php echo $v_masa_tocino?>";
+  var masas_napolitana="<?php echo $v_masa_napolitana?>";
+  var masas_criolla="<?php echo $v_masa_criolla?>";
+  var masas_tropical="<?php echo $v_masa_tropical?>";
+  var masas_mexicana="<?php echo $v_masa_mexicana?>";
+
+
+  var masas_aprox = document.getElementById('aprox_Masas');
+  masas_aprox.innerHTML = "<?php echo $masa_totales?>"; ;
 
   function isInputNumber(evt){
       var ch = String.fromCharCode(evt.which);
@@ -135,7 +174,7 @@
   function myFunction(id) {
     var inicial = document.getElementById("i"+id);
     var final = document.getElementById("f"+id).value;
-    var utilizado = document.getElementById("utilizado"+id);
+    var utilizado = document.getElementById("aprox_"+id);
     var resta= inicial.innerHTML-final;
     if(resta>=0) utilizado.innerHTML = ""+resta;
     else document.getElementById("f"+id).value=""+Number(inicial.innerHTML);
