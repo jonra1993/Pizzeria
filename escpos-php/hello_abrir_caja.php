@@ -23,7 +23,7 @@ use Mike42\Escpos\CapabilityProfile;
 
 try {
 
-	//$connector = new WindowsPrintConnector("pos-80");
+	//$connector = new WindowsPrintConnector("POS-80");
 	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
 	$printer = new Printer($connector);
 	/* Initialize */
@@ -44,9 +44,10 @@ try {
 
 }
 catch (Exception $e) {
-    echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
+	echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
+	redirect('../caja_ingreso_retiro.php?status=noAbriocaja',false); 
 }
 
-redirect('../caja_ingreso_retiro.php?status=noAbriocaja',false); 
+
 
 ?>

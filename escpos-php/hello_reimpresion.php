@@ -197,18 +197,10 @@ try {
 
     $printer -> close();
 
-    $comandos='&servir='.$_GET["servir"].'&efectivo='.$_GET["efectivo"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
-
-    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
-	
-	//redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
 
 }
 catch (Exception $e) {
     echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
-    //redirect('../realizar_venta.php?status=noImpreso',false);
-    $comandos='&servir='.$_GET["servir"].'&efectivo='.$_GET["efectivo"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
-    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
 
 }
 

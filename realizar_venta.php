@@ -305,7 +305,7 @@
           <thead>
             <tr>
               <th class="text-center" style="width:10%">Cantidad</th>
-              <th class="text-justify" style="width:40%">Descrip</th>
+              <th class="text-justify" style="width:40%">Descripción</th>
               <th class="text-center" style="width:20%">Precio</th>
               <th class="text-center" style="width:20%">Total</th>
               <th class="text-center" style="width:10%"></th>
@@ -353,7 +353,7 @@
           <div class="panel-body" id="tabla_vuelto">
             <table class="table table-striped table-hover table-condensed">
               <tbody> 
-                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" style="width: 25%;" onchange="actu_vuelto()"></td></tr>
+                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" style="width: 25%;" onkeyup="actu_vuelto()"></td></tr>
                 <tr><td class="text-right">Vuelto</td><td class="text-center">$ <input id="in_vuelto" class="text-center"  type="number" value="0.00" pattern="^\d+(?:\.\d{1,2})?$" min="0" style="width: 25%;" disabled></td></tr>
               </tbody>
             </table>
