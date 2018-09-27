@@ -333,7 +333,7 @@
             </tr>
           </tfoot>
         </table>
-        <button id="final_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Continuar</button>
+        <button id="cont_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Continuar</button>
         <div class="row" id="cont_vuelto" style="display: none;">
           <div class="row"  style="padding-top: 5%;">
             <div class="form-check text-center">
@@ -368,16 +368,19 @@
 
 <script >
   var venta_aux=[];
+  var venta_aux_extra=[];
   var item_eliminados=[];
   var categ, p_tama, p_tipo, p_extras, p_forma, p_pago, pizza_vent='0';
   var fila_id = 0;
   var num_extras = 0;
   var str_extra="";
   var pagoTotal=1; 
+  var p_id_pizza='';      //Informacion de id de la pizza a la cual corresponden los extras
   var DOMAIN = "http://localhost/Pizzeria/";
 
   var titu_regre=document.getElementById("titulo_regresar"); //Titulo regresar 
   var btn_regre=document.getElementById("btn_regresar");    //Boton regresar
+  var btn_cont=document.getElementById("cont_compra");    //Boton continuar con la compra
     
   function selec_categ(nombre_cat) {
     var g=document.getElementById("cont_categ"); //Cotenedor catego boqueo selecion
@@ -419,6 +422,8 @@
     }
     categ=nombre_cat;
     g.style.pointerEvents="none";   //Bloqueo de categoria
+    
+    btn_cont.disabled=true;   //Bloqueo boton contiuar compra
   }
   //---------- Categoria PIZZAS --------------
   // 0=> Ventana de tamano
@@ -522,12 +527,15 @@
     //Titulo de ventana
     titu_regre.innerText = "¿Desea algún ingrediente extra?";
     pizza_vent=3;   //Ventana de servir
+    p_id_pizza=(fila_id+1);     //Corrspondencia de pizza con extras
+    // alert(p_id_pizza);
   }
 
   function ingre_extra(extra){
     num_extras++;
-    str_extra+=(extra+",");
+    //str_extra+=(extra+",");
     // alert(str_extra);
+    
 
     //Buscar precios de extras y cracion de fila en nota de venta
     $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
@@ -535,10 +543,26 @@
       precio=Number(result);
       var descrip= "Extra "+extra+" en pizza "+p_tama;
       agregar_fila(descrip,precio);
-      var venta_extra={id:fila_id,categ:"extra",canti:1,tama:p_tama,extra:extra,precioP:precio};
-      venta_aux.push(venta_extra);
+      // var venta_extra={id:fila_id,categ:"extra",canti:1,tama:p_tama,p_extra:extra,precioP:precio};
+      // venta_aux.push(venta_extra);
+      var v_extra={id:fila_id,id_pizza:p_id_pizza,p_extra:extra};
+      venta_aux_extra.push(v_extra);
     }});
     
+  }
+
+  function avanzar_extra() {
+    // venta_aux.forEach(element => {
+    //   if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
+    //     element.extra=str_e; 
+    //     //alert(str_e);
+    //   }
+    // });
+    var e = document.getElementById("selc_pizzas_forma");
+    var f = document.getElementById("selc_extra");
+    centrar(e);
+    f.style.display = 'none';
+    pizza_vent=4;   //Ventana de servir
   }
 
   function forma_servir(forma) {
@@ -567,27 +591,12 @@
     e.style.display = 'none';
     regr.style.display = 'none';
     g.style.pointerEvents="auto"; //Habilitar pulsacion
-    var btn_finalizar = document.getElementById("final_compra");
-    centrar(btn_finalizar);
+    centrar(btn_cont);
+    btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
     //Titulo de ventana
     titu_regre.innerText = "La pizza es para:";
   }
 
-  function avanzar_extra() {
-    var str_e=str_extra.slice(0, -1);         //Elimina la coma
-
-    venta_aux.forEach(element => {
-      if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
-        element.extra=str_e; 
-        //alert(str_e);
-      }
-    });
-    var e = document.getElementById("selc_pizzas_forma");
-    var f = document.getElementById("selc_extra");
-    centrar(e);
-    f.style.display = 'none';
-    pizza_vent=4;   //Ventana de servir
-  }
 
   function centrar(id){
     id.style.display = 'flex';
@@ -624,6 +633,7 @@
         var f = document.getElementById("selc_pizzas_tam");
         
         g.style.pointerEvents="auto"; //Habilitar categorias
+        btn_cont.disabled=false;      //Habilitar continuar compra
         f.style.display = 'none';     //Desaparecer caracteristicas pizzas
         r.style.display = 'none';
         break;
@@ -632,6 +642,7 @@
         r.style.display = 'none';
         g.style.display="none";
         z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
         break;
 
       case 6:       //Regresar ingredientes
@@ -639,6 +650,7 @@
         r.style.display = 'none';
         f.style.display="none";
         z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
         break;
     }
   }
@@ -648,11 +660,7 @@
     // alert(venta_aux);
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
     item_eliminados.push(tr_id);
-    // venta_aux.forEach(element => {
-    //   if(element.id==tr_id)
-    //     venta_aux.splice((tr_id-1), 1)        //Eliminar array de venta_aux
-    //   alert(element.id);
-    // });
+
     alert(item_eliminados);
     sum_productos();
   }
@@ -780,8 +788,8 @@
       agregar_fila(descrip,precio);
       var venta_bebida={id:fila_id,categ:"bebida",canti:1,tama:size,sabor:flavor,precioP:precio};
       venta_aux.push(venta_bebida);
-      var btn_finalizar = document.getElementById("final_compra");
-      centrar(btn_finalizar);
+      centrar(btn_cont);
+      btn_cont.disabled=false;  //Desbloqueo boton contiuar compra
     }});
   }
 
@@ -801,8 +809,8 @@
       agregar_fila(descrip,precio);
       var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,v_nombre:nombre,precioP:precio};
       venta_aux.push(venta_ingre);
-      var btn_finalizar = document.getElementById("final_compra");
-      centrar(btn_finalizar);
+      centrar(btn_cont);
+      btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
     }});
   }
 
@@ -825,14 +833,37 @@
       var user = "<?php echo $user['username']; ?>";        //Determinar el usuario que ejecuta la venta
 
       //CARGAR A BD DE VENTA PIZZAS
+      var aux_extra=0;    //Aux que cuenta el numero de extras
+      str_extra="";
       if(aux==0){
         venta_aux.forEach(element => {
           var aux_eli=item_eliminados.indexOf(element.id);
           if(aux_eli<0){
             alert(element.id);
             if(element.categ=="Pizzas"){
-              $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+element.extra+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
+              //Agregar los extras a la pizza actualemente seleccionada
+              venta_aux_extra.forEach(ele_extra => {
+                if(ele_extra.id_pizza==element.id){     //Verificar si pertenece a la pizza
+                  var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
+                  if(aux_eli_extra<0){                                        //Verificar si no ha sido eliminada
+                    str_extra+=(ele_extra.p_extra+",");
+                    alert(str_extra);
+                    aux_extra++;
+                  }
+                }
               });
+
+              var str_e=""
+              if(aux_extra==0){
+                if(element.extra!="")
+                  str_e=element.extra.slice(0, -1);     //Elimina la coma de sabores de personalozada
+              }       
+              else
+                var str_e=element.extra+str_extra.slice(0, -1);         //Elimina la coma
+
+              $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+str_e+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
+              });
+              str_extra="";
             }
             else if(element.categ=="bebida"){
               $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago

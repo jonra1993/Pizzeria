@@ -149,20 +149,32 @@
   </div>
 
 <script>
-  var masas_mixta="<?php echo $v_masa_mixta?>";
-  var masas_hawayana="<?php echo $v_masa_hawayana?>";
-  var masas_pollo="<?php echo $v_masa_pollo?>";
-  var masas_vegetariana="<?php echo $v_masa_vegetariana?>";
-  var masas_carne="<?php echo $v_masa_carne?>";
-  var masas_tocino="<?php echo $v_masa_tocino?>";
-  var masas_napolitana="<?php echo $v_masa_napolitana?>";
-  var masas_criolla="<?php echo $v_masa_criolla?>";
-  var masas_tropical="<?php echo $v_masa_tropical?>";
-  var masas_mexicana="<?php echo $v_masa_mexicana?>";
+  var masas_mixta=Number("<?php echo $v_masa_mixta?>");
+  var masas_hawayana=Number("<?php echo $v_masa_hawayana?>");
+  var masas_pollo=Number("<?php echo $v_masa_pollo?>");
+  var masas_vegetariana=Number("<?php echo $v_masa_vegetariana?>");
+  var masas_carne=Number("<?php echo $v_masa_carne?>");
+  var masas_tocino=Number("<?php echo $v_masa_tocino?>");
+  var masas_napolitana=Number("<?php echo $v_masa_napolitana?>");
+  var masas_criolla=Number("<?php echo $v_masa_criolla?>");
+  var masas_tropical=Number("<?php echo $v_masa_tropical?>");
+  var masas_mexicana=Number("<?php echo $v_masa_mexicana?>");
 
 
   var masas_aprox = document.getElementById('aprox_Masas');
-  masas_aprox.innerHTML = "<?php echo $masa_totales?>"; ;
+  masas_aprox.innerHTML = "<?php echo $masa_totales?>"; 
+
+  var harina_aprox = document.getElementById('aprox_Harina');
+  harina_aprox.innerHTML = 0.5*Number("<?php echo $masa_totales?>"); 
+
+  var queso_aprox = document.getElementById('aprox_Queso');
+  queso_aprox.innerHTML = 0.357*Number("<?php echo $masa_totales?>"); 
+
+  var jamon_aprox = document.getElementById('aprox_Jamón');
+  jamon_aprox.innerHTML = 0.5*masas_mixta+0.1*masas_hawayana; //+0.0125*masas_amangiare+0.025*masas_tradPollo+0.075*masas_tradHawayana
+
+  var mortadela_aprox = document.getElementById('aprox_Mortadela');
+  mortadela_aprox.innerHTML = 0.1*masas_mixta; //+0.025*masas_amangiare+0.05*masas_tradPollo+0.05*masas_tradHawayana
 
   function isInputNumber(evt){
       var ch = String.fromCharCode(evt.which);
