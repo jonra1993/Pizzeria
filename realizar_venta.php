@@ -333,7 +333,7 @@
             </tr>
           </tfoot>
         </table>
-        <button id="cont_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Continuar</button>
+        <button id="cont_compra" type="button" class="btn btn-primary btn-block" onclick="f_final_compra()"style="display:none;">Elegir forma de pago</button>
         <div class="row" id="cont_vuelto" style="display: none;">
           <div class="row"  style="padding-top: 5%;">
             <div class="form-check text-center">
@@ -358,7 +358,8 @@
           </div>
           <div class="text-center">
             <button id="f_continuar" type="button" class="btn btn-success" onclick="f_continuar(1)" >Finalizar Compra</button>
-            <button id="f_cancelar" type="button" class="btn btn-danger" onclick="f_continuar(0)" >Cancelar Compra</button>
+            <a style="visibility:hidden;">aaaa</a>
+            <button id="f_cancelar" type="button" class="btn btn-danger " onclick="f_continuar(0)" >Cancelar Compra</button>
           </div>
         </div>
       </div>
@@ -535,7 +536,6 @@
     num_extras++;
     //str_extra+=(extra+",");
     // alert(str_extra);
-    
 
     //Buscar precios de extras y cracion de fila en nota de venta
     $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){

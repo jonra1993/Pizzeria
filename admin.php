@@ -22,15 +22,15 @@
     $month = date('m');
     $day = date('d');
 
-    $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
-    $ventasBebidas = dailySales($year,$month,$day,'venta_bebidas');
-    $ventasIngredientes = dailySales($year,$month,$day,'venta_ingredientes');
-
     $total1;
     $total2;
     $total3;
     $val;
 
+    $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
+    $ventasBebidas = dailySales($year,$month,$day,'venta_bebidas');
+    $ventasIngredientes = dailySales($year,$month,$day,'venta_ingredientes');
+    
     $listaExtras=buscar_catalogo("extra_pizzas");
 
     foreach ($ventasPizzas as $vP){

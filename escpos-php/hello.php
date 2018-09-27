@@ -161,7 +161,7 @@ try {
  
     /* Cut */
     $printer -> feed(1);
-    $printer -> cut();   
+//    $printer -> cut();   
 
     /* Name of shop */
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -192,7 +192,7 @@ try {
     //else $printer -> text("Ef\n");
     /* Cut */
     $printer -> feed(1);
-    $printer -> cut();   
+//    $printer -> cut();   
 
 
     $printer -> close();

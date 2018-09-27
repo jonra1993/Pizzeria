@@ -27,7 +27,7 @@ if(isset($_POST['aceptar'])){
       if($p_dinero<0)$session->msg('s',"Retiro de dinero exitoso");  
       else $session->msg('s',"Ingreso de dinero en caja exitoso"); 
           
-      redirect('caja_ingreso_retiro.php',false); 
+      redirect('escpos-php/hello_abrir_caja.php',false); 
     } 
     else {
       $session->msg('d',' Lo siento, registro falló.');
