@@ -423,7 +423,7 @@
     categ=nombre_cat;
     g.style.pointerEvents="none";   //Bloqueo de categoria
     
-    btn_cont.disabled=false;   //Bloqueo boton contiuar compra
+    btn_cont.disabled=true;   //Bloqueo boton contiuar compra
   }
   //---------- Categoria PIZZAS --------------
   // 0=> Ventana de tamano
@@ -592,7 +592,7 @@
     regr.style.display = 'none';
     g.style.pointerEvents="auto"; //Habilitar pulsacion
     centrar(btn_cont);
-    // btn_cont.style.pointerEvents="auto";   //Desbloqueo boton contiuar compra
+    btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
     //Titulo de ventana
     titu_regre.innerText = "La pizza es para:";
   }
@@ -633,6 +633,7 @@
         var f = document.getElementById("selc_pizzas_tam");
         
         g.style.pointerEvents="auto"; //Habilitar categorias
+        btn_cont.disabled=false;      //Habilitar continuar compra
         f.style.display = 'none';     //Desaparecer caracteristicas pizzas
         r.style.display = 'none';
         break;
@@ -641,6 +642,7 @@
         r.style.display = 'none';
         g.style.display="none";
         z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
         break;
 
       case 6:       //Regresar ingredientes
@@ -648,6 +650,7 @@
         r.style.display = 'none';
         f.style.display="none";
         z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
         break;
     }
   }
@@ -786,7 +789,7 @@
       var venta_bebida={id:fila_id,categ:"bebida",canti:1,tama:size,sabor:flavor,precioP:precio};
       venta_aux.push(venta_bebida);
       centrar(btn_cont);
-      // btn_cont.style.pointerEvents="auto";   //Desbloqueo boton contiuar compra
+      btn_cont.disabled=false;  //Desbloqueo boton contiuar compra
     }});
   }
 
@@ -807,7 +810,7 @@
       var venta_ingre={id:fila_id,categ:"ingredientes",canti:1,v_nombre:nombre,precioP:precio};
       venta_aux.push(venta_ingre);
       centrar(btn_cont);
-      // btn_cont.style.pointerEvents="auto";   //Desbloqueo boton contiuar compra
+      btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
     }});
   }
 
