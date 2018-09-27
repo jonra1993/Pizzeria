@@ -617,9 +617,22 @@ function by_dates_Inventario ($start_date,$end_date,$product){
   //Contador de produtos
   function contador_masas ($tama,$lista){ 
     global $db;
+    $date    = make_date();
+    $today  = date("Y-m-d", strtotime($date));
     $sql  =" SELECT sum(qty)";
     $sql .= " FROM $lista c";
-    $sql .= " WHERE c.tam_pizza = '{$tama}' LIMIT 1";
+    $sql .= " WHERE c.tam_pizza = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
+    return $db->query($sql);
+  }
+
+  //Contador de produtos
+  function contador_masas_sabor ($tama,$lista,$sabor){ 
+    global $db;
+    $date    = make_date();
+    $today  = date("Y-m-d", strtotime($date));
+    $sql  =" SELECT sum(qty)";
+    $sql .= " FROM $lista c";
+    $sql .= " WHERE c.tam_pizza = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' AND c.sabor_pizza = '{$sabor}' LIMIT 1";
     return $db->query($sql);
   }
 
