@@ -211,8 +211,9 @@ try {
 }
 catch (Exception $e) {
     echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
+    redirect('../realizar_venta.php?status=noImpreso',false);
 }
 
-redirect('../realizar_venta.php?status=noImpreso',false); 
+ 
 
 ?>
