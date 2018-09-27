@@ -82,7 +82,7 @@ if(!$proveedor){
                    <i class="glyphicon glyphicon-th-large"></i>
                    <span>Nombre..</span>
                   </span>
-                  <input type="text" class="form-control" name="name"  autocomplete="off" placeholder="<?php echo remove_junk($proveedor['name']);?>">
+                  <input type="text" class="form-control" name="name"  autocomplete="off" value="<?php echo remove_junk($proveedor['name']);?>">
                </div>
               </div>
 
@@ -92,7 +92,7 @@ if(!$proveedor){
                    <i class="glyphicon glyphicon-th-large"></i>
                    <span>Dirección</span>
                   </span>
-                  <input type="text" class="form-control" name="address" autocomplete="off" placeholder="<?php echo remove_junk($proveedor['address']);?>">
+                  <input type="text" class="form-control" name="address" autocomplete="off" value="<?php echo remove_junk($proveedor['address']);?>">
                </div>
               </div>
 
@@ -102,7 +102,7 @@ if(!$proveedor){
                    <i class="glyphicon glyphicon-th-large"></i>
                    <span>Teléfono.</span>
                   </span>
-                  <input type="tel" class="form-control" name="phone" autocomplete="off" placeholder="<?php echo remove_junk($proveedor['phone']);?>">
+                  <input type="tel" class="form-control" name="phone" autocomplete="off" value="<?php echo remove_junk($proveedor['phone']);?>">
                </div>
               </div>
 
@@ -112,7 +112,7 @@ if(!$proveedor){
                    <i class="glyphicon glyphicon-th-large"></i>
                    <span>Celular....</span>
                   </span>
-                  <input type="tel" class="form-control" name="cellphone" autocomplete="off" placeholder="<?php echo remove_junk($proveedor['cellphone']);?>">
+                  <input type="tel" class="form-control" name="cellphone" autocomplete="off" value="<?php echo remove_junk($proveedor['cellphone']);?>">
                </div>
               </div>
               <button type="submit" name="proveedor" class="btn btn-success">Actualizar</button>

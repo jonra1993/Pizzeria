@@ -96,14 +96,6 @@
 
               <div class="form-group">
                <div class="row">
-                  <div class="col-md-4">
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-usd"></i>
-                      </span>
-                      <input type="decimal" class="form-control" name="saleing-price" placeholder="Precio de venta">
-                   </div>
-                  </div>
                </div>
               </div>
               <button type="submit" name="add_productovender" class="btn btn-danger">Agregar producto</button>

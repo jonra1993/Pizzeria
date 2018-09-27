@@ -75,7 +75,6 @@
                 <th class="text-center" style="width: 10%;"> Unidades </th>
                 <th class="text-center" style="width: 10%;"> Proveedor </th>
                 <th class="text-center" style="width: 10%;"> Precio de compra </th>
-                <th class="text-center" style="width: 10%;"> Precio de venta </th>
                 <th class="text-center" style="width: 10%;"> Agregado </th>
                 <th class="text-center" style="width: 10%;"> Acciones </th>
               </tr>
@@ -103,7 +102,6 @@
                 <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['pro']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
