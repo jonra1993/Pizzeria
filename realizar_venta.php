@@ -661,7 +661,7 @@
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
     item_eliminados.push(tr_id);
 
-    alert(item_eliminados);
+    //alert(item_eliminados);
     sum_productos();
   }
 
@@ -839,7 +839,7 @@
         venta_aux.forEach(element => {
           var aux_eli=item_eliminados.indexOf(element.id);
           if(aux_eli<0){
-            alert(element.id);
+            //alert(element.id);
             if(element.categ=="Pizzas"){
               //Agregar los extras a la pizza actualemente seleccionada
               venta_aux_extra.forEach(ele_extra => {
@@ -847,7 +847,7 @@
                   var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
                   if(aux_eli_extra<0){                                        //Verificar si no ha sido eliminada
                     str_extra+=(ele_extra.p_extra+",");
-                    alert(str_extra);
+                    //alert(str_extra);
                     aux_extra++;
                   }
                 }

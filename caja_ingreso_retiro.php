@@ -24,7 +24,9 @@ if(isset($_POST['aceptar'])){
      $query .=" '{$p_dinero}', '{$p_date}', '{$aux}'";
      $query .="); ";
     if($db->query($query)){
-      $session->msg('s',"Transacción exitosa");     
+      if($p_dinero<0)$session->msg('s',"Retiro de dinero exitoso");  
+      else $session->msg('s',"Ingreso de dinero en caja exitoso"); 
+          
       redirect('caja_ingreso_retiro.php',false); 
     } 
     else {
