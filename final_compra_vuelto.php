@@ -3,9 +3,12 @@ $page_title = 'Reporte de Inventario';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(3);
+
 ?>
 
 <?php
+  require_once('realizar_z.php');
+
 if(isset($_GET['p_efect'])) {
     $efectivo=$_GET['p_efect'];
     $vuelto=$_GET['p_vuelto'];
@@ -22,6 +25,10 @@ if(isset($_GET['p_efect'])) {
     $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
     $query .=" conta = '{$contador}' WHERE id = 1;";
     if($db->query($query)){}
+
+
+    GuardarVentasGenerales($_GET["numorden"], $_GET["subtotal"], $_GET["p_efect"],$_GET["p_vuelto"],$_GET["date"], $_GET["user"], $_GET["p_pago"]);
+
     
   }
 ?>

@@ -83,8 +83,8 @@ class itemcocina
 
 try {
 
-	$connector = new WindowsPrintConnector("pos-80");
-	//$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
+	//$connector = new WindowsPrintConnector("pos-80");
+	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
@@ -201,9 +201,10 @@ try {
     $p_vuelto=$_GET["p_vuelto"];
     $p_efect=$_GET["p_efect"];
 
-        //window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_self");
 
-    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$p_efect.'&p_vuelto='.$p_vuelto.'&p_pago='.$p_pago,false);  //cambiar a donde se quiere que vaya venta
+    //window.open(DOMAIN+"final_compra_vuelto.php?p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_self");
+
+    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$p_efect.'&p_vuelto='.$p_vuelto.'&p_pago='.$p_pago.'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"],false);  //cambiar a donde se quiere que vaya venta
 	
 	//redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
 

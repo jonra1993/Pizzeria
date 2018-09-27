@@ -23,8 +23,8 @@ use Mike42\Escpos\CapabilityProfile;
 
 try {
 
-	$connector = new WindowsPrintConnector("pos-80");
-	//$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
+	//$connector = new WindowsPrintConnector("pos-80");
+	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
