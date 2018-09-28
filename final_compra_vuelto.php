@@ -1,5 +1,5 @@
 <?php
-$page_title = 'Reporte de Inventario';
+$page_title = 'Resumen de venta';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(3);
@@ -85,9 +85,9 @@ function reeimpresion(){
   var p_efect = '<?php echo $_GET['p_efect']; ?>';
   var p_vuelto = '<?php echo $_GET['p_vuelto']; ?>';
   var p_pago = '<?php echo $_GET['p_pago']; ?>';
-  //var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
+  //var win = window.open("escpos-php/hello_reimpresion.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
 
-  $.ajax({url: DOMAIN+"escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,
+  $.ajax({url: DOMAIN+"escpos-php/hello_reimpresion.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,
     success: function(result){
       alert("Comprobante reimpreso");
     }});
