@@ -3,16 +3,6 @@
   $selec="Selecciona el sabor del ingrediente";
   require_once('includes/load.php');
 
-  /*
-  require_once('realizar_z.php');
-
-
-  if($_GET["numorden"]!=null){
-
-   GuardarVentasGenerales($_GET["numorden"], $_GET["subtotal"], $_GET["p_efect"],$_GET["p_vuelto"],$_GET["date"], $_GET["user"], $_GET["p_pago"]);
-  }
-  */
-
   // Checkin What level user has permission to view this page
    page_require_level(1);
    //Catergoria pizzas
@@ -917,13 +907,14 @@
         var d = new Date();
         var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
         
-        var e=0; //0 con tarjeat, 1 con efectivo
         var servir=1; //0 llevar, 1 servirse
         //var servir = [0,1,1,1,1];
         var numorden='<?php echo $contador?>';
-        var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
-        //window.open(DOMAIN+"realizar_venta.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago+"&"+"orden="+str_get2,"_self");
-        
+
+        //guarda venta general y el contador
+        $.ajax({url: DOMAIN+"realizar_z.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago});
+        //manda a imprimir
+        var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
       }
     }
     else{

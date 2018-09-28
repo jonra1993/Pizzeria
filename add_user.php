@@ -8,19 +8,21 @@
 <?php
   if(isset($_POST['add_user'])){
 
-   $req_fields = array('full-name','username','password','level' );
+   $req_fields = array('full-name','username','password','level','clave_caja' );
    validate_fields($req_fields);
 
    if(empty($errors)){
-           $name   = remove_junk($db->escape($_POST['full-name']));
+       $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
        $password   = remove_junk($db->escape($_POST['password']));
+       $clave_caja   = remove_junk($db->escape($_POST['clave_caja']));
        $user_level = (int)$db->escape($_POST['level']);
+       $clave_caja = sha1($clave_caja);
        $password = sha1($password);
         $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level,status";
+        $query .="name,username,password,user_level,status,clave_caja";
         $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
+        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1','{$clave_caja}'";
         $query .=")";
         if($db->query($query)){
           //sucess
@@ -62,6 +64,10 @@
             <div class="form-group">
                 <label for="password">Contraseña</label>
                 <input type="password" class="form-control" name ="password" placeholder="Contraseña">
+            </div>
+            <div class="form-group">
+                <label for="clave_caja">Clave de la caja</label>
+                <input type="password" class="form-control" name ="clave_caja" placeholder="Clave">
             </div>
             <div class="form-group">
               <label for="level">Rol de usuario</label>

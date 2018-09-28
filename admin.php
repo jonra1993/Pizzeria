@@ -347,30 +347,4 @@
     </div>
   </div>
 
-  <script>
-
-    //alert('<?php echo $val?>');
-    var user = "<?php echo $user['username']; ?>";
-    var date = "<?php echo make_date(); ?>";
-    var d = new Date();
-    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
-    
-    var efectivo=1; //0 con tarjeat, 1 con efectivo
-    var servir=1; //0 llevar, 1 servirse
-    var numorden=25;
-    var subtotal=130;
-    var  num_item=Number(<?php echo $num_items;?>);
-    
-
-    var orden = [
-      <?php foreach ($lista_items as $list):?>
-        ['<?php echo $list[0];?>','<?php echo $list[1];?>','<?php echo $list[2];?>'],
-      <?php endforeach;?>
-    ];
-
-    //var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
-    //var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
-
-  </script>
-
   <?php include_once('layouts/footer.php'); ?>

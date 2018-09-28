@@ -2,6 +2,8 @@
 /*--------------------------------------------------------------*/
 /* Function for redirect
 /*--------------------------------------------------------------*/
+
+
 function redirect($url, $permanent = false)
 {
     if (headers_sent() === false)
@@ -90,8 +92,7 @@ try {
 	$printer -> initialize();
 	/* Text */
 	//$printer -> text("Hello world\n");
-	/* Pulse */
-	$printer -> pulse();
+
 	/* Always close the printer! On some PrintConnectors, no actual
 	 * data is sent until the printer is closed. */
 	    /* Information for the receipt */
@@ -150,8 +151,12 @@ try {
     $printer -> selectPrintMode();
 
     //efectivo o tarjeta
-    if($_GET["efectivo"]==0) $printer -> text("Tar\n");
-    else $printer -> text("Ef\n");
+    if($_GET['p_pago']=="efectivo"){
+            /* Pulse solo con pagos en efectivo*/    
+        $printer -> pulse();
+        $printer -> text("Ef\n");
+    } 
+    else $printer -> text("Tar\n");
 
     /* Footer */
     $printer -> feed(1);
@@ -197,7 +202,7 @@ try {
 
     $printer -> close();
 
-    $comandos='&servir='.$_GET["servir"].'&efectivo='.$_GET["efectivo"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
+    $comandos='&servir='.$_GET["servir"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
 
     redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
 	
@@ -207,8 +212,8 @@ try {
 catch (Exception $e) {
     echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
     //redirect('../realizar_venta.php?status=noImpreso',false);
-    $comandos='&servir='.$_GET["servir"].'&efectivo='.$_GET["efectivo"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
-    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
+    $comandos='&servir='.$_GET["servir"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
+    redirect('../final_compra_vuelto.php?status=noImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
 
 }
 

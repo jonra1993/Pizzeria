@@ -4,33 +4,11 @@ $page_title = 'Resumen de venta';
   // Checkin What level user has permission to view this page
   page_require_level(3);
 
+  $efectivo=$_GET['p_efect'];
+  $vuelto=$_GET['p_vuelto'];
+  $forma=$_GET['p_pago'];
+
 ?>
-
-<?php
-  require_once('realizar_z.php');
-  if(isset($_GET['p_efect'])) {
-      $efectivo=$_GET['p_efect'];
-      $vuelto=$_GET['p_vuelto'];
-      $compra=$_GET['p_desVenta'];
-      $forma=$_GET['p_pago'];
-      
-      $cc = find_conta('contador');
-      $contador;
-      foreach($cc as $c){
-      $contador=$c['conta'];
-      }
-
-      $contador++;
-      $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
-      $query .=" conta = '{$contador}' WHERE id = 1;";
-      if($db->query($query)){}
-
-
-      GuardarVentasGenerales($_GET["numorden"], $_GET["subtotal"], $_GET["p_efect"],$_GET["p_vuelto"],$_GET["date"], $_GET["user"], $_GET["p_pago"]);
-
-      
-    }
-  ?>
 
 <?php include_once('layouts/header.php'); ?>
 
@@ -71,31 +49,49 @@ $page_title = 'Resumen de venta';
   </div>
 </div>
 <script >
-function reeimpresion(){
-  var DOMAIN = "http://localhost/Pizzeria/";
-  //window.open(DOMAIN+"realizar_venta.php","_self");
-  var servir = '<?php echo $_GET['servir']; ?>';
-  var numorden = '<?php echo $_GET['numorden']; ?>';
-  var e = '<?php echo $_GET['efectivo']; ?>';
-  var user = '<?php echo $_GET['user']; ?>';
-  var date = '<?php echo $_GET['date']; ?>';
-  var subtotal = '<?php echo $_GET['subtotal']; ?>';
-  var orden = '<?php echo $_GET['orden']; ?>';
-  var date1 = '<?php echo $_GET['date1']; ?>';
-  var p_efect = '<?php echo $_GET['p_efect']; ?>';
-  var p_vuelto = '<?php echo $_GET['p_vuelto']; ?>';
-  var p_pago = '<?php echo $_GET['p_pago']; ?>';
-  //var win = window.open("escpos-php/hello_reimpresion.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
+  pdf_prueb();
+  function pdf_prueb(){
+    var DOMAIN = "http://localhost/Pizzeria/";
+    //window.open(DOMAIN+"realizar_venta.php","_self");
+    var servir = '<?php echo $_GET['servir']; ?>';
+    var numorden = '<?php echo $_GET['numorden']; ?>';
+    var user = '<?php echo $_GET['user']; ?>';
+    var date = '<?php echo $_GET['date']; ?>';
+    var subtotal = '<?php echo $_GET['subtotal']; ?>';
+    var orden = '<?php echo $_GET['orden']; ?>';
+    var date1 = '<?php echo $_GET['date1']; ?>';
+    var p_efect = '<?php echo $_GET['p_efect']; ?>';
+    var p_vuelto = '<?php echo $_GET['p_vuelto']; ?>';
+    var p_pago = '<?php echo $_GET['p_pago']; ?>';
+    var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago); 
+  }
 
-  $.ajax({url: DOMAIN+"escpos-php/hello_reimpresion.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,
-    success: function(result){
-      alert("Comprobante reimpreso");
-    }});
 
-}
-function f_final(){
-  var DOMAIN = "http://localhost/Pizzeria/";
-  window.open(DOMAIN+"realizar_venta.php","_self");
-}
+  function reeimpresion(){
+    var DOMAIN = "http://localhost/Pizzeria/";
+    //window.open(DOMAIN+"realizar_venta.php","_self");
+    var servir = '<?php echo $_GET['servir']; ?>';
+    var numorden = '<?php echo $_GET['numorden']; ?>';
+    var user = '<?php echo $_GET['user']; ?>';
+    var date = '<?php echo $_GET['date']; ?>';
+    var subtotal = '<?php echo $_GET['subtotal']; ?>';
+    var orden = '<?php echo $_GET['orden']; ?>';
+    var date1 = '<?php echo $_GET['date1']; ?>';
+    var p_efect = '<?php echo $_GET['p_efect']; ?>';
+    var p_vuelto = '<?php echo $_GET['p_vuelto']; ?>';
+    var p_pago = '<?php echo $_GET['p_pago']; ?>';
+    //var win = window.open("escpos-php/hello_reimpresion.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
+
+
+    $.ajax({url: DOMAIN+"escpos-php/hello_reimpresion.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1+"&p_efect="+p_efect+"&p_vuelto="+p_vuelto+"&p_pago="+p_pago,
+      success: function(result){
+        alert("Comprobante reimpreso");
+      }});
+
+  }
+  function f_final(){
+    var DOMAIN = "http://localhost/Pizzeria/";
+    window.open(DOMAIN+"realizar_venta.php","_self");
+  }
 </script>
 <?php include_once('layouts/footer.php'); ?>

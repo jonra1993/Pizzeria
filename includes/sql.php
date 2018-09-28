@@ -103,8 +103,25 @@ function tableExists($table){
         return $user['id'];
       }
     }
-   return false;
+    return false;
   }
+  
+  function authenticate_clave_caja($password='') {
+    global $db;
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    $sql  = sprintf("SELECT clave_caja FROM users WHERE username='{$p_user}' LIMIT 1");
+    $result = $db->query($sql);
+    if($db->num_rows($result)){
+      $user = $db->fetch_assoc($result);
+      $password_request = sha1($password);
+      if($password_request === $user['clave_caja'] ){
+        return true;
+      }
+    }
+    return false;
+  }
+
   /*--------------------------------------------------------------*/
   /* Login with the data provided in $_POST,
   /* coming from the login_v2.php form.
