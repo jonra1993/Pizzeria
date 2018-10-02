@@ -72,10 +72,19 @@
     }
     ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor;
   }
+
+  
+
+  foreach ($pizzas_espec as $sab) {
+    $nombre_sab=remove_junk($sab['name']); 
+    foreach ($tam_pizzas as $tam) {
+      $nombre_tam=remove_junk($tam['name']);
+      ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
+      foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
+    }
+    ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor;
+  }
 ?>
-
-
-
 
 <?php include_once('layouts/header.php'); ?>
   <div class="row">
@@ -149,6 +158,9 @@
   </div>
 
 <script>
+  var masas=Number("<?php echo $masa_totales?>");
+
+ //SABORES NORMALES
   var masas_mixta=Number("<?php echo $v_masa_mixta?>");
   var masas_hawayana=Number("<?php echo $v_masa_hawayana?>");
   var masas_pollo=Number("<?php echo $v_masa_pollo?>");
@@ -160,22 +172,60 @@
   var masas_tropical=Number("<?php echo $v_masa_tropical?>");
   var masas_mexicana=Number("<?php echo $v_masa_mexicana?>");
 
+  //SABORES ESPECIALES
+  var masas_amangiare=Number("<?php echo $v_masa_amangiare?>");
+  var masas_tradicionalHawayana=Number("<?php echo $v_masa_tradicionalHawayana?>");
+  var masas_tradicionalPollo=Number("<?php echo $v_masa_tradicionalPollo?>");
+
 
   var masas_aprox = document.getElementById('aprox_Masas');
-  masas_aprox.innerHTML = "<?php echo $masa_totales?>"; 
+  masas_aprox.innerHTML = masas;
 
   var harina_aprox = document.getElementById('aprox_Harina');
-  harina_aprox.innerHTML = 0.5*Number("<?php echo $masa_totales?>"); 
+  harina_aprox.innerHTML = 0.5*masas; 
 
   var queso_aprox = document.getElementById('aprox_Queso');
-  queso_aprox.innerHTML = 0.357*Number("<?php echo $masa_totales?>"); 
+  queso_aprox.innerHTML = 0.357*masas; 
 
   var jamon_aprox = document.getElementById('aprox_Jamón');
-  jamon_aprox.innerHTML = 0.5*masas_mixta+0.1*masas_hawayana; //+0.0125*masas_amangiare+0.025*masas_tradPollo+0.075*masas_tradHawayana
+  jamon_aprox.innerHTML = 0.5*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana
 
   var mortadela_aprox = document.getElementById('aprox_Mortadela');
-  mortadela_aprox.innerHTML = 0.1*masas_mixta; //+0.025*masas_amangiare+0.05*masas_tradPollo+0.05*masas_tradHawayana
+  mortadela_aprox.innerHTML = 0.1*masas_mixta+0.025*masas_amangiare+0.05*masas_tradicionalPollo+0.05*masas_tradicionalHawayana;
 
+  var salami_aprox = document.getElementById('aprox_Salami');
+  salami_aprox.innerHTML = 0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana;
+  
+  var peperoni_aprox = document.getElementById('aprox_Peperoni');
+  peperoni_aprox.innerHTML = 0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana;
+
+  var salsa_aprox = document.getElementById('aprox_Salsa');
+  salsa_aprox.innerHTML = 0.0625*masas;
+
+  var piña_aprox = document.getElementById('aprox_Piña');
+  piña_aprox.innerHTML = 0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana;
+
+  var durazno_aprox = document.getElementById('aprox_Durazno');
+  durazno_aprox.innerHTML =0.5*masas_tropical;  
+
+  var pollo_aprox = document.getElementById('aprox_Pollo');
+  pollo_aprox.innerHTML =0.25*masas_pollo+0.125*masas_tradicionalPollo+0.0625*masas_amangiare; 
+
+  var champiñones_aprox = document.getElementById('aprox_Champiñones');
+  champiñones_aprox.innerHTML =(0.2*masas_pollo+0.1*masas_tradicionalPollo+0.1*masas_amangiare+0.1*masas_carne+0.2*masas_tocino+0.2*masas_vegetariana).toFixed(5);; //+0.2*masas_vegana
+
+  var carne_aprox = document.getElementById('aprox_Carne');
+  carne_aprox.innerHTML =0.22*masas_carne+0.22*masas_criolla+0.22*masas_mexicana;
+
+  var tocino_aprox = document.getElementById('aprox_Tocino');
+  tocino_aprox.innerHTML =0.2*masas_tocino+0.05*masas_criolla+0.05*masas_amangiare;
+
+  var aceite_aprox = document.getElementById('aprox_Aceite');
+  aceite_aprox.innerHTML =0.42*masas.toFixed(2);
+
+  var levadura_aprox = document.getElementById('aprox_Levadura');
+  levadura_aprox.innerHTML =0.42*masas;
+  
   function isInputNumber(evt){
       var ch = String.fromCharCode(evt.which);
       if(!(/[0-9]/.test(ch))){
