@@ -107,7 +107,7 @@
                       <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> 
                         <?php
                           $p_llevar=0; 
-                          if((remove_junk($sale['llevar_pizza'])!='servirse')&&($sale['llevar_pizza']!='servirse')){
+                          if((remove_junk($sale['llevar_pizza'])!='servirse')&&($sale['tam_pizza']!='porcion')){
                             if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
                             else $p_llevar=1.00;
                           }
