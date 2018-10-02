@@ -139,12 +139,12 @@
       </a>
   </li>
 
-  <li  class="nav-item start">
+  <!--li  class="nav-item start">
     <a href="prueba_impresora.php" class="nav-link nav-toggle">
       <i class="glyphicon glyphicon-usd"></i>
        <span class="title">Prueba impresora</span>
       </a>
-  </li>
+  </li-->
 
 </ul>
 <script type="text/javascript" src="assets/jquery-1.10.2.min.js"></script>

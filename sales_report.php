@@ -139,17 +139,25 @@ $page_title = 'Reporte de ventas';
                     <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> 
                       <?php
                         $p_llevar=0; 
-                        if((remove_junk($vP['llevar_pizza'])!='servirse')&&($vP['llevar_pizza']!='servirse')){
+                        if((remove_junk($sale['llevar_pizza'])!='servirse')&&($sale['llevar_pizza']!='servirse')){
                           if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
                           else $p_llevar=1.00;
                         }
                         $val_e=0;
-                        $p_extras = explode(",", $sale['extras']);
-                        if(!$p_extras==''){
-                          $cos=costoExtra($sale['tam_pizza']);
-                          $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
-                          
-                        }
+                        if($sale['extras']!=null){
+                          $arrayExtras = explode(",", $sale['extras']);  // se obtiene un vector de extras
+                          $cos=costoExtra($sale['tam_pizza']);        //costo de extras en base al tamaño de la pizza
+                          if($sale['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
+                          else{
+                            $auxConta=0;
+                            foreach($listaExtras as $lE){
+                              foreach($arrayExtras as $aE){
+                                if($lE['name']==$aE)  $auxConta++;
+                              }
+                            }
+                            $val_e=$cos[0]['price']*$auxConta;
+                          }
+                        } 
                         $total1=(float)remove_junk($sale['price'])+$p_llevar+$val_e;
                         echo number_format((float)$total1, 2, '.', '');
                       ?>

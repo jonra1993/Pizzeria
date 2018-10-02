@@ -7,6 +7,7 @@
   $year  = date('Y');
   $month = date('m');
   $day = date('d');
+  $listaExtras=buscar_catalogo("extra_pizzas");
 ?>
 
 <?php
@@ -111,12 +112,20 @@
                             else $p_llevar=1.00;
                           }
                           $val_e=0;
-                          $p_extras = explode(",", $sale['extras']);
-                          if($p_extras!=''){
-                            $cos=costoExtra($sale['tam_pizza']);
-                            $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
-                            
-                          }
+                          if($sale['extras']!=null){
+                            $arrayExtras = explode(",", $sale['extras']);  // se obtiene un vector de extras
+                            $cos=costoExtra($sale['tam_pizza']);        //costo de extras en base al tamaño de la pizza
+                            if($sale['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
+                            else{
+                              $auxConta=0;
+                              foreach($listaExtras as $lE){
+                                foreach($arrayExtras as $aE){
+                                  if($lE['name']==$aE)  $auxConta++;
+                                }
+                              }
+                              $val_e=$cos[0]['price']*$auxConta;
+                            }
+                          } 
                           $total1=(float)remove_junk($sale['price'])+$p_llevar+$val_e;
                           echo number_format((float)$total1, 2, '.', '');
                         ?>

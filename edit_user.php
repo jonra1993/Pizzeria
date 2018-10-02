@@ -65,6 +65,29 @@ if(isset($_POST['update-pass'])) {
   }
 }
 
+// Update clave caja
+if(isset($_POST['update_clave_caja'])) {
+  $req_fields = array('clave_caja');
+  validate_fields($req_fields);
+  if(empty($errors)){
+           $id = (int)$e_user['id'];
+     $password = remove_junk($db->escape($_POST['clave_caja']));
+     $h_pass   = sha1($password);
+          $sql = "UPDATE users SET clave_caja='{$h_pass}' WHERE id='{$db->escape($id)}'";
+       $result = $db->query($sql);
+        if($result && $db->affected_rows() === 1){
+          $session->msg('s',"Se ha actualizado la clave de ".remove_junk(ucwords($e_user['name'])));
+          redirect('users.php');
+        } else {
+          $session->msg('d','No se pudo actualizar la clave usuario..');
+          redirect('edit_user.php?id='.(int)$e_user['id'], false);
+        }
+  } else {
+    $session->msg("d", $errors);
+    redirect('edit_user.php?id='.(int)$e_user['id'],false);
+  }
+}
+
 ?>
 <?php include_once('layouts/header.php'); ?>
  <div class="row">
@@ -127,6 +150,15 @@ if(isset($_POST['update-pass'])) {
           </div>
           <div class="form-group clearfix">
             <button type="submit" name="update-pass" class="btn btn-success pull-right">Cambiar</button>
+          </div>
+        </form>
+        <form action="edit_user.php?id=<?php echo (int)$e_user['id'];?>" method="post" class="clearfix">
+          <div class="form-group">
+                <label for="clave_caja" class="control-label">Clave de la caja</label>
+                <input type="password" class="form-control" name="clave_caja" placeholder="Ingresa la nueva clave para la caja" required>
+          </div>
+          <div class="form-group clearfix">
+            <button type="submit" name="update_clave_caja" class="btn btn-success pull-right">Cambiar</button>
           </div>
         </form>
       </div>

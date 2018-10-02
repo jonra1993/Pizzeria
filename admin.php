@@ -22,14 +22,16 @@
     $month = date('m');
     $day = date('d');
 
-    $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
-    $ventasBebidas = dailySales($year,$month,$day,'venta_bebidas');
-    $ventasIngredientes = dailySales($year,$month,$day,'venta_ingredientes');
-
     $total1;
     $total2;
     $total3;
     $val;
+
+    $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
+    $ventasBebidas = dailySales($year,$month,$day,'venta_bebidas');
+    $ventasIngredientes = dailySales($year,$month,$day,'venta_ingredientes');
+    
+    $listaExtras=buscar_catalogo("extra_pizzas");
 
     foreach ($ventasPizzas as $vP){
       $p_llevar=0;
@@ -39,9 +41,18 @@
       }
       $val_e=0;
       if($vP['extras']!=null){
-        $p_extras = explode(",", $vP['extras']);
-        $cos=costoExtra($vP['tam_pizza']);
-        $val_e=$cos[0]['price']*(count($p_extras));  //resta 1 porque hay una comma luego de extras
+        $arrayExtras = explode(",", $vP['extras']);  // se obtiene un vector de extras
+        $cos=costoExtra($vP['tam_pizza']);        //costo de extras en base al tamaño de la pizza
+        if($vP['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
+        else{
+          $auxConta=0;
+          foreach($listaExtras as $lE){
+            foreach($arrayExtras as $aE){
+              if($lE['name']==$aE)  $auxConta++;
+            }
+          }
+          $val_e=$cos[0]['price']*$auxConta;
+        }
       }        
   
       $total1=$total1+(float)remove_junk($vP['price'])+(float)$p_llevar+(float)$val_e;
@@ -335,31 +346,5 @@
       </div>
     </div>
   </div>
-
-  <script>
-
-    //alert('<?php echo $val?>');
-    var user = "<?php echo $user['username']; ?>";
-    var date = "<?php echo make_date(); ?>";
-    var d = new Date();
-    var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
-    
-    var efectivo=1; //0 con tarjeat, 1 con efectivo
-    var servir=1; //0 llevar, 1 servirse
-    var numorden=25;
-    var subtotal=130;
-    var  num_item=Number(<?php echo $num_items;?>);
-    
-
-    var orden = [
-      <?php foreach ($lista_items as $list):?>
-        ['<?php echo $list[0];?>','<?php echo $list[1];?>','<?php echo $list[2];?>'],
-      <?php endforeach;?>
-    ];
-
-    //var win = window.open("realizar_venta_pdf.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
-    //var win = window.open("realizar_pedido_pdf.php?"+"servir="+servir+"&"+"efectivo="+efectivo+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+subtotal+"&"+"orden="+orden+"&"+"date1="+date1,"_blank"); // will open new tab on document ready
-
-  </script>
 
   <?php include_once('layouts/footer.php'); ?>

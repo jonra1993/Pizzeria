@@ -100,7 +100,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
                 <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Iniciar sesión</button>  
                 <div class="pull-right">
                   <h6>
-                    <a href="#pablo" class="link">Necesita Ayuda?</a>
+                    <!--a href="#pablo" class="link">Necesita Ayuda?</a-->
                   </h6>
                 </div>
             </form>
@@ -122,7 +122,7 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
             document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
           </script>, Diseñado por 
           <!--a href="#" target="_blank">XXXXX</a-->
-          <a href="#">XXXXX</a>
+          <a href="#diegonf26@gmail.com">Diego Navas</a> y <a href="#jonathan.vargas1104@gmail.com">Jonathan Vargas</a>
         </div>
       </div>
     </footer>

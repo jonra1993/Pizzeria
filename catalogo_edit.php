@@ -78,7 +78,7 @@ if(!$product){
                   <span class="input-group-addon">
                     <i class="glyphicon glyphicon-usd"></i>
                   </span>
-                  <input  type="number" class="form-control" name="saleing-price" placeholder="<?php echo remove_junk($product['price']);?>" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" min="0"  >
+                  <input  type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['price']);?>" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" min="0"  >
                 </div>
               </div>
             </div>

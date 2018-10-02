@@ -2,14 +2,6 @@
   $page_title = 'Ventas';
   $selec="Selecciona el sabor del ingrediente";
   require_once('includes/load.php');
-  require_once('realizar_z.php');
-
-
-  if($_GET["numorden"]!=null){
-
-   GuardarVentasGenerales($_GET["numorden"], $_GET["subtotal"], $_GET["p_efect"],$_GET["p_vuelto"],$_GET["date"], $_GET["user"], $_GET["p_pago"]);
-  }
-  
 
   // Checkin What level user has permission to view this page
    page_require_level(1);
@@ -303,7 +295,7 @@
           <thead>
             <tr>
               <th class="text-center" style="width:10%">Cantidad</th>
-              <th class="text-justify" style="width:40%">Descrip</th>
+              <th class="text-justify" style="width:40%">Descripción</th>
               <th class="text-center" style="width:20%">Precio</th>
               <th class="text-center" style="width:20%">Total</th>
               <th class="text-center" style="width:10%"></th>
@@ -333,7 +325,7 @@
             </tr>
           </tfoot>
         </table>
-        <button id="cont_compra" type="button" class="btn btn-danger btn-block" onclick="f_final_compra()"style="display:none;">Continuar</button>
+        <button id="cont_compra" type="button" class="btn btn-primary btn-block" onclick="f_final_compra()"style="display:none;">Elegir forma de pago</button>
         <div class="row" id="cont_vuelto" style="display: none;">
           <div class="row"  style="padding-top: 5%;">
             <div class="form-check text-center">
@@ -351,14 +343,15 @@
           <div class="panel-body" id="tabla_vuelto">
             <table class="table table-striped table-hover table-condensed">
               <tbody> 
-                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" style="width: 25%;" onchange="actu_vuelto()"></td></tr>
+                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" style="width: 25%;" onkeyup="actu_vuelto()"></td></tr>
                 <tr><td class="text-right">Vuelto</td><td class="text-center">$ <input id="in_vuelto" class="text-center"  type="number" value="0.00" pattern="^\d+(?:\.\d{1,2})?$" min="0" style="width: 25%;" disabled></td></tr>
               </tbody>
             </table>
           </div>
           <div class="text-center">
             <button id="f_continuar" type="button" class="btn btn-success" onclick="f_continuar(1)" >Finalizar Compra</button>
-            <button id="f_cancelar" type="button" class="btn btn-danger" onclick="f_continuar(0)" >Cancelar Compra</button>
+            <a style="visibility:hidden;">aaaa</a>
+            <button id="f_cancelar" type="button" class="btn btn-danger " onclick="f_continuar(0)" >Cancelar Compra</button>
           </div>
         </div>
       </div>
@@ -535,7 +528,6 @@
     num_extras++;
     //str_extra+=(extra+",");
     // alert(str_extra);
-    
 
     //Buscar precios de extras y cracion de fila en nota de venta
     $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
@@ -661,7 +653,7 @@
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
     item_eliminados.push(tr_id);
 
-    alert(item_eliminados);
+    //alert(item_eliminados);
     sum_productos();
   }
 
@@ -839,7 +831,7 @@
         venta_aux.forEach(element => {
           var aux_eli=item_eliminados.indexOf(element.id);
           if(aux_eli<0){
-            alert(element.id);
+            //alert(element.id);
             if(element.categ=="Pizzas"){
               //Agregar los extras a la pizza actualemente seleccionada
               venta_aux_extra.forEach(ele_extra => {
@@ -847,7 +839,7 @@
                   var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
                   if(aux_eli_extra<0){                                        //Verificar si no ha sido eliminada
                     str_extra+=(ele_extra.p_extra+",");
-                    alert(str_extra);
+                    //alert(str_extra);
                     aux_extra++;
                   }
                 }
@@ -915,13 +907,14 @@
         var d = new Date();
         var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
         
-        var e=0; //0 con tarjeat, 1 con efectivo
         var servir=1; //0 llevar, 1 servirse
         //var servir = [0,1,1,1,1];
         var numorden='<?php echo $contador?>';
-        //var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
-        window.open(DOMAIN+"realizar_venta.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"efectivo="+e+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago+"&"+"orden="+str_get2,"_self");
-        
+
+        //guarda venta general y el contador
+        $.ajax({url: DOMAIN+"realizar_z.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago});
+        //manda a imprimir
+        var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
       }
     }
     else{

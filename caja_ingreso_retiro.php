@@ -8,34 +8,41 @@
 <?php
 $user = current_user();
 if(isset($_POST['aceptar'])){
-   $req_fields = array('dinero');
+   $req_fields = array('dinero','clave_caja');
    validate_fields($req_fields);
-   if(empty($errors)){
-     $aux = remove_junk(ucwords($user['username']));
-     $p_id = remove_junk(ucwords($user['id']));
-     $p_date    = make_date();
-     $p_dinero = remove_junk($db->escape($_POST['dinero']));
-     $option   = remove_junk($db->escape($_POST['selector']));
-     if($option == 'Retiro de Efectivo en Caja') $p_dinero=-$p_dinero;
-
-     $query  = "INSERT INTO tabla_ingresos_retiros_cajas (";        //Insertar la BD en donde se va a ingresar los datos
-     $query .=" importe,date,username";
-     $query .=") VALUES (";
-     $query .=" '{$p_dinero}', '{$p_date}', '{$aux}'";
-     $query .="); ";
-    if($db->query($query)){
-      $session->msg('s',"Transacción exitosa");     
-      redirect('caja_ingreso_retiro.php',false); 
-    } 
-    else {
-      $session->msg('d',' Lo siento, registro falló.');
-      redirect('caja_ingreso_retiro.php', false);         //Regresar a administrar productos a vender
+  if(empty($errors)){
+    $aux = remove_junk(ucwords($user['username']));
+    $p_id = remove_junk(ucwords($user['id']));
+    $p_date    = make_date();
+    $p_dinero = remove_junk($db->escape($_POST['dinero']));
+    $option   = remove_junk($db->escape($_POST['selector']));
+    $clave_caja   = remove_junk($db->escape($_POST['clave_caja']));
+    if(authenticate_clave_caja($clave_caja)){
+      if($option == 'Retiro de Efectivo en Caja') $p_dinero=-$p_dinero;
+      $query  = "INSERT INTO tabla_ingresos_retiros_cajas (";        //Insertar la BD en donde se va a ingresar los datos
+      $query .=" importe,date,username";
+      $query .=") VALUES (";
+      $query .=" '{$p_dinero}', '{$p_date}', '{$aux}'";
+      $query .="); ";
+      if($db->query($query)){
+        if($p_dinero<0)$session->msg('s',"Retiro de dinero exitoso");  
+        else $session->msg('s',"Ingreso de dinero en caja exitoso");    
+        redirect('escpos-php/hello_abrir_caja.php',false); 
+      } 
+      else {
+        $session->msg('d',' Lo siento, registro falló.');
+        redirect('caja_ingreso_retiro.php', false);         //Regresar a administrar productos a vender
+      }
+    }
+    else{
+      $session->msg('d',' Lo siento, contraseña incorrecta.');
+      redirect('caja_ingreso_retiro.php',false);
     }
 
-   } else{
-     $session->msg("d", $errors);
-     redirect('caja_ingreso_retiro.php',false);
-   }
+  } else{
+    $session->msg('d','La contraseña no puede estar en blanco');
+    redirect('caja_ingreso_retiro.php',false);
+  }
 }
 if(isset($_POST['cancelar'])) redirect('admin.php', false);
 ?>
@@ -62,33 +69,30 @@ if(isset($_POST['cancelar'])) redirect('admin.php', false);
         <form method="post" action="caja_ingreso_retiro.php" class="clearfix">
           <div class="form-group">
             <div class="col-md-4">
-              <div class="input-group">
+              <!--div class="input-group">
                 <span class="input-group-addon">
                 <i class="glyphicon glyphicon-th-large"></i>
                 </span>
                 <output type="text" class="form-control" name="fecha" placeholder="Descripción">
                   <?php 
-                      date_default_timezone_set('America/Bogota'); $fecha= date("d/m/Y"); echo $fecha; //$hora= date("d/m/Y  g:i a"); 
+                      //date_default_timezone_set('America/Bogota'); $fecha= date("d/m/Y"); echo $fecha; //$hora= date("d/m/Y  g:i a"); 
                   ?>
                 </output>
-              </div>
+              </div-->
               <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                 <input id= "ingres_retiro" type="number" class="form-control" name="dinero" placeholder="Valor"  step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
               </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-sort"></i></span>
-                  <select class="form-control" name="selector" required>
-                    <option>Ingreso de Efectivo en Caja</option>
-                    <option>Retiro de Efectivo en Caja</option>
-                  </select>            
-                </div>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-sort"></i></span>
+                <select class="form-control" name="selector" required>
+                  <option>Ingreso de Efectivo en Caja</option>
+                  <option>Retiro de Efectivo en Caja</option>
+                </select>            
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-th-large"></i></span>
+                <input type="password" class="form-control" name ="clave_caja" placeholder="Contraseña">
               </div>
             </div>
           </div>
