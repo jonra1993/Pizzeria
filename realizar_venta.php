@@ -536,7 +536,7 @@
       var descrip= "Extra "+extra+" en pizza "+p_tama;
       agregar_fila(descrip,precio);
       //Objeto para almacenar extras en tabla de comprobante
-      var venta_extra={id:fila_id,categ:"Extra",canti:1,tama:p_tama,p_extra:extra,precioP:precio};
+      var venta_extra={id:fila_id,id_pizza:p_id_pizza,categ:"Extra",canti:1,tama:p_tama,p_extra:extra,precioP:precio};
       venta_aux.push(venta_extra);
       //Array paracargar a BD con ingredientes extras repetidos
       var v_extra={id:fila_id,id_pizza:p_id_pizza,p_extra:extra};
@@ -652,11 +652,39 @@
   }
 
   function eliminar_fila(tr_id) {
-    //Eliminar fila
-    // alert(venta_aux);
+    //Eliminar fila de comprobante de venta
     $('#tabla_factura tbody tr#'+tr_id).remove();     //Eliminar fila  de tabla
     item_eliminados.push(tr_id);
-
+    //Eliminar adicionales de pizza eliminadasfor
+    venta_aux.forEach(element => {
+      if (element.id==tr_id) {
+        if(element.categ=="Pizzas"){
+          venta_aux.forEach(elem_relac => {
+            if(elem_relac.id_pizza==tr_id){
+              $('#tabla_factura tbody tr#'+elem_relac.id).remove();
+              item_eliminados.push(elem_relac.id);
+            }
+          });
+        }
+        else if(element.categ=="Caja_pizza"){
+          venta_aux.forEach(elem_relac2 => {
+            //Eliminar pizzas vinculadas con caja
+            if(elem_relac2.categ=="Pizzas"){
+              if(elem_relac2.id==element.id_pizza){
+                $('#tabla_factura tbody tr#'+elem_relac2.id).remove();
+                item_eliminados.push(elem_relac2.id);
+              }
+            }
+            //Eliminar adicionales de pizzas vinculadas con caja
+            else if(elem_relac2.id_pizza==element.id_pizza){
+              $('#tabla_factura tbody tr#'+elem_relac2.id).remove();
+              item_eliminados.push(elem_relac2.id);
+            }
+          });
+          element.id_pizza=0;
+        }
+      }
+    });
     //alert(item_eliminados);
     sum_productos();
   }
@@ -678,6 +706,7 @@
         if(element.categ=="Pizzas"){
           venta_aux.forEach(caja => {
             if(caja.id_pizza==(Number(id))){
+              //alert(caja.id_pizza);
               caja.canti=cantidad;
               precio=document.getElementById('precio_'+caja.id).value;
               caja.precioP=(cantidad*precio).toFixed(2);
@@ -905,29 +934,31 @@
         //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
         var srt_get="";
         venta_aux.forEach(element => {
-          srt_get+=(element.canti+","+element.categ+" ");
+          var aux_eli=item_eliminados.indexOf(element.id);    //Verificar si no ha sido eliminada
+          if(aux_eli<0){                                        //Verificar si no ha sido eliminada
+            srt_get+=(element.canti+","+element.categ+" ");
 
-          if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
-            srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
-            if(element.forma=="llevar")
-              srt_get+=" L";
-            else
-              srt_get+=" S";
-          }
-          else if(element.categ=="Extra"){
-            srt_get+=(element.tama+" "+element.p_extra);
-          }
-          else if (element.categ=="Caja_pizza") {
-            srt_get+=(element.tama);
-          }
-          else if (element.categ=="Bebida") {
-            srt_get+=(element.tama+" "+element.sabor);
-          }
-          else if (element.categ=="Ingredientes") {
-            srt_get+=(element.v_nombre);         //Poner en mayuscula primera letra);
-          }
-          srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
-
+            if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
+              srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
+              if(element.forma=="llevar")
+                srt_get+=" L";
+              else
+                srt_get+=" S";
+            }
+            else if(element.categ=="Extra"){
+              srt_get+=(element.tama+" "+element.p_extra);
+            }
+            else if (element.categ=="Caja_pizza") {
+              srt_get+=(element.tama);
+            }
+            else if (element.categ=="Bebida") {
+              srt_get+=(element.tama+" "+element.sabor);
+            }
+            else if (element.categ=="Ingredientes") {
+              srt_get+=(element.v_nombre);         //Poner en mayuscula primera letra);
+            }
+            srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
+          } 
         });
         var totalCompra=document.getElementById('total_compra').value;
         var efectivo=document.getElementById('in_efectivo').value;
