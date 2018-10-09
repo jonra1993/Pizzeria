@@ -590,7 +590,8 @@
     //Titulo de ventana
     titu_regre.innerText = "La pizza es para:";
     //Deshabilitar el contador de caja para actulizacion automatica
-    document.getElementById("canti_"+fila_id).disabled = true;
+    if(p_forma=='llevar')
+      document.getElementById("canti_"+fila_id).disabled = true;
   }
 
 
