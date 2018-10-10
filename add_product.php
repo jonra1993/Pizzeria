@@ -8,6 +8,7 @@
   $all_proveedores = find_all('proveedores');
 ?>
 <?php
+ $uni=array("Unidad", "Kg", "Litro", "Latas", "gr");
  if(isset($_POST['add_product'])){
    $req_fields = array('product-title','product-categorie','product-quantity','desc-unidades','buying-price','nombre-proveedor' );
    validate_fields($req_fields);
@@ -115,7 +116,7 @@
                     <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                     </span>
-                    <input type="number" class="form-control" name="product-quantity" autocomplete="off" placeholder="Cantidad">
+                    <input type="number" class="form-control" name="product-quantity" autocomplete="off" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" placeholder="Cantidad">
                   </div>
                  </div>
                  <div class="col-md-8">
@@ -123,7 +124,13 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-asterisk"></i>
                       </span>
-                      <input type="text" class="form-control" name="desc-unidades" placeholder="Unidades">
+                      <select class="form-control" name="desc-unidades">
+                        <option value="">Seleccione una unidad de medida</option>
+                        <?php  foreach ($uni as $u): ?>
+                          <option value=<?php echo $u?>><?php echo $u?></option>
+                        <?php endforeach; ?>
+                      </select>
+                      <!--input type="text" class="form-control" name="desc-unidades" placeholder="Unidades"-->
                     </div>
                   </div>
                 </div>

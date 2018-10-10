@@ -104,7 +104,14 @@ try {
 
     $itemsco = array();
     for($x = 0; $x < $k; $x++){
-        $itemsco[$x]=new itemcocina(true,"".$values[$x*4+1],"".(int)$values[$x*4]);
+        if($data[$x*$q+1]=="Caja_pizza mediana"||$data[$x*$q+1]=="Caja_pizza familiar"||$data[$x*$q+1]=="Caja_pizza extragrande"){
+            $itemsco[$x]=new itemcocina();
+        }
+        else{
+            if(substr($values[$x*4+1], -1)=='L') $ast=true;
+            else $ast=false;
+            $itemsco[$x]=new itemcocina($ast,"".$values[$x*4+1],"".(int)$values[$x*4]);
+        }
     }
 
     /* Name of shop */

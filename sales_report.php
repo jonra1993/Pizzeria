@@ -158,6 +158,8 @@ $page_title = 'Reporte de ventas';
                             $val_e=$cos[0]['price']*$auxConta;
                           }
                         } 
+                        $p_llevar = (float)$p_llevar*(float)$sale['qty'];        
+                        $val_e = (float)$val_e*(float)$sale['qty']; 
                         $total1=(float)remove_junk($sale['price'])+$p_llevar+$val_e;
                         echo number_format((float)$total1, 2, '.', '');
                       ?>
