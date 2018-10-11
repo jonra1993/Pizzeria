@@ -29,7 +29,7 @@
 
       if($newQuantity!=''){   //solo actualiza si se cambiado el valor
         $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
-        $query .=" quantity = '{$newQuantity}', date = '{$p_date}' WHERE id =";
+        $query .=" quantity = '{$newQuantity}', date = '{$p_date}', qtyAproximada = '0' WHERE id =";
         $query .=" '{$p_id}' ;";
   
         if($db->query($query)){

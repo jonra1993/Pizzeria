@@ -32,11 +32,20 @@ https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH
   
   $d = make_date2();
   $cc = find_conta('contador');
+  $products = join_product_table();
 
-  if($d!=$cc[0]['date']){   //solo actualiza si se cambiado el valor
+  if($d!=$cc[0]['date']){   //solo actualiza si se ha cambiado el valor
     $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
-    $query .=" conta = 0, date = '{$d}' WHERE id = 1;";
+    $query .=" conta = 1, date = '{$d}' WHERE id = 1;";
     if($db->query($query)){
+      foreach ($products as $product) {     
+        $qty   = remove_junk($product['quantity']);
+        $qty_apro   = remove_junk($product['qtyAproximada']);
+        $tempo=(float)$qty-(float)$qty_apro;
+        $query = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
+        $query .=" quantity = '{$tempo}', date = '{$d}', qtyAproximada = '0' WHERE id='{$product['id']}';";
+        $db->query($query);
+      }
     }
   }
 

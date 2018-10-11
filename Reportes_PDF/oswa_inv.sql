@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-10-2018 a las 03:58:30
+-- Tiempo de generación: 11-10-2018 a las 17:04:07
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -21,58 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `oswa_inv`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `autoconsumo_bebidas`
---
-
-CREATE TABLE `autoconsumo_bebidas` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `qty` int(11) NOT NULL,
-  `tam_bebida` varchar(25) NOT NULL,
-  `sabor_bebida` varchar(50) NOT NULL,
-  `price` decimal(25,2) NOT NULL,
-  `date` datetime NOT NULL,
-  `user` varchar(25) NOT NULL,
-  `forma_pago` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `autoconsumo_pizzas`
---
-
-CREATE TABLE `autoconsumo_pizzas` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `qty` int(11) NOT NULL,
-  `tam_pizza` varchar(25) NOT NULL,
-  `tipo_pizza` varchar(25) NOT NULL,
-  `sabor_pizza` varchar(50) NOT NULL,
-  `llevar_pizza` varchar(25) NOT NULL,
-  `extras` varchar(100) NOT NULL,
-  `price` decimal(25,2) NOT NULL,
-  `forma_pago` varchar(25) NOT NULL,
-  `date` datetime NOT NULL,
-  `user` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `autoconsumo_pizzas`
---
-
-INSERT INTO `autoconsumo_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
-(1, 1, 'familiar', 'especial', 'tradicionalPollo', 'llevar', '', '15.00', 'efectivo', '2018-09-16 18:09:50', ''),
-(2, 1, 'extragrande', 'normal', 'mixta', 'llevar', '', '15.00', 'efectivo', '2018-09-16 18:09:50', ''),
-(3, 1, 'mediana', 'normal', 'hawayana', 'llevar', 'queso,', '8.50', 'tarjeta', '2018-09-16 18:10:15', ''),
-(4, 1, 'familiar', 'especial', 'tradicionalHawayana', 'llevar', 'queso,champinones,embutidos,durazno,pina,', '15.00', 'efectivo', '2018-09-16 18:16:07', ''),
-(5, 1, 'extragrande', 'especial', 'tradicionalHawayana', 'llevar', '', '18.00', 'efectivo', '2018-09-16 18:31:10', ''),
-(6, 1, 'familiar', 'normal', 'pollo', 'llevar', 'champinones,embutidos,durazno,', '13.00', 'efectivo', '2018-09-16 18:50:59', ''),
-(7, 1, 'familiar', 'normal', 'hawayana', 'llevar', 'champinones,pina,queso', '13.00', 'efectivo', '2018-09-16 20:31:34', ''),
-(8, 1, 'mediana', 'normal', 'pollo', 'servirse', 'champinones,embutidos,pina', '8.50', 'efectivo', '2018-09-16 20:33:13', ''),
-(9, 1, 'extragrande', 'normal', 'napolitana', 'llevar', 'champinones,pina,durazno', '15.00', 'efectivo', '2018-09-16 20:35:30', '');
 
 -- --------------------------------------------------------
 
@@ -327,7 +275,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 0, '2018-10-10');
+(1, 1, '2018-10-11');
 
 -- --------------------------------------------------------
 
@@ -470,38 +418,39 @@ INSERT INTO `productovender` (`id`, `name`, `sale_price`, `categorie_id`, `media
 CREATE TABLE `products` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `quantity` varchar(50) DEFAULT NULL,
+  `quantity` decimal(10,2) DEFAULT NULL,
   `unidades` varchar(50) NOT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
   `categorie_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL,
-  `proveedor_id` int(11) DEFAULT NULL
+  `proveedor_id` int(11) DEFAULT NULL,
+  `qtyAproximada` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`) VALUES
-(1, 'Masas', '3', 'Unidad', '0.00', 2, 86, '2018-09-23 17:15:16', 0),
-(2, 'Cajas Grandes', '3', 'Unidad', '0.00', 2, 88, '2018-09-23 17:15:16', 0),
-(3, 'Cajas Medianas', '3', 'Unidad', '0.00', 2, 89, '2018-09-23 17:15:16', 0),
-(19, 'Harina', '1', 'Kg', '0.70', 4, 20, '2018-09-14 20:20:21', 1),
-(20, 'Queso', '11', 'Kg', '4.20', 4, 21, '2018-09-14 20:19:38', 1),
-(21, 'JamÃ³n', '13', 'Kg', '5.50', 4, 76, '2018-09-14 20:19:38', 7),
-(22, 'Mortadela', '6', 'Kg', '3.12', 4, 71, '2018-09-14 20:19:38', 9),
-(23, 'Salami', '9', 'Kg', '5.50', 4, 81, '2018-09-14 20:19:38', 7),
-(24, 'Peperoni', '10', 'Kg', '5.50', 4, 78, '2018-09-14 20:19:38', 7),
-(25, 'Salsa', '5', 'Balde', '2.00', 4, 82, '2018-09-14 20:19:39', 9),
-(26, 'PiÃ±a', '5', 'Unidad', '1.50', 4, 79, '2018-09-14 20:19:39', 10),
-(27, 'Durazno', '6', 'latas', '2.60', 4, 75, '2018-09-14 20:19:39', 9),
-(28, 'Pollo', '4', 'Unidad', '5.00', 4, 80, '2018-09-14 20:19:39', 12),
-(29, 'ChampiÃ±ones', '11', 'Kg', '6.15', 4, 74, '2018-09-14 20:19:39', 4),
-(30, 'Carne', '7', 'Kg', '5.60', 4, 73, '2018-09-14 20:19:39', 11),
-(31, 'Tocino', '9', 'Kg', '9.50', 4, 70, '2018-09-14 20:19:39', 13),
-(32, 'Aceite', '6', 'Litro', '1.39', 4, 72, '2018-09-14 20:18:29', 14),
-(33, 'Levadura', '4', 'Kg', '6.50', 4, 77, '2018-09-14 20:20:01', 5);
+INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`, `qtyAproximada`) VALUES
+(1, 'Masas', '70.87', 'Unidad', '0.00', 2, 86, '2018-10-11 00:00:00', 0, '28.13'),
+(2, 'Cajas Grandes', '100.00', 'Unidad', '0.00', 2, 88, '2018-10-11 00:00:00', 0, '0.00'),
+(3, 'Cajas Medianas', '92.00', 'Unidad', '0.00', 2, 89, '2018-10-11 00:00:00', 0, '0.00'),
+(19, 'Harina', '74.94', 'Kg', '0.70', 4, 20, '2018-10-11 00:00:00', 1, '14.06'),
+(20, 'Queso', '81.96', 'Kg', '4.20', 4, 21, '2018-10-11 00:00:00', 1, '10.04'),
+(21, 'JamÃ³n', '99.54', 'Kg', '5.50', 4, 76, '2018-10-11 00:00:00', 7, '0.46'),
+(22, 'Mortadela', '99.87', 'Kg', '3.12', 4, 71, '2018-10-11 00:00:00', 9, '0.13'),
+(23, 'Salami', '99.94', 'Kg', '5.50', 4, 81, '2018-10-11 00:00:00', 7, '0.06'),
+(24, 'Peperoni', '99.94', 'Kg', '5.50', 4, 78, '2018-10-11 00:00:00', 7, '0.06'),
+(25, 'Salsa', '97.24', 'Balde', '2.00', 4, 82, '2018-10-11 00:00:00', 9, '1.76'),
+(26, 'PiÃ±a', '97.67', 'Unidad', '1.50', 4, 79, '2018-10-11 00:00:00', 10, '1.33'),
+(27, 'Durazno', '100.00', 'latas', '2.60', 4, 75, '2018-10-11 00:00:00', 9, '0.00'),
+(28, 'Pollo', '90.53', 'Unidad', '5.00', 4, 80, '2018-10-11 00:00:00', 12, '5.47'),
+(29, 'ChampiÃ±ones', '92.62', 'Kg', '6.15', 4, 74, '2018-10-11 00:00:00', 4, '4.38'),
+(30, 'Carne', '100.00', 'Kg', '5.60', 4, 73, '2018-10-11 00:00:00', 11, '0.00'),
+(31, 'Tocino', '100.00', 'Kg', '9.50', 4, 70, '2018-10-11 00:00:00', 13, '0.00'),
+(32, 'Aceite', '79.19', 'Litro', '1.39', 4, 72, '2018-10-11 00:00:00', 14, '11.81'),
+(33, 'Levadura', '78.91', 'Kg', '6.50', 4, 77, '2018-10-11 00:00:00', 5, '12.09');
 
 -- --------------------------------------------------------
 
@@ -564,7 +513,66 @@ INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity
 (35, 'Harina', '51', '1', 'Kg', '0.70', '-35.00', '2018-09-14 20:20:21', 'Admin', 1),
 (36, 'Masas', '0', '1', 'Unidad', '10.00', '10.00', '0000-00-00 00:00:00', 'Admin', 1),
 (37, 'dasda', '0', '12', 'Kg', '12.00', '144.00', '0000-00-00 00:00:00', 'Admin', 10),
-(38, 'wdwedew', '0', '12', 'gr', '34.00', '408.00', '0000-00-00 00:00:00', 'Admin', 10);
+(38, 'wdwedew', '0', '12', 'gr', '34.00', '408.00', '0000-00-00 00:00:00', 'Admin', 10),
+(39, 'Masas', '3', '2', 'Unidad', '0.00', '0.00', '2018-10-11 11:26:51', 'Admin', 0),
+(40, 'Masas', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:40:17', 'Admin', 0),
+(41, 'Cajas Grandes', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:40:17', 'Admin', 0),
+(42, 'Cajas Medianas', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:40:17', 'Admin', 0),
+(43, 'Harina', '0', '100', 'Kg', '0.70', '70.00', '2018-10-11 11:40:17', 'Admin', 1),
+(44, 'Queso', '0', '100', 'Kg', '4.20', '420.00', '2018-10-11 11:40:17', 'Admin', 1),
+(45, 'JamÃ³n', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:40:17', 'Admin', 7),
+(46, 'Mortadela', '0', '100', 'Kg', '3.12', '312.00', '2018-10-11 11:40:17', 'Admin', 9),
+(47, 'Salami', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:40:17', 'Admin', 7),
+(48, 'Peperoni', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:40:17', 'Admin', 7),
+(49, 'Salsa', '0', '100', 'Balde', '2.00', '200.00', '2018-10-11 11:40:17', 'Admin', 9),
+(50, 'PiÃ±a', '0', '100', 'Unidad', '1.50', '150.00', '2018-10-11 11:40:17', 'Admin', 10),
+(51, 'Durazno', '0', '100', 'latas', '2.60', '260.00', '2018-10-11 11:40:18', 'Admin', 9),
+(52, 'Pollo', '0', '100', 'Unidad', '5.00', '500.00', '2018-10-11 11:40:18', 'Admin', 12),
+(53, 'ChampiÃ±ones', '0', '100', 'Kg', '6.15', '615.00', '2018-10-11 11:40:18', 'Admin', 4),
+(54, 'Carne', '0', '100', 'Kg', '5.60', '560.00', '2018-10-11 11:40:18', 'Admin', 11),
+(55, 'Tocino', '0', '100', 'Kg', '9.50', '950.00', '2018-10-11 11:40:18', 'Admin', 13),
+(56, 'Aceite', '0', '100', 'Litro', '1.39', '139.00', '2018-10-11 11:40:18', 'Admin', 14),
+(57, 'Levadura', '0', '100', 'Kg', '6.50', '650.00', '2018-10-11 11:40:18', 'Admin', 5),
+(58, 'Masas', '100', '80', 'Unidad', '0.00', '0.00', '2018-10-11 11:41:46', 'Admin', 0),
+(59, 'Masas', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:44:08', 'Admin', 0),
+(60, 'Cajas Grandes', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:44:08', 'Admin', 0),
+(61, 'Cajas Medianas', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:44:08', 'Admin', 0),
+(62, 'Harina', '0', '100', 'Kg', '0.70', '70.00', '2018-10-11 11:44:08', 'Admin', 1),
+(63, 'Queso', '0', '100', 'Kg', '4.20', '420.00', '2018-10-11 11:44:08', 'Admin', 1),
+(64, 'JamÃ³n', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:44:08', 'Admin', 7),
+(65, 'Mortadela', '0', '100', 'Kg', '3.12', '312.00', '2018-10-11 11:44:08', 'Admin', 9),
+(66, 'Salami', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:44:08', 'Admin', 7),
+(67, 'Peperoni', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:44:08', 'Admin', 7),
+(68, 'Salsa', '0', '100', 'Balde', '2.00', '200.00', '2018-10-11 11:44:08', 'Admin', 9),
+(69, 'PiÃ±a', '0', '100', 'Unidad', '1.50', '150.00', '2018-10-11 11:44:08', 'Admin', 10),
+(70, 'Durazno', '0', '100', 'latas', '2.60', '260.00', '2018-10-11 11:44:09', 'Admin', 9),
+(71, 'Pollo', '0', '100', 'Unidad', '5.00', '500.00', '2018-10-11 11:44:09', 'Admin', 12),
+(72, 'ChampiÃ±ones', '0', '100', 'Kg', '6.15', '615.00', '2018-10-11 11:44:09', 'Admin', 4),
+(73, 'Carne', '0', '100', 'Kg', '5.60', '560.00', '2018-10-11 11:44:09', 'Admin', 11),
+(74, 'Tocino', '0', '100', 'Kg', '9.50', '950.00', '2018-10-11 11:44:09', 'Admin', 13),
+(75, 'Aceite', '0', '100', 'Litro', '1.39', '139.00', '2018-10-11 11:44:09', 'Admin', 14),
+(76, 'Levadura', '0', '100', 'Kg', '6.50', '650.00', '2018-10-11 11:44:09', 'Admin', 5),
+(77, 'Masas', '100', '34', 'Unidad', '0.00', '0.00', '2018-10-11 11:44:58', 'Admin', 0),
+(78, 'Masas', '100', '23', 'Unidad', '0.00', '0.00', '2018-10-11 11:46:35', 'Admin', 0),
+(79, 'Masas', '45', '145', 'Unidad', '0.00', '0.00', '2018-10-11 11:58:14', 'Admin', 0),
+(80, 'Cajas Grandes', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:58:14', 'Admin', 0),
+(81, 'Cajas Medianas', '0', '100', 'Unidad', '0.00', '0.00', '2018-10-11 11:58:14', 'Admin', 0),
+(82, 'Harina', '0', '100', 'Kg', '0.70', '70.00', '2018-10-11 11:58:15', 'Admin', 1),
+(83, 'Queso', '0', '100', 'Kg', '4.20', '420.00', '2018-10-11 11:58:15', 'Admin', 1),
+(84, 'JamÃ³n', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:58:15', 'Admin', 7),
+(85, 'Mortadela', '0', '100', 'Kg', '3.12', '312.00', '2018-10-11 11:58:15', 'Admin', 9),
+(86, 'Salami', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:58:15', 'Admin', 7),
+(87, 'Peperoni', '0', '100', 'Kg', '5.50', '550.00', '2018-10-11 11:58:15', 'Admin', 7),
+(88, 'Salsa', '0', '100', 'Balde', '2.00', '200.00', '2018-10-11 11:58:15', 'Admin', 9),
+(89, 'PiÃ±a', '0', '100', 'Unidad', '1.50', '150.00', '2018-10-11 11:58:15', 'Admin', 10),
+(90, 'Durazno', '0', '100', 'latas', '2.60', '260.00', '2018-10-11 11:58:15', 'Admin', 9),
+(91, 'Pollo', '0', '100', 'Unidad', '5.00', '500.00', '2018-10-11 11:58:15', 'Admin', 12),
+(92, 'ChampiÃ±ones', '0', '100', 'Kg', '6.15', '615.00', '2018-10-11 11:58:15', 'Admin', 4),
+(93, 'Carne', '0', '100', 'Kg', '5.60', '560.00', '2018-10-11 11:58:15', 'Admin', 11),
+(94, 'Tocino', '0', '100', 'Kg', '9.50', '950.00', '2018-10-11 11:58:15', 'Admin', 13),
+(95, 'Aceite', '0', '100', 'Litro', '1.39', '139.00', '2018-10-11 11:58:15', 'Admin', 14),
+(96, 'Levadura', '0', '100', 'Kg', '6.50', '650.00', '2018-10-11 11:58:16', 'Admin', 5),
+(97, 'Masas', '145', '120', 'Unidad', '0.00', '0.00', '2018-10-11 11:59:01', 'Admin', 0);
 
 -- --------------------------------------------------------
 
@@ -581,28 +589,6 @@ CREATE TABLE `products_aproximados` (
   `date` datetime NOT NULL,
   `proveedor_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `products_aproximados`
---
-
-INSERT INTO `products_aproximados` (`id`, `name`, `quantity`, `unidades`, `categorie_id`, `date`, `proveedor_id`) VALUES
-(1, 'Masas', '0', 'Unidad', 2, '2018-10-10 22:56:26', 0),
-(19, 'Harina', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 1),
-(20, 'Queso', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 1),
-(21, 'JamÃ³n', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 7),
-(22, 'Mortadela', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 9),
-(23, 'Salami', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 7),
-(24, 'Peperoni', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 7),
-(25, 'Salsa', '0.00', 'Balde', 4, '2018-10-10 22:56:26', 9),
-(26, 'PiÃ±a', '0.00', 'Unidad', 4, '2018-10-10 22:56:26', 10),
-(27, 'Durazno', '0.00', 'latas', 4, '2018-10-10 22:56:26', 9),
-(28, 'Pollo', '0.00', 'Unidad', 4, '2018-10-10 22:56:26', 12),
-(29, 'ChampiÃ±ones', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 4),
-(30, 'Carne', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 11),
-(31, 'Tocino', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 13),
-(32, 'Aceite', '0.00', 'Litro', 4, '2018-10-10 22:56:26', 14),
-(33, 'Levadura', '0.00', 'Kg', 4, '2018-10-10 22:56:26', 5);
 
 -- --------------------------------------------------------
 
@@ -832,7 +818,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`, `clave_caja`) VALUES
-(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-10-10 22:55:20', 1, 'd8c7468774962290ed594c33e79c2c219b2c2f42'),
+(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-10-11 10:40:42', 1, 'd8c7468774962290ed594c33e79c2c219b2c2f42'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0, ''),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0, ''),
 (4, 'prueba1', 'prueba1', '096459e93f20a2b39ab6c5ddd493e44f58bc3a91', 1, 'no_image.jpg', 1, NULL, 0, '096459e93f20a2b39ab6c5ddd493e44f58bc3a91');
@@ -876,14 +862,6 @@ CREATE TABLE `venta_bebidas` (
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `venta_bebidas`
---
-
-INSERT INTO `venta_bebidas` (`id`, `qty`, `tam_bebida`, `sabor_bebida`, `price`, `date`, `user`, `forma_pago`) VALUES
-(1, 2, '1/2 litro', 'fruit', '1.00', '2018-10-01 23:24:07', 'admin', 'efectivo'),
-(2, 1, '3 litro', 'coca-cola', '3.00', '2018-10-01 23:24:07', 'admin', 'efectivo');
-
 -- --------------------------------------------------------
 
 --
@@ -901,32 +879,6 @@ CREATE TABLE `venta_general` (
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `venta_general`
---
-
-INSERT INTO `venta_general` (`id`, `orden`, `price`, `pagado`, `vuelto`, `date`, `user`, `forma_pago`) VALUES
-(1, 3, '30.00', '0.00', '0.00', '2018-10-01 23:02:16', 'admin', 'tarjeta'),
-(2, 4, '23.50', '25.00', '1.50', '2018-10-01 23:23:45', 'admin', 'efectivo'),
-(3, 5, '5.00', '0.00', '0.00', '2018-10-01 23:47:19', 'admin', 'tarjeta'),
-(4, 6, '5.00', '0.00', '0.00', '2018-10-02 00:09:09', 'admin', 'tarjeta'),
-(5, 7, '21.00', '25.00', '4.00', '2018-10-02 00:15:20', 'admin', 'efectivo'),
-(6, 8, '4.00', '0.00', '0.00', '2018-10-02 00:20:20', 'admin', 'tarjeta'),
-(7, 9, '26.50', '0.00', '0.00', '2018-10-02 00:39:06', 'admin', 'tarjeta'),
-(8, 10, '65.00', '0.00', '0.00', '2018-10-02 00:43:12', 'admin', 'tarjeta'),
-(9, 11, '40.00', '40.00', '0.00', '2018-10-02 00:49:40', 'admin', 'efectivo'),
-(10, 0, '28.50', '0.00', '0.00', '2018-10-05 00:00:49', 'admin', 'tarjeta'),
-(11, 1, '32.50', '0.00', '0.00', '2018-10-05 00:07:23', 'admin', 'tarjeta'),
-(12, 0, '11.00', '0.00', '0.00', '2018-10-08 10:33:10', 'admin', 'tarjeta'),
-(13, 1, '16.25', '17.00', '0.75', '2018-10-08 13:57:39', 'admin', 'efectivo'),
-(14, 2, '10.00', '10.00', '0.00', '2018-10-08 13:58:26', 'admin', 'efectivo'),
-(15, 3, '10.00', '10.00', '0.00', '2018-10-08 14:08:40', 'admin', 'efectivo'),
-(16, 4, '10.00', '10.00', '0.00', '2018-10-08 17:53:41', 'admin', 'efectivo'),
-(17, 5, '2.00', '5.00', '3.00', '2018-10-08 22:05:12', 'admin', 'efectivo'),
-(18, 6, '3.75', '4.00', '0.25', '2018-10-08 22:58:45', 'admin', 'efectivo'),
-(19, 7, '1.25', '2.00', '0.75', '2018-10-09 00:28:06', 'admin', 'efectivo'),
-(20, 8, '1.25', '2.00', '0.75', '2018-10-09 00:38:55', 'admin', 'efectivo');
-
 -- --------------------------------------------------------
 
 --
@@ -942,14 +894,6 @@ CREATE TABLE `venta_ingredientes` (
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `venta_ingredientes`
---
-
-INSERT INTO `venta_ingredientes` (`id`, `qty`, `nombre_ingre`, `price`, `date`, `user`, `forma_pago`) VALUES
-(1, 1, 'quesoNormal', '12.00', '2018-10-01 23:24:08', 'admin', 'efectivo'),
-(2, 1, 'embutidos', '7.50', '2018-10-01 23:24:08', 'admin', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -972,37 +916,8 @@ CREATE TABLE `venta_pizzas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `venta_pizzas`
---
-
-INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
-(1, 2, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Vegetariana,pina,champinones', '20.00', 'tarjeta', '2018-10-01 23:03:14', 'admin'),
-(2, 2, 'porcion', 'porcion', 'mixta', 'servirse', 'queso,pina', '3.00', 'tarjeta', '2018-10-01 23:47:51', 'admin'),
-(3, 1, 'porcion', 'porcion', 'mixta', 'servirse', 'queso,queso,queso,queso,pina,pina,pina', '1.50', 'tarjeta', '2018-10-02 00:09:58', 'admin'),
-(4, 1, 'mediana', 'especial', 'amangiare', 'llevar', 'queso,queso,queso,pina,pina', '10.00', 'efectivo', '2018-10-02 00:16:13', 'admin'),
-(5, 1, 'porcion', 'porcion', 'mixta', 'servirse', 'queso,queso,durazno,durazno,durazno', '1.50', 'tarjeta', '2018-10-02 00:20:44', 'admin'),
-(6, 3, 'mediana', 'normal', 'hawayana', 'llevar', '', '25.50', 'tarjeta', '2018-10-02 00:39:29', 'admin'),
-(7, 4, 'familiar', 'especial', 'tradicionalPollo', 'llevar', '', '60.00', 'tarjeta', '2018-10-02 00:43:41', 'admin'),
-(8, 4, 'mediana', 'especial', 'tradicionalHawayana', 'llevar', '', '40.00', 'efectivo', '2018-10-02 00:51:30', 'admin'),
-(9, 3, 'mediana', 'normal', 'mixta', 'llevar', '', '25.50', 'tarjeta', '2018-10-05 00:02:02', 'admin'),
-(10, 2, 'familiar', 'normal', 'tropical ', 'llevar', '', '30.00', 'tarjeta', '2018-10-05 00:08:37', 'admin'),
-(15, 1, 'mediana', 'especial', 'personalizada', 'servirse', 'Mixta,Carne,Tocino', '10.00', 'efectivo', '2018-10-08 17:54:27', 'admin');
-
---
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `autoconsumo_bebidas`
---
-ALTER TABLE `autoconsumo_bebidas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `autoconsumo_pizzas`
---
-ALTER TABLE `autoconsumo_pizzas`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `catalogo_bebidas`
@@ -1178,18 +1093,6 @@ ALTER TABLE `venta_pizzas`
 --
 
 --
--- AUTO_INCREMENT de la tabla `autoconsumo_bebidas`
---
-ALTER TABLE `autoconsumo_bebidas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `autoconsumo_pizzas`
---
-ALTER TABLE `autoconsumo_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
 -- AUTO_INCREMENT de la tabla `catalogo_bebidas`
 --
 ALTER TABLE `catalogo_bebidas`
@@ -1247,13 +1150,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `products_add_records`
 --
 ALTER TABLE `products_add_records`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT de la tabla `products_aproximados`
 --
 ALTER TABLE `products_aproximados`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -1319,25 +1222,25 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `venta_bebidas`
 --
 ALTER TABLE `venta_bebidas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
