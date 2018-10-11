@@ -236,7 +236,7 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
   function join_product_table(){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.quantity,p.unidades,p.buy_price,p.sale_price,p.media_id,p.date,p.proveedor_id,";
+     $sql  =" SELECT p.id,p.name,p.quantity,p.unidades,p.buy_price,p.media_id,p.date,p.proveedor_id,";
     $sql  .=" c.name AS categorie,m.file_name AS image, k.name AS pro";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
@@ -355,7 +355,7 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
    function join_productovender_table(){
     global $db;
-    $sql  =" SELECT p.id,p.name,p.sale_price,p.media_id,c.name";
+    $sql  =" SELECT p.id,p.name,p.media_id,c.name";
    $sql  .=" AS categorie,m.file_name AS image";
    $sql  .=" FROM productovender p";                    //Definir la base de datos necesaria
    $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
@@ -405,7 +405,7 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
+   $sql   = " SELECT p.id,p.name,p.media_id,c.name AS categorie,";
    $sql  .= "m.file_name AS image FROM products p";
    $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
    $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
@@ -415,7 +415,7 @@ function tableExists($table){
 
  function find_bajostock_product(){
   global $db;
-  $sql   = " SELECT p.quantity,p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
+  $sql   = " SELECT p.quantity,p.id,p.name,p.media_id,c.name AS categorie,";
   $sql  .= "m.file_name AS image FROM products p";
   $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
   $sql  .= " LEFT JOIN media m ON m.id = p.media_id";

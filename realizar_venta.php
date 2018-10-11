@@ -66,12 +66,35 @@
         <div id="funcion_regresar" class="row" style="display: none;">
           <button id="btn_regresar" type="button" class="btn btn-success" style="width: auto" onclick="regresar_carac()">
             <i class="glyphicon glyphicon-arrow-left"></i>
-            Regresar
+              Regresar
           </button>
           <div class='col-sm-8 text-center'>
             <h3 id='titulo_regresar' class='text-center text-white' style="color: #213041; font-weight: bold;">Example </h3>
           </div>
         </div>
+
+        <!-- Categoria cajas-->
+        <div id="selc_cajas" class="row" style="display: none;">
+          <div class="col-sm-3">
+            <div class="card" style="width: 16rem; ">
+              <a href="#" onclick="f_caja('mediana');" title="Seleccionar Caja Mediana"> 
+                <img class="card-img-top img-responsive" src="uploads/products/cajaPizza_mediana.png" alt="">
+              </a>
+              <h4 class="card-title center"> Caja Mediana </h4>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="card" style="width: 16rem; ">
+              <a href="#" onclick="f_caja('grande');" title="Seleccionar Caja Grande"> 
+                <img class="card-img-top img-responsive" src="uploads/products/cajaPizza_grande.png" alt="">
+              </a>
+              <h4 class="card-title center"> Caja Grande </h4>
+            </div>
+          </div>
+
+        </div>
+
         <!-- Categoria Bebidas -->
         <div id="selc_bebidas" class="row" style="display: none;">
           <?php foreach ($bebidas as $beb):?>
@@ -369,6 +392,8 @@
   var str_extra="";
   var pagoTotal=1; 
   var p_id_pizza='';      //Informacion de id de la pizza a la cual corresponden los extras
+  var caja_mediana=0;
+  var caja_grande=0;
   var DOMAIN = "http://localhost/Pizzeria/";
 
   var titu_regre=document.getElementById("titulo_regresar"); //Titulo regresar 
@@ -397,7 +422,6 @@
       pizza_vent=0;   //Ventana de tamano
     }
     else if (nombre_cat=="Bebidas") {
-      //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
       var f = document.getElementById("selc_bebidas");   //Actual
       centrar(f);
       //titulo de categoria
@@ -406,12 +430,19 @@
     }
     
     else if (nombre_cat=="Ingredientes") {
-      //var e = document.getElementById("selc_pizzas_nor_esp"); //Siguinte
       var f = document.getElementById("selc_ingredientes");   //Actual
       centrar(f);
       //titulo de categoria
       titu_regre.innerText = "Seleccione ingrediente";  
       pizza_vent=6;  
+    }
+    
+    else if (nombre_cat=="Cajas Pizza") {
+      var f = document.getElementById("selc_cajas");   //Actual
+      centrar(f);
+      //titulo de categoria
+      titu_regre.innerText = "Seleccione Caja Pizza";  
+      pizza_vent=7;  
     }
     categ=nombre_cat;
     g.style.pointerEvents="none";   //Bloqueo de categoria
@@ -422,7 +453,7 @@
   // 0=> Ventana de tamano
   // 1=> Ventana de tipo
   // 2=> Ventana de sabor
-  // 3=> Ventana de extra
+  // 3=> Ventana de extra 
 
   //-1)---Tamano PIZZA
   function tam_pizzas(tama){
@@ -526,9 +557,6 @@
 
   function ingre_extra(extra){
     num_extras++;
-    //str_extra+=(extra+",");
-    // alert(str_extra);
-
     //Buscar precios de extras y cracion de fila en nota de venta
     $.ajax({url: DOMAIN+"buscar_precio_extra.php?p_tama="+p_tama+"&p_extra="+extra, success: function(result){
       // alert(result);
@@ -546,12 +574,6 @@
   }
 
   function avanzar_extra() {
-    // venta_aux.forEach(element => {
-    //   if (element.id==(Number(fila_id-num_extras))) {   //Es necesario contar el numero de xtras porq tambien generan filas
-    //     element.extra=str_e; 
-    //     //alert(str_e);
-    //   }
-    // });
     var e = document.getElementById("selc_pizzas_forma");
     var f = document.getElementById("selc_extra");
     centrar(e);
@@ -644,6 +666,14 @@
 
       case 6:       //Regresar ingredientes
         var f = document.getElementById("selc_ingredientes");
+        r.style.display = 'none';
+        f.style.display="none";
+        z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
+        break;
+
+      case 7:       //Regresar Caja Pizza
+        var f = document.getElementById("selc_cajas");
         r.style.display = 'none';
         f.style.display="none";
         z.style.pointerEvents="auto"; //Habilitar pulsacion
@@ -827,6 +857,8 @@
     }
   }
 
+  //---------------------------------------------------------------------------
+
   function f_bebidas(size, flavor){
     var f = document.getElementById("selc_bebidas");   //Actual
     var r = document.getElementById("funcion_regresar");
@@ -838,7 +870,6 @@
     // Buscar precios de extras y cracion de fila en nota de venta
 
     $.ajax({url: DOMAIN+"buscar_precio_bebidas.php?p_size="+size+"&p_flavor="+flavor, success: function(result){
-      // alert(result);
       precio=Number(result);
       var descrip= size+" de "+flavor;
       agregar_fila(descrip,precio);
@@ -868,6 +899,30 @@
       centrar(btn_cont);
       btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
     }});
+  }
+
+  function f_caja(tam){
+    var descrip="Caja Pizza "+tam;
+    if(tam=='mediana')
+      var precio_caja=1;
+    else 
+      var precio_caja=1.25;
+    
+    agregar_fila(descrip, precio_caja);
+    var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:tam,precioP:precio_caja};
+    venta_aux.push(venta_forma);
+
+    //Quitar  el contenedor al finalizar
+    var e = document.getElementById("selc_cajas");
+    var regr=document.getElementById("funcion_regresar"); 
+    var g = document.getElementById("cont_categ");
+    e.style.display = 'none';
+    regr.style.display = 'none';
+    g.style.pointerEvents="auto"; //Habilitar pulsacion
+    centrar(btn_cont);
+    btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
+    //Titulo de ventana
+    titu_regre.innerText = "Escoja la caja a vender:";
   }
 
   function f_continuar(conti){
@@ -951,6 +1006,10 @@
             }
             else if (element.categ=="Caja_pizza") {
               srt_get+=(element.tama);
+              if(element.tama=="mediana")
+                caja_mediana++;
+              else 
+               caja_grande++;
             }
             else if (element.categ=="Bebida") {
               srt_get+=(element.tama+" "+element.sabor);
@@ -961,6 +1020,11 @@
             srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
           } 
         });
+        $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
+        });
+        // $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Grandes'+"&p_cantidad="+caja_grande   //Guardar en BD aproximados
+        // });
+
         var totalCompra=document.getElementById('total_compra').value;
         var efectivo=document.getElementById('in_efectivo').value;
         var vuelto=document.getElementById('in_vuelto').value;
