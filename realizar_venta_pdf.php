@@ -49,7 +49,7 @@ function ImprovedTable1($pdf,$header,$data)
     $pdf->setFont("Courier","B",9);
     // Column widths
     $q=4;
-    $w = array(20, 48);
+    $w = array(15, 20, 48);
     // Header
     $pdf->setFont("Courier","BI",9);
     for($i=0;$i<count($header);$i++)
@@ -59,9 +59,27 @@ function ImprovedTable1($pdf,$header,$data)
 
     // Data
     for ($x = 0; $x < (sizeof($data)/4); $x++) {
-        $pdf->Cell($w[0],4,utf8_decode($data[$x*$q]),0,0,"C");
-        $pdf->Cell($w[1],4,utf8_decode($data[$x*$q+1]),0,0,"L");
-        $pdf->Ln();
+        if($data[$x*$q+1]=="Caja_pizza mediana"||$data[$x*$q+1]=="Caja_pizza familiar"||$data[$x*$q+1]=="Caja_pizza extragrande"){
+            //$pdf->Cell($w[0],4,"",0,0,"C");
+            //$pdf->Cell($w[1],4,"",0,0,"L");
+        }
+        else{
+            if(substr($data[$x*$q+1], -1)=='L'||substr($data[$x*$q+1], -1)=='S'){
+                //$pdf->Ln();
+                if(substr($data[$x*$q+1], -1)=='L') $pdf->Cell($w[0],4,"*",0,0,"C");
+                else $pdf->Cell($w[0],4,"",0,0,"C");
+                
+                $pdf->Cell($w[0],4,utf8_decode($data[$x*$q]),0,0,"C");
+                $pdf->Cell($w[1],4,utf8_decode($data[$x*$q+1]),0,0,"L");
+            }  
+            else{
+                $pdf->Cell($w[0],4,"",0,0,"C");
+                $pdf->Cell($w[0],4,utf8_decode($data[$x*$q]),0,0,"C");
+                $pdf->Cell($w[1],4,utf8_decode($data[$x*$q+1]),0,0,"L");
+            }  
+            $pdf->Ln();
+        }
+        
     }
 
     // Closing line
@@ -121,7 +139,7 @@ $pdf->setFont("Courier","B",12);   //se establece el tipo de letra
 $pdf->Cell(0,5,"Orden #".$numOrden,0,1,"C"); //imprime una celda de borse rectangular
 
 
-$header = array('Cantidad', 'Descripción');
+$header = array('LLevar','Cantidad', 'Descripción');
 
 ImprovedTable1($pdf,$header,$values);
 

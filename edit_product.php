@@ -15,42 +15,43 @@ if(!$product){
 }
 ?>
 <?php
- if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-categorie','product-quantity','buying-price' );
-    validate_fields($req_fields);
-    
-   if(empty($errors)){
-       $p_name  = remove_junk($db->escape($_POST['product-title']));
-       $p_cat   = (int)$_POST['product-categorie'];
-       $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-       $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-       $p_unidades  = remove_junk($db->escape($_POST['product-unidades']));
-       $p_pro  = (int)$_POST['nombre-proveedor'];
-       if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-         $media_id = '0';
-       } else {
-         $media_id = remove_junk($db->escape($_POST['product-photo']));
-       }
-       $query   = "UPDATE products SET";
-       $query  .=" name ='{$p_name}', quantity ='{$p_qty}',";
-       $query  .=" unidades='{$p_unidades}', buy_price ='{$p_buy}', categorie_id ='{$p_cat}',media_id='{$media_id}',proveedor_id='{$p_pro}'";
-       $query  .=" WHERE id ='{$product['id']}'";
-       $result = $db->query($query);
-               if($result && $db->affected_rows() === 1){
-                 $session->msg('s',"Producto ha sido actualizado. ");
-                 redirect('product.php', false);
-               } else {
-                 $session->msg('d',' Lo siento, actualización falló.');
-                 redirect('edit_product.php?id='.$product['id'], false);
-               }
+  $uni=array("Unidad", "Kg", "Litro", "Latas", "gr");
+  if(isset($_POST['product'])){
+      $req_fields = array('product-title','product-categorie','product-quantity','buying-price' );
+      validate_fields($req_fields);
+      
+    if(empty($errors)){
+        $p_name  = remove_junk($db->escape($_POST['product-title']));
+        $p_cat   = (int)$_POST['product-categorie'];
+        $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
+        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
+        $p_unidades  = remove_junk($db->escape($_POST['product-unidades']));
+        $p_pro  = (int)$_POST['nombre-proveedor'];
+        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
+          $media_id = '0';
+        } else {
+          $media_id = remove_junk($db->escape($_POST['product-photo']));
+        }
+        $query   = "UPDATE products SET";
+        $query  .=" name ='{$p_name}', quantity ='{$p_qty}',";
+        $query  .=" unidades='{$p_unidades}', buy_price ='{$p_buy}', categorie_id ='{$p_cat}',media_id='{$media_id}',proveedor_id='{$p_pro}'";
+        $query  .=" WHERE id ='{$product['id']}'";
+        $result = $db->query($query);
+                if($result && $db->affected_rows() === 1){
+                  $session->msg('s',"Producto ha sido actualizado. ");
+                  redirect('product.php', false);
+                } else {
+                  $session->msg('d',' Lo siento, actualización falló.');
+                  redirect('edit_product.php?id='.$product['id'], false);
+                }
 
-   } else{
-       $session->msg("d", $errors);
-       redirect('edit_product.php?id='.$product['id'], false);
-   }
+    } else{
+        $session->msg("d", $errors);
+        redirect('edit_product.php?id='.$product['id'], false);
+    }
 
- }
- else if(isset($_POST['regresar'])) redirect('product.php',false);
+  }
+  else if(isset($_POST['regresar'])) redirect('product.php',false);
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -110,7 +111,7 @@ if(!$product){
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-shopping-cart"></i>
                       </span>
-                      <input type="number" class="form-control" name="product-quantity"  autocomplete="off" value="<?php echo remove_junk($product['quantity']); ?>">
+                      <input type="number" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control" name="product-quantity"  autocomplete="off" value="<?php echo remove_junk($product['quantity']); ?>">
                    </div>
                   </div>
                  </div>
@@ -122,7 +123,15 @@ if(!$product){
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-asterisk"></i>
                       </span>
-                      <input type="text" class="form-control" name="product-unidades" value="<?php echo remove_junk($product['unidades']); ?>">
+                      <select class="form-control" name="product-unidades">
+                        <option value="<?php echo remove_junk($product['unidades']); ?>"><?php echo remove_junk($product['unidades']);?></option>
+                        <?php  foreach ($uni as $u): ?>
+                          <?php if($u!=remove_junk($product['unidades'])):?>
+                            <option value=<?php echo $u?>><?php echo $u?></option>
+                          <?php endif; ?>
+                        <?php endforeach; ?>
+                      </select>
+                      <!--input type="text" class="form-control" name="product-unidades" value="<?php //echo remove_junk($product['unidades']); ?>"-->
                    </div>
                   </div>
                 </div>

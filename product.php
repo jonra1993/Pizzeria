@@ -98,7 +98,7 @@
                 <?php endif; ?>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" min="0" value="0" onkeypress="isInputNumber(event)" type="number" class="form-control"></td>
+                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" min="0" value="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" type="number" class="form-control"></td>
                 <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['pro']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>

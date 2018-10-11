@@ -176,7 +176,7 @@
                 <td class="text-center"> <?php echo remove_junk($product['unidades']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['pro']); ?></td>
                 <td class="text-center" id="i<?php echo remove_junk($product['id']); ?>"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" id="f<?php echo remove_junk($product['id']); ?>" min="0" onkeypress="isInputNumber(event)" onchange="myFunction(<?php echo remove_junk($product['id']); ?>)" type="number" class="form-control"></td>
+                <td class="text-center"><input name="hola<?php echo remove_junk($product['id']); ?>" id="f<?php echo remove_junk($product['id']); ?>" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" type="number" onchange="myFunction(<?php echo remove_junk($product['id']); ?>)" class="form-control"></td>
                 <td class="text-center" id="aprox_<?php echo remove_junk($product['name']); ?>"></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">

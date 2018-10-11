@@ -53,9 +53,12 @@
           }
           $val_e=$cos[0]['price']*$auxConta;
         }
-      }        
-  
-      $total1=$total1+(float)remove_junk($vP['price'])+(float)$p_llevar+(float)$val_e;
+
+       
+      }
+      $p_llevar = (float)$p_llevar*(float)$vP['qty'];        
+      $val_e = (float)$val_e*(float)$vP['qty'];
+      $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
     }
 
     foreach ($ventasBebidas as $vB){
