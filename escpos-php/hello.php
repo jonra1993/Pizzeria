@@ -103,15 +103,17 @@ try {
         $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
     }
 
+    $hayalgo=false;
     $itemsco = array();
     for($x = 0; $x < $k; $x++){
-        if($data[$x*$q+1]=="Caja_pizza mediana"||$data[$x*$q+1]=="Caja_pizza familiar"||$data[$x*$q+1]=="Caja_pizza extragrande"){
+        if(substr($data[$x*$q+1],0,1)=="C"||substr($data[$x*$q+1],0,1)=="I"||substr($data[$x*$q+1],0,1)=="B"){
             $itemsco[$x]=new itemcocina();
         }
         else{
             if(substr($values[$x*4+1], -1)=='L') $ast=true;
             else $ast=false;
             $itemsco[$x]=new itemcocina($ast,"".$values[$x*4+1],"".(int)$values[$x*4]);
+            $hayalgo=true;
         }
     }
 
@@ -173,39 +175,42 @@ try {
  
     /* Cut */
     $printer -> feed(1);
-//    $printer -> cut();   
+//    $printer -> cut();
 
-    /* Name of shop */
-    $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-    $printer -> text("PIZZERIA AMANGIARE.\n");
-    /* Title of receipt */
-    $printer -> setEmphasis(true);
-    $printer -> feed(1);
-    $numOrden=$_GET["numorden"];
-    $printer -> text("Orden# $numOrden\n");
-    $printer -> feed(1);
-    $printer -> selectPrintMode();
-    $printer -> setEmphasis(true);
-    $printer -> text("Fecha: ");
-    $printer -> setEmphasis(false);
-    $printer -> text("$date\n");
-    $printer -> text("================================================");
-    $printer -> setEmphasis(true);
-    $printer -> text(new itemcocina(false, 'Descrip.', 'Cant.'));
-    /* Items */
-    $printer -> setJustification(Printer::JUSTIFY_LEFT);
-    $printer -> setEmphasis(false);
-    foreach ($itemsco as $item) {
-        if($item!="") $printer -> text($item);
+    if($hayalgo){
+        /* Name of shop */
+        $printer -> setJustification(Printer::JUSTIFY_CENTER);
+        $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+        $printer -> text("PIZZERIA AMANGIARE.\n");
+        /* Title of receipt */
+        $printer -> setEmphasis(true);
+        $printer -> feed(1);
+        $numOrden=$_GET["numorden"];
+        $printer -> text("Orden# $numOrden\n");
+        $printer -> feed(1);
+        $printer -> selectPrintMode();
+        $printer -> setEmphasis(true);
+        $printer -> text("Fecha: ");
+        $printer -> setEmphasis(false);
+        $printer -> text("$date\n");
+        $printer -> text("================================================");
+        $printer -> setEmphasis(true);
+        $printer -> text(new itemcocina(false, 'Descrip.', 'Cant.'));
+        /* Items */
+        $printer -> setJustification(Printer::JUSTIFY_LEFT);
+        $printer -> setEmphasis(false);
+        foreach ($itemsco as $item) {
+            if($item!="") $printer -> text($item);
+        }
+        //efectivo o tarjeta
+        //if($_GET["efectivo"]==0) $printer -> text("Tar\n");
+        //else $printer -> text("Ef\n");
+        /* Cut */
+        $printer -> feed(1);
+        //    $printer -> cut();   
     }
-    //efectivo o tarjeta
-    //if($_GET["efectivo"]==0) $printer -> text("Tar\n");
-    //else $printer -> text("Ef\n");
-    /* Cut */
-    $printer -> feed(1);
-//    $printer -> cut();   
 
+ 
 
     $printer -> close();
 

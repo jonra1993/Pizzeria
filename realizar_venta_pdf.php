@@ -59,7 +59,7 @@ function ImprovedTable1($pdf,$header,$data)
 
     // Data
     for ($x = 0; $x < (sizeof($data)/4); $x++) {
-        if($data[$x*$q+1]=="Caja_pizza mediana"||$data[$x*$q+1]=="Caja_pizza familiar"||$data[$x*$q+1]=="Caja_pizza extragrande"){
+        if(substr($data[$x*$q+1],0,1)=="C"||substr($data[$x*$q+1],0,1)=="I"||substr($data[$x*$q+1],0,1)=="B"){
             //$pdf->Cell($w[0],4,"",0,0,"C");
             //$pdf->Cell($w[1],4,"",0,0,"L");
         }
