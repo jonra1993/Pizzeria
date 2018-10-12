@@ -170,7 +170,7 @@ try {
  
     /* Cut */
     $printer -> feed(1);
-//    $printer -> cut();   
+    $printer -> cut();   
 
     if($hayalgo){
         /* Name of shop */
@@ -202,7 +202,7 @@ try {
         //else $printer -> text("Ef\n");
         /* Cut */
         $printer -> feed(1);
-        //    $printer -> cut();   
+        $printer -> cut();   
     }
 
 

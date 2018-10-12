@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-10-2018 a las 17:04:07
+-- Tiempo de generación: 12-10-2018 a las 03:38:11
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -577,22 +577,6 @@ INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `products_aproximados`
---
-
-CREATE TABLE `products_aproximados` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `quantity` varchar(50) DEFAULT NULL,
-  `unidades` varchar(50) NOT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
-  `date` datetime NOT NULL,
-  `proveedor_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `proveedores`
 --
 
@@ -989,14 +973,6 @@ ALTER TABLE `products_add_records`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `products_aproximados`
---
-ALTER TABLE `products_aproximados`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `categorie_id` (`categorie_id`);
-
---
 -- Indices de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
@@ -1151,12 +1127,6 @@ ALTER TABLE `products`
 --
 ALTER TABLE `products_add_records`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
-
---
--- AUTO_INCREMENT de la tabla `products_aproximados`
---
-ALTER TABLE `products_aproximados`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`

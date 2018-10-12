@@ -26,6 +26,12 @@ sidebar https://bootsnipp.com/snippets/featured/responsive-sidebar-menu
 
 tutorial diseño de sistema completo
 https://www.youtube.com/watch?v=zwm-1OAhLbQ&list=PLB_Wd4-5SGAYCmzk21-bvdVTTF6AkH3-T&index=1
+
+
+
+comandos mysql https://gist.github.com/hofmannsven/9164408
+create database oswa_inv;   crea base de datos
+mysql -u root -p oswa_inv < oswa_inv.sql
 */
   ob_start();
   require_once('includes/load.php');                                    //importa archivos de include
