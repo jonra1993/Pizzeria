@@ -653,6 +653,12 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     return $db->query($sql);
   }
 
+  //Buscar cantidad de productos aproximados
+  function buscar_productosaprox_table($nombre){
+    global $db;
+    $sql  ="SELECT p.qtyAproximada FROM products p WHERE p.name = '{$nombre}' LIMIT 1";
+   return $db->query($sql);
+  }
 
 ?>
 
