@@ -9,12 +9,6 @@
   $sabor_pizzas=join_tipopizza_table();
   $pizzas_espec=join_pizzaespecilal_table();
   $tam_pizzas= join_tampizza_table();
-
-  // $div_personalizada=0;
-  // $year  = date('Y');
-  // $month = date('m');
-  // $day = date('d');
-  // $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
 ?>
 
 <?php
@@ -55,74 +49,7 @@
     $session->msg('s',"Cantidad Actualizada");
     redirect('product_update.php', false);
   }
-  //-----CONTADOR DE PRODUCTOS
-  //Contador de Masas
-  // $masa_porcion=contador_masas('porcion','venta_pizzas');
-  // foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
-  // $masa_mediana=contador_masas('mediana','venta_pizzas');
-  // foreach ($masa_mediana as $mediana){ $v_masa_mediana=remove_junk($mediana['sum(qty)']); if($v_masa_mediana==NULL)$v_masa_familiar=0;}
-  // $masa_familiar=contador_masas('familiar','venta_pizzas');
-  // foreach ($masa_familiar as $familiar){ $v_masa_familiar=remove_junk($familiar['sum(qty)']);if($v_masa_familiar==NULL)$v_masa_familiar=0;}
-  // $masa_extragrande=contador_masas('extragrande','venta_pizzas');
-  // foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
- 
-  // $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande;
-
-  // //SABORES
-  // //Tipo Especial
-  // //Conteo de Pizzas Especiales
-  // foreach ($pizzas_espec as $sab) {
-  //   $nombre_sab=remove_junk($sab['name']); 
-  //   if($nombre_sab=="personalizada"){
-  //     foreach ($ventasPizzas as $vP){
-  //       if($vP['sabor_pizza']=="personalizada"){               //Escogo solo pizzas personalizada
-  //         $arrayExtras = explode(",", $vP['extras']);  // se obtiene un vector de extras
-  //         foreach($sabor_pizzas as $sp){
-  //           $nombre_sp=remove_junk($sp['name']); 
-  //           ${'v_masa_perso_'.$nombre_sp}=0;
-  //           foreach($arrayExtras as $aE){
-  //             if($aE==ucwords($nombre_sp)){
-  //               $div_personalizada++;
-  //               if($vP['tam_pizza']!="porcion"){
-  //                 if($vP['tam_pizza']=="mediana")
-  //                   ${'v_masa_perso_'.$nombre_sp}=0.5;
-  //                 else
-  //                   ${'v_masa_perso_'.$nombre_sp}=1;
-  //               }
-  //             }  
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  // //Diferentes a personalizadas
-  // foreach ($pizzas_espec as $sab) {
-  //   $nombre_sab=remove_junk($sab['name']); 
-  //   if($nombre_sab!="personalizada"){
-  //     foreach ($tam_pizzas as $tam) {
-  //       $nombre_tam=remove_junk($tam['name']);
-  //       ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
-  //       foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
-  //     }
-  //     ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor;
-  //   }
-  // }
-
-  // //Tipo Normal
-  // foreach ($sabor_pizzas as $sab) {
-  //   $nombre_sab=remove_junk($sab['name']); 
-  //   foreach ($tam_pizzas as $tam) {
-  //     $nombre_tam=remove_junk($tam['name']);
-  //     ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
-  //     foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
-  //   }
-  //   ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor+(float)${'v_masa_personalizada_'.$nombre_sab};
-
-  //   if($div_personalizada!=0){        //Evitar division para cero si el numero de div de personalizada es 0
-  //     ${'v_masa_'.$nombre_sab}+=(1/(float)$div_personalizada)*(${'v_masa_perso_'.$nombre_sab});   //Sumar la parte de pizza personalizada
-  //   }
-  // }
+  
 ?>
 
 <?php include_once('layouts/header.php'); ?>
