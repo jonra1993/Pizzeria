@@ -27,6 +27,21 @@ $page_title = 'Resumen de venta';
       $day = date('d');
       $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
 
+      //Contador de Cajas
+      // $caja_mediana= contador_cajas ('mediana','venta_pizzas');
+      // foreach ($caja_mediana as $cmediana){ $v_caja_mediana=remove_junk($cmediana['COUNT(llevar_pizza)']); if($v_caja_mediana==NULL)$v_caja_mediana=0;}
+      // $caja_familiar= contador_cajas ('familiar','venta_pizzas');
+      // foreach ($caja_familiar as $cfamiliar){ $v_caja_familiar=remove_junk($cfamiliar['COUNT(llevar_pizza)']); if($v_caja_familiar==NULL)$v_caja_familiar=0;}
+      // $caja_extragrande= contador_cajas ('extragrande','venta_pizzas');
+      // foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['COUNT(llevar_pizza)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}
+
+      $caja_mediana1= contador_cajas1 ('mediana','venta_cajas');
+      foreach ($caja_mediana1 as $cmediana1){ $v_caja_mediana1=remove_junk($cmediana1['sum(qty)']); if($v_caja_mediana1==NULL)$v_caja_mediana1=0;}
+      $caja_grande= contador_cajas1 ('familiar','venta_cajas');
+      foreach ($caja_grande as $cgrande){ $v_caja_grande=remove_junk($cgrande['sum(qty)']); if($v_caja_grande==NULL)$v_caja_grande=0;}      
+      $caja_extragrande= contador_cajas1 ('familiar','venta_cajas');
+      foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['sum(qty)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}      
+
       //Contador de Masas
       $masa_porcion=contador_masas('porcion','venta_pizzas');
       foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
@@ -174,6 +189,10 @@ $page_title = 'Resumen de venta';
   var val_aprox_Tocino = (0.2*masas_tocino+0.05*masas_criolla+0.05*masas_amangiare).toFixed(2);
   var val_aprox_Aceite = (0.42*masas).toFixed(2);
   var val_aprox_Levadura = (0.43*masas).toFixed(2);
+
+  var val_aprox_CajasGrandes =Number("<?php echo $v_caja_grande;?>")+Number("<?php echo $v_caja_extragrande?>");
+  var val_aprox_CajasMedianas=Number("<?php echo $v_caja_mediana1?>");
+  
 
 
   <?php foreach ($products as $prod) :?>

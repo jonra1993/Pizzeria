@@ -89,7 +89,7 @@
 
           <div class="col-sm-3">
             <div class="card" style="width: 16rem; ">
-              <a href="#" onclick="f_caja('grande');" title="Seleccionar Caja Grande"> 
+              <a href="#" onclick="f_caja('familiar');" title="Seleccionar Caja Grande"> 
                 <img class="card-img-top img-responsive" src="uploads/products/cajaPizza_grande.png" alt="">
               </a>
               <h4 class="card-title center"> Caja Grande </h4>
