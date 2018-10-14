@@ -936,54 +936,20 @@
           }
         }
       });
-    
-      //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
-      var srt_get="";
-      venta_aux.forEach(element => {
-        var aux_eli=item_eliminados.indexOf(element.id);    //Verificar si no ha sido eliminada
-        if(aux_eli<0){                                        //Verificar si no ha sido eliminada
-          srt_get+=(element.canti+","+element.categ+" ");
 
-          if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
-            srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
-            if(element.forma=="llevar")
-              srt_get+=" L";
-            else
-              srt_get+=" S";
-          }
-          else if(element.categ=="Extra"){
-            srt_get+=(element.tama+" "+element.p_extra);
-          }
-          else if (element.categ=="Caja_pizza") {
-            srt_get+=(element.tama);
-            if(element.tama=="mediana")
-              caja_mediana++;
-            else 
-              caja_grande++;
-          }
-          else if (element.categ=="Bebida") {
-            srt_get+=(element.tama+" "+element.sabor);
-          }
-          else if (element.categ=="Ingredientes") {
-            srt_get+=(element.v_nombre);         //Poner en mayuscula primera letra);
-          }
-          srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
-        } 
-      });
+      //GUARDAR CONSUMOS APROXIMADOS
       $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
       });
 
-      var totalCompra=document.getElementById('total_compra').value;
-      
-      var str_get2=srt_get.slice(0, -1);
+      // var totalCompra=document.getElementById('total_compra').value;
 
-      var date = "<?php echo make_date(); ?>";
-      var d = new Date();
-      var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+      // var date = "<?php echo make_date(); ?>";
+      // var d = new Date();
+      // var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
       
-      var servir=1; //0 llevar, 1 servirse
+      // var servir=1; //0 llevar, 1 servirse
       
-      var numorden='<?php echo $contador?>';
+      // var numorden='<?php echo $contador?>';
 
       //guarda venta general y el contador
       //$.ajax({url: DOMAIN+"realizar_z.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago});

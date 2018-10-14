@@ -992,7 +992,6 @@
               });
             }
             else if(element.categ=="Caja_pizza"){
-              //var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:tam,precioP:precio_caja};
               $.ajax({url: DOMAIN+"guardar_ventas_cajas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user
               });
             }
@@ -1008,6 +1007,36 @@
 
             if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
               srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
+              if(element.sabor=="personalizada"){
+                srt_get+=":";
+                var srt_get2='';
+                if(venta_aux_extra.length>0){     //Verificar si hay extras
+                  var arr_extras=element.extra.split(",");    //Convertir str_extras en array
+                  arr_extras.forEach(extra => {               //Evaluar cada extra de la pizza
+                    venta_aux_extra.forEach(ele_extra => {    //Buscar en el array venta aux extra
+                      if(ele_extra.id_pizza==element.id){     //Verificar si pertenece a la pizza
+                        var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
+                        if(aux_eli_extra<0){ 
+                          if(extra!=ele_extra.p_extra){
+                            srt_get2+=extra+",";
+                            alert(srt_get2);
+                          }
+                        }
+                      }
+                    });
+                  });
+                }
+                else{
+                  var str_sc=(element.extra.slice(0, -1)).replace(",", "-");      //Elimina ultima como y transforma como en espacio
+                  srt_get+=str_sc;
+                  alert(str_sc);
+                }
+                var str_per=Array.from(new Set(srt_get2.split(','))).toString();    //Quitar duplicados
+                var str_per2=(str_per.replace(/[,]/g,"-")).slice(0, -1);            //cambiar , por  - y elimiar el ultimo -
+
+                srt_get+=str_per2;
+              }
+
               if(element.forma=="llevar")
                 srt_get+=" L";
               else
@@ -1032,10 +1061,10 @@
             srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
           } 
         });
+
+        //GUARDAR CONSUMO APROXIMADOS DE INGREDIENTES
         $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
         });
-        // $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Grandes'+"&p_cantidad="+caja_grande   //Guardar en BD aproximados
-        // });
 
         var totalCompra=document.getElementById('total_compra').value;
         var efectivo=document.getElementById('in_efectivo').value;
