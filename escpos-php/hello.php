@@ -106,7 +106,8 @@ try {
     $hayalgo=false;
     $itemsco = array();
     for($x = 0; $x < $k; $x++){
-        if(substr($data[$x*$q+1],0,1)=="C"||substr($data[$x*$q+1],0,1)=="I"||substr($data[$x*$q+1],0,1)=="B"){
+        if(substr($values[$x*4+1],0,1)=="C"||substr($values[$x*4+1],0,1)=="I"){
+            //||substr($values[$x*4+1],0,1)=="B"
             $itemsco[$x]=new itemcocina();
         }
         else{
