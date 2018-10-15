@@ -272,7 +272,7 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Últimas ventas</span>
+            <span>Últimas ventas del día</span>
           </strong>
         </div>
         <div class="panel-body">
@@ -287,12 +287,14 @@
             </thead>
             <tbody>
               <?php foreach ($recent_sales as  $recent_sale): ?>
-              <tr>
-                <td class="text-center"><?php echo remove_junk(first_character($recent_sale['orden'])); ?></td>
-                <td class="text-center"><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-                <td class="text-center"><?php echo remove_junk(first_character($recent_sale['user'])); ?></td>
-                <td class="text-center">$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
-              </tr>
+                <?php if($recent_sale['forma_pago']!='autoconsumo'): ?>
+                  <tr>
+                    <td class="text-center"><?php echo remove_junk(first_character($recent_sale['orden'])); ?></td>
+                    <td class="text-center"><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+                    <td class="text-center"><?php echo remove_junk(first_character($recent_sale['user'])); ?></td>
+                    <td class="text-center">$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+                  </tr>
+                <?php endif; ?>
               <?php endforeach; ?>
             </tbody>
           </table>
