@@ -2,7 +2,7 @@
     $page_title = 'Admin página de inicio';
     require_once('includes/load.php');
     // Checkin What level user has permission to view this page
-    page_require_level(1);
+    page_require_level(3);
   ?>
   <?php
     $d = make_date2();
@@ -43,39 +43,47 @@
     $listaExtras=buscar_catalogo("extra_pizzas");
 
     foreach ($ventasPizzas as $vP){
-      $p_llevar=0;
-      if($vP['llevar_pizza']!='servirse' && $vP['tam_pizza']!='porcion'){
-        if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
-        else $p_llevar=1.00;
-      }
-      $val_e=0;
-      if($vP['extras']!=null){
-        $arrayExtras = explode(",", $vP['extras']);  // se obtiene un vector de extras
-        $cos=costoExtra($vP['tam_pizza']);        //costo de extras en base al tamaño de la pizza
-        if($vP['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
-        else{
-          $auxConta=0;
-          foreach($listaExtras as $lE){
-            foreach($arrayExtras as $aE){
-              if($lE['name']==$aE)  $auxConta++;
-            }
-          }
-          $val_e=$cos[0]['price']*$auxConta;
+      if($vP['forma_pago']!='autoconsumo'){
+        $p_llevar=0;
+        if($vP['llevar_pizza']!='servirse' && $vP['tam_pizza']!='porcion'){
+          if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
+          else $p_llevar=1.00;
         }
-
-       
+        $val_e=0;
+        if($vP['extras']!=null){
+          $arrayExtras = explode(",", $vP['extras']);  // se obtiene un vector de extras
+          $cos=costoExtra($vP['tam_pizza']);        //costo de extras en base al tamaño de la pizza
+          if($vP['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
+          else{
+            $auxConta=0;
+            foreach($listaExtras as $lE){
+              foreach($arrayExtras as $aE){
+                if($lE['name']==$aE)  $auxConta++;
+              }
+            }
+            $val_e=$cos[0]['price']*$auxConta;
+          }
+  
+         
+        }
+        $p_llevar = (float)$p_llevar*(float)$vP['qty'];        
+        $val_e = (float)$val_e*(float)$vP['qty'];
+        $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
       }
-      $p_llevar = (float)$p_llevar*(float)$vP['qty'];        
-      $val_e = (float)$val_e*(float)$vP['qty'];
-      $total1=$total1+(float)remove_junk($vP['price'])+$p_llevar+$val_e;
     }
 
     foreach ($ventasBebidas as $vB){
-      $total2=$total2+(float)remove_junk($vB['price']);
+      if($vB['forma_pago']!='autoconsumo'){
+        $total2=$total2+(float)remove_junk($vB['price']);
+      }
+      
     }
 
     foreach ($ventasIngredientes as $vI){
-      $total3=$total3+(float)remove_junk($vI['price']);
+      if($vI['forma_pago']!='autoconsumo'){
+        $total3=$total3+(float)remove_junk($vI['price']);
+      }
+      
     }
 
     $ventasDiarias= $total1+$total2+$total3;
