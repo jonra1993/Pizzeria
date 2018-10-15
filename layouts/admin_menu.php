@@ -79,10 +79,18 @@
   <!-- Realizar una Nueva Venta -->
   <?php $user = current_user();?> 
   <?php if($user['bloqueocaja']==true):?>
+
   <li  class="nav-item start">
     <a href="realizar_venta.php" class="nav-link">
       <i class="glyphicon glyphicon-tags"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
       <span class="title">Nueva venta</span>
+    </a>
+  </li>
+  <!-- Realizar Autoconsumo -->
+  <li  class="nav-item start">
+    <a href="realizar_autoconsumo.php" class="nav-link">
+      <i class="glyphicon glyphicon-eye-close"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span class="title">Autoconsumo  </span>
     </a>
   </li>
 <?php endif;?>

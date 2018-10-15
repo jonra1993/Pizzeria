@@ -631,7 +631,7 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     return find_by_sql($sql);
   }
 
-  //Contador de produtos
+  //Contador de masas
   function contador_masas ($tama,$lista){ 
     global $db;
     $date    = make_date();
@@ -639,6 +639,28 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     $sql  =" SELECT sum(qty)";
     $sql .= " FROM $lista c";
     $sql .= " WHERE c.tam_pizza = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
+    return $db->query($sql);
+  }
+
+  // //Contador de cajas
+  // function contador_cajas ($tama,$lista){ 
+  //   global $db;
+  //   $date    = make_date();
+  //   $today  = date("Y-m-d", strtotime($date));
+  //   $sql  =" SELECT COUNT(llevar_pizza)";
+  //   $sql .= " FROM $lista c";
+  //   $sql .= " WHERE c.tam_pizza = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
+  //   return $db->query($sql);
+  // }
+
+  //Contador de cajas
+  function contador_cajas1 ($tama,$lista){ 
+    global $db;
+    $date    = make_date();
+    $today  = date("Y-m-d", strtotime($date));
+    $sql  =" SELECT  sum(qty)";
+    $sql .= " FROM $lista c";
+    $sql .= " WHERE c.tama = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
     return $db->query($sql);
   }
 
@@ -653,6 +675,12 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     return $db->query($sql);
   }
 
+  //Buscar cantidad de productos aproximados
+  function buscar_productosaprox_table($nombre){
+    global $db;
+    $sql  ="SELECT p.qtyAproximada FROM products p WHERE p.name = '{$nombre}' LIMIT 1";
+   return $db->query($sql);
+  }
 
 ?>
 

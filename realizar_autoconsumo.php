@@ -351,35 +351,7 @@
             </tr>
           </tfoot>
         </table>
-        <button id="cont_compra" type="button" class="btn btn-primary btn-block" onclick="f_final_compra()"style="display:none;">Elegir forma de pago</button>
-        <div class="row" id="cont_vuelto" style="display: none;">
-          <div class="row"  style="padding-top: 5%;">
-            <div class="form-check text-center">
-              <label class="form-check-label" style="margin-right: 15%;">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="forma_pago('efectivo');">
-                Pago en Efectivo
-              </label>
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onclick="forma_pago('tarjeta');">
-                Pago con tarjeta
-              </label>
-            </div>
-          </div>
-          <img class="card-img-top img-responsive pb-2" id="im_tarjeta" src="fotos/tarjeta.png" alt="" style="width: 30%; margin:auto; display: none;">
-          <div class="panel-body" id="tabla_vuelto">
-            <table class="table table-striped table-hover table-condensed">
-              <tbody> 
-                <tr><td class="text-right">Efectivo</td><td class="text-center">$ <input id="in_efectivo" class="text-center" type="number" value="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" style="width: 25%;" onkeyup="actu_vuelto()"></td></tr>
-                <tr><td class="text-right">Vuelto</td><td class="text-center">$ <input id="in_vuelto" class="text-center"  type="number" value="0.00" pattern="^\d+(?:\.\d{1,2})?$" min="0" style="width: 25%;" disabled></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="text-center">
-            <button id="f_continuar" type="button" class="btn btn-success" onclick="f_continuar(1)" >Finalizar Compra</button>
-            <a style="visibility:hidden;">aaaa</a>
-            <button id="f_cancelar" type="button" class="btn btn-danger " onclick="f_continuar(0)" >Cancelar Compra</button>
-          </div>
-        </div>
+        <button id="cont_compra" type="button" class="btn btn-success btn-block" onclick="f_final_compra()"style="display:none;">Finalizar Autoconsumo</button>
       </div>
     </div>
   </div>
@@ -808,11 +780,11 @@
   function f_final_compra(){
     var nFilas = $("#tabla_factura tbody tr").length;
     if (nFilas==0) {
-      alert("No existen productos en la factura");
+      alert("No existen productos en autoconsumo");
       location.reload();
     }
     else{
-      document.getElementById('cont_vuelto').style.display='block';
+      f_continuar();
     }
   }
 
@@ -838,30 +810,6 @@
       alert("Numero de ingredientes insuficientes");
     }
     event.preventDefault();     //Evitar refresh de pagina tras submit
-  }
-
-  function actu_vuelto(){
-    var total = document.getElementById('total_compra').value;
-
-    var efectivo = document.getElementById('in_efectivo').value;
-    document.getElementById('in_vuelto').value=(efectivo-total).toFixed(2);
-    //Mantener 2 decimales
-    efectivo = parseFloat(efectivo).toFixed(2);
-  }
-
-  function forma_pago(forma){
-    tabla_vuelto=document.getElementById('tabla_vuelto');
-    im_tarjeta=document.getElementById('im_tarjeta');
-    if (forma=="efectivo") {
-      tabla_vuelto.style.display='block';
-      im_tarjeta.style.display='none';
-      pagoTotal=1;    //Bandera de pago en efectivo
-    }
-    else{
-      tabla_vuelto.style.display='none';
-      centrar(im_tarjeta);
-      pagoTotal=0;    //Bandera de pago en tarjeta
-    }
   }
 
   //---------------------------------------------------------------------------
@@ -932,166 +880,83 @@
     titu_regre.innerText = "Escoja la caja a vender:";
   }
 
-  function f_continuar(conti){
+  function f_continuar(){
     var aux=0;            //Auxiliar q permite determinar si se debe cargar los datos a la  BD o no
-    var efect=document.getElementById('in_efectivo').value;
     var total=document.getElementById('total_compra').value;
-    if(conti==1){
-      if(pagoTotal==1){
-        if(Number(efect)>=Number(total)){
-          p_pago="efectivo";
-        }
-        else{
-          alert("Valor de efectivo incorrecto");
-          aux=1;
-        }
-      }
-      else p_pago="tarjeta";
 
-      var user = "<?php echo $user['username']; ?>";        //Determinar el usuario que ejecuta la venta
+    p_pago="autoconsumo";
 
-      //CARGAR A BD DE VENTA PIZZAS
-      var aux_extra=0;    //Aux que cuenta el numero de extras
-      str_extra="";
-      if(aux==0){
-        venta_aux.forEach(element => {
-          var aux_eli=item_eliminados.indexOf(element.id);
-          if(aux_eli<0){
-            //alert(element.id);
-            if(element.categ=="Pizzas"){
-              //Agregar los extras a la pizza actualemente seleccionada
-              venta_aux_extra.forEach(ele_extra => {
-                if(ele_extra.id_pizza==element.id){     //Verificar si pertenece a la pizza
-                  var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
-                  if(aux_eli_extra<0){                                        //Verificar si no ha sido eliminada
-                    str_extra+=(ele_extra.p_extra+",");
-                    //alert(str_extra);
-                    aux_extra++;
-                  }
+    var user = "<?php echo $user['username']; ?>";        //Determinar el usuario que ejecuta la venta
+
+    //CARGAR A BD DE VENTA PIZZAS
+    var aux_extra=0;    //Aux que cuenta el numero de extras
+    str_extra="";
+    if(aux==0){
+      venta_aux.forEach(element => {
+        var aux_eli=item_eliminados.indexOf(element.id);
+        if(aux_eli<0){
+          //alert(element.id);
+          if(element.categ=="Pizzas"){
+            //Agregar los extras a la pizza actualemente seleccionada
+            venta_aux_extra.forEach(ele_extra => {
+              if(ele_extra.id_pizza==element.id){     //Verificar si pertenece a la pizza
+                var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
+                if(aux_eli_extra<0){                                        //Verificar si no ha sido eliminada
+                  str_extra+=(ele_extra.p_extra+",");
+                  //alert(str_extra);
+                  aux_extra++;
                 }
-              });
-
-              var str_e=""
-              if(aux_extra==0){
-                if(element.extra!="")
-                  str_e=element.extra.slice(0, -1);     //Elimina la coma de sabores de personalozada
-              }       
-              else
-                var str_e=element.extra+str_extra.slice(0, -1);         //Elimina la coma
-
-              $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+str_e+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
-              });
-              str_extra="";
-            }
-            else if(element.categ=="Bebida"){
-              $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
-              });
-            }
-            else if(element.categ=="Ingredientes"){
-              $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
-              });
-            }
-            else if(element.categ=="Caja_pizza"){
-              $.ajax({url: DOMAIN+"guardar_ventas_cajas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user
-              });
-            }
-          }
-        });
-      
-        //ENVIO PARA IMPRESION DE COMPRABANTE DE PAGO
-        var srt_get="";
-        venta_aux.forEach(element => {
-          var aux_eli=item_eliminados.indexOf(element.id);    //Verificar si no ha sido eliminada
-          if(aux_eli<0){                                        //Verificar si no ha sido eliminada
-            srt_get+=(element.canti+","+element.categ+" ");
-
-            if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
-              srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
-              if(element.sabor=="personalizada"){
-                srt_get+=":";
-                var srt_get2='';
-                if(venta_aux_extra.length>0){     //Verificar si hay extras
-                  var arr_extras=element.extra.split(",");    //Convertir str_extras en array
-                  arr_extras.forEach(extra => {               //Evaluar cada extra de la pizza
-                    venta_aux_extra.forEach(ele_extra => {    //Buscar en el array venta aux extra
-                      if(ele_extra.id_pizza==element.id){     //Verificar si pertenece a la pizza
-                        var aux_eli_extra=item_eliminados.indexOf(ele_extra.id);    //Verificar si no ha sido eliminada
-                        if(aux_eli_extra<0){ 
-                          if(extra!=ele_extra.p_extra){
-                            srt_get2+=extra+",";
-                            alert(srt_get2);
-                          }
-                        }
-                      }
-                    });
-                  });
-                }
-                else{
-                  var str_sc=(element.extra.slice(0, -1)).replace(",", "-");      //Elimina ultima como y transforma como en espacio
-                  srt_get+=str_sc;
-                  alert(str_sc);
-                }
-                var str_per=Array.from(new Set(srt_get2.split(','))).toString();    //Quitar duplicados
-                var str_per2=(str_per.replace(/[,]/g,"-")).slice(0, -1);            //cambiar , por  - y elimiar el ultimo -
-
-                srt_get+=str_per2;
               }
+            });
 
-              if(element.forma=="llevar")
-                srt_get+=" L";
-              else
-                srt_get+=" S";
-            }
-            else if(element.categ=="Extra"){
-              srt_get+=(element.tama+" "+element.p_extra);
-            }
-            else if (element.categ=="Caja_pizza") {
-              srt_get+=(element.tama);
-              if(element.tama=="mediana")
-                caja_mediana++;
-              else 
-               caja_grande++;
-            }
-            else if (element.categ=="Bebida") {
-              srt_get+=(element.tama+" "+element.sabor);
-            }
-            else if (element.categ=="Ingredientes") {
-              srt_get+=(element.v_nombre);         //Poner en mayuscula primera letra);
-            }
-            srt_get+=(","+(element.precioP/element.canti)+","+element.precioP+",");
-          } 
-        });
+            var str_e=""
+            if(aux_extra==0){
+              if(element.extra!="")
+                str_e=element.extra.slice(0, -1);     //Elimina la coma de sabores de personalozada
+            }       
+            else
+              var str_e=element.extra+str_extra.slice(0, -1);         //Elimina la coma
 
-        //GUARDAR CONSUMO APROXIMADOS DE INGREDIENTES
-        $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
-        });
+            $.ajax({url: DOMAIN+"guardar_ventas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_tipo="+element.tipo+"&p_sabor="+element.sabor+"&p_extras="+str_e+"&p_forma="+element.forma+"&p_precio="+element.precioP+"&p_pago="+p_pago+"&p_usuario="+user
+            });
+            str_extra="";
+          }
+          else if(element.categ=="Bebida"){
+            $.ajax({url: DOMAIN+"guardar_ventas_bebida.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_sabor="+element.sabor+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
+            });
+          }
+          else if(element.categ=="Ingredientes"){
+            $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
+            });
+          }
+          else if(element.categ=="Caja_pizza"){
+            //var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:tam,precioP:precio_caja};
+            $.ajax({url: DOMAIN+"guardar_ventas_cajas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user
+            });
+          }
+        }
+      });
 
-        var totalCompra=document.getElementById('total_compra').value;
-        var efectivo=document.getElementById('in_efectivo').value;
-        var vuelto=document.getElementById('in_vuelto').value;
-        
-        var str_get2=srt_get.slice(0, -1);
+      //GUARDAR CONSUMOS APROXIMADOS
+      $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
+      });
 
-        var date = "<?php echo make_date(); ?>";
-        var d = new Date();
-        var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
-        
-        var servir=1; //0 llevar, 1 servirse
-        //var servir = [0,1,1,1,1];
-        var numorden='<?php echo $contador?>';
+      // var totalCompra=document.getElementById('total_compra').value;
 
-        //guarda venta general y el contador
-        $.ajax({url: DOMAIN+"realizar_z.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago});
-        
-        //setTimeout("contador_Masas()",3000);
-        //manda a imprimir
-        var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
-      }
-    }
-    else{
-      window.open(DOMAIN+"realizar_venta.php","_self");
-    }
-    
+      // var date = "<?php echo make_date(); ?>";
+      // var d = new Date();
+      // var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+      
+      // var servir=1; //0 llevar, 1 servirse
+      
+      // var numorden='<?php echo $contador?>';
+
+      //guarda venta general y el contador
+      //$.ajax({url: DOMAIN+"realizar_z.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago});
+      
+      
+      window.open(DOMAIN+"admin.php","_self");
+    }   
   }
 
 </script>
