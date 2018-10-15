@@ -88,10 +88,6 @@ try {
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
-	/* Text */
-	//$printer -> text("Hello world\n");
-	/* Pulse */
-	$printer -> pulse();
 	/* Always close the printer! On some PrintConnectors, no actual
 	 * data is sent until the printer is closed. */
 	    /* Information for the receipt */
@@ -159,8 +155,12 @@ try {
     $printer -> selectPrintMode();
 
     //efectivo o tarjeta
-    if($_GET["efectivo"]==0) $printer -> text("Tar\n");
-    else $printer -> text("Ef\n");
+    if($_GET['p_pago']=="efectivo"){
+        /* Pulse solo con pagos en efectivo*/    
+        $printer -> pulse();
+        $printer -> text("Ef\n");
+    } 
+    else $printer -> text("Tar\n");
 
     /* Footer */
     $printer -> feed(1);
