@@ -73,8 +73,8 @@ class itemcocina
 		$qtyCols = 10;
 		$m = 3;
 		
-		if($this -> llevar) $left = str_pad('*'.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
-		else $left = str_pad($this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		if($this -> llevar) $left = str_pad('LL '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		else $left = str_pad('S '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
 		$middle = str_pad(' ', $m, ' ', STR_PAD_LEFT) ;
 		$right = str_pad($this -> name, $nameCols);
 		return "$left$middle$right\n";
@@ -88,10 +88,6 @@ try {
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
-	/* Text */
-	//$printer -> text("Hello world\n");
-	/* Pulse */
-	$printer -> pulse();
 	/* Always close the printer! On some PrintConnectors, no actual
 	 * data is sent until the printer is closed. */
 	    /* Information for the receipt */
@@ -105,7 +101,8 @@ try {
     $hayalgo=false;
     $itemsco = array();
     for($x = 0; $x < $k; $x++){
-        if(substr($data[$x*$q+1],0,1)=="C"||substr($data[$x*$q+1],0,1)=="I"||substr($data[$x*$q+1],0,1)=="B"){
+        if(substr($values[$x*4+1],0,1)=="C"||substr($values[$x*4+1],0,1)=="I"){
+            //||substr($values[$x*4+1],0,1)=="B"
             $itemsco[$x]=new itemcocina();
         }
         else{
@@ -159,8 +156,19 @@ try {
     $printer -> selectPrintMode();
 
     //efectivo o tarjeta
-    if($_GET["efectivo"]==0) $printer -> text("Tar\n");
-    else $printer -> text("Ef\n");
+    if($_GET['p_pago']=="efectivo"){
+        /* Pulse solo con pagos en efectivo*/    
+        $printer -> pulse();
+        $left = str_pad('Efectivo', 14) ;
+        $right = str_pad('$ '.$_GET["p_efect"], 10, ' ', STR_PAD_LEFT);
+        $printer -> text("$left$right\n");
+
+        $left = str_pad('Cambio', 14) ;
+        $right = str_pad('$ '.$_GET["p_vuelto"], 10, ' ', STR_PAD_LEFT);
+        $printer -> text("$left$right\n");
+         //$printer -> text("Ef\n");
+    } 
+    else $printer -> text("Tar\n");
 
     /* Footer */
     $printer -> feed(1);
@@ -170,7 +178,7 @@ try {
  
     /* Cut */
     $printer -> feed(1);
-//    $printer -> cut();   
+    $printer -> cut();   
 
     if($hayalgo){
         /* Name of shop */
@@ -202,7 +210,7 @@ try {
         //else $printer -> text("Ef\n");
         /* Cut */
         $printer -> feed(1);
-        //    $printer -> cut();   
+        $printer -> cut();   
     }
 
 

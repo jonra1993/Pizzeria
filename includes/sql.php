@@ -450,9 +450,13 @@ function tableExists($table){
  /* Function for Display Recent sale
  /*--------------------------------------------------------------*/
 function find_recent_sale_added($limit){
+  $year  = date('Y');
+  $month = date('m');
+  $day = date('d');
   global $db;
-  $sql  = "SELECT s.id,s.orden,s.price,s.date,s.user";
+  $sql  = "SELECT s.id,s.orden,s.price,s.date,s.user,s.forma_pago";
   $sql .= " FROM venta_general s";
+  $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
   $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }

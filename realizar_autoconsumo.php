@@ -941,18 +941,18 @@
       $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
       });
 
-      // var totalCompra=document.getElementById('total_compra').value;
+      var totalCompra=document.getElementById('total_compra').value;
 
-      // var date = "<?php echo make_date(); ?>";
-      // var d = new Date();
-      // var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
+      var date = "<?php echo make_date(); ?>";
+      var d = new Date();
+      var date1=d.getFullYear().toString()+"_"+d.getMonth().toString()+"_"+d.getDate().toString()+"_"+d.getHours().toString()+"_"+d.getMinutes().toString();
       
-      // var servir=1; //0 llevar, 1 servirse
+      var servir=1; //0 llevar, 1 servirse
       
-      // var numorden='<?php echo $contador?>';
+      var numorden='<?php echo $contador?>';
 
       //guarda venta general y el contador
-      //$.ajax({url: DOMAIN+"realizar_z.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago});
+      $.ajax({url: DOMAIN+"realizar_z.php?"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra});
       
       
       window.open(DOMAIN+"admin.php","_self");
