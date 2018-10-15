@@ -16,6 +16,7 @@ $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 
 $ventasRealizadas_e=0;
 $ventasRealizadas_t=0;
+$ventasAutoconsumo=0;
 $efectivo=VentasRealizadas($open['date'],'venta_general','efectivo');
 foreach ($efectivo as $vB){
   $ventasRealizadas_e=$ventasRealizadas_e+(float)remove_junk($vB['price']);
@@ -24,6 +25,11 @@ foreach ($efectivo as $vB){
 $tarjeta=VentasRealizadas($open['date'],'venta_general','tarjeta');
 foreach ($tarjeta as $vB){
   $ventasRealizadas_t=$ventasRealizadas_t+(float)remove_junk($vB['price']);
+}
+
+$autoconsumo=VentasRealizadas($open['date'],'venta_general','autoconsumo');
+foreach ($autoconsumo as $vB){
+  $ventasAutoconsumo=$ventasAutoconsumo+(float)remove_junk($vB['price']);
 }
 
 foreach($ingresos_cajas as $tempo){
@@ -225,8 +231,10 @@ else{
     var d_ret_ef_caja = Number("<?php echo $retiros_caja;?>");
     var cobros_efe = Number("<?php echo $ventasRealizadas_e;?>");
     var cobros_tar = Number("<?php echo $ventasRealizadas_t;?>");
+    var autocon = Number("<?php echo $ventasAutoconsumo;?>")
     document.getElementById("retiro_ef_caja").value=d_ret_ef_caja.toFixed(2);
     document.getElementById("ingreso_ef_caja").value=d_ing_ef_caja.toFixed(2);
+    document.getElementById("autoconsumo").value=autocon.toFixed(2);
     document.getElementById("apertura_caja").value=d_apertura.toFixed(2);
     document.getElementById("cobros_efectivo").value=cobros_efe.toFixed(2);
     document.getElementById("cobros_tarjeta").value=cobros_tar.toFixed(2);
@@ -273,7 +281,8 @@ else{
     var s1=d_cobro_ef+d_cobro_tar;
     d_total_v.value=s1.toFixed(2);
 
-    var s2= -d_autoconsumo+d_ing_ef_caja-d_ret_ef_caja;
+    //var s2= -d_autoconsumo+d_ing_ef_caja-d_ret_ef_caja;
+    var s2= d_ing_ef_caja-d_ret_ef_caja;
 
     //dolares
     var cien = document.getElementById("cien_d").value;

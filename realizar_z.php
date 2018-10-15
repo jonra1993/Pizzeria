@@ -20,6 +20,10 @@
 
     GuardarVentasGenerales($_GET["numorden"], $_GET["subtotal"], $_GET["p_efect"],$_GET["p_vuelto"],$_GET["date"], $_GET["user"], $_GET["p_pago"]);     
   }
+  //es autoconsumo
+  else{
+    GuardarVentasGenerales('0', $_GET["subtotal"], '0','0',$_GET["date"], $_GET["user"],'autoconsumo');     
+  }
   
   function  GuardarVentasGenerales($num, $price, $pagado,$vuelto,$date, $user, $fP){
 
