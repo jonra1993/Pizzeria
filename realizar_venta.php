@@ -1006,9 +1006,9 @@
             srt_get+=(element.canti+","+element.categ+" ");
 
             if (element.categ=="Pizzas") {      //Determinar que tipo de categoria es
-              srt_get+=(element.tama+" "+element.sabor);//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
+              srt_get+=(element.tama+" ");//+","+element.extra+","+element.forma+","+element.precioP+","+element.fpago);
               if(element.sabor=="personalizada"){
-                srt_get+=":";
+                srt_get+="P:";
                 var srt_get2='';
                 if(venta_aux_extra.length>0){     //Verificar si hay extras
                   var arr_extras=element.extra.split(",");    //Convertir str_extras en array
@@ -1019,7 +1019,6 @@
                         if(aux_eli_extra<0){ 
                           if(extra!=ele_extra.p_extra){
                             srt_get2+=extra+",";
-                            alert(srt_get2);
                           }
                         }
                       }
@@ -1027,14 +1026,20 @@
                   });
                 }
                 else{
-                  var str_sc=(element.extra.slice(0, -1)).replace(",", "-");      //Elimina ultima como y transforma como en espacio
-                  srt_get+=str_sc;
-                  alert(str_sc);
+                  var srt_get2=(element.extra.slice(0, -1));      //Elimina ultima como y transforma como en espacio
                 }
                 var str_per=Array.from(new Set(srt_get2.split(','))).toString();    //Quitar duplicados
-                var str_per2=(str_per.replace(/[,]/g,"-")).slice(0, -1);            //cambiar , por  - y elimiar el ultimo -
+                var str_per2=str_per.split(","); 
+                var str_per3='';
+                str_per2.forEach(element => {
+                  str_per3+=element.slice(0,3)+"-";
+                });
+                var str_per4=str_per3.slice(0, -1);            //cambiar , por  - y elimiar el ultimo -
 
-                srt_get+=str_per2;
+                srt_get+=str_per4;
+              }
+              else{
+                srt_get+=element.sabor;
               }
 
               if(element.forma=="llevar")

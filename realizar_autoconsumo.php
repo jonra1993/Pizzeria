@@ -955,7 +955,7 @@
       $.ajax({url: DOMAIN+"realizar_z.php?"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra});
       
       
-      window.open(DOMAIN+"admin.php","_self");
+      window.open(DOMAIN+"admin.php?p_aproximado=0","_self");
     }   
   }
 
