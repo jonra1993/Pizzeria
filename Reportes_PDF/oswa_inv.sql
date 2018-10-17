@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-10-2018 a las 03:38:11
+-- Tiempo de generación: 17-10-2018 a las 03:50:37
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 7.1.8
 
@@ -164,7 +164,9 @@ CREATE TABLE `catalogo_ingredientes` (
 INSERT INTO `catalogo_ingredientes` (`id`, `nombre`, `price`, `media_id`) VALUES
 (1, 'quesoEspecial', '15.00', 68),
 (2, 'quesoNormal', '12.00', 69),
-(3, 'embutidos', '7.50', 38);
+(3, 'peperoni', '7.50', 38),
+(4, 'jamon', '7.50', 91),
+(5, 'salami', '7.50', 90);
 
 -- --------------------------------------------------------
 
@@ -275,7 +277,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 1, '2018-10-11');
+(1, 3, '2018-10-16');
 
 -- --------------------------------------------------------
 
@@ -296,9 +298,11 @@ CREATE TABLE `extra_pizzas` (
 INSERT INTO `extra_pizzas` (`id`, `name`, `media_id`) VALUES
 (2, 'queso', 37),
 (3, 'champinones', 39),
-(4, 'embutidos', 38),
+(4, 'salami', 90),
 (5, 'durazno', 27),
-(6, 'pina', 12);
+(6, 'pina', 12),
+(7, 'jamon', 91),
+(8, 'peperoni', 38);
 
 -- --------------------------------------------------------
 
@@ -383,7 +387,9 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 (86, 'masas.jpg', 'image/jpeg'),
 (87, 'cat_cajaPizza.jpg', 'image/jpeg'),
 (88, 'cajaPizza_grande.png', 'image/png'),
-(89, 'cajaPizza_mediana.png', 'image/png');
+(89, 'cajaPizza_mediana.png', 'image/png'),
+(90, 'ingre_salami.png', 'image/png'),
+(91, 'ingre_jam.png', 'image/png');
 
 -- --------------------------------------------------------
 
@@ -433,24 +439,24 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`, `qtyAproximada`) VALUES
-(1, 'Masas', '70.87', 'Unidad', '0.00', 2, 86, '2018-10-11 00:00:00', 0, '28.13'),
-(2, 'Cajas Grandes', '100.00', 'Unidad', '0.00', 2, 88, '2018-10-11 00:00:00', 0, '0.00'),
-(3, 'Cajas Medianas', '92.00', 'Unidad', '0.00', 2, 89, '2018-10-11 00:00:00', 0, '0.00'),
-(19, 'Harina', '74.94', 'Kg', '0.70', 4, 20, '2018-10-11 00:00:00', 1, '14.06'),
-(20, 'Queso', '81.96', 'Kg', '4.20', 4, 21, '2018-10-11 00:00:00', 1, '10.04'),
-(21, 'JamÃ³n', '99.54', 'Kg', '5.50', 4, 76, '2018-10-11 00:00:00', 7, '0.46'),
-(22, 'Mortadela', '99.87', 'Kg', '3.12', 4, 71, '2018-10-11 00:00:00', 9, '0.13'),
-(23, 'Salami', '99.94', 'Kg', '5.50', 4, 81, '2018-10-11 00:00:00', 7, '0.06'),
-(24, 'Peperoni', '99.94', 'Kg', '5.50', 4, 78, '2018-10-11 00:00:00', 7, '0.06'),
-(25, 'Salsa', '97.24', 'Balde', '2.00', 4, 82, '2018-10-11 00:00:00', 9, '1.76'),
-(26, 'PiÃ±a', '97.67', 'Unidad', '1.50', 4, 79, '2018-10-11 00:00:00', 10, '1.33'),
-(27, 'Durazno', '100.00', 'latas', '2.60', 4, 75, '2018-10-11 00:00:00', 9, '0.00'),
-(28, 'Pollo', '90.53', 'Unidad', '5.00', 4, 80, '2018-10-11 00:00:00', 12, '5.47'),
-(29, 'ChampiÃ±ones', '92.62', 'Kg', '6.15', 4, 74, '2018-10-11 00:00:00', 4, '4.38'),
-(30, 'Carne', '100.00', 'Kg', '5.60', 4, 73, '2018-10-11 00:00:00', 11, '0.00'),
-(31, 'Tocino', '100.00', 'Kg', '9.50', 4, 70, '2018-10-11 00:00:00', 13, '0.00'),
-(32, 'Aceite', '79.19', 'Litro', '1.39', 4, 72, '2018-10-11 00:00:00', 14, '11.81'),
-(33, 'Levadura', '78.91', 'Kg', '6.50', 4, 77, '2018-10-11 00:00:00', 5, '12.09');
+(1, 'Masas', '41.62', 'Unidad', '0.00', 2, 86, '2018-10-16 00:00:00', 0, '1.50'),
+(2, 'CajasGrandes', '90.00', 'Unidad', '0.00', 2, 88, '2018-10-16 00:00:00', 0, '0.00'),
+(3, 'CajasMedianas', '57.00', 'Unidad', '0.00', 2, 89, '2018-10-16 00:00:00', 0, '3.00'),
+(19, 'Harina', '60.31', 'Kg', '0.70', 4, 20, '2018-10-16 00:00:00', 1, '0.75'),
+(20, 'Queso', '71.52', 'Kg', '4.20', 4, 21, '2018-10-16 00:00:00', 1, '0.54'),
+(21, 'JamÃ³n', '98.95', 'Kg', '5.50', 4, 76, '2018-10-16 00:00:00', 7, '0.03'),
+(22, 'Mortadela', '98.97', 'Kg', '3.12', 4, 71, '2018-10-16 00:00:00', 9, '0.05'),
+(23, 'Salami', '99.43', 'Kg', '5.50', 4, 81, '2018-10-16 00:00:00', 7, '0.03'),
+(24, 'Peperoni', '99.48', 'Kg', '5.50', 4, 78, '2018-10-16 00:00:00', 7, '0.03'),
+(25, 'Salsa', '95.40', 'Balde', '2.00', 4, 82, '2018-10-16 00:00:00', 9, '0.09'),
+(26, 'PiÃ±a', '97.15', 'Unidad', '1.50', 4, 79, '2018-10-16 00:00:00', 10, '0.00'),
+(27, 'Durazno', '100.00', 'latas', '2.60', 4, 75, '2018-10-16 00:00:00', 9, '0.00'),
+(28, 'Pollo', '89.12', 'Unidad', '5.00', 4, 80, '2018-10-16 00:00:00', 12, '0.03'),
+(29, 'ChampiÃ±ones', '91.41', 'Kg', '6.15', 4, 74, '2018-10-16 00:00:00', 4, '0.05'),
+(30, 'Carne', '100.00', 'Kg', '5.60', 4, 73, '2018-10-16 00:00:00', 11, '0.00'),
+(31, 'Tocino', '99.91', 'Kg', '9.50', 4, 70, '2018-10-16 00:00:00', 13, '0.03'),
+(32, 'Aceite', '67.12', 'Litro', '1.39', 4, 72, '2018-10-16 00:00:00', 14, '0.63'),
+(33, 'Levadura', '67.12', 'Kg', '6.50', 4, 77, '2018-10-16 00:00:00', 5, '0.65');
 
 -- --------------------------------------------------------
 
@@ -643,7 +649,8 @@ INSERT INTO `tabla_aperturas_cajas` (`id`, `dinero_apertura`, `date`, `username`
 (4, '50.00', '2018-09-16 17:50:59', 'Admin'),
 (5, '20.00', '2018-09-16 17:59:30', 'Admin'),
 (6, '20.00', '2018-09-16 18:08:52', 'Admin'),
-(7, '12.00', '2018-09-27 10:24:10', 'Admin');
+(7, '12.00', '2018-09-27 10:24:10', 'Admin'),
+(8, '20.00', '2018-10-14 22:58:57', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -677,7 +684,8 @@ INSERT INTO `tabla_cierres_cajas` (`id`, `dinero_apertura`, `cobros_en_caja`, `c
 (3, '20.00', '13.00', '14.00', '27.00', '0.00', '30.00', '40.00', '23.00', '50.00', '27.00', '2018-09-16 17:48:42', 'Admin'),
 (4, '50.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '50.00', '0.00', '-50.00', '2018-09-16 17:58:40', 'Admin'),
 (5, '20.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '20.00', '0.00', '-20.00', '2018-09-16 18:07:14', 'Admin'),
-(6, '20.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '20.00', '0.00', '-20.00', '2018-09-27 10:24:04', 'Admin');
+(6, '20.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '20.00', '0.00', '-20.00', '2018-09-27 10:24:04', 'Admin'),
+(7, '12.00', '13.00', '116.50', '129.50', '19.25', '0.00', '0.00', '25.00', '100.00', '75.00', '2018-10-14 22:58:23', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -802,10 +810,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`, `clave_caja`) VALUES
-(1, 'Jonathan', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-10-11 10:40:42', 1, 'd8c7468774962290ed594c33e79c2c219b2c2f42'),
-(2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0, ''),
-(3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0, ''),
-(4, 'prueba1', 'prueba1', '096459e93f20a2b39ab6c5ddd493e44f58bc3a91', 1, 'no_image.jpg', 1, NULL, 0, '096459e93f20a2b39ab6c5ddd493e44f58bc3a91');
+(1, 'Desarrolador', 'desarrollador', '5bdc6124e426ae33bcca3961742d718a8007f5b3', 1, 'pzg9wa7o1.jpg', 1, '2018-10-16 22:29:09', 1, 'd8c7468774962290ed594c33e79c2c219b2c2f42'),
+(2, 'Administrador', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26', 0, ''),
+(3, 'Vendedr', 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03', 0, '');
 
 -- --------------------------------------------------------
 
@@ -825,8 +832,8 @@ CREATE TABLE `user_groups` (
 --
 
 INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VALUES
-(1, 'Administrador', 1, 1),
-(2, 'Vendedor Autorizado', 2, 1),
+(1, 'Desarollador', 1, 1),
+(2, 'Administrador', 2, 1),
 (3, 'Vendedor', 3, 1);
 
 -- --------------------------------------------------------
@@ -849,6 +856,35 @@ CREATE TABLE `venta_bebidas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `venta_cajas`
+--
+
+CREATE TABLE `venta_cajas` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `qty` int(11) NOT NULL,
+  `tama` varchar(25) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `date` datetime NOT NULL,
+  `user` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_cajas`
+--
+
+INSERT INTO `venta_cajas` (`id`, `qty`, `tama`, `price`, `date`, `user`) VALUES
+(1, 1, 'familiar', '1.25', '2018-10-14 22:40:05', 'admin'),
+(2, 1, 'mediana', '1.00', '2018-10-14 22:43:28', 'admin'),
+(3, 1, 'mediana', '1.00', '2018-10-14 22:52:03', 'admin'),
+(4, 1, 'mediana', '1.00', '2018-10-15 23:05:06', 'admin'),
+(5, 1, 'familiar', '1.25', '2018-10-15 23:50:24', 'admin'),
+(6, 1, 'mediana', '1.00', '2018-10-16 00:07:31', 'admin'),
+(7, 1, 'mediana', '1.00', '2018-10-16 00:10:52', 'admin'),
+(8, 1, 'mediana', '1.00', '2018-10-16 21:52:05', 'admin');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `venta_general`
 --
 
@@ -862,6 +898,23 @@ CREATE TABLE `venta_general` (
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_general`
+--
+
+INSERT INTO `venta_general` (`id`, `orden`, `price`, `pagado`, `vuelto`, `date`, `user`, `forma_pago`) VALUES
+(1, 1, '103.50', '0.00', '0.00', '2018-10-14 22:36:29', 'admin', 'tarjeta'),
+(2, 0, '19.25', '0.00', '0.00', '2018-10-14 22:39:10', 'admin', 'autoconsumo'),
+(3, 2, '13.00', '0.00', '0.00', '2018-10-14 22:42:49', 'admin', 'tarjeta'),
+(4, 3, '13.00', '20.00', '7.00', '2018-10-14 22:51:36', 'admin', 'efectivo'),
+(5, 0, '1.50', '0.00', '0.00', '2018-10-15 23:04:13', 'admin', 'autoconsumo'),
+(6, 1, '1.00', '0.00', '0.00', '2018-10-15 23:04:32', 'admin', 'tarjeta'),
+(7, 0, '14.25', '0.00', '0.00', '2018-10-15 23:50:10', 'admin', 'autoconsumo'),
+(8, 2, '11.00', '0.00', '0.00', '2018-10-16 00:07:04', 'admin', 'tarjeta'),
+(9, 3, '11.00', '0.00', '0.00', '2018-10-16 00:09:58', 'admin', 'tarjeta'),
+(10, 1, '30.00', '0.00', '0.00', '2018-10-16 21:39:34', 'admin', 'tarjeta'),
+(11, 2, '13.50', '0.00', '0.00', '2018-10-16 21:51:19', 'admin', 'tarjeta');
 
 -- --------------------------------------------------------
 
@@ -878,6 +931,17 @@ CREATE TABLE `venta_ingredientes` (
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_ingredientes`
+--
+
+INSERT INTO `venta_ingredientes` (`id`, `qty`, `nombre_ingre`, `price`, `date`, `user`, `forma_pago`) VALUES
+(1, 3, 'quesoNormal', '36.00', '2018-10-14 22:37:08', 'admin', 'tarjeta'),
+(2, 3, 'quesoEspecial', '45.00', '2018-10-14 22:37:08', 'admin', 'tarjeta'),
+(3, 3, 'embutidos', '22.50', '2018-10-14 22:37:08', 'admin', 'tarjeta'),
+(4, 1, 'salami', '7.50', '2018-10-16 21:46:37', 'admin', 'tarjeta'),
+(5, 3, 'jamon', '22.50', '2018-10-16 21:46:37', 'admin', 'tarjeta');
 
 -- --------------------------------------------------------
 
@@ -898,6 +962,20 @@ CREATE TABLE `venta_pizzas` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_pizzas`
+--
+
+INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
+(1, 1, 'familiar', 'especial', 'personalizada', 'llevar', 'Hawayana,Mixta,Pollo,Tocino,queso', '15.00', 'autoconsumo', '2018-10-14 22:40:05', 'admin'),
+(2, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Tocino,Napolitana,Vegetariana,queso', '10.00', 'tarjeta', '2018-10-14 22:43:28', 'admin'),
+(3, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Hawayana,Vegetariana,pina', '10.00', 'efectivo', '2018-10-14 22:52:03', 'admin'),
+(4, 1, 'porcion', 'porcion', 'mixta', 'llevar', '', '1.50', 'autoconsumo', '2018-10-15 23:04:27', 'admin'),
+(5, 1, 'familiar', 'normal', 'mixta', 'llevar', '', '13.00', 'autoconsumo', '2018-10-15 23:50:24', 'admin'),
+(6, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Mixta,Criolla', '10.00', 'tarjeta', '2018-10-16 00:07:31', 'admin'),
+(7, 1, 'mediana', 'especial', 'personalizada', 'llevar', 'Pollo,Tocino', '10.00', 'tarjeta', '2018-10-16 00:10:52', 'admin'),
+(8, 1, 'mediana', 'normal', 'mixta', 'llevar', 'salami,peperoni', '8.50', 'tarjeta', '2018-10-16 21:52:05', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -1047,6 +1125,12 @@ ALTER TABLE `venta_bebidas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `venta_cajas`
+--
+ALTER TABLE `venta_cajas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
@@ -1084,7 +1168,7 @@ ALTER TABLE `catalogo_extras`
 -- AUTO_INCREMENT de la tabla `catalogo_ingredientes`
 --
 ALTER TABLE `catalogo_ingredientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -1102,13 +1186,13 @@ ALTER TABLE `contador`
 -- AUTO_INCREMENT de la tabla `extra_pizzas`
 --
 ALTER TABLE `extra_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de la tabla `productovender`
@@ -1144,13 +1228,13 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT de la tabla `tabla_aperturas_cajas`
 --
 ALTER TABLE `tabla_aperturas_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tabla_cierres_cajas`
 --
 ALTER TABLE `tabla_cierres_cajas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tabla_ingresos_retiros_cajas`
@@ -1195,22 +1279,28 @@ ALTER TABLE `venta_bebidas`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `venta_cajas`
+--
+ALTER TABLE `venta_cajas`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas

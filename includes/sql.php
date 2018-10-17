@@ -306,11 +306,10 @@ function tableExists($table){
 
   function join_ingredientes_table(){
     global $db;
-    $sql  =" SELECT p.id,p.nombre, p.price, p.media_id,";
-   $sql  .=" m.file_name AS image";
-   $sql  .=" FROM catalogo_ingredientes p";                    //Definir la base de datos necesaria
+    $sql  =" SELECT p.id,p.qty, p.nombre_ingre, p.price, p.date, p.user, p.forma_pago,";
+    $sql  .=" m.file_name AS image";
+   $sql  .=" FROM venta_ingredientes p";                    //Definir la base de datos necesaria
    #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
-   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
    $sql  .=" ORDER BY p.id ASC";
    return find_by_sql($sql);
   }
@@ -646,16 +645,16 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     return $db->query($sql);
   }
 
-  // //Contador de cajas
-  // function contador_cajas ($tama,$lista){ 
-  //   global $db;
-  //   $date    = make_date();
-  //   $today  = date("Y-m-d", strtotime($date));
-  //   $sql  =" SELECT COUNT(llevar_pizza)";
-  //   $sql .= " FROM $lista c";
-  //   $sql .= " WHERE c.tam_pizza = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
-  //   return $db->query($sql);
-  // }
+  //Contador de masas
+  function contador_ingredientes ($tama,$lista){ 
+    global $db;
+    $date    = make_date();
+    $today  = date("Y-m-d", strtotime($date));
+    $sql  =" SELECT sum(qty)";
+    $sql .= " FROM $lista c";
+    $sql .= " WHERE c.nombre_ingre = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
+    return $db->query($sql);
+  }
 
   //Contador de cajas
   function contador_cajas1 ($tama,$lista){ 

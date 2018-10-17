@@ -9,6 +9,7 @@ $page_title = 'Resumen de venta';
   $forma=$_GET['p_pago'];
 
   $products = join_product_table();
+  $ingredientes = join_ingredientes_table();
 
 ?>
 
@@ -102,6 +103,11 @@ $page_title = 'Resumen de venta';
       ${'v_masa_'.$nombre_sab}+=(1/(float)$div_personalizada)*(${'v_masa_perso_'.$nombre_sab});   //Sumar la parte de pizza personalizada
     }
   }
+
+  //Contador de ingredientes
+  foreach ($ingredientes as $ingre) {
+    ${'ingre_'.$ingre}=contador_ingredientes("venta_ingredientes",$ingre);
+  }
 ?>
     
 
@@ -142,6 +148,7 @@ $page_title = 'Resumen de venta';
   </div>
 </div>
 <script >
+  alert("<?php echo $ingre_salami?>");
 
   var DOMAIN = "http://localhost/Pizzeria/";
   //............CONTADOR DE MASAS .................................
