@@ -306,6 +306,17 @@ function tableExists($table){
 
   function join_ingredientes_table(){
     global $db;
+    $sql  =" SELECT p.id,p.nombre,p.price, p.media_id,";
+    $sql  .=" m.file_name AS image";
+    $sql  .=" FROM catalogo_ingredientes p";                    //Definir la base de datos necesaria
+   #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+  }
+
+  function join_ingredientesVender_table(){
+    global $db;
     $sql  =" SELECT p.id,p.qty, p.nombre_ingre, p.price, p.date, p.user, p.forma_pago";
    $sql  .=" FROM venta_ingredientes p";                    //Definir la base de datos necesaria
    #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";

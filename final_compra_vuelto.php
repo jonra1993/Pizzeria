@@ -9,7 +9,7 @@ $page_title = 'Resumen de venta';
   $forma=$_GET['p_pago'];
 
   $products = join_product_table();
-  $ingredientes = join_ingredientes_table();
+  $ingredientes = join_ingredientesVender_table();
 
 ?>
 
