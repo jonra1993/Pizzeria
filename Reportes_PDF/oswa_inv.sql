@@ -578,7 +578,9 @@ INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity
 (94, 'Tocino', '0', '100', 'Kg', '9.50', '950.00', '2018-10-11 11:58:15', 'Admin', 13),
 (95, 'Aceite', '0', '100', 'Litro', '1.39', '139.00', '2018-10-11 11:58:15', 'Admin', 14),
 (96, 'Levadura', '0', '100', 'Kg', '6.50', '650.00', '2018-10-11 11:58:16', 'Admin', 5),
-(97, 'Masas', '145', '120', 'Unidad', '0.00', '0.00', '2018-10-11 11:59:01', 'Admin', 0);
+(97, 'Masas', '145', '120', 'Unidad', '0.00', '0.00', '2018-10-11 11:59:01', 'Admin', 0),
+(98, 'Masas', '55.24', '14', 'Unidad', '0.00', '0.00', '2018-10-14 21:18:26', 'Admin', 0),
+(99, 'Masas', '-0.63', '22.37', 'Unidad', '0.00', '0.00', '2018-10-14 21:21:25', 'Admin', 0);
 
 -- --------------------------------------------------------
 
@@ -1210,7 +1212,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `products_add_records`
 --
 ALTER TABLE `products_add_records`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -1270,7 +1272,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `user_groups`
 --
 ALTER TABLE `user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_bebidas`

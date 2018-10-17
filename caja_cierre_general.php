@@ -18,12 +18,16 @@ $page_title = 'Reporte de cierres de caja';
       $da=0;
       $cc=0;
       $ct=0; 
+      $ic=0; 
+      $rc=0; 
       $de=0;
       $s=0;
       foreach ($cierres as $c){
         $da=$da+(float)remove_junk($c['dinero_apertura']);
         $cc=$cc+(float)remove_junk($c['cobros_en_caja']);
         $ct=$ct+(float)remove_junk($c['cobros_con_tarjeta']);
+        $ic=$ic+(float)remove_junk($c['ingreso_efectivo_en_caja']);
+        $rc=$rc+(float)remove_junk($c['retiro_efectivo_en_caja']);
         $de=$de+(float)remove_junk($c['dinero_entregado']);
         $s=$s+(float)remove_junk($c['saldo']);
       }
@@ -90,12 +94,14 @@ $page_title = 'Reporte de cierres de caja';
           <thead>
             <tr>
               <th class="text-center" style="width: 15%;"> Fecha </th>
-              <th class="text-center" style="width: 10%;"> Usuario </th>
-              <th class="text-center" style="width: 10%;"> Monto de Apertura </th>
-              <th class="text-center" style="width: 10%;"> Cobros en Efectivo</th>
-              <th class="text-center" style="width: 10%;"> Cobros con Tarjeta</th>
-              <th class="text-center" style="width: 10%;"> Monto Entregado</th>
-              <th class="text-center" style="width: 10%;"> Saldo </th>
+                <th class="text-center" style="width: 10%;"> Usuario </th>
+                <th class="text-center" style="width: 10%;"> Monto de apertura </th>
+                <th class="text-center" style="width: 10%;"> Cobros en efectivo</th>
+                <th class="text-center" style="width: 10%;"> Cobros con tarjeta</th>
+                <th class="text-center" style="width: 10%;"> Ingreso en caja</th>
+                <th class="text-center" style="width: 10%;"> Retiro en caja</th>
+                <th class="text-center" style="width: 10%;"> Monto entregado</th>
+                <th class="text-center" style="width: 10%;"> Saldo </th>
             </tr>
           </thead>
           <tbody>
@@ -106,6 +112,8 @@ $page_title = 'Reporte de cierres de caja';
               <td class="text-center" id="da<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['dinero_apertura']); ?></td>
               <td class="text-center" id="cc<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['cobros_en_caja']); ?></td>
               <td class="text-center" id="ct<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['cobros_con_tarjeta']); ?></td>
+              <td class="text-center" id="ic<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['ingreso_efectivo_en_caja']); ?></td>
+              <td class="text-center" id="rc<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['retiro_efectivo_en_caja']); ?></td>
               <td class="text-center" id="de<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['dinero_entregado']); ?></td>
               <td class="text-center" id="s<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['saldo']); ?></td>
             </tr>
@@ -116,6 +124,8 @@ $page_title = 'Reporte de cierres de caja';
             <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$da, 2, '.', '')?> </th>
             <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$cc, 2, '.', '')?> </th>
             <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$ct, 2, '.', '')?> </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$ic, 2, '.', '')?> </th>
+            <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$rc, 2, '.', '')?> </th>
             <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$de, 2, '.', '')?> </th>
             <th class="text-center" style="width: 10%;" ><?php echo number_format((float)$s, 2, '.', '')?> </th>
           </tr>

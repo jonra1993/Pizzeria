@@ -118,59 +118,61 @@ $page_title = 'Reporte de ventas';
                 </thead>
                 <tbody>
                   <?php foreach ($ventas as $sale):?>
-                  <tr>
-                    <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
-                    <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
-                    <td > Pizza <?php echo remove_junk($sale['tam_pizza'])?> <?php echo remove_junk($sale['sabor_pizza']); ?></td>
-                    <td class="text-center">
-                      <?php if (remove_junk($sale['extras'])!==''): ?>
-                      <div class="checkbox">
-                        <label><input onclick="return false;" type="checkbox" value="" checked></label>
-                      </div>
-                      <?php endif; ?>
-                    </td>
-                    <td class="text-center">
-                      <?php if(remove_junk($sale['llevar_pizza'])!='servirse'): ?>
-                      <div class="checkbox">
-                        <label><input onclick="return false;" type="checkbox" value="" checked></label>
-                      </div>
-                      <?php endif; ?>
-                    </td>
-                    <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> 
-                      <?php
-                        $p_llevar=0; 
-                        if((remove_junk($sale['llevar_pizza'])!='servirse')&&($sale['tam_pizza']!='porcion')){
-                          if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
-                          else $p_llevar=1.00;
-                        }
-                        $val_e=0;
-                        if($sale['extras']!=null){
-                          $arrayExtras = explode(",", $sale['extras']);  // se obtiene un vector de extras
-                          $cos=costoExtra($sale['tam_pizza']);        //costo de extras en base al tamaño de la pizza
-                          if($sale['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
-                          else{
-                            $auxConta=0;
-                            foreach($listaExtras as $lE){
-                              foreach($arrayExtras as $aE){
-                                if($lE['name']==$aE)  $auxConta++;
+                    <?php if($sale['forma_pago']!='autoconsumo'):?>
+                      <tr>
+                        <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
+                        <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
+                        <td > Pizza <?php echo remove_junk($sale['tam_pizza'])?> <?php echo remove_junk($sale['sabor_pizza']); ?></td>
+                        <td class="text-center">
+                          <?php if (remove_junk($sale['extras'])!==''): ?>
+                          <div class="checkbox">
+                            <label><input onclick="return false;" type="checkbox" value="" checked></label>
+                          </div>
+                          <?php endif; ?>
+                        </td>
+                        <td class="text-center">
+                          <?php if(remove_junk($sale['llevar_pizza'])!='servirse'): ?>
+                            <div class="checkbox">
+                              <label><input onclick="return false;" type="checkbox" value="" checked></label>
+                            </div>
+                          <?php endif; ?>
+                        </td>
+                        <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> 
+                          <?php
+                            $p_llevar=0; 
+                            if((remove_junk($sale['llevar_pizza'])!='servirse')&&($sale['tam_pizza']!='porcion')){
+                              if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
+                              else $p_llevar=1.00;
+                            }
+                            $val_e=0;
+                            if($sale['extras']!=null){
+                              $arrayExtras = explode(",", $sale['extras']);  // se obtiene un vector de extras
+                              $cos=costoExtra($sale['tam_pizza']);        //costo de extras en base al tamaño de la pizza
+                              if($sale['sabor_pizza']!="personalizada")   $val_e=$cos[0]['price']*(count($arrayExtras)); // si no es personalizada solo cuenta y multiplica
+                              else{
+                                $auxConta=0;
+                                foreach($listaExtras as $lE){
+                                  foreach($arrayExtras as $aE){
+                                    if($lE['name']==$aE)  $auxConta++;
+                                  }
+                                }
+                                $val_e=$cos[0]['price']*$auxConta;
                               }
                             }
-                            $val_e=$cos[0]['price']*$auxConta;
-                          }
-                        } 
-                        $p_llevar = (float)$p_llevar*(float)$sale['qty'];        
-                        $val_e = (float)$val_e*(float)$sale['qty']; 
-                        $total1=(float)remove_junk($sale['price'])+$p_llevar+$val_e;
-                        echo number_format((float)$total1, 2, '.', '');
-                      ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
+                            $p_llevar = (float)$p_llevar*(float)$sale['qty'];        
+                            $val_e = (float)$val_e*(float)$sale['qty']; 
+                            $total1=(float)remove_junk($sale['price'])+$p_llevar+$val_e;
+                            echo number_format((float)$total1, 2, '.', '');
+                          ?>
+                        </td>
+                      </tr>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
                 </tbody>
-                  <tr>
-                    <th class="text-center" style="width: 10%;" colspan="5"> Total </th>
-                    <th class="text-center" style="width: 10%;" id="total"> </th>
-                  </tr>
+                <tr>
+                  <th class="text-center" style="width: 10%;" colspan="5"> Total </th>
+                  <th class="text-center" style="width: 10%;" id="total"> </th>
+                </tr>
               </table>
             </div>
           <?php break; ?>
@@ -188,14 +190,16 @@ $page_title = 'Reporte de ventas';
                 </thead>
                 <tbody>
                   <?php foreach ($ventas as $sale):?>
-                  <tr>
-                    <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
-                    <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
-                    <td class="text-center"> <?php echo remove_junk($sale['tam_bebida'])?> </td>
-                    <td class="text-center"> <?php echo remove_junk($sale['sabor_bebida']); ?></td>
-                    <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> <?php echo remove_junk($sale['price']); ?></td>
-                  </tr>
-                <?php endforeach; ?>
+                    <?php if($sale['forma_pago']!='autoconsumo'):?>
+                      <tr>
+                        <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
+                        <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
+                        <td class="text-center"> <?php echo remove_junk($sale['tam_bebida'])?> </td>
+                        <td class="text-center"> <?php echo remove_junk($sale['sabor_bebida']); ?></td>
+                        <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> <?php echo remove_junk($sale['price']); ?></td>
+                      </tr>
+                    <?php endif;?>
+                  <?php endforeach; ?>
                 </tbody>
                   <tr>
                     <th class="text-center" style="width: 10%;" colspan="4"> Total </th>
@@ -217,13 +221,15 @@ $page_title = 'Reporte de ventas';
                 </thead>
                 <tbody>
                   <?php foreach ($ventas as $sale):?>
-                  <tr>
-                    <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
-                    <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
-                    <td class="text-center"> <?php echo remove_junk($sale['nombre_ingre']); ?></td>
-                    <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> <?php echo remove_junk($sale['price']); ?></td>
-                  </tr>
-                <?php endforeach; ?>
+                    <?php if($sale['forma_pago']!='autoconsumo'):?>
+                      <tr>
+                        <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
+                        <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
+                        <td class="text-center"> <?php echo remove_junk($sale['nombre_ingre']); ?></td>
+                        <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> <?php echo remove_junk($sale['price']); ?></td>
+                      </tr>
+                    <?php endif;?>
+                  <?php endforeach; ?>
                 </tbody>
                   <tr>
                     <th class="text-center" style="width: 10%;" colspan="3"> Total </th>
@@ -243,18 +249,19 @@ $page_title = 'Reporte de ventas';
 myFunction();
 
   function myFunction() {
+    "<?php if ($ventas != null):?>";
+      var s = document.getElementById('total');
+      var pri=0;
+      "<?php foreach ($ventas as $sale):?>";
+        "<?php if($sale['forma_pago']!='autoconsumo'):?>";
+        var id = "<?php echo $sale['id']; ?>";
+        
+        pri = pri + Number(document.getElementById("pri"+id).innerHTML);
 
-    var s = document.getElementById('total');
-
-    var pri=0;
-
-    "<?php foreach ($ventas as $sale):?>";
-      var id = "<?php echo $sale['id']; ?>";
-      
-      pri = pri + Number(document.getElementById("pri"+id).innerHTML);
-
-    "<?php endforeach ?>";
-    s.innerHTML =pri.toFixed(2);
+        "<?php endif; ?>";
+      "<?php endforeach ?>";
+      s.innerHTML =pri.toFixed(2);
+    "<?php endif; ?>"; 
   }
 
 </script>

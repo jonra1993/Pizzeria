@@ -126,7 +126,7 @@
             </a>
             <ul class="dropdown-menu">
               <!--li ><a href="profile.php?id=<?php echo (int)$user['id'];?>"><i class="glyphicon glyphicon-user"></i>Perfil</a></li-->
-              <li ><a href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li>
+              <!--li ><a href="edit_account.php" title="edit account"><i class="glyphicon glyphicon-cog"></i>Configuración</a></li-->
               <li ><a href="logout.php"><i class="glyphicon glyphicon-off"></i>Salir</a></li>
             </ul>
             </ul>
@@ -147,15 +147,15 @@
         <div class="page-sidebar navbar-collapse collapse">
           <?php if($user['user_level'] === '1'): ?>
             <!-- admin menu -->
-          <?php include_once('admin_menu.php');?>       <!--Importa opciones de administrador-->
+          <?php include_once('desarrollador_menu.php');?>       <!--Importa opciones de administrador-->
 
           <?php elseif($user['user_level'] === '2'): ?>
             <!-- Special user -->
-          <?php include_once('special_menu.php');?>     <!--Importa opciones de usuario Especial-->
+          <?php include_once('administrador_menu.php');?>     <!--Importa opciones de usuario Especial-->
 
           <?php elseif($user['user_level'] === '3'): ?>
             <!-- User menu -->
-          <?php include_once('user_menu.php');?>        <!--Importa opciones de Usuario-->
+          <?php include_once('vendedor_menu.php');?>        <!--Importa opciones de Usuario-->
           <?php endif;?>
         </div>
       </div> 

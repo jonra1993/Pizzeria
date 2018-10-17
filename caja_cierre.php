@@ -2,7 +2,7 @@
   $page_title = 'Cierre de caja';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(2);
+  page_require_level(3);
 ?>
 <?php
  $year  = date('Y');
@@ -92,7 +92,9 @@ if(isset($_POST['cerrar_caja'])){
      redirect('caja_cierre.php',false);
    }
 }
-if(isset($_POST['no_cerrar'])) $a=1;//redirect('admin.php', false);
+if(isset($_POST['no_cerrar'])){
+  redirect('admin.php', false);
+} 
 
 else{
   if($user['bloqueocaja']==false){
