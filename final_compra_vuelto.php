@@ -106,7 +106,8 @@ $page_title = 'Resumen de venta';
 
   //Contador de ingredientes
   foreach ($ingredientes as $ingre) {
-    ${'ingre_'.$ingre}=contador_ingredientes("venta_ingredientes",$ingre);
+    $nombre_ingred=remove_junk($ingre['nombre_ingre']); 
+    ${'ingre_'.$nombre_ingred}=contador_ingredientes('jamon','venta_ingredientes');
   }
 ?>
     

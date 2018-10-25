@@ -317,7 +317,7 @@ function tableExists($table){
 
   function join_ingredientesVender_table(){
     global $db;
-    $sql  =" SELECT p.id,p.qty, p.nombre_ingre, p.price, p.date, p.user, p.forma_pago";
+   $sql  =" SELECT p.id,p.qty, p.nombre_ingre, p.price, p.date, p.user, p.forma_pago";
    $sql  .=" FROM venta_ingredientes p";                    //Definir la base de datos necesaria
    #$sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
    $sql  .=" ORDER BY p.id ASC";
