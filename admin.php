@@ -142,9 +142,9 @@
     foreach ($caja_mediana1 as $cmediana1){ $v_caja_mediana1=remove_junk($cmediana1['sum(qty)']); if($v_caja_mediana1==NULL)$v_caja_mediana1=0;}
     $caja_grande= contador_cajas1 ('familiar','venta_cajas');
     foreach ($caja_grande as $cgrande){ $v_caja_grande=remove_junk($cgrande['sum(qty)']); if($v_caja_grande==NULL)$v_caja_grande=0;}      
-    $caja_extragrande= contador_cajas1 ('familiar','venta_cajas');
+    $caja_extragrande= contador_cajas1 ('extragrande','venta_cajas');
     foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['sum(qty)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}      
-  
+
     //Contador de Masas
     $masa_porcion=contador_masas('porcion','venta_pizzas');
     foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}

@@ -688,11 +688,20 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     return $db->query($sql);
   }
 
-  //Buscar cantidad de productos aproximados
+    //Buscar cantidad de productos aproximados
   function buscar_productosaprox_table($nombre){
     global $db;
     $sql  ="SELECT p.qtyAproximada FROM products p WHERE p.name = '{$nombre}' LIMIT 1";
    return $db->query($sql);
+  }
+
+  //Revisar ventapizzas
+  function join_venta_pizzas(){
+    global $db;
+    $sql  =" SELECT c.id,c.qty,c.tam_pizza,c.tipo_pizza,c.sabor_pizza,c.extras,c.price,c.forma_pago,c.date,c.user";
+    $sql  .=" FROM venta_pizzas c";
+    $sql  .=" ORDER BY c.date DESC";
+    return find_by_sql($sql);
   }
 
 ?>

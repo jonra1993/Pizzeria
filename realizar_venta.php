@@ -992,7 +992,7 @@
               });
             }
             else if(element.categ=="Caja_pizza"){
-              $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+"caja"
+              $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
               });
               
               $.ajax({url: DOMAIN+"guardar_ventas_cajas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user
@@ -1071,9 +1071,6 @@
         });
 
         //GUARDAR CONSUMO APROXIMADOS DE INGREDIENTES
-        $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
-        });
-
         var totalCompra=document.getElementById('total_compra').value;
         var efectivo=document.getElementById('in_efectivo').value;
         var vuelto=document.getElementById('in_vuelto').value;

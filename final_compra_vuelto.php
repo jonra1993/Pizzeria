@@ -21,6 +21,7 @@ $page_title = 'Resumen de venta';
   $sabor_pizzas=join_tipopizza_table();
   $pizzas_espec=join_pizzaespecilal_table();
   $tam_pizzas= join_tampizza_table();
+  $extra_pizzas=join_extrapizza_table();
 
   $div_personalizada=0;
   $year  = date('Y');
@@ -33,9 +34,28 @@ $page_title = 'Resumen de venta';
   foreach ($caja_mediana1 as $cmediana1){ $v_caja_mediana1=remove_junk($cmediana1['sum(qty)']); if($v_caja_mediana1==NULL)$v_caja_mediana1=0;}
   $caja_grande= contador_cajas1 ('familiar','venta_cajas');
   foreach ($caja_grande as $cgrande){ $v_caja_grande=remove_junk($cgrande['sum(qty)']); if($v_caja_grande==NULL)$v_caja_grande=0;}      
-  $caja_extragrande= contador_cajas1 ('familiar','venta_cajas');
+  $caja_extragrande= contador_cajas1 ('extragrande','venta_cajas');
   foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['sum(qty)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}      
 
+  //Contador de ingrediente extras
+  foreach ($extra_pizzas as $extra){
+    $nombre_extra=remove_junk($extra['name']); 
+    ${'canti_'.$nombre_extra}=0;
+    foreach($ventasPizzas as $vPext){
+      $ingre_extra=remove_junk($vPext['extras']);
+      if($ingre_extra!=NULL && (strpos($ingre_extra,$nombre_extra) !== false )){
+        $tama_extra=remove_junk($vPext['tam_pizza']); 
+        foreach ($tam_pizzas as $tam) {
+          if($tama_extra==(remove_junk($tam['name']))){
+            ${'canti_'.$nombre_extra.'_'.$tama_extra}+=remove_junk($vPext['qty']); 
+          }
+        }    
+      }
+    }
+    // ${'extra'.$nombre_extra}=contador_extras($nombre_extra,'venta_pizzas'));
+    // foreach (${'extra'.$nombre_extra} as $ext){ ${'v_extra_'.$nombre_extra}=remove_junk($ext['sum(qty)']); if(${'v_extra_'.$nombre_extra}==NULL) ${'v_extra_'.$nombre_extra}=0;}
+  }
+  
   //Contador de Masas
   $masa_porcion=contador_masas('porcion','venta_pizzas');
   foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
@@ -149,11 +169,14 @@ $page_title = 'Resumen de venta';
   </div>
 </div>
 <script >
-  alert("<?php echo $ingre_salami?>");
+  //alert("<?php echo $ingre_salami?>");
 
   var DOMAIN = "http://localhost/Pizzeria/";
   //............CONTADOR DE MASAS .................................
   var masas=Number("<?php echo $masa_totales?>");
+  var ingre_queso_porcion=Number("<?php echo $canti_queso_porcion?>");
+  var ingre_queso_mediana=Number("<?php echo $canti_queso_mediana?>");
+  alert(ingre_queso);
     
   //SABORES NORMALES
   var masas_mixta=Number("<?php echo $v_masa_mixta?>");
@@ -195,7 +218,7 @@ $page_title = 'Resumen de venta';
   var val_aprox_CajasMedianas=Number("<?php echo $v_caja_mediana1?>");
   
 
-
+  //Cargar productos a inventario aproxiado
   <?php foreach ($products as $prod) :?>
     $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'<?php echo remove_junk($prod['name']); ?>'+"&p_cantidad="+val_aprox_<?php echo remove_junk($prod['name']); ?>   //Guardar en BD aproximados
     });
