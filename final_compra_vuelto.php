@@ -174,9 +174,18 @@ $page_title = 'Resumen de venta';
   var DOMAIN = "http://localhost/Pizzeria/";
   //............CONTADOR DE MASAS .................................
   var masas=Number("<?php echo $masa_totales?>");
-  var ingre_queso_porcion=Number("<?php echo $canti_queso_porcion?>");
-  var ingre_queso_mediana=Number("<?php echo $canti_queso_mediana?>");
-  alert(ingre_queso);
+  
+  //Contador de ingredientes extras
+  <?php foreach ($extra_pizzas as $extra):?>
+    var nombre_extra="<?php echo remove_junk($extra['name'])?>"; 
+    <?php foreach ($tam_pizzas as $tam):?>
+      var tamano="<?php echo remove_junk($tam['name'])?>";
+      if("<?php echo ${"canti_".$extra['name']."_".$tam['name']}?>"!="")
+        eval("ingre_"+nombre_extra+"_"+tamano+"="+"<?php echo ${"canti_".$extra['name']."_".$tam['name']}?>");
+      else
+        eval("ingre_"+nombre_extra+"_"+tamano+"="+0);
+    <?php endforeach; ?>
+  <?php endforeach; ?>
     
   //SABORES NORMALES
   var masas_mixta=Number("<?php echo $v_masa_mixta?>");
@@ -195,25 +204,30 @@ $page_title = 'Resumen de venta';
   var masas_tradicionalHawayana=Number("<?php echo $v_masa_tradicionalHawayana?>");
   var masas_tradicionalPollo=Number("<?php echo $v_masa_tradicionalPollo?>");
 
+  //-----------------INVENTARIO DE APROXIMADOS-----------------
   var val_aprox_Masas=masas;
   var val_aprox_CajasMedianas=0;
   var val_aprox_CajasGrandes=0;
   var val_aprox_Harina = (0.5*masas).toFixed(2);
-  var val_aprox_Queso = (0.357*masas).toFixed(2);
-  var val_aprox_Jamón = (0.05*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana).toFixed(2);
-  var val_aprox_Mortadela = (0.1*masas_mixta+0.025*masas_amangiare+0.05*masas_tradicionalPollo+0.05*masas_tradicionalHawayana).toFixed(2);
-  var val_aprox_Salami = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana).toFixed(2);
-  var val_aprox_Peperoni = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana).toFixed(2);
-  var val_aprox_Salsa = (0.0625*masas).toFixed(2);
-  var val_aprox_Piña = (0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana).toFixed(2);
-  var val_aprox_Durazno = (0.5*masas_tropical).toFixed(2);   
-  var val_aprox_Pollo = (0.25*masas_pollo+0.125*masas_tradicionalPollo+0.0625*masas_amangiare).toFixed(2); 
+  var val_aprox_Levadura = (0.43*masas).toFixed(2);
+  var val_aprox_Aceite = (0.42*masas).toFixed(2);
+
+  //Con ingredientes extras
+  var val_aprox_Queso = (0.357*masas).toFixed(2)+ingre_queso_porcion+ingre_queso_mediana+ingre_queso_familiar+ingre_queso_extragrande;
   var val_aprox_Champiñones = (0.2*masas_pollo+0.1*masas_tradicionalPollo+0.1*masas_amangiare+0.1*masas_carne+0.2*masas_tocino+0.2*masas_vegetariana).toFixed(2); //+0.2*masas_vegana
+  var val_aprox_Salami = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana).toFixed(2);
+  var val_aprox_Durazno = (0.5*masas_tropical).toFixed(2);   
+  var val_aprox_Piña = (0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana).toFixed(2);
+  var val_aprox_Jamón = (0.05*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana).toFixed(2);
+  var val_aprox_Peperoni = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana).toFixed(2);
+
+  var val_aprox_Mortadela = (0.1*masas_mixta+0.025*masas_amangiare+0.05*masas_tradicionalPollo+0.05*masas_tradicionalHawayana).toFixed(2);
+  var val_aprox_Salsa = (0.0625*masas).toFixed(2);
+  var val_aprox_Pollo = (0.25*masas_pollo+0.125*masas_tradicionalPollo+0.0625*masas_amangiare).toFixed(2); 
   var val_aprox_Carne = (0.22*masas_carne+0.22*masas_criolla+0.22*masas_mexicana).toFixed(2);
   var val_aprox_Tocino = (0.2*masas_tocino+0.05*masas_criolla+0.05*masas_amangiare).toFixed(2);
-  var val_aprox_Aceite = (0.42*masas).toFixed(2);
-  var val_aprox_Levadura = (0.43*masas).toFixed(2);
-
+  
+  
   var val_aprox_CajasGrandes =Number("<?php echo $v_caja_grande;?>")+Number("<?php echo $v_caja_extragrande?>");
   var val_aprox_CajasMedianas=Number("<?php echo $v_caja_mediana1?>");
   
