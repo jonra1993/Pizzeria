@@ -142,9 +142,9 @@
     foreach ($caja_mediana1 as $cmediana1){ $v_caja_mediana1=remove_junk($cmediana1['sum(qty)']); if($v_caja_mediana1==NULL)$v_caja_mediana1=0;}
     $caja_grande= contador_cajas1 ('familiar','venta_cajas');
     foreach ($caja_grande as $cgrande){ $v_caja_grande=remove_junk($cgrande['sum(qty)']); if($v_caja_grande==NULL)$v_caja_grande=0;}      
-    $caja_extragrande= contador_cajas1 ('familiar','venta_cajas');
+    $caja_extragrande= contador_cajas1 ('extragrande','venta_cajas');
     foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['sum(qty)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}      
-  
+
     //Contador de Masas
     $masa_porcion=contador_masas('porcion','venta_pizzas');
     foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
@@ -472,6 +472,18 @@
     var DOMAIN = "http://localhost/Pizzeria/";
     //............CONTADOR DE MASAS .................................
     var masas=Number("<?php echo $masa_totales?>");
+    
+    //Contador de ingredientes extras
+    <?php foreach ($extra_pizzas as $extra):?>
+      var nombre_extra="<?php echo remove_junk($extra['name'])?>"; 
+      <?php foreach ($tam_pizzas as $tam):?>
+        var tamano="<?php echo remove_junk($tam['name'])?>";
+        if("<?php echo ${"canti_".$extra['name']."_".$tam['name']}?>"!="")
+          eval("ingre_"+nombre_extra+"_"+tamano+"="+"<?php echo ${"canti_".$extra['name']."_".$tam['name']}?>");
+        else
+          eval("ingre_"+nombre_extra+"_"+tamano+"="+0);
+      <?php endforeach; ?>
+    <?php endforeach; ?>
 
     //SABORES NORMALES
     var masas_mixta=Number("<?php echo $v_masa_mixta?>");
@@ -490,28 +502,33 @@
     var masas_tradicionalHawayana=Number("<?php echo $v_masa_tradicionalHawayana?>");
     var masas_tradicionalPollo=Number("<?php echo $v_masa_tradicionalPollo?>");
 
+    //-----------------INVENTARIO DE APROXIMADOS-----------------
     var val_aprox_Masas=masas;
     var val_aprox_CajasMedianas=0;
     var val_aprox_CajasGrandes=0;
     var val_aprox_Harina = (0.5*masas).toFixed(2);
-    var val_aprox_Queso = (0.357*masas).toFixed(2);
-    var val_aprox_Jamón = (0.05*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana).toFixed(2);
+    var val_aprox_Levadura = (0.0043*masas).toFixed(2);
+    var val_aprox_Aceite = (0.042*masas).toFixed(2);
+
+    //Con ingredientes extras
+    //Ingrediente que pueden ser agregados como extras
+    var val_aprox_Queso = ((0.357*masas)+(0.047*ingre_queso_porcion)+(0.179*ingre_queso_mediana)+(0.357*ingre_queso_familiar)+(0.45*ingre_queso_extragrande)).toFixed(2);
+    var val_aprox_Champiñones = (0.2*masas_pollo+0.1*masas_tradicionalPollo+0.1*masas_amangiare+0.1*masas_carne+0.2*masas_tocino+0.2*masas_vegetariana+(0.025*ingre_champinones_porcion)+(0.1*ingre_champinones_mediana)+(0.2*ingre_champinones_familiar)+(0.25*ingre_champinones_extragrande)).toFixed(2); //+0.2*masas_vegana
+    var val_aprox_Salami = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana+(0.0125*ingre_salami_porcion)+(0.05*ingre_salami_mediana)+(0.1*ingre_salami_familiar)+(0.13*ingre_salami_extragrande)).toFixed(2);
+    var val_aprox_Durazno = (0.5*masas_tropical+(0.0625*ingre_durazno_porcion)+(0.25*ingre_durazno_mediana)+(0.5*ingre_durazno_familiar)+(0.7*ingre_durazno_extragrande)).toFixed(2);   
+    var val_aprox_Piña = (0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana+(0.0416*ingre_pina_porcion)+(0.166*ingre_pina_mediana)+(0.333*ingre_pina_familiar)+(0.42*ingre_pina_extragrande)).toFixed(2);
+    var val_aprox_Jamón = (0.05*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana+(0.0125*ingre_jamon_porcion)+(0.05*ingre_jamon_mediana)+(0.1*ingre_queso_familiar)+(0.13*ingre_jamon_extragrande)).toFixed(2);
+    var val_aprox_Peperoni = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana+(0.0125*ingre_peperoni_porcion)+(0.05*ingre_peperoni_mediana)+(0.1*ingre_peperoni_familiar)+(0.13*ingre_peperoni_extragrande)).toFixed(2);
+
     var val_aprox_Mortadela = (0.1*masas_mixta+0.025*masas_amangiare+0.05*masas_tradicionalPollo+0.05*masas_tradicionalHawayana).toFixed(2);
-    var val_aprox_Salami = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana).toFixed(2);
-    var val_aprox_Peperoni = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana).toFixed(2);
     var val_aprox_Salsa = (0.0625*masas).toFixed(2);
-    var val_aprox_Piña = (0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana).toFixed(2);
-    var val_aprox_Durazno = (0.5*masas_tropical).toFixed(2);   
     var val_aprox_Pollo = (0.25*masas_pollo+0.125*masas_tradicionalPollo+0.0625*masas_amangiare).toFixed(2); 
-    var val_aprox_Champiñones = (0.2*masas_pollo+0.1*masas_tradicionalPollo+0.1*masas_amangiare+0.1*masas_carne+0.2*masas_tocino+0.2*masas_vegetariana).toFixed(2); //+0.2*masas_vegana
     var val_aprox_Carne = (0.22*masas_carne+0.22*masas_criolla+0.22*masas_mexicana).toFixed(2);
     var val_aprox_Tocino = (0.2*masas_tocino+0.05*masas_criolla+0.05*masas_amangiare).toFixed(2);
-    var val_aprox_Aceite = (0.42*masas).toFixed(2);
-    var val_aprox_Levadura = (0.43*masas).toFixed(2);
-
+    
+    
     var val_aprox_CajasGrandes =Number("<?php echo $v_caja_grande;?>")+Number("<?php echo $v_caja_extragrande?>");
     var val_aprox_CajasMedianas=Number("<?php echo $v_caja_mediana1?>");
-
 
     <?php foreach ($products as $prod) :?>
       $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'<?php echo remove_junk($prod['name']); ?>'+"&p_cantidad="+val_aprox_<?php echo remove_junk($prod['name']); ?>   //Guardar en BD aproximados
