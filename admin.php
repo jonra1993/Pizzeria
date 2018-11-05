@@ -507,17 +507,18 @@
     var val_aprox_CajasMedianas=0;
     var val_aprox_CajasGrandes=0;
     var val_aprox_Harina = (0.5*masas).toFixed(2);
-    var val_aprox_Levadura = (0.43*masas).toFixed(2);
-    var val_aprox_Aceite = (0.42*masas).toFixed(2);
+    var val_aprox_Levadura = (0.0043*masas).toFixed(2);
+    var val_aprox_Aceite = (0.042*masas).toFixed(2);
 
     //Con ingredientes extras
-    var val_aprox_Queso = (0.357*masas).toFixed(2)+ingre_queso_porcion+ingre_queso_mediana+ingre_queso_familiar+ingre_queso_extragrande;
-    var val_aprox_Champiñones = (0.2*masas_pollo+0.1*masas_tradicionalPollo+0.1*masas_amangiare+0.1*masas_carne+0.2*masas_tocino+0.2*masas_vegetariana).toFixed(2); //+0.2*masas_vegana
-    var val_aprox_Salami = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana).toFixed(2);
-    var val_aprox_Durazno = (0.5*masas_tropical).toFixed(2);   
-    var val_aprox_Piña = (0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana).toFixed(2);
-    var val_aprox_Jamón = (0.05*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana).toFixed(2);
-    var val_aprox_Peperoni = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana).toFixed(2);
+    //Ingrediente que pueden ser agregados como extras
+    var val_aprox_Queso = ((0.357*masas)+(0.047*ingre_queso_porcion)+(0.179*ingre_queso_mediana)+(0.357*ingre_queso_familiar)+(0.45*ingre_queso_extragrande)).toFixed(2);
+    var val_aprox_Champiñones = (0.2*masas_pollo+0.1*masas_tradicionalPollo+0.1*masas_amangiare+0.1*masas_carne+0.2*masas_tocino+0.2*masas_vegetariana+(0.025*ingre_champinones_porcion)+(0.1*ingre_champinones_mediana)+(0.2*ingre_champinones_familiar)+(0.25*ingre_champinones_extragrande)).toFixed(2); //+0.2*masas_vegana
+    var val_aprox_Salami = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_napolitana+(0.0125*ingre_salami_porcion)+(0.05*ingre_salami_mediana)+(0.1*ingre_salami_familiar)+(0.13*ingre_salami_extragrande)).toFixed(2);
+    var val_aprox_Durazno = (0.5*masas_tropical+(0.0625*ingre_durazno_porcion)+(0.25*ingre_durazno_mediana)+(0.5*ingre_durazno_familiar)+(0.7*ingre_durazno_extragrande)).toFixed(2);   
+    var val_aprox_Piña = (0.3333*masas_hawayana+0.3333*masas_tropical+0.0833*masas_amangiare+0.1667*masas_tradicionalHawayana+(0.0416*ingre_pina_porcion)+(0.166*ingre_pina_mediana)+(0.333*ingre_pina_familiar)+(0.42*ingre_pina_extragrande)).toFixed(2);
+    var val_aprox_Jamón = (0.05*masas_mixta+0.1*masas_hawayana+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.075*masas_tradicionalHawayana+(0.0125*ingre_jamon_porcion)+(0.05*ingre_jamon_mediana)+(0.1*ingre_queso_familiar)+(0.13*ingre_jamon_extragrande)).toFixed(2);
+    var val_aprox_Peperoni = (0.05*masas_mixta+0.0125*masas_amangiare+0.025*masas_tradicionalPollo+0.025*masas_tradicionalHawayana+0.1*masas_mexicana+(0.0125*ingre_peperoni_porcion)+(0.05*ingre_peperoni_mediana)+(0.1*ingre_peperoni_familiar)+(0.13*ingre_peperoni_extragrande)).toFixed(2);
 
     var val_aprox_Mortadela = (0.1*masas_mixta+0.025*masas_amangiare+0.05*masas_tradicionalPollo+0.05*masas_tradicionalHawayana).toFixed(2);
     var val_aprox_Salsa = (0.0625*masas).toFixed(2);

@@ -156,3 +156,14 @@
 
 </ul>
 <script type="text/javascript" src="assets/jquery-1.10.2.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- <script >
+  $(document).ready(function(){
+      $('li').click(function(){
+          $('li').css('color','black');
+          $(this).css('color', 'green');
+      });
+  });
+  // var selec=document.getElementsByTagName("IL");
+  // selec.style.background= 'yellow';
+</script> -->

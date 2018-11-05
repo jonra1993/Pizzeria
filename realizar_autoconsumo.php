@@ -41,6 +41,9 @@
 </div>
   <!--.......Cuadrados de visualizacion......-->
   <div class="row">
+  <div class="container">
+    <span class="badge badge-success" style="background-color:#AE1D01; color:white; font-weight:bold; margin-bottom: 1%;"><h4> AUTOCONSUMO </h4></span>
+   </div>
   <!--Seleccion de Productos-->
   <div class="col-md-7">
     <div id="cont_categ" class="row">
