@@ -202,7 +202,7 @@
         </div>
         <!-- Sabor de pizza PORCION-->
         <div id="selc_pizzas_sabor_PORCION" class="row justify-content-around" style="display: none;">
-          <?php foreach ($sabor_pizzas as $tip) if ($tmp++ < 4){?>
+          <?php foreach ($sabor_pizzas as $tip) if ($tmp++ < 3){?>
             <div class="col-md-3">
               <div class="card" style="width: 16rem;">
                 <?php if($tip['media_id'] === '0'): ?>
@@ -505,12 +505,18 @@
         venta_aux.push(venta_pizza); 
       }}); 
     }
-    if(tipo=="personalizada")
+    if(tipo=="personalizada"){
       var e = document.getElementById("selc_personalizada");
+      //Titulo de ventana
+      titu_regre.innerText = "Seleccione ingredientes:";
+    }
     else{
       var e = document.getElementById("selc_extra");
       var selc_personalizada = document.getElementById("selc_personalizada");
-      selc_personalizada.style.display = 'none';  
+      selc_personalizada.style.display = 'none'; 
+      //Titulo de ventana
+      titu_regre.innerText = "¿Desea algún ingrediente extra?"; 
+      btn_regre.style.display = 'none';     //Desaparecer boton regresar de ingredientes extras
     }
 
     var sabor_porcion = document.getElementById("selc_pizzas_sabor_PORCION");
@@ -526,13 +532,9 @@
     f.style.display = 'none';
     f2.style.display = 'none';
     g.style.display = 'none';
-    btn_regre.style.display = 'none';     //Desaparecer boton regresar de ingredientes extras
     sabor_porcion.style.display = 'none';
-    //Titulo de ventana
-    titu_regre.innerText = "¿Desea algún ingrediente extra?";
     pizza_vent=3;   //Ventana de servir
     p_id_pizza=(fila_id+1);     //Corrspondencia de pizza con extras
-    // alert(p_id_pizza);
   }
 
   function ingre_extra(extra){
@@ -581,6 +583,7 @@
       agregar_fila(descrip, precio_caja);
       var venta_forma={id:fila_id,id_pizza:p_id_pizza,categ:"Caja_pizza",canti:1,tama:p_tama,precioP:precio_caja};
       venta_aux.push(venta_forma);
+      document.getElementById("canti_"+fila_id).disabled = true;
     }
     //Quitar  el contenedor al finalizar
     var e = document.getElementById("selc_pizzas_forma");
@@ -594,8 +597,6 @@
     //Titulo de ventana
     titu_regre.innerText = "La pizza es para:";
     //Deshabilitar el contador de caja para actulizacion automatica
-    if(p_forma=='llevar')
-      document.getElementById("canti_"+fila_id).disabled = true;
   }
 
 
@@ -864,7 +865,7 @@
     if(tam=='mediana')
       var precio_caja=1;
     else 
-      var precio_caja=1.25;
+      var precio_caja=1;
     
     agregar_fila(descrip, precio_caja);
     var venta_forma={id:fila_id,categ:"Caja_pizza",canti:1,tama:tam,precioP:precio_caja};
