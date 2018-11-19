@@ -439,7 +439,7 @@ function tableExists($table){
  function find_higest_saleing_pizzas($limit,$tama){
    global $db;
    $sql  = "SELECT s.sabor_pizza AS nam, COUNT(s.sabor_pizza) AS totalSold, SUM(s.qty) AS totalQty, SUM(s.price) AS totalprice";
-   $sql .= " FROM venta_pizzas s WHERE s.tam_pizza='{$tama}'" ;
+   $sql .= " FROM venta_pizzas s WHERE s.tam_pizza='{$tama}' AND s.forma_pago<>'autoconsumo'" ;
    $sql .= " GROUP BY s.sabor_pizza";
    $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
    return $db->query($sql);

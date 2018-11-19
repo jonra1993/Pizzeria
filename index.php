@@ -42,7 +42,7 @@ mysql -u root -p oswa_inv < oswa_inv.sql
 
   if($d!=$cc[0]['date']){   //solo actualiza si se ha cambiado el valor
     $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
-    $query .=" conta = 1, date = '{$d}' WHERE id = 1;";
+    $query .=" conta = 0, date = '{$d}' WHERE id = 1;";
     if($db->query($query)){
       foreach ($products as $product) {     
         $qty   = remove_junk($product['quantity']);
