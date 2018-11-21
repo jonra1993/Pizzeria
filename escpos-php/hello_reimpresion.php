@@ -159,11 +159,11 @@ try {
     if($_GET['p_pago']=="efectivo"){
         /* Pulse solo con pagos en efectivo*/    
         $printer -> pulse();
-        $left = str_pad('Efectivo', 28) ;      
+        $left = str_pad('Efectivo', 38) ;      
         $right = str_pad('$ '.number_format((float)$_GET["p_efect"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
         $printer -> text("$left$right\n");
 
-        $left = str_pad('Cambio', 28) ;
+        $left = str_pad('Cambio', 38) ;
         $right = str_pad('$ '.number_format((float)$_GET["p_vuelto"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
         $printer -> text("$left$right\n");
          //$printer -> text("Ef\n");

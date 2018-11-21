@@ -78,7 +78,7 @@
   }
 
   foreach ($ventasIngredientes as $vI){
-    if($vI['forma_pago']!='autoconsumo'){
+    if($vI['forma_pago']!='autoconsumo'&& $vI['nombre_ingre']!='familiar'&&$vI['nombre_ingre']!='mediana'&&$vI['nombre_ingre']!='extragrande'){
       $total3=$total3+(float)remove_junk($vI['price']);
     }
     

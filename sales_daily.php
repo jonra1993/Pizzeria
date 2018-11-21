@@ -189,7 +189,7 @@
                   </thead>
                   <tbody>
                     <?php foreach ($ventas as $sale):?>
-                      <?php if($sale['forma_pago']!='autoconsumo'):?>
+                      <?php if($sale['forma_pago']!='autoconsumo'&& $sale['nombre_ingre']!='familiar'&&$sale['nombre_ingre']!='mediana'&&$sale['nombre_ingre']!='extragrande'):?>
                         <tr>
                           <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
                           <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>
