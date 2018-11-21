@@ -1014,6 +1014,7 @@
               $.ajax({url: DOMAIN+"guardar_ventas_cajas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user
               });
             }
+            
           }
         });
       
