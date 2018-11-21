@@ -1,0 +1,12 @@
+
+$ mysql -u your-user-name -p'Your-password' -h your-hostname
+mysql> show databases;
+mysql> show tables;
+
+
+DROP DATABASE tutorial_database;
+mysql> CREATE DATABASE menagerie;
+
+
+importar tabla 
+ mysql -u username -p  databasename  < path/example.sql
