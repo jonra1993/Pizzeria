@@ -942,8 +942,12 @@
       });
 
       //GUARDAR CONSUMOS APROXIMADOS
-      $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
-      });
+  //     <?php foreach ($products as $prod) :?>
+  //     $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_nombre="+'<?php echo remove_junk($prod['name']); ?>'+"&p_cantidad="+4
+  //     });
+  // <?php endforeach; ?>
+      // $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'Cajas Medianas'+"&p_cantidad="+4   //Guardar en BD aproximados
+      // });
 
       var totalCompra=document.getElementById('total_compra').value;
 
