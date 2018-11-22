@@ -235,10 +235,16 @@ $page_title = 'Resumen de venta';
 
   //Cargar productos a inventario aproxiado
   <?php foreach ($products as $prod) :?>
-    $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'<?php echo remove_junk($prod['name']); ?>'+"&p_cantidad="+val_aprox_<?php echo remove_junk($prod['name']); ?>   //Guardar en BD aproximados
-    });
+    //$.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'<?php echo remove_junk($prod['name']); ?>'+"&p_cantidad="+val_aprox_<?php echo remove_junk($prod['name']); ?>});
   <?php endforeach; ?>
-//--------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------
+
+  var products = <?php echo json_encode( $products); ?>;
+  for ( var prod in products ) 
+  {
+    $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+prod['name']+"&p_cantidad="+val_aprox_+prod['name']});
+  }
+
   pdf_prueb();
   
   function pdf_prueb(){
