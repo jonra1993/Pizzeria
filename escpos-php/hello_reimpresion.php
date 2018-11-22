@@ -73,8 +73,8 @@ class itemcocina
 		$qtyCols = 10;
 		$m = 3;
 		
-		if($this -> llevar) $left = str_pad('LL '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
-		else $left = str_pad('S '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		if($this -> llevar) $left = str_pad('* '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		else $left = str_pad(''.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
 		$middle = str_pad(' ', $m, ' ', STR_PAD_LEFT) ;
 		$right = str_pad($this -> name, $nameCols);
 		return "$left$middle$right\n";
