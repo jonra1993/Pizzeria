@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.9
--- https://www.phpmyadmin.net
+-- version 4.6.6deb4
+-- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 21-11-2018 a las 23:07:04
--- Versión del servidor: 5.6.37
--- Versión de PHP: 7.1.8
+-- Servidor: localhost:3306
+-- Tiempo de generación: 22-11-2018 a las 16:52:08
+-- Versión del servidor: 10.1.23-MariaDB-9+deb9u1
+-- Versión de PHP: 7.0.30-0+deb9u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,13 +26,13 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `catalogo_bebidas`
 --
 
-CREATE TABLE IF NOT EXISTS `catalogo_bebidas` (
+CREATE TABLE `catalogo_bebidas` (
   `id` int(11) NOT NULL,
   `size` varchar(20) NOT NULL,
   `flavor` varchar(20) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `media_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `catalogo_bebidas`
@@ -61,12 +61,12 @@ INSERT INTO `catalogo_bebidas` (`id`, `size`, `flavor`, `price`, `media_id`) VAL
 -- Estructura de tabla para la tabla `catalogo_extras`
 --
 
-CREATE TABLE IF NOT EXISTS `catalogo_extras` (
+CREATE TABLE `catalogo_extras` (
   `id` int(11) NOT NULL,
   `size` varchar(20) NOT NULL,
   `flavor` varchar(20) NOT NULL,
   `price` decimal(25,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `catalogo_extras`
@@ -148,12 +148,12 @@ INSERT INTO `catalogo_extras` (`id`, `size`, `flavor`, `price`) VALUES
 -- Estructura de tabla para la tabla `catalogo_ingredientes`
 --
 
-CREATE TABLE IF NOT EXISTS `catalogo_ingredientes` (
+CREATE TABLE `catalogo_ingredientes` (
   `id` int(11) NOT NULL,
   `nombre` varchar(20) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `media_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `catalogo_ingredientes`
@@ -172,7 +172,7 @@ INSERT INTO `catalogo_ingredientes` (`id`, `nombre`, `price`, `media_id`) VALUES
 -- Estructura de tabla para la tabla `catalogo_pizzas`
 --
 
-CREATE TABLE IF NOT EXISTS `catalogo_pizzas` (
+CREATE TABLE `catalogo_pizzas` (
   `id` int(11) NOT NULL,
   `size` varchar(20) NOT NULL,
   `type` varchar(20) NOT NULL,
@@ -242,11 +242,11 @@ INSERT INTO `catalogo_pizzas` (`id`, `size`, `type`, `flavor`, `price`) VALUES
 -- Estructura de tabla para la tabla `categories`
 --
 
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `categories` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `categories`
@@ -264,18 +264,18 @@ INSERT INTO `categories` (`id`, `name`, `media_id`) VALUES
 -- Estructura de tabla para la tabla `contador`
 --
 
-CREATE TABLE IF NOT EXISTS `contador` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `contador` (
+  `id` int(11) UNSIGNED NOT NULL,
   `conta` int(10) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `contador`
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 0, '2018-11-21');
+(1, 1, '2018-11-22');
 
 -- --------------------------------------------------------
 
@@ -283,11 +283,11 @@ INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
 -- Estructura de tabla para la tabla `extra_pizzas`
 --
 
-CREATE TABLE IF NOT EXISTS `extra_pizzas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `extra_pizzas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `extra_pizzas`
@@ -308,11 +308,11 @@ INSERT INTO `extra_pizzas` (`id`, `name`, `media_id`) VALUES
 -- Estructura de tabla para la tabla `media`
 --
 
-CREATE TABLE IF NOT EXISTS `media` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `media` (
+  `id` int(11) UNSIGNED NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_type` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `media`
@@ -396,13 +396,13 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 -- Estructura de tabla para la tabla `productovender`
 --
 
-CREATE TABLE IF NOT EXISTS `productovender` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `productovender` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `sale_price` decimal(25,2) NOT NULL,
-  `categorie_id` int(11) unsigned NOT NULL,
+  `categorie_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `productovender`
@@ -420,42 +420,42 @@ INSERT INTO `productovender` (`id`, `name`, `sale_price`, `categorie_id`, `media
 -- Estructura de tabla para la tabla `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(11) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL,
+CREATE TABLE `products` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `quantity` decimal(10,2) DEFAULT NULL,
   `unidades` varchar(50) NOT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
-  `categorie_id` int(11) unsigned NOT NULL,
+  `categorie_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL,
   `proveedor_id` int(11) DEFAULT NULL,
   `qtyAproximada` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`, `qtyAproximada`) VALUES
-(1, 'Masas', '0.75', 'Unidad', '0.00', 2, 86, '2018-11-21 00:00:00', 0, '1.00'),
-(2, 'CajasGrandes', '73.00', 'Unidad', '0.00', 2, 88, '2018-11-21 00:00:00', 0, '0.00'),
-(3, 'CajasMedianas', '38.00', 'Unidad', '0.00', 2, 89, '2018-11-21 00:00:00', 0, '2.00'),
-(19, 'Harina', '51.37', 'Kg', '0.70', 4, 20, '2018-11-21 00:00:00', 1, '0.50'),
-(20, 'Queso', '64.69', 'Kg', '4.20', 4, 21, '2018-11-21 00:00:00', 1, '0.36'),
-(21, 'JamÃ³n', '98.37', 'Kg', '5.50', 4, 76, '2018-11-21 00:00:00', 7, '0.10'),
-(22, 'Mortadela', '98.06', 'Kg', '3.12', 4, 71, '2018-11-21 00:00:00', 9, '0.00'),
-(23, 'Salami', '98.96', 'Kg', '5.50', 4, 81, '2018-11-21 00:00:00', 7, '0.00'),
-(24, 'Peperoni', '99.01', 'Kg', '5.50', 4, 78, '2018-11-21 00:00:00', 7, '0.00'),
-(25, 'Salsa', '94.28', 'Balde', '2.00', 4, 82, '2018-11-21 00:00:00', 9, '0.06'),
-(26, 'PiÃ±a', '96.77', 'Unidad', '1.50', 4, 79, '2018-11-21 00:00:00', 10, '0.00'),
-(27, 'Durazno', '100.00', 'latas', '2.60', 4, 75, '2018-11-21 00:00:00', 9, '0.00'),
-(28, 'Pollo', '87.87', 'Unidad', '5.00', 4, 80, '2018-11-21 00:00:00', 12, '0.25'),
-(29, 'ChampiÃ±ones', '90.34', 'Kg', '6.15', 4, 74, '2018-11-21 00:00:00', 4, '0.20'),
-(30, 'Carne', '99.89', 'Kg', '5.60', 4, 73, '2018-11-21 00:00:00', 11, '0.00'),
-(31, 'Tocino', '99.88', 'Kg', '9.50', 4, 70, '2018-11-21 00:00:00', 13, '0.00'),
-(32, 'Aceite', '61.22', 'Litro', '1.39', 4, 72, '2018-11-21 00:00:00', 14, '0.04'),
-(33, 'Levadura', '61.24', 'Kg', '6.50', 4, 77, '2018-11-21 00:00:00', 5, '0.00');
+(1, 'Masas', '-0.25', 'Unidad', '0.00', 2, 86, '2018-11-22 00:00:00', 0, '0.50'),
+(2, 'CajasGrandes', '73.00', 'Unidad', '0.00', 2, 88, '2018-11-22 00:00:00', 0, '0.00'),
+(3, 'CajasMedianas', '36.00', 'Unidad', '0.00', 2, 89, '2018-11-22 00:00:00', 0, '0.00'),
+(19, 'Harina', '50.87', 'Kg', '0.70', 4, 20, '2018-11-22 00:00:00', 1, '0.25'),
+(20, 'Queso', '64.33', 'Kg', '4.20', 4, 21, '2018-11-22 00:00:00', 1, '0.18'),
+(21, 'Jamón', '98.27', 'Kg', '5.50', 4, 76, '2018-11-22 00:00:00', 7, '0.00'),
+(22, 'Mortadela', '98.06', 'Kg', '3.12', 4, 71, '2018-11-22 00:00:00', 9, '0.00'),
+(23, 'Salami', '98.96', 'Kg', '5.50', 4, 81, '2018-11-22 00:00:00', 7, '0.00'),
+(24, 'Peperoni', '99.01', 'Kg', '5.50', 4, 78, '2018-11-22 00:00:00', 7, '0.00'),
+(25, 'Salsa', '94.22', 'Balde', '2.00', 4, 82, '2018-11-22 00:00:00', 9, '0.03'),
+(26, 'Piña', '96.77', 'Unidad', '1.50', 4, 79, '2018-11-22 00:00:00', 10, '0.00'),
+(27, 'Durazno', '100.00', 'latas', '2.60', 4, 75, '2018-11-22 00:00:00', 9, '0.00'),
+(28, 'Pollo', '87.62', 'Unidad', '5.00', 4, 80, '2018-11-22 00:00:00', 12, '0.13'),
+(29, 'Champiñones', '90.14', 'Kg', '6.15', 4, 74, '2018-11-22 00:00:00', 4, '0.10'),
+(30, 'Carne', '99.89', 'Kg', '5.60', 4, 73, '2018-11-22 00:00:00', 11, '0.00'),
+(31, 'Tocino', '99.88', 'Kg', '9.50', 4, 70, '2018-11-22 00:00:00', 13, '0.00'),
+(32, 'Aceite', '61.18', 'Litro', '1.39', 4, 72, '2018-11-22 00:00:00', 14, '0.02'),
+(33, 'Levadura', '61.24', 'Kg', '6.50', 4, 77, '2018-11-22 00:00:00', 5, '0.00');
 
 -- --------------------------------------------------------
 
@@ -463,8 +463,8 @@ INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `cate
 -- Estructura de tabla para la tabla `products_add_records`
 --
 
-CREATE TABLE IF NOT EXISTS `products_add_records` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `products_add_records` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `last_quantity` varchar(20) DEFAULT NULL,
   `new_quantity` varchar(20) NOT NULL,
@@ -474,7 +474,7 @@ CREATE TABLE IF NOT EXISTS `products_add_records` (
   `date` datetime NOT NULL,
   `username` varchar(20) NOT NULL,
   `proveedor_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `products_add_records`
@@ -587,13 +587,13 @@ INSERT INTO `products_add_records` (`id`, `name`, `last_quantity`, `new_quantity
 -- Estructura de tabla para la tabla `proveedores`
 --
 
-CREATE TABLE IF NOT EXISTS `proveedores` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `proveedores` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(20) NOT NULL,
   `address` varchar(150) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `cellphone` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `proveedores`
@@ -618,9 +618,9 @@ INSERT INTO `proveedores` (`id`, `name`, `address`, `phone`, `cellphone`) VALUES
 -- Estructura de tabla para la tabla `sales`
 --
 
-CREATE TABLE IF NOT EXISTS `sales` (
-  `id` int(11) unsigned NOT NULL,
-  `product_id` int(11) unsigned NOT NULL,
+CREATE TABLE `sales` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `date` date NOT NULL
@@ -632,12 +632,12 @@ CREATE TABLE IF NOT EXISTS `sales` (
 -- Estructura de tabla para la tabla `tabla_aperturas_cajas`
 --
 
-CREATE TABLE IF NOT EXISTS `tabla_aperturas_cajas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `tabla_aperturas_cajas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `dinero_apertura` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tabla_aperturas_cajas`
@@ -654,7 +654,8 @@ INSERT INTO `tabla_aperturas_cajas` (`id`, `dinero_apertura`, `date`, `username`
 (8, '20.00', '2018-10-14 22:58:57', 'Admin'),
 (9, '20.00', '2018-10-23 22:08:37', 'Vendedor'),
 (10, '80.00', '2018-11-10 12:03:46', 'Vendedor'),
-(11, '56.00', '2018-11-21 17:59:25', 'Desarrollador');
+(11, '56.00', '2018-11-21 17:59:25', 'Desarrollador'),
+(12, '23.00', '2018-11-22 16:47:56', 'Desarrollador');
 
 -- --------------------------------------------------------
 
@@ -662,8 +663,8 @@ INSERT INTO `tabla_aperturas_cajas` (`id`, `dinero_apertura`, `date`, `username`
 -- Estructura de tabla para la tabla `tabla_cierres_cajas`
 --
 
-CREATE TABLE IF NOT EXISTS `tabla_cierres_cajas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `tabla_cierres_cajas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `dinero_apertura` decimal(25,2) NOT NULL,
   `cobros_en_caja` decimal(25,2) NOT NULL,
   `cobros_con_tarjeta` decimal(25,2) NOT NULL,
@@ -676,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `tabla_cierres_cajas` (
   `saldo` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tabla_cierres_cajas`
@@ -700,12 +701,12 @@ INSERT INTO `tabla_cierres_cajas` (`id`, `dinero_apertura`, `cobros_en_caja`, `c
 -- Estructura de tabla para la tabla `tabla_ingresos_retiros_cajas`
 --
 
-CREATE TABLE IF NOT EXISTS `tabla_ingresos_retiros_cajas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `tabla_ingresos_retiros_cajas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `importe` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tabla_ingresos_retiros_cajas`
@@ -725,11 +726,11 @@ INSERT INTO `tabla_ingresos_retiros_cajas` (`id`, `importe`, `date`, `username`)
 -- Estructura de tabla para la tabla `tam_pizzas`
 --
 
-CREATE TABLE IF NOT EXISTS `tam_pizzas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `tam_pizzas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tam_pizzas`
@@ -747,12 +748,12 @@ INSERT INTO `tam_pizzas` (`id`, `name`, `media_id`) VALUES
 -- Estructura de tabla para la tabla `tipo_esp_pizzas`
 --
 
-CREATE TABLE IF NOT EXISTS `tipo_esp_pizzas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `tipo_esp_pizzas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `tipo_descrip` varchar(100) NOT NULL,
   `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tipo_esp_pizzas`
@@ -770,12 +771,12 @@ INSERT INTO `tipo_esp_pizzas` (`id`, `name`, `tipo_descrip`, `media_id`) VALUES
 -- Estructura de tabla para la tabla `tipo_pizzas`
 --
 
-CREATE TABLE IF NOT EXISTS `tipo_pizzas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `tipo_pizzas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `tipo_descrip` varchar(100) NOT NULL,
   `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tipo_pizzas`
@@ -799,8 +800,8 @@ INSERT INTO `tipo_pizzas` (`id`, `name`, `tipo_descrip`, `media_id`) VALUES
 -- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -810,16 +811,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` datetime DEFAULT NULL,
   `bloqueocaja` tinyint(1) NOT NULL,
   `clave_caja` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`, `clave_caja`) VALUES
-(1, 'Desarrolador', 'desarrollador', '6de7d66eaced8e72f2861d9f821fb0ed5459fea4', 1, 'pzg9wa7o1.jpg', 1, '2018-11-11 12:28:00', 0, '64fe42831a725a1ee99e42f000f7b8433d338dff'),
+(1, 'Desarrolador', 'desarrollador', '6de7d66eaced8e72f2861d9f821fb0ed5459fea4', 1, 'pzg9wa7o1.jpg', 1, '2018-11-22 16:47:38', 1, '64fe42831a725a1ee99e42f000f7b8433d338dff'),
 (2, 'Administrador', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 'no_image.jpg', 1, '2018-11-10 11:46:24', 0, '64fe42831a725a1ee99e42f000f7b8433d338dff'),
-(3, 'Vendedr', 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 3, 'no_image.jpg', 1, '2018-11-10 11:50:38', 0, '64fe42831a725a1ee99e42f000f7b8433d338dff');
+(3, 'Vendedor', 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 3, 'no_image.jpg', 1, '2018-11-10 11:50:38', 0, '64fe42831a725a1ee99e42f000f7b8433d338dff');
 
 -- --------------------------------------------------------
 
@@ -827,12 +828,12 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`
 -- Estructura de tabla para la tabla `user_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `user_groups` (
+CREATE TABLE `user_groups` (
   `id` int(11) NOT NULL,
   `group_name` varchar(150) NOT NULL,
   `group_level` int(11) NOT NULL,
   `group_status` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `user_groups`
@@ -849,8 +850,8 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 -- Estructura de tabla para la tabla `venta_bebidas`
 --
 
-CREATE TABLE IF NOT EXISTS `venta_bebidas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `venta_bebidas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `tam_bebida` varchar(25) NOT NULL,
   `sabor_bebida` varchar(25) NOT NULL,
@@ -866,14 +867,14 @@ CREATE TABLE IF NOT EXISTS `venta_bebidas` (
 -- Estructura de tabla para la tabla `venta_cajas`
 --
 
-CREATE TABLE IF NOT EXISTS `venta_cajas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `venta_cajas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `tama` varchar(25) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -881,8 +882,8 @@ CREATE TABLE IF NOT EXISTS `venta_cajas` (
 -- Estructura de tabla para la tabla `venta_general`
 --
 
-CREATE TABLE IF NOT EXISTS `venta_general` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `venta_general` (
+  `id` int(11) UNSIGNED NOT NULL,
   `orden` int(11) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `pagado` decimal(25,2) NOT NULL,
@@ -890,7 +891,14 @@ CREATE TABLE IF NOT EXISTS `venta_general` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_general`
+--
+
+INSERT INTO `venta_general` (`id`, `orden`, `price`, `pagado`, `vuelto`, `date`, `user`, `forma_pago`) VALUES
+(10, 0, '8.50', '10.00', '1.50', '2018-11-22 16:48:36', 'desarrollador', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -898,15 +906,15 @@ CREATE TABLE IF NOT EXISTS `venta_general` (
 -- Estructura de tabla para la tabla `venta_ingredientes`
 --
 
-CREATE TABLE IF NOT EXISTS `venta_ingredientes` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `venta_ingredientes` (
+  `id` int(11) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `nombre_ingre` varchar(25) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -914,8 +922,8 @@ CREATE TABLE IF NOT EXISTS `venta_ingredientes` (
 -- Estructura de tabla para la tabla `venta_pizzas`
 --
 
-CREATE TABLE IF NOT EXISTS `venta_pizzas` (
-  `id` int(11) unsigned NOT NULL,
+CREATE TABLE `venta_pizzas` (
+  `id` int(11) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `tam_pizza` varchar(25) NOT NULL,
   `tipo_pizza` varchar(25) NOT NULL,
@@ -926,7 +934,14 @@ CREATE TABLE IF NOT EXISTS `venta_pizzas` (
   `forma_pago` varchar(25) NOT NULL,
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_pizzas`
+--
+
+INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza`, `llevar_pizza`, `extras`, `price`, `forma_pago`, `date`, `user`) VALUES
+(10, 1, 'mediana', 'normal', 'pollo', 'servirse', '', '8.50', 'efectivo', '2018-11-22 16:49:00', 'desarrollador');
 
 --
 -- Índices para tablas volcadas
@@ -1107,127 +1122,127 @@ ALTER TABLE `venta_pizzas`
 -- AUTO_INCREMENT de la tabla `catalogo_bebidas`
 --
 ALTER TABLE `catalogo_bebidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `catalogo_extras`
 --
 ALTER TABLE `catalogo_extras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 --
 -- AUTO_INCREMENT de la tabla `catalogo_ingredientes`
 --
 ALTER TABLE `catalogo_ingredientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `contador`
 --
 ALTER TABLE `contador`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `extra_pizzas`
 --
 ALTER TABLE `extra_pizzas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 --
 -- AUTO_INCREMENT de la tabla `productovender`
 --
 ALTER TABLE `productovender`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT de la tabla `products_add_records`
 --
 ALTER TABLE `products_add_records`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tabla_aperturas_cajas`
 --
 ALTER TABLE `tabla_aperturas_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `tabla_cierres_cajas`
 --
 ALTER TABLE `tabla_cierres_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `tabla_ingresos_retiros_cajas`
 --
 ALTER TABLE `tabla_ingresos_retiros_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tam_pizzas`
 --
 ALTER TABLE `tam_pizzas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `tipo_esp_pizzas`
 --
 ALTER TABLE `tipo_esp_pizzas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `tipo_pizzas`
 --
 ALTER TABLE `tipo_pizzas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `user_groups`
 --
 ALTER TABLE `user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `venta_bebidas`
 --
 ALTER TABLE `venta_bebidas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `venta_cajas`
 --
 ALTER TABLE `venta_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Restricciones para tablas volcadas
 --
