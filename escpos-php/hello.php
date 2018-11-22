@@ -210,7 +210,7 @@ try {
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
         $printer -> setEmphasis(false);
         foreach ($itemsco as $item) {
-            if($item!="") $printer -> text($item);
+            if(substr($item, -1)!=" ") $printer -> text($item);
         }
         //efectivo o tarjeta
         //if($_GET["efectivo"]==0) $printer -> text("Tar\n");

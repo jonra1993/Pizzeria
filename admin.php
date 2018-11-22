@@ -479,8 +479,8 @@
 </div>
 
 <script >
-  alert("Prueba");
-  alert("<?php echo $aprox_prod?>");
+  //alert("Prueba");
+  //alert("<?php //echo $aprox_prod?>");
   //if(Number(0)==Number("<?php echo $aprox_prod?>")){
     var DOMAIN = "http://localhost/Pizzeria/";
 
