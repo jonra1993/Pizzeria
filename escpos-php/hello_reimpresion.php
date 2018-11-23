@@ -59,7 +59,7 @@ class itemcocina
 	private $name;
 	private $price;
 	private $llevar;
-	public function __construct($llevar=false,$name = '',  $qty = '')
+	public function __construct($llevar=false,$name = '',  $qty = 'z')
 	{
 		$this -> name = $name;
 		$this -> qty = $qty;
@@ -203,7 +203,7 @@ try {
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
         $printer -> setEmphasis(false);
         foreach ($itemsco as $item) {
-            if(substr($item, -1)!="") $printer -> text($item);
+            if(substr($item,0,1)!="z") $printer -> text($item);
         }
         //efectivo o tarjeta
         //if($_GET["efectivo"]==0) $printer -> text("Tar\n");
