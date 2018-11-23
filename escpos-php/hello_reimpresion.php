@@ -76,8 +76,8 @@ class itemcocina
 	public function __toString()
 	{
 		
-		$nameCols = 35;
-		$qtyCols = 10;
+		$nameCols = 39;
+		$qtyCols = 6;
 		$m = 3;
 		
 		if($this -> llevar) $left = str_pad('* '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;

@@ -10,3 +10,22 @@ mysql> CREATE DATABASE menagerie;
 
 importar tabla 
  mysql -u username -p  databasename  < path/example.sql
+
+
+
+
+
+ Modo Kiosko
+ sudo gedit /home/pi/.config/lxsession/LXDE-pi/autostart
+ añadir @/usr/bin/chromium-browser --kiosk --disable-restore-session-state www.domain.com
+ salir modo kiosko  alt+f4
+
+
+ esconder puntero
+ sudo apt-get install unclutter
+ sudo nano ~/.config/lxsession/LXDE-pi/autostart
+ @unclutter -idle 0.1
+
+
+
+
