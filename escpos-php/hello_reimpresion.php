@@ -58,12 +58,19 @@ class itemcocina
 {
 	private $name;
 	private $price;
-	private $llevar;
-	public function __construct($llevar=false,$name = '',  $qty = 'z')
+    private $llevar;
+    private $imprimir;
+	public function __construct($llevar=false,$name = '',  $qty = '', $imprimir=false)
 	{
 		$this -> name = $name;
 		$this -> qty = $qty;
-		$this -> llevar = $llevar;
+        $this -> llevar = $llevar;
+        $this -> imprimir= $imprimir;
+    }
+    
+    public function GetImprimir()
+	{
+        return $this -> imprimir;
 	}
 	
 	public function __toString()
@@ -80,7 +87,6 @@ class itemcocina
 		return "$left$middle$right\n";
 	}
 }
-
 try {
 
 	//$connector = new WindowsPrintConnector("POS-80");
@@ -108,7 +114,7 @@ try {
         else{
             if(substr($values[$x*4+1], -1)=='L') $ast=true;
             else $ast=false;
-            $itemsco[$x]=new itemcocina($ast,"".$values[$x*4+1],"".(int)$values[$x*4]);
+            $itemsco[$x]=new itemcocina($ast,"".$values[$x*4+1],"".(int)$values[$x*4],true);
             $hayalgo=true;
         }
     }
@@ -203,7 +209,7 @@ try {
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
         $printer -> setEmphasis(false);
         foreach ($itemsco as $item) {
-            if($item[0]!='z') $printer -> text($item);
+            if($item->GetImprimir()) $printer -> text($item);
         }
         //efectivo o tarjeta
         //if($_GET["efectivo"]==0) $printer -> text("Tar\n");
