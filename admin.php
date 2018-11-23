@@ -44,7 +44,7 @@
     if($vP['forma_pago']!='autoconsumo'){
       $p_llevar=0;
       if($vP['llevar_pizza']!='servirse' && $vP['tam_pizza']!='porcion'){
-        if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
+        if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.00;
         else $p_llevar=1.00;
       }
       $val_e=0;

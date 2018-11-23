@@ -17,7 +17,7 @@ importar tabla
 
  Modo Kiosko
  sudo gedit /home/pi/.config/lxsession/LXDE-pi/autostart
- añadir @/usr/bin/chromium-browser --kiosk --disable-restore-session-state www.domain.com
+ añadir @/usr/bin/chromium-browser --kiosk --disable-restore-session-state localhost/Pizzeria
  salir modo kiosko  ctrl+w o alt+f4  
 
 
