@@ -169,8 +169,6 @@ $page_title = 'Resumen de venta';
   </div>
 </div>
 <script >
-  //alert("<?php echo $ingre_salami?>");
-
   var DOMAIN = "http://localhost/Pizzeria/";
   //............CONTADOR DE MASAS .................................
   var masas=Number("<?php echo $masa_totales?>");
