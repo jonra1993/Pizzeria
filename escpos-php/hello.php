@@ -60,23 +60,30 @@ class itemcocina
 {
 	private $name;
 	private $price;
-	private $llevar;
-	public function __construct($llevar=false,$name = '',  $qty = '')
+    private $llevar;
+    private $imprimir;
+	public function __construct($llevar=false,$name = '',  $qty = '', $imprimir=false)
 	{
 		$this -> name = $name;
 		$this -> qty = $qty;
-		$this -> llevar = $llevar;
+        $this -> llevar = $llevar;
+        $this -> imprimir= $imprimir;
+    }
+    
+    public function GetImprimir()
+	{
+        return $this -> imprimir;
 	}
 	
 	public function __toString()
 	{
 		
-		$nameCols = 35;
-		$qtyCols = 10;
+		$nameCols = 39;
+		$qtyCols = 6;
 		$m = 3;
 		
-		if($this -> llevar) $left = str_pad('LL '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
-		else $left = str_pad('S '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		if($this -> llevar) $left = str_pad('* '.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
+		else $left = str_pad(''.$this -> qty, $qtyCols, ' ', STR_PAD_LEFT) ;
 		$middle = str_pad(' ', $m, ' ', STR_PAD_LEFT) ;
 		$right = str_pad($this -> name, $nameCols);
 		return "$left$middle$right\n";
@@ -113,7 +120,7 @@ try {
         else{
             if(substr($values[$x*4+1], -1)=='L') $ast=true;
             else $ast=false;
-            $itemsco[$x]=new itemcocina($ast,"".$values[$x*4+1],"".(int)$values[$x*4]);
+            $itemsco[$x]=new itemcocina($ast,"".$values[$x*4+1],"".(int)$values[$x*4],true);
             $hayalgo=true;
         }
     }
@@ -160,21 +167,22 @@ try {
     $printer -> text("$left$right\n");
     $printer -> selectPrintMode();
 
+    
     //efectivo o tarjeta
     if($_GET['p_pago']=="efectivo"){
-            /* Pulse solo con pagos en efectivo*/    
+        /* Pulse solo con pagos en efectivo*/    
         $printer -> pulse();
-        $left = str_pad('Efectivo', 14) ;
-        $right = str_pad('$ '.$_GET["p_efect"], 10, ' ', STR_PAD_LEFT);
+        $left = str_pad('Efectivo', 38) ;      
+        $right = str_pad('$ '.number_format((float)$_GET["p_efect"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
         $printer -> text("$left$right\n");
 
-        $left = str_pad('Cambio', 14) ;
-        $right = str_pad('$ '.$_GET["p_vuelto"], 10, ' ', STR_PAD_LEFT);
+        $left = str_pad('Cambio', 38) ;
+        $right = str_pad('$ '.number_format((float)$_GET["p_vuelto"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
         $printer -> text("$left$right\n");
-
-        //$printer -> text("Ef\n");
+         //$printer -> text("Ef\n");
     } 
     else $printer -> text("Tar\n");
+
 
     /* Footer */
     $printer -> feed(1);
@@ -209,7 +217,7 @@ try {
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
         $printer -> setEmphasis(false);
         foreach ($itemsco as $item) {
-            if($item!="") $printer -> text($item);
+            if($item->GetImprimir()) $printer -> text($item);
         }
         //efectivo o tarjeta
         //if($_GET["efectivo"]==0) $printer -> text("Tar\n");

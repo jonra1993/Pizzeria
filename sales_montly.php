@@ -126,7 +126,7 @@
                             <?php
                               $p_llevar=0; 
                               if((remove_junk($sale['llevar_pizza'])!='servirse')&&($sale['tam_pizza']!='porcion')){
-                                if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.25;
+                                if(remove_junk($sale['tam_pizza'])=='familiar'||remove_junk($sale['tam_pizza'])=='extragrande') $p_llevar=1.00;
                                 else $p_llevar=1.00;
                               }
                               $val_e=0;
@@ -206,7 +206,7 @@
                   </thead>
                   <tbody>
                     <?php foreach ($ventas as $sale):?>
-                      <?php if($sale['forma_pago']!='autoconsumo'):?>
+                      <?php if($sale['forma_pago']!='autoconsumo'&& $sale['nombre_ingre']!='familiar'&&$sale['nombre_ingre']!='mediana'&&$sale['nombre_ingre']!='extragrande'):?>
                         <tr>
                           <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
                           <td class="text-center"> <?php echo remove_junk($sale['qty']); ?></td>

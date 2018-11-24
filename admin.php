@@ -44,7 +44,7 @@
     if($vP['forma_pago']!='autoconsumo'){
       $p_llevar=0;
       if($vP['llevar_pizza']!='servirse' && $vP['tam_pizza']!='porcion'){
-        if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.25;
+        if($vP['tam_pizza']=='familiar'||$vP['tam_pizza']=='extragrande') $p_llevar=1.00;
         else $p_llevar=1.00;
       }
       $val_e=0;
@@ -78,7 +78,7 @@
   }
 
   foreach ($ventasIngredientes as $vI){
-    if($vI['forma_pago']!='autoconsumo'){
+    if($vI['forma_pago']!='autoconsumo'&& $vI['nombre_ingre']!='familiar'&&$vI['nombre_ingre']!='mediana'&&$vI['nombre_ingre']!='extragrande'){
       $total3=$total3+(float)remove_junk($vI['price']);
     }
     
@@ -120,7 +120,8 @@
   //Variable de aproximado de productos
   $aprox_prod=1;
 
-  if(isset($_GET['p_aproximado'])) {
+  if(isset($_GET['p_aproximado'])) 
+  {
     $aprox_prod=$_GET['p_aproximado'];
 
     $products = join_product_table();
@@ -195,6 +196,22 @@
         ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor;
       }
     }
+  
+    //Tipo Normal
+    foreach ($sabor_pizzas as $sab) {
+      $nombre_sab=remove_junk($sab['name']); 
+      foreach ($tam_pizzas as $tam) {
+        $nombre_tam=remove_junk($tam['name']);
+        ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
+        foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
+      }
+      ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor+(float)${'v_masa_personalizada_'.$nombre_sab};
+  
+      if($div_personalizada!=0){        //Evitar division para cero si el numero de div de personalizada es 0
+        ${'v_masa_'.$nombre_sab}+=(1/(float)$div_personalizada)*(${'v_masa_perso_'.$nombre_sab});   //Sumar la parte de pizza personalizada
+      }
+    }
+    
   
     //Tipo Normal
     foreach ($sabor_pizzas as $sab) {
@@ -462,8 +479,8 @@
 </div>
 
 <script >
-  alert("Prueba");
-  alert("<?php echo $aprox_prod?>");
+  //alert("Prueba");
+  //alert("<?php //echo $aprox_prod?>");
   //if(Number(0)==Number("<?php echo $aprox_prod?>")){
     var DOMAIN = "http://localhost/Pizzeria/";
 
