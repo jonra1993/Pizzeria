@@ -298,7 +298,7 @@
         </div>
         <!-- Pizza Personalizada -->
         <div id="selc_personalizada" class="row justify-content-around" style="display: none;">
-          <form class="form-horizontal" onsubmit="ingre_especial();">
+          <form class="form-horizontal" id="formulario-perso" onsubmit="ingre_especial1();">
             <?php for ($x = 1; $x <= 4; $x++) { ?>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" style="width: 150px;">Ingrediente <?php echo $x ?></label>
@@ -702,6 +702,7 @@
         btn_cont.disabled=false;
         break;
     }
+    document.getElementById("formulario-perso").reset();
   }
 
   function eliminar_fila(tr_id) {
@@ -830,7 +831,7 @@
     }
   }
 
-  function ingre_especial(){
+  function ingre_especial1(){
     var ingre=0;
     var ingre_esp=[];
     for(k=1;k<=4;k++){
@@ -851,6 +852,7 @@
       ingre_esp=[];
       alert("Numero de ingredientes insuficientes");
     }
+    document.getElementById("formulario-perso").reset();
     event.preventDefault();     //Evitar refresh de pagina tras submit
   }
 
