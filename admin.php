@@ -481,7 +481,7 @@
 <script >
   //alert("Prueba");
   //alert("<?php //echo $aprox_prod?>");
-  //if(Number(0)==Number("<?php echo $aprox_prod?>")){
+  if(Number(0)==Number("<?php echo $aprox_prod?>")){
     var DOMAIN = "http://localhost/Pizzeria/";
 
     //............CONTADOR DE MASAS .................................
@@ -550,7 +550,7 @@
       $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'<?php echo remove_junk($prod['name']); ?>'+"&p_cantidad="+val_aprox_<?php echo remove_junk($prod['name']); ?>   //Guardar en BD aproximados
       });
     <?php endforeach; ?>
-  //} 
+  } 
 </script>
 
 <?php include_once('layouts/footer.php'); ?>
