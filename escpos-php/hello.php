@@ -1,11 +1,13 @@
 <?php
-// require_once('includes/load.php');
+require_once('includes/load.php');
 
-// $cc = find_conta('contador');
-// $contador=$cc[0]['conta'];
+$cc = find_conta('contador');
+$contador=$cc[0]['conta'];
 
+?>
 
-function redirect($url, $permanent = false)
+<?php
+function redirect1($url, $permanent = false)
 {
     if (headers_sent() === false)
     {
@@ -245,19 +247,17 @@ try {
 
     $comandos='&servir='.$_GET["servir"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
 
-    redirect('../final_compra_vuelto.php?status=siImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
+    redirect1('../final_compra_vuelto.php?status=siImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
 	
-	//redirect('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
+	//redirect1('../admin.php?status=siImpreso',false);  //cambiar a donde se quiere que vaya venta
 
 }
 catch (Exception $e) {
     echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";    
-    //redirect('../realizar_venta.php?status=noImpreso',false);
+    //redirect1('../realizar_venta.php?status=noImpreso',false);
     $comandos='&servir='.$_GET["servir"].'&orden='.$_GET["orden"].'&date1='.$_GET["date1"];
-    redirect('../final_compra_vuelto.php?status=noImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
+    redirect1('../final_compra_vuelto.php?status=noImpreso&p_efect='.$_GET["p_efect"].'&p_vuelto='.$_GET["p_vuelto"].'&p_pago='.$_GET["p_pago"].'&numorden='.$_GET["numorden"].'&subtotal='.$_GET["subtotal"].'&date='. $_GET["date"].'&user='. $_GET["user"].$comandos,false);  //cambiar a donde se quiere que vaya venta
 
 }
-
- 
 
 ?>
