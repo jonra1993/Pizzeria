@@ -112,12 +112,17 @@ try {
     $hayalgo_comp=false;
     $k=(sizeof($values)/4);
     for($x = 0; $x < $k; $x++){
-        if(stristr($values[$x*4+1],"porcion") == false && $hayalgo_comp==false){
+        if(stristr($values[$x*4+1],"porcion") == false){
             $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
             $hayalgo_comp=true;
         }
-        else
-            $items[$x]=new item();
+        else{
+            if($hayalgo_comp==false)
+                $items[$x]=new item();
+            else
+                $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
+            
+        } 
     }
 
     $hayalgo=false;

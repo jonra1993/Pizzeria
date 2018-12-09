@@ -1110,7 +1110,6 @@
         //setTimeout("contador_Masas()",3000);
 
         //manda a imprimir
-        // numorden='<?php $contador=$contador+1; echo $contador;?>';
         var win = window.open("escpos-php/hello.php?"+"servir="+servir+"&"+"numorden="+numorden+"&"+"user="+user+"&"+"date="+date+"&"+"subtotal="+totalCompra+"&"+"orden="+str_get2+"&"+"date1="+date1+"&p_efect="+efectivo+"&p_vuelto="+vuelto+"&p_pago="+p_pago,"_SELF"); // will open new tab on document ready
       }
     }
