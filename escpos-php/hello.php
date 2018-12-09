@@ -107,13 +107,15 @@ try {
     $items = array();
     $k=(sizeof($values)/4);
     for($x = 0; $x < $k; $x++){
-        $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
+        if(stristr($values[$x*4+1],"porcion") == false){
+            $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
+        }
     }
 
     $hayalgo=false;
     $itemsco = array();
-    for($x = 0; $x < $k; $x++){
-        if(substr($values[$x*4+1],0,1)=="C"||substr($values[$x*4+1],0,1)=="I"){
+    for($x = 0; $x < $k; $x++){  
+        if(substr($values[$x*4+1],0,1)=="C"||substr($values[$x*4+1],0,1)=="I"||stristr($values[$x*4+1],"porcion") == true){
             //||substr($values[$x*4+1],0,1)=="B"
             $itemsco[$x]=new itemcocina();
         }
