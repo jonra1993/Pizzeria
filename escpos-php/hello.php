@@ -105,11 +105,15 @@ try {
 	    /* Information for the receipt */
     $values = explode(",", $_GET["orden"]);
     $items = array();
+    $hayalgo_comp=false;
     $k=(sizeof($values)/4);
     for($x = 0; $x < $k; $x++){
         if(stristr($values[$x*4+1],"porcion") == false){
             $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
+            $hayalgo_comp=true;
         }
+        else
+            $items[$x]=new item();
     }
 
     $hayalgo=false;
@@ -127,74 +131,77 @@ try {
         }
     }
 
-    /* Name of shop */
-    $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-    $printer -> text("PIZZERIA AMANGIARE.\n");
-    $printer -> selectPrintMode();
-    /* Title of receipt */
-    $printer -> setEmphasis(true);
-    $printer -> feed(1);
-    $numOrden=$_GET["numorden"];
-    $printer -> text("Orden# $numOrden\n");
-    $printer -> setEmphasis(false);
-    /* Header */
-    $printer -> setJustification(Printer::JUSTIFY_LEFT);
-    $printer -> setEmphasis(true);
-    $printer -> feed(1);
-    $printer -> text("Dir: ");
-    $printer -> setEmphasis(false);
-    $printer -> text("Conocoto, Montufar 889 y Garcia Moreno \n");
-    $printer -> setEmphasis(true);
-    $printer -> text("Telf: ");
-    $printer -> setEmphasis(false);
-    $printer -> text("02-2073707\n");
-    $printer -> setEmphasis(true);
-    $printer -> text("Fecha: ");
-    $printer -> setEmphasis(false);
-    $date=$_GET["date"];
-    $printer -> text("$date\n");
-    $printer -> text("================================================");
-    $printer -> setEmphasis(true);
-    $printer -> text(new item('Descrip.', 'Cant.', 'Val.'));
-    /* Items */
-    $printer -> setEmphasis(false);
-    foreach ($items as $item) {
-        $printer -> text($item);
-    }
+    if($hayalgo_comp){
+        /* Name of shop */
+        $printer -> setJustification(Printer::JUSTIFY_CENTER);
+        $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+        $printer -> text("PIZZERIA AMANGIARE.\n");
+        $printer -> selectPrintMode();
+        /* Title of receipt */
+        $printer -> setEmphasis(true);
+        $printer -> feed(1);
+        $numOrden=$_GET["numorden"];
+        $printer -> text("Orden# $numOrden\n");
+        $printer -> setEmphasis(false);
+        /* Header */
+        $printer -> setJustification(Printer::JUSTIFY_LEFT);
+        $printer -> setEmphasis(true);
+        $printer -> feed(1);
+        $printer -> text("Dir: ");
+        $printer -> setEmphasis(false);
+        $printer -> text("Conocoto, Montufar 889 y Garcia Moreno \n");
+        $printer -> setEmphasis(true);
+        $printer -> text("Telf: ");
+        $printer -> setEmphasis(false);
+        $printer -> text("02-2073707\n");
+        $printer -> setEmphasis(true);
+        $printer -> text("Fecha: ");
+        $printer -> setEmphasis(false);
+        $date=$_GET["date"];
+        $printer -> text("$date\n");
+        $printer -> text("================================================");
+        $printer -> setEmphasis(true);
+        $printer -> text(new item('Descrip.', 'Cant.', 'Val.'));
+        /* Items */
+        $printer -> setEmphasis(false);
+        foreach ($items as $item) {
+            $printer -> text($item);
+        }
 
-    $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-    $left = str_pad('Total', 14) ;
-    $right = str_pad('$ '.$_GET["subtotal"], 10, ' ', STR_PAD_LEFT);
-    $printer -> text("$left$right\n");
-    $printer -> selectPrintMode();
+        $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+        $left = str_pad('Total', 14) ;
+        $right = str_pad('$ '.$_GET["subtotal"], 10, ' ', STR_PAD_LEFT);
+        $printer -> text("$left$right\n");
+        $printer -> selectPrintMode();
 
+        
+        //efectivo o tarjeta
+        if($_GET['p_pago']=="efectivo"){
+            /* Pulse solo con pagos en efectivo*/    
+            $printer -> pulse();
+            $left = str_pad('Efectivo', 38) ;      
+            $right = str_pad('$ '.number_format((float)$_GET["p_efect"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
+            $printer -> text("$left$right\n");
+
+            $left = str_pad('Cambio', 38) ;
+            $right = str_pad('$ '.number_format((float)$_GET["p_vuelto"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
+            $printer -> text("$left$right\n");
+            //$printer -> text("Ef\n");
+        } 
+        else $printer -> text("Tar\n");
+
+
+        /* Footer */
+        $printer -> feed(1);
+        $printer -> setJustification(Printer::JUSTIFY_CENTER);
+        $printer -> text("------Muchas gracias por preferirnos------\n");
+        $printer -> setJustification();
     
-    //efectivo o tarjeta
-    if($_GET['p_pago']=="efectivo"){
-        /* Pulse solo con pagos en efectivo*/    
-        $printer -> pulse();
-        $left = str_pad('Efectivo', 38) ;      
-        $right = str_pad('$ '.number_format((float)$_GET["p_efect"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
-        $printer -> text("$left$right\n");
-
-        $left = str_pad('Cambio', 38) ;
-        $right = str_pad('$ '.number_format((float)$_GET["p_vuelto"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
-        $printer -> text("$left$right\n");
-         //$printer -> text("Ef\n");
-    } 
-    else $printer -> text("Tar\n");
-
-
-    /* Footer */
-    $printer -> feed(1);
-    $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> text("------Muchas gracias por preferirnos------\n");
-    $printer -> setJustification();
- 
-    /* Cut */
-    $printer -> feed(1);
-    $printer -> cut();
+        /* Cut */
+        $printer -> feed(1);
+        $printer -> cut();
+    }
+    
 
     if($hayalgo){
         /* Name of shop */
