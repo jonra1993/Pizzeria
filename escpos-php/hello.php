@@ -1,10 +1,9 @@
 <?php
-require_once('includes/load.php');
+    require_once('includes/load.php');
 
-$cc = find_conta('contador');
-$contador=$cc[0]['conta'];
-$impresion=false;
-
+    $cc = find_conta('contador');
+    $contador=$cc[0]['conta'];
+    $impresion=false;
 ?>
 
 <?php
@@ -98,15 +97,11 @@ try {
 
 	//$connector = new WindowsPrintConnector("POS-80");
 	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
-	$printer = new Printer($connector);
+    $printer = new Printer($connector);
+    
 	/* Initialize */
 	$printer -> initialize();
-	/* Text */
-	//$printer -> text("Hello world\n");
 
-	/* Always close the printer! On some PrintConnectors, no actual
-	 * data is sent until the printer is closed. */
-        /* Information for the receipt */
     //Convertir orden en filas de productos
     $values = explode(",", $_GET["orden"]);
     $items = array();
@@ -130,7 +125,6 @@ try {
     $itemsco = array();
     for($x = 0; $x < $k; $x++){  
         if(substr($values[$x*4+1],0,1)=="C"||substr($values[$x*4+1],0,1)=="I"||stristr($values[$x*4+1],"porcion") == true){
-            //||substr($values[$x*4+1],0,1)=="B"
             $itemsco[$x]=new itemcocina();
         }
         else{
@@ -252,7 +246,10 @@ try {
 
     if($impresion=true){
         //AUMENTAR EL CONTADOR DE ORDENES
-        $contador=$contador+1;
+        $contador++;
+        $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
+        $query .=" conta = '{$contador}' WHERE id = 1;";
+        if($db->query($query)){}
     }
 
     $printer -> close();
