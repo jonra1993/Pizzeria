@@ -2,7 +2,8 @@
 /*--------------------------------------------------------------*/
 /* Function for redirect
 /*--------------------------------------------------------------*/
-
+$cc = find_conta('contador');
+$contador=$cc[0]['conta'];
 
 function redirect($url, $permanent = false)
 {
@@ -102,13 +103,14 @@ try {
 
 	/* Always close the printer! On some PrintConnectors, no actual
 	 * data is sent until the printer is closed. */
-	    /* Information for the receipt */
+        /* Information for the receipt */
+    //Convertir orden en filas de productos
     $values = explode(",", $_GET["orden"]);
     $items = array();
     $hayalgo_comp=false;
     $k=(sizeof($values)/4);
     for($x = 0; $x < $k; $x++){
-        if(stristr($values[$x*4+1],"porcion") == false){
+        if(stristr($values[$x*4+1],"porcion") == false && $hayalgo_comp==false){
             $items[$x]=new item("".$values[$x*4+1],"".(int)$values[$x*4], "".number_format((float)$values[$x*4+3], 2, '.', ''));
             $hayalgo_comp=true;
         }
@@ -140,7 +142,7 @@ try {
         /* Title of receipt */
         $printer -> setEmphasis(true);
         $printer -> feed(1);
-        $numOrden=$_GET["numorden"];
+        $numOrden=$contador;
         $printer -> text("Orden# $numOrden\n");
         $printer -> setEmphasis(false);
         /* Header */
@@ -178,7 +180,7 @@ try {
         //efectivo o tarjeta
         if($_GET['p_pago']=="efectivo"){
             /* Pulse solo con pagos en efectivo*/    
-            $printer -> pulse();
+            // $printer -> pulse();
             $left = str_pad('Efectivo', 38) ;      
             $right = str_pad('$ '.number_format((float)$_GET["p_efect"], 2, '.', ''), 10, ' ', STR_PAD_LEFT);
             $printer -> text("$left$right\n");
@@ -201,6 +203,7 @@ try {
         $printer -> feed(1);
         $printer -> cut();
     }
+    $printer -> pulse();
     
 
     if($hayalgo){
@@ -235,8 +238,8 @@ try {
         $printer -> feed(1);
         $printer -> cut();   
     }
-
- 
+    //AUMENTAR EL CONTADOR
+    $contador=$contador+1;
 
     $printer -> close();
 
