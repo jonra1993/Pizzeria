@@ -1,9 +1,9 @@
 <?php
-/*--------------------------------------------------------------*/
-/* Function for redirect
-/*--------------------------------------------------------------*/
-$cc = find_conta('contador');
-$contador=$cc[0]['conta'];
+// require_once('includes/load.php');
+
+// $cc = find_conta('contador');
+// $contador=$cc[0]['conta'];
+
 
 function redirect($url, $permanent = false)
 {
