@@ -209,6 +209,9 @@ try {
         /* Cut */
         $printer -> feed(1);
         $printer -> cut();
+        
+        //AUMENTAR EL CONTADOR DE ORDENES
+        $contador=$contador+1;
     }
     $printer -> pulse();
     
@@ -221,7 +224,7 @@ try {
         /* Title of receipt */
         $printer -> setEmphasis(true);
         $printer -> feed(1);
-        $numOrden=$_GET["numorden"];
+        $numOrden=$contador;
         $printer -> text("Orden# $numOrden\n");
         $printer -> feed(1);
         $printer -> selectPrintMode();
@@ -245,8 +248,6 @@ try {
         $printer -> feed(1);
         $printer -> cut();   
     }
-    //AUMENTAR EL CONTADOR
-    $contador=$contador+1;
 
     $printer -> close();
 
