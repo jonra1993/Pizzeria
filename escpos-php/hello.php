@@ -3,6 +3,7 @@ require_once('includes/load.php');
 
 $cc = find_conta('contador');
 $contador=$cc[0]['conta'];
+$impresion=false;
 
 ?>
 
@@ -209,9 +210,9 @@ try {
         /* Cut */
         $printer -> feed(1);
         $printer -> cut();
-        
-        //AUMENTAR EL CONTADOR DE ORDENES
-        $contador=$contador+1;
+
+        //Variable asegurarse q se imprime para aumentar el contador
+        $impresion=true;
     }
     $printer -> pulse();
     
@@ -247,6 +248,11 @@ try {
         /* Cut */
         $printer -> feed(1);
         $printer -> cut();   
+    }
+
+    if($impresion=true){
+        //AUMENTAR EL CONTADOR DE ORDENES
+        $contador=$contador+1;
     }
 
     $printer -> close();
