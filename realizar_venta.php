@@ -702,6 +702,7 @@
         btn_cont.disabled=false;
         break;
     }
+    document.getElementById("formulario-perso").reset();
   }
 
   function eliminar_fila(tr_id) {

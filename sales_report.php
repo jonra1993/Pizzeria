@@ -4,6 +4,7 @@ $page_title = 'Reporte de ventas';
   // Checkin What level user has permission to view this page
   page_require_level(3);
   $categorias = join_categories_table();
+  $listaExtras=buscar_catalogo("extra_pizzas");
 ?>
 
 <?php
