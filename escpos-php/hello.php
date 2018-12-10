@@ -215,7 +215,7 @@ try {
         /* Name of shop */
         $printer -> setJustification(Printer::JUSTIFY_CENTER);
         $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-        $printer -> text("PIZZERIA AMANGIARE.\n");
+        // $printer -> text("PIZZERIA AMANGIARE.\n");
         /* Title of receipt */
         $printer -> setEmphasis(true);
         $printer -> feed(1);
@@ -232,7 +232,8 @@ try {
         $printer -> text(new itemcocina(false, 'Descrip.', 'Cant.'));
         /* Items */
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
-        $printer -> setEmphasis(false);
+        $printer -> setEmphasis(true);
+        $printer -> feed(1);
         foreach ($itemsco as $item) {
             if($item->GetImprimir()) $printer -> text($item);
         }
