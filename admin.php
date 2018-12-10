@@ -95,6 +95,8 @@
   $products_sold_extragrande   = find_higest_saleing_pizzas('3','extragrande');
   $extra_pizzas=join_extrapizza_table();
 
+  $tam_pizzas=buscar_catalogo("tam_pizzas");
+
   $recent_products = find_bajostock_product();
 
   $recent_sales    = find_recent_sale_added('5');
