@@ -221,7 +221,6 @@ try {
         // $printer -> feed(1);
         $numOrden=$contador;
         $printer -> text("Orden# $numOrden\n");
-        $printer -> feed(1);
         $printer -> selectPrintMode();
         $printer -> setEmphasis(true);
         $printer -> text("Fecha: ");
