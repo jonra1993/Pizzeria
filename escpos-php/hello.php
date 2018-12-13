@@ -232,7 +232,7 @@ try {
         // $printer -> text(new itemcocina(false, 'Descrip.', 'Cant.'));
         /* Items */
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
-        $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
+        $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
         $printer -> setEmphasis(true);
         foreach ($itemsco as $item) {
             if($item->GetImprimir()) $printer -> text($item);
