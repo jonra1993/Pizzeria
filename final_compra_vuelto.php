@@ -236,7 +236,7 @@ $page_title = 'Resumen de venta';
     $.ajax({url: DOMAIN+"guardar_invent_aprox.php?p_producto="+'<?php echo remove_junk($prod["name"]); ?>'+"&p_cantidad="+val_aprox_<?php echo remove_junk($prod["name"]); ?>});
   <?php endforeach; ?>
   //--------------------------------------------------------------------------------------
-  pdf_prueb();
+  //pdf_prueb();
   
   function pdf_prueb(){
     //window.open(DOMAIN+"realizar_venta.php","_self");

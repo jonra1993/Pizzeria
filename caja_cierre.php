@@ -10,6 +10,7 @@
  $day = date('d');
 
 $user = current_user();
+//Encontrar fecha
 $open=find_last_open_box();
 $ingresos_cajas = find_sum_ingresos_caja($year,$month,$day);
 $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
@@ -17,6 +18,7 @@ $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 $ventasRealizadas_e=0;
 $ventasRealizadas_t=0;
 $ventasAutoconsumo=0;
+//$efectivo=VentasRealizadas('2018-12-12 21:24:58','venta_general','efectivo');
 $efectivo=VentasRealizadas($open['date'],'venta_general','efectivo');
 foreach ($efectivo as $vB){
   $ventasRealizadas_e=$ventasRealizadas_e+(float)remove_junk($vB['price']);
