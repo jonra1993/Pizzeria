@@ -8,13 +8,16 @@
     $forma=$_GET['p_pago'];
 
     $cc = find_conta('contador');
-    $contador=$cc[0]['conta'];
+    $contador;
+    foreach($cc as $c){
+      $contador=$c['conta'];
+      $contador=$cc[0]['conta'];
     }
 
-    //$contador++;
-    // $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
-    // $query .=" conta = '{$contador}' WHERE id = 1;";
-    // if($db->query($query)){}
+    $contador++;
+    $query = "UPDATE contador SET ";        //Insertar la BD en la memoria de usuario
+    $query .=" conta = '{$contador}' WHERE id = 1;";
+    if($db->query($query)){}
 
     GuardarVentasGenerales($_GET["numorden"], $_GET["subtotal"], $_GET["p_efect"],$_GET["p_vuelto"],$_GET["date"], $_GET["user"], $_GET["p_pago"]);     
   }

@@ -233,7 +233,7 @@ try {
         /* Items */
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
         $printer -> setEmphasis(true);
-        $printer -> feed(1);
+        $printer -> feed(2);
         foreach ($itemsco as $item) {
             if($item->GetImprimir()) $printer -> text($item);
         }
