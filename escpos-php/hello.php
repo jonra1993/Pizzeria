@@ -210,15 +210,15 @@ try {
     }
     $printer -> pulse();
     
-
+    //PAPEL DE COCINA
     if($hayalgo){
         /* Name of shop */
         $printer -> setJustification(Printer::JUSTIFY_CENTER);
         $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
         // $printer -> text("PIZZERIA AMANGIARE.\n");
         /* Title of receipt */
-        $printer -> setEmphasis(true);
-        $printer -> feed(1);
+        // $printer -> setEmphasis(true);
+        // $printer -> feed(1);
         $numOrden=$contador;
         $printer -> text("Orden# $numOrden\n");
         $printer -> feed(1);
@@ -228,12 +228,12 @@ try {
         $printer -> setEmphasis(false);
         $printer -> text("$date\n");
         $printer -> text("================================================");
-        $printer -> setEmphasis(true);
-        $printer -> text(new itemcocina(false, 'Descrip.', 'Cant.'));
+        // $printer -> setEmphasis(true);
+        // $printer -> text(new itemcocina(false, 'Descrip.', 'Cant.'));
         /* Items */
         $printer -> setJustification(Printer::JUSTIFY_LEFT);
+        $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
         $printer -> setEmphasis(true);
-        $printer -> feed(2);
         foreach ($itemsco as $item) {
             if($item->GetImprimir()) $printer -> text($item);
         }
