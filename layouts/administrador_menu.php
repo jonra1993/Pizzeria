@@ -33,7 +33,7 @@
       <span class="title">Inventario</span>
     </a>
     <ul class="sub-menu">
-      <li class="nav-item start "><a class="nav-link "href="product.php">Manejo de inventario</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="product.php?hello=0">Manejo de inventario</a> </li>
       <li class="nav-item start "><a class="nav-link "href="product_update.php">Actualización de inventario</a> </li>
       <li class="nav-item start "><a class="nav-link "href="product_report.php">Reportes de inventario</a> </li>
 

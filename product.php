@@ -7,7 +7,6 @@
 ?>
 
 <?php
-
   if($_GET['hello']==1){
     $user = current_user();
     $aux = remove_junk(ucwords($user['username']));
