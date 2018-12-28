@@ -93,6 +93,15 @@
       <span class="title">Autoconsumo  </span>
     </a>
   </li>
+
+  <!-- Realizar Pizzas Escuelas-->
+  <li  class="nav-item start">
+    <a href="add_escuelas.php" class="nav-link">
+      <i class="glyphicon glyphicon-blackboard"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+      <span class="title">Pizzas escuelas  </span>
+    </a>
+  </li>
+
 <?php endif;?>
 
 
