@@ -29,6 +29,7 @@ $page_title = 'Resumen de venta';
   $day = date('d');
   $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
 
+
   //Contador de Cajas
   $caja_mediana1= contador_cajas1 ('mediana','venta_cajas');
   foreach ($caja_mediana1 as $cmediana1){ $v_caja_mediana1=remove_junk($cmediana1['sum(qty)']); if($v_caja_mediana1==NULL)$v_caja_mediana1=0;}
@@ -210,7 +211,7 @@ $page_title = 'Resumen de venta';
   var masas_tocino=Number("<?php echo $v_masa_tocino?>");
   var masas_napolitana=Number("<?php echo $v_masa_napolitana?>");
   var masas_criolla=Number("<?php echo $v_masa_criolla?>");
-  //var masas_tropical=Number("");
+  var masas_tropical=Number("<?php echo $v_masa_tropical?>");
   var masas_mexicana=Number("<?php echo $v_masa_mexicana?>");
 
   //SABORES ESPECIALES
