@@ -71,13 +71,13 @@ $page_title = 'Resumen de venta';
   //SABORES
   //Tipo Especial
   //Conteo de Pizzas Especiales
-  foreach ($pizzas_espec as $sab) {
+  foreach ($pizzas_espec as $sab) {       //Todas las pizzas especiales: aman, tradi-pollo, tradi-hawa, PERSONALIZADA
     $nombre_sab=remove_junk($sab['name']); 
     if($nombre_sab=="personalizada"){
-      foreach ($ventasPizzas as $vP){
-        if($vP['sabor_pizza']=="personalizada"){               //Escogo solo pizzas personalizada
-          $arrayExtras = explode(",", $vP['extras']);  // se obtiene un vector de extras
-          foreach($sabor_pizzas as $sp){
+      foreach ($ventasPizzas as $vP){                   //Busco en ventas realizadas
+        if($vP['sabor_pizza']=="personalizada"){        //Escogo solo pizzas personalizada
+          $arrayExtras = explode(",", $vP['extras']);   // se obtiene un vector de extras
+          foreach($sabor_pizzas as $sp){                //Cada una de los sabores normlaes de pizzas: mixta, pollo, hayawana etc
             $nombre_sp=remove_junk($sp['name']); 
             ${'v_masa_perso_'.$nombre_sp}=0;
             foreach($arrayExtras as $aE){
@@ -117,7 +117,7 @@ $page_title = 'Resumen de venta';
       ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
       foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
     }
-    ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor+(float)${'v_masa_personalizada_'.$nombre_sab};
+    ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor+(float)${'v_masa_perso_'.$nombre_sab};
 
     if($div_personalizada!=0){        //Evitar division para cero si el numero de div de personalizada es 0
       ${'v_masa_'.$nombre_sab}+=(1/(float)$div_personalizada)*(${'v_masa_perso_'.$nombre_sab});   //Sumar la parte de pizza personalizada
