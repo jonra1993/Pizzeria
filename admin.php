@@ -29,10 +29,9 @@
   $month = date('m');
   $day = date('d');
 
-  $total1;
-  $total2;
-  $total3;
-  $val;
+  $total1=0;
+  $total2=0;
+  $total3=0;
 
   $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
   $ventasBebidas = dailySales($year,$month,$day,'venta_bebidas');
@@ -107,7 +106,7 @@
   $lista_items=array();
 
   //Contador de productos
-  //Contador de Masas
+  //Contador de Masas ---
   $masa_porcion=contador_masas('porcion','venta_pizzas');
   foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
   $masa_mediana=contador_masas('mediana','venta_pizzas');

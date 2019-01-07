@@ -23,7 +23,6 @@
           <thead>
             <tr>
               <th class="text-center" style="width: 2%;">#</th>
-              <th class="text-center" style="width: 3%;"> Marca</th>
               <th class="text-center" style="width: 3%;"> Tamaño</th>
               <th class="text-center" style="width: 3%;"> Sabor </th> 
               <th class="text-center" style="width: 3%;"> Precio </th>
@@ -35,7 +34,6 @@
               <?php foreach ($catalogoBebidas as $product):?>
                 <tr>
                   <td class="text-center"> <?php echo remove_junk($product['id']);?></td>
-                  <td class="text-center"> <?php echo remove_junk($product['brand']); ?></td>
                   <td class="text-center"> <?php echo remove_junk($product['size']); ?></td>
                   <td class="text-center"> <?php echo remove_junk($product['flavor']); ?></td>
                   <td class="text-center"> <?php echo remove_junk($product['price']); ?></td>

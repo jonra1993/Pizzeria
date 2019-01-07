@@ -29,6 +29,8 @@
  $recent_products = find_recent_product_added('5');
  $recent_sales    = find_recent_sale_added('5');
 
+ $tmp=0;
+
 ?>
 
 
