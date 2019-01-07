@@ -304,7 +304,7 @@
                 <label class="col-sm-2 col-form-label" style="width: 150px;">Ingrediente <?php echo $x ?></label>
                 <div class="col-md-6">
                   <select class="form-control" id="ingred_<?php echo $x ?>" style="width: 400px;">
-                    <option value=""><? echo $selec?> </option>
+                    <option value="">Seleccione el sabor del ingrediente</option>
                       <?php  foreach ($sabores as $sab): ?>
                         <option value="<?php echo (int)$sab['id'] ?>">
                           <?php echo ucfirst($sab['name']) ?></option>
@@ -833,11 +833,12 @@
 
   function ingre_especial1(){
     var ingre=0;
+    alert("Enr");
     var ingre_esp=[];
     for(k=1;k<=4;k++){
       var e = document.getElementById("ingred_"+k);
       var strUser = e.options[e.selectedIndex].text;
-      if(strUser!='<? echo $selec?>'){
+      if(strUser!='Seleccione el sabor del ingrediente'){
         ingre++;
         ingre_esp.push(strUser);        //Ingresar ingredientes de personalizada en array ingre_esp
       }
