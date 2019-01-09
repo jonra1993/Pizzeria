@@ -78,37 +78,21 @@
         <div class="panel-body">
          <div class="col-md-12">
           <form method="post" action="add_product.php" class="clearfix">
-              <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="product-title" autocomplete="off" placeholder="Descripción">
-               </div>
-              </div>
+              <!-- Masas utiliadas-->
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-6">
-                    <select class="form-control" name="product-categorie">
-                      <option value="">Selecciona una categoría</option>
-                    <?php  foreach ($all_categories as $cat): ?>
-                      <option value="<?php echo (int)$cat['id'] ?>">
-                        <?php echo $cat['name'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-                    <select class="form-control" name="product-photo">
-                      <option value="">Selecciona una imagen</option>
-                    <?php  foreach ($all_photo as $photo): ?>
-                      <option value="<?php echo (int)$photo['id'] ?>">
-                        <?php echo $photo['file_name'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-record"></i>
+                      </span>
+                      <input type="number" step="1"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="masas-usadas" placeholder="# Masas Usadas">
+                    </div>
                   </div>
                 </div>
               </div>
-              <!-- Selcion de cantidad -->
+
+              <!-- Cantidad y precio -->
               <div class="form-group">
                <div class="row">
                 <div class="col-md-4">
@@ -116,26 +100,20 @@
                     <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                     </span>
-                    <input type="number" class="form-control" name="product-quantity" autocomplete="off" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" placeholder="Cantidad">
+                    <input type="number" class="form-control" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Porciones obtenidas">
                   </div>
                  </div>
-                 <div class="col-md-8">
-                   <div class="input-group">
+                 <div class="col-md-4">
+                    <div class="input-group">
                       <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-asterisk"></i>
+                        <i class="glyphicon glyphicon-paperclip"></i>
                       </span>
-                      <select class="form-control" name="desc-unidades">
-                        <option value="">Seleccione una unidad de medida</option>
-                        <?php  foreach ($uni as $u): ?>
-                          <option value=<?php echo $u?>><?php echo $u?></option>
-                        <?php endforeach; ?>
-                      </select>
-                      <!--input type="text" class="form-control" name="desc-unidades" placeholder="Unidades"-->
+                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="precio-porcion" placeholder="Precio por porcion">
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- Seleccion de precios -->
+              <!-- TOTAL-->
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
@@ -143,33 +121,44 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="buying-price" placeholder="Precio de compra">
+                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="precio-total" placeholder="Total venta escuelas">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Verrificacion de uso de cajas -->
+              <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                <label class="custom-control-label" for="customControlInline">  SE USO CAJAS PARA ESTA ENTREGA</label>
+              </div>
+
+
+              <!-- Opcines de cajas -->
+              <div id="cajas-usadas" class="form-group" style="margin-top: 3%; display: none;">
+                <div class="row">
+                  <!-- cajas grandes -->
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th-large"></i>
+                      </span>
+                      <input type="number" class="form-control" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Cajas Grandes">
+                    </div>
+                  </div>
+                  <!-- cajas medianas -->
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                      </span>
+                      <input type="number" class="form-control" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Cajas Medianas">
                     </div>
                   </div>
                 </div>
               </div>
 
-
-
-              <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-briefcase"></i>
-                  </span>
-                  
-                  <select class="form-control" name="nombre-proveedor">
-                    <option value="">Seleccione el proveedor</option>
-                    <?php  foreach ($all_proveedores as $proveedor): ?>
-                      <option value="<?php echo (int)$proveedor['id'] ?>">
-                        <?php echo $proveedor['name'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                               
-                </div>
-              </div>
-
-              <button type="submit" name="add_product" class="btn btn-success">Agregar producto</button>
-              <button type="submit" name="regresar" class="btn btn-danger">Cancelar</button>
+              <button type="submit" name="add_escuelas" class="btn btn-success" style="margin-top: 3%;">Cargar valores a inventario</button>
+              <button type="submit" name="regresar" class="btn btn-danger" style="margin-top: 3%;">Cancelar</button>
 
           </form>
          </div>
