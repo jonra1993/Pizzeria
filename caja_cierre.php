@@ -155,7 +155,7 @@ else{
                 <input type="number" readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
               </td></tr>
               <tr><td  style="background-color:#0099ff">Dinero entregado</td><td class="text-center" >
-                <input type="number" readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
+                <input type="number" style="text-align:center"  id="dinero_entregado" name="dinero_entregado" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off"/>
               </td></tr>
               <tr id="color_saldo"><td id="dinero_sobra_txt">a</td><td class="text-center">
                 <input type="number" readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
