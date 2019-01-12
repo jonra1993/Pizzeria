@@ -89,8 +89,8 @@ class itemcocina
 }
 try {
 
-	//$connector = new WindowsPrintConnector("POS-80");
-	$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
+	$connector = new WindowsPrintConnector("POS-80");
+	//$connector = new FilePrintConnector("/dev/usb/lp0"); //linux
 	$printer = new Printer($connector);
 	/* Initialize */
 	$printer -> initialize();
