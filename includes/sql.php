@@ -491,7 +491,7 @@ function  dailySales($year,$month,$day,$tabla){
   $sql  =" SELECT *";
   $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
-  $sql .= " ORDER date DESC";
+  $sql .= " ORDER BY date DESC";
   return find_by_sql($sql);
 }
 
@@ -510,7 +510,7 @@ function monthlySales ($year,$month,$tabla){
   $sql  =" SELECT *";
   $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m' ) = '{$year}-{$month}'";
-  $sql .= " ORDER BY DATE(c.date) DESC";
+  $sql .= " ORDER BY date DESC";
   return find_by_sql($sql);
 }
 
