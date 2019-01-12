@@ -835,7 +835,6 @@
 
   function ingre_especial1(){
     var ingre=0;
-    alert("Enr");
     var ingre_esp=[];
     for(k=1;k<=4;k++){
       var e = document.getElementById("ingred_"+k);

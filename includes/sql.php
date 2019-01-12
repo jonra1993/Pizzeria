@@ -479,7 +479,7 @@ function datesSales ($start_date,$end_date,$tabla){
   $sql  =" SELECT *";
   $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}'";
-  $sql .= " ORDER BY DATE(c.date) DESC";
+  $sql .= " ORDER BY date DESC";
   return $db->query($sql);
 }
 
@@ -491,7 +491,7 @@ function  dailySales($year,$month,$day,$tabla){
   $sql  =" SELECT *";
   $sql .= " FROM $tabla c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
-  $sql .= " ORDER BY DATE(c.date) DESC";
+  $sql .= " ORDER date DESC";
   return find_by_sql($sql);
 }
 
