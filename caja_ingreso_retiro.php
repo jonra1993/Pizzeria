@@ -87,7 +87,7 @@ if(isset($_POST['cancelar'])) redirect('admin.php', false);
                 <!-- Descipcion -->
               <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                <input id= "in-ret_descripcion" type="text" class="form-control" name="dinero" placeholder="Descripción"  autocomplete="off">              
+                <input id= "in-ret_descripcion" type="text" class="form-control" name="descrip" placeholder="Descripción"  autocomplete="off">              
               </div>
               <!-- Contraseña -->
               <div class="input-group" style="margin-top: 4%;">

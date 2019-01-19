@@ -128,7 +128,7 @@
               </div>
               <!-- Verrificacion de uso de cajas -->
               <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                <input type="checkbox" class="custom-control-input" id="customControlInline" onchange="f_cajas()">
                 <label class="custom-control-label" for="customControlInline">  SE USO CAJAS PARA ESTA ENTREGA</label>
               </div>
 
@@ -168,3 +168,27 @@
   </div>
 
 <?php include_once('layouts/footer.php'); ?>
+
+<script>
+var grupo_cajas = document.getElementById("cajas-usadas"); 
+var check_cajas= document.getElementById("customControlInline");
+
+function f_cajas() {
+  
+  if (check_cajas.checked == true) {
+    alert("hola");
+    grupo_cajas.style.display = 'flex';
+  }
+  else{
+    grupo_cajas.style.display = 'none';
+  }
+}
+
+function centrar(id){
+    id.style.display = 'flex';
+    id.style.paddingTop='2%';
+    id.style.alignItems='center';
+    id.style.flexWrap= 'wrap';
+    id.style.justifyContent= 'center';
+  }
+</script>
