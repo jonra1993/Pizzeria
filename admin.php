@@ -32,10 +32,12 @@
   $total1=0;
   $total2=0;
   $total3=0;
+  $total4=0;
 
   $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
   $ventasBebidas = dailySales($year,$month,$day,'venta_bebidas');
   $ventasIngredientes = dailySales($year,$month,$day,'venta_ingredientes');
+  $ventasEscuelas = dailySales($year,$month,$day,'venta_escuelas');
   
   $listaExtras=buscar_catalogo("extra_pizzas");
 
@@ -80,10 +82,13 @@
     if($vI['forma_pago']!='autoconsumo'&& $vI['nombre_ingre']!='familiar'&&$vI['nombre_ingre']!='mediana'&&$vI['nombre_ingre']!='extragrande'){
       $total3=$total3+(float)remove_junk($vI['price']);
     }
-    
   }
 
-  $ventasDiarias= $total1+$total2+$total3;
+  foreach ($ventasEscuelas as $vE){
+    $total4=$total4+(float)remove_junk($vE['price']);
+  }
+
+  $ventasDiarias= $total1+$total2+$total3+$total4;
 
   $c_categorie     = count_by_id('categories');
   $c_product       = count_by_id('products');
@@ -115,8 +120,11 @@
   foreach ($masa_familiar as $familiar){ $v_masa_familiar=remove_junk($familiar['sum(qty)']);if($v_masa_familiar==NULL)$v_masa_familiar=0;}
   $masa_extragrande=contador_masas('extragrande','venta_pizzas');
   foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
+  $masa_escuelas=contador_masas_escuela('venta_escuelas');
+  foreach ($masa_escuelas as $escuela){ $v_masa_escuela=remove_junk($escuela['sum(qty_masas)']); if($v_masa_escuela==NULL)$v_masa_escuela=0;}
+    
   
-  $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande;
+  $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande+(float)$v_masa_escuela;
   
   //Variable de aproximado de productos
   $aprox_prod=1;
@@ -144,18 +152,6 @@
     $caja_extragrande= contador_cajas1 ('extragrande','venta_cajas');
     foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['sum(qty)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}      
 
-    //Contador de Masas
-    $masa_porcion=contador_masas('porcion','venta_pizzas');
-    foreach ($masa_porcion as $porcion){ $v_masa_porcion=remove_junk($porcion['sum(qty)']); if($v_masa_porcion==NULL)$v_masa_porcion=0;}
-    $masa_mediana=contador_masas('mediana','venta_pizzas');
-    foreach ($masa_mediana as $mediana){ $v_masa_mediana=remove_junk($mediana['sum(qty)']); if($v_masa_mediana==NULL)$v_masa_familiar=0;}
-    $masa_familiar=contador_masas('familiar','venta_pizzas');
-    foreach ($masa_familiar as $familiar){ $v_masa_familiar=remove_junk($familiar['sum(qty)']);if($v_masa_familiar==NULL)$v_masa_familiar=0;}
-    $masa_extragrande=contador_masas('extragrande','venta_pizzas');
-    foreach ($masa_extragrande as $extragrande){ $v_masa_extragrande=remove_junk($extragrande['sum(qty)']); if($v_masa_extragrande==NULL)$v_masa_extragrande=0;}
-  
-    $masa_totales=(0.5*(float)$v_masa_mediana)+(0.125*(float)$v_masa_porcion)+(float)$v_masa_familiar+(float)$v_masa_extragrande;
-  
     //SABORES
     //Tipo Especial
     //Conteo de Pizzas Especiales
@@ -481,7 +477,7 @@
 
 <script >
   //alert("Prueba");
-  //alert("<?php //echo $aprox_prod?>");
+  //alert("<?php echo $v_masa_escuela?>");
   if(Number(0)==Number("<?php echo $aprox_prod?>")){
     var DOMAIN = "http://localhost/Pizzeria/";
 

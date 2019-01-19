@@ -3,61 +3,65 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(2);
-  $all_categories = find_all('categories');
-  $all_photo = find_all('media');
-  $all_proveedores = find_all('proveedores');
+  $c_user= count_by_id('users');
 ?>
 <?php
- $uni=array("Unidad", "Kg", "Litro", "Latas", "gr");
- if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-categorie','product-quantity','desc-unidades','buying-price','nombre-proveedor' );
+ 
+ if(isset($_POST['add_escuelas'])){
+   $req_fields = array('masas-usadas','precio-total','cajas_grandes','cajas_peque' );
    validate_fields($req_fields);
    if(empty($errors)){
-     $p_name  = remove_junk($db->escape($_POST['product-title']));
-     $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
-     $p_prov   = remove_junk($db->escape($_POST['nombre-proveedor']));
-     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-     $p_uni   = remove_junk($db->escape($_POST['desc-unidades']));
-     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
+    $p_masasEscuelas  = remove_junk($db->escape($_POST['masas-usadas']));
+    $p_totalEscuelas  = remove_junk($db->escape($_POST['precio-total']));
+    $p_cajaGEscuelas  = remove_junk($db->escape($_POST['cajas_grandes'])); 
+    $p_cajaPEscuelas   = remove_junk($db->escape($_POST['cajas_peque']));
 
-     if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-       $media_id = '0';
-     } else {
-       $media_id = remove_junk($db->escape($_POST['product-photo']));
-     }
-     $date    = make_date();
-     $query  = "INSERT INTO products (";
-     $query .=" name,quantity,unidades,buy_price,categorie_id,media_id,date,proveedor_id";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}','{$p_uni}', '{$p_buy}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_prov}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-     if($db->query($query)){
-      $user = current_user();
-      $aux = remove_junk(ucwords($user['username']));
-      $gasto    = $p_qty*$p_buy;
-      $query2  = "INSERT INTO products_add_records (";
-      $query2 .=" `name`, `last_quantity`, `new_quantity`, `unidades`, `buy_price`, `gasto`,`date`, `username`, `proveedor_id`";
-      $query2 .=") VALUES (";
-      $query2 .=" '{$p_name}','0','{$p_qty}', '{$p_uni}', '{$p_buy}','{$gasto}', '{$p_date}', '{$aux}', '{$p_prov}'";
-      $query2 .=")";
-      if($db->query($query2)){
-        $session->msg('s',"Producto agregado exitosamente. ");
-       redirect('product.php', false);
-      }
-       
-     } else {
-       $session->msg('d',' Lo siento, registro falló.');
-       redirect('product.php', false);
-     }
+    $date    = make_date();
+    //Agregar usuarui
+    $user = current_user();
+    $aux = remove_junk(ucwords($user['username']));
+    //Ingresar en base de Datos
+    $query  = "INSERT INTO venta_escuelas (";
+    $query .=" qty_masas,price,cajaGrande,cajaPequena,date,user";
+    $query .=") VALUES (";
+    $query .=" '{$p_masasEscuelas}', '{$p_totalEscuelas}','{$p_cajaGEscuelas}', '{$p_cajaPEscuelas}','{$date}', '{$aux}'";
+    $query .=")";
+    if($db->query($query)){
+      //Actualizar valores APROXIMADOS
+      //Leer actual y sumer nuevo (masas y cajas)
+      $query0 = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
+      $query0 .=" qtyAproximada = qtyAproximada+'{$p_masasEscuelas}' WHERE name =";
+      $query0 .=" 'Masas'";
 
-   } else{
-     $session->msg("d", $errors);
-     redirect('add_product.php',false);
+      if($db->query($query0)){
+        //Cajas Medianas
+        $query1 = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
+        $query1 .=" qtyAproximada = qtyAproximada+'{$p_cajaGEscuelas}' WHERE name =";
+        $query1 .=" 'CajasGrandes';";
+        if($db->query($query1)){
+          //Cajas Grandes
+          $query2 = "UPDATE products SET ";        //Insertar la BD en la memoria de usuario
+          $query2.=" qtyAproximada = qtyAproximada+'{$p_cajaPEscuelas}' WHERE name =";
+          $query2.=" 'CajasMedianas';";
+          
+          if($db->query($query2)){
+            $session->msg('s',"Pizzas escuela agregadas exitosamente. "); 
+          } 
+          else {
+            $session->msg('d',' Lo siento, registro falló.');
+            redirect('add_escuelas.php', false);
+          }
+        }
+      } 
+    }
+   } 
+   else{
+    $session->msg("d", $errors);
+    redirect('add_escuelas.php',false);
    }
 
  }
- else if(isset($_POST['regresar'])) redirect('product.php',false);
+ else if(isset($_POST['regresar'])) redirect('add_escuelas.php',false);
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -77,7 +81,7 @@
         </div>
         <div class="panel-body">
          <div class="col-md-12">
-          <form method="post" action="add_product.php" class="clearfix">
+          <form method="post" action="add_escuelas.php" class="clearfix">
               <!-- Masas utiliadas-->
               <div class="form-group">
                 <div class="row">
@@ -86,7 +90,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-record"></i>
                       </span>
-                      <input type="number" step="1"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="masas-usadas" placeholder="# Masas Usadas">
+                      <input type="number" step="1"  min="0" pattern="[0-9]" autocomplete="off" class="form-control"  id="masas-usadas" name="masas-usadas" placeholder="# Masas Usadas" onchange="actu_valor()">
                     </div>
                   </div>
                 </div>
@@ -100,7 +104,7 @@
                     <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                     </span>
-                    <input type="number" class="form-control" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Porciones obtenidas">
+                    <input type="number" class="form-control" id="num-porciones" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Porciones obtenidas" onchange="actu_valor()">
                   </div>
                  </div>
                  <div class="col-md-4">
@@ -108,7 +112,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-paperclip"></i>
                       </span>
-                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="precio-porcion" placeholder="Precio por porcion">
+                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" id="precio-porcion" name="precio-porcion" placeholder="Precio por porcion" onchange="actu_valor()">
                     </div>
                   </div>
                 </div>
@@ -121,7 +125,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" name="precio-total" placeholder="Total venta escuelas">
+                      <input type="number" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off" class="form-control" id="precio-total" name="precio-total" placeholder="Total venta escuelas" readonly>
                     </div>
                   </div>
                 </div>
@@ -142,7 +146,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th-large"></i>
                       </span>
-                      <input type="number" class="form-control" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Cajas Grandes">
+                      <input type="number" class="form-control" id="cajas_grandes" name="cajas_grandes" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Cajas Grandes" value="0">
                     </div>
                   </div>
                   <!-- cajas medianas -->
@@ -151,7 +155,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th"></i>
                       </span>
-                      <input type="number" class="form-control" name="num-porciones" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Cajas Medianas">
+                      <input type="number" class="form-control" id="cajas_peque" name="cajas_peque" autocomplete="off" min="0" step="1" pattern="^\d+(?:\.\d{1,2})?$" placeholder="# Cajas Medianas" value="0">
                     </div>
                   </div>
                 </div>
@@ -170,25 +174,42 @@
 <?php include_once('layouts/footer.php'); ?>
 
 <script>
-var grupo_cajas = document.getElementById("cajas-usadas"); 
-var check_cajas= document.getElementById("customControlInline");
+  //Globaizacion de variables
+  var grupo_cajas = document.getElementById("cajas-usadas"); 
+  var check_cajas= document.getElementById("customControlInline");
+  var masa_usadas=document.getElementById("masas-usadas");
+  var porc_obt=document.getElementById("num-porciones");
+  var porc_precio=document.getElementById("precio-porcion");
+  var total_escuelas=document.getElementById("precio-total");
+  //Cajas
+  var cajas_grandes=document.getElementById("cajas_grandes");
+  var cajas_peque=document.getElementById("cajas_peque");
 
-function f_cajas() {
+  function f_cajas() {
+    
+    if (check_cajas.checked == true) {
+      grupo_cajas.style.display = 'flex';
+    }
+    else{
+      grupo_cajas.style.display = 'none';
+      cajas_grandes.value=0;
+      cajas_peque.value=0;
+    }
+  }
+
+  function actu_valor(){
+    //Delimitar los valores a solo enteros
+    masa_usadas.value=parseInt(masa_usadas.value);
+    porc_obt.value=parseInt(porc_obt.value);
   
-  if (check_cajas.checked == true) {
-    alert("hola");
-    grupo_cajas.style.display = 'flex';
+    if(masa_usadas.value!=0 && porc_obt.value!=0 && porc_precio.value!=0)
+      total_escuelas.value= (masa_usadas.value*porc_obt.value*porc_precio.value).toFixed(2);
   }
-  else{
-    grupo_cajas.style.display = 'none';
-  }
-}
 
-function centrar(id){
-    id.style.display = 'flex';
-    id.style.paddingTop='2%';
-    id.style.alignItems='center';
-    id.style.flexWrap= 'wrap';
-    id.style.justifyContent= 'center';
+  function deli_cajas(){
+    //Delimitar los valores a solo enteros
+    cajas_grandes.valuee=parseInt(cajas_grandes.value);
+    cajas_peque.value=parseInt(cajas_peque.value);
   }
+
 </script>

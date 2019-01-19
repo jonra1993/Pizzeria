@@ -533,6 +533,18 @@ function monthlySales ($year,$month,$tabla){
     return $db->query($sql);
   }
 
+  function VentasRealizadas_Es ($start_date,$tabla){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username'])); 
+    global $db;
+    $start_date  = date("Y-m-d H:i:s", strtotime($start_date));
+    $sql  =" SELECT *";
+    $sql .= " FROM $tabla c";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d %H:%i:%s' ) >= '{$start_date}' AND c.user='{$p_user}'";
+    $sql .= " ORDER BY c.date desc";
+    return $db->query($sql);
+  }
+  
 
   function find_last_open_box(){
     $current_user = current_user();
@@ -654,6 +666,17 @@ function by_dates_Inventario ($start_date,$end_date,$product){
     $sql  =" SELECT sum(qty)";
     $sql .= " FROM $lista c";
     $sql .= " WHERE c.tam_pizza = '{$tama}' AND DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
+    return $db->query($sql);
+  }
+
+  //Contador de masas
+  function contador_masas_escuela ($lista){ 
+    global $db;
+    $date    = make_date();
+    $today  = date("Y-m-d", strtotime($date));
+    $sql  =" SELECT sum(qty_masas)";
+    $sql .= " FROM $lista c";
+    $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$today}' LIMIT 1";
     return $db->query($sql);
   }
 
