@@ -13,9 +13,10 @@
    $pizzas_espec=join_pizzaespecilal_table();
    $products = join_product_table();
   
-   //categoria Bebidas
-   $bebidas=join_bebidas_table();
-   $ingredientes=join_ingredientes_table();
+   $bebidas=join_bebidas_table(); //categoria Bebidas
+   $ingredientes=join_ingredientes_table(); //categoria ingredientes
+   $otros = join_otros_table("catalogo_otros"); //categoria otros
+   $lasagna = join_otros_table("catalogo_lasagna"); //categoria otros
 
    $sabores = find_all('tipo_pizzas');
    $cc = find_conta('contador');
@@ -152,8 +153,50 @@
             </div>
           <?php endforeach; ?>
         </div>
+
+        <!-- Categoria OTROS -->
+        <div id="selc_otros" class="row" style="display: none;">
+          <?php foreach ($otros as $otr):?>
+            <div class="col-sm-3">
+              <div class="card" style="width: 16rem;">
+                <?php if($otr['media_id'] === '0'): ?>
+                  <a href="#" onclick="f_otros('<?php echo remove_junk($otr['nombre']); ?>');" title="Seleccionar Producto"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="f_otros('<?php echo remove_junk($otr['nombre']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($otr['size'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $otr['image']; ?>" alt="">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($otr['nombre']));?></h4>
+                <p class="card-body"> Precio: $<?php echo remove_junk(ucfirst($otr['price'])); ?> </p>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- Categoria LASAGNA -->
+        <div id="selc_lasagna" class="row" style="display: none;">
+          <?php foreach ($lasagna as $lasag):?>
+            <div class="col-sm-3">
+              <div class="card" style="width: 16rem;">
+                <?php if($otr['media_id'] === '0'): ?>
+                  <a href="#" onclick="f_lasagna('<?php echo remove_junk($lasag['nombre']); ?>');" title="Seleccionar Producto"> 
+                  <img class="card-img-top img-responsive" src="uploads/products/no_image.jpg" alt="">
+                  </a>
+                <?php else: ?>
+                <a href="#" onclick="f_lasagna('<?php echo remove_junk($lasag['nombre']); ?>');" title="Seleccionar <?php echo remove_junk(ucfirst($lasag['size'])); ?>"> 
+                    <img class="card-img-top img-responsive" src="uploads/products/<?php echo $lasag['image']; ?>" alt="">
+                  </a>
+                <?php endif; ?>
+                <h4 class="card-title center"> <?php echo remove_junk(ucfirst($lasag['nombre']));?></h4>
+                <p class="card-body"> Precio: $<?php echo remove_junk(ucfirst($lasag['price'])); ?> </p>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
         
-        <!-- Presentacion de opciones -->
+        <!-- CATEGORIA PIZZAS -->
         <div id="selc_pizzas_tam" class="row" style="display: none;">
           <?php foreach ($tam_pizzas as $tam):?>
             <div class="col-sm-3">
@@ -463,6 +506,21 @@
       titu_regre.innerText = "Seleccione Caja Pizza";  
       pizza_vent=7;  
     }
+    else if (nombre_cat=="Otros") {
+      var f = document.getElementById("selc_otros");   //Actual
+      centrar(f);
+      //titulo de categoria
+      titu_regre.innerText = "Seleccione Producto";
+      pizza_vent=8; 
+    }
+    else if (nombre_cat=="Lasagna") {
+      var f = document.getElementById("selc_lasagna");   //Actual
+      centrar(f);
+      //titulo de categoria
+      titu_regre.innerText = "Seleccione Sabor Lasagna";
+      pizza_vent=9; 
+    }
+    
     categ=nombre_cat;
     g.style.pointerEvents="none";   //Bloqueo de categoria
     
@@ -604,6 +662,7 @@
     centrar(e);
     f.style.display = 'none';
     pizza_vent=4;   //Ventana de servir
+    titu_regre.innerText ="Forma de Consumo";
   }
 
   function forma_servir(forma) {
@@ -698,6 +757,22 @@
 
       case 7:       //Regresar Caja Pizza
         var f = document.getElementById("selc_cajas");
+        r.style.display = 'none';
+        f.style.display="none";
+        z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
+        break;
+
+      case 8:       //Regresar Otros
+        var f = document.getElementById("selc_otros");
+        r.style.display = 'none';
+        f.style.display="none";
+        z.style.pointerEvents="auto"; //Habilitar pulsacion
+        btn_cont.disabled=false;
+        break;
+
+      case 9:       //Regresar Lasagna
+        var f = document.getElementById("selc_lasagna");
         r.style.display = 'none';
         f.style.display="none";
         z.style.pointerEvents="auto"; //Habilitar pulsacion
@@ -926,6 +1001,50 @@
     }});
   }
 
+  //---------------------------CATEGORIAS OTROS
+  function f_otros(nombre){
+    var f = document.getElementById("selc_otros");   //Actual
+    var r = document.getElementById("funcion_regresar");
+    var g = document.getElementById("cont_categ");
+    g.style.pointerEvents="auto"; //Habilitar pulsacion
+    f.style.display="none";
+    r.style.display = 'none';
+
+    $.ajax({url: DOMAIN+"buscar_precio_otros.php?p_nombre="+nombre, success: function(result){
+      // alert(result);
+      precio=Number(result);
+      var descrip= nombre.replace(/(^|\s)\S/g, l => l.toUpperCase());         //Poner en mayuscula primera letra
+      agregar_fila(descrip,precio);
+      var venta_ingre={id:fila_id,categ:"Otros",canti:1,v_nombre:nombre,precioP:precio};
+      venta_aux.push(venta_ingre);
+      centrar(btn_cont);
+      btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
+    }});
+  }
+
+   //---------------------------CATEGORIAS LASAGNA
+   function f_lasagna(nombre){
+    var n_lasagna="Lasagna "+nombre;
+    var f = document.getElementById("selc_lasagna");   //Actual
+    var r = document.getElementById("funcion_regresar");
+    var g = document.getElementById("cont_categ");
+    g.style.pointerEvents="auto"; //Habilitar pulsacion
+    f.style.display="none";
+    r.style.display = 'none';
+
+    $.ajax({url: DOMAIN+"buscar_precio_lasagna.php?p_nombre="+nombre, success: function(result){
+      // alert(result);
+      precio=Number(result);
+      var descrip= n_lasagna;
+      agregar_fila(descrip,precio);
+      var venta_ingre={id:fila_id,categ:"Lasagna",canti:1,v_nombre:n_lasagna,precioP:precio};
+      venta_aux.push(venta_ingre);
+      centrar(btn_cont);
+      btn_cont.disabled=false;   //Desbloqueo boton contiuar compra
+    }});
+  }
+
+
   function f_caja(tam){
     var descrip="Caja Pizza "+tam;
     if(tam!='familiarEspecial')
@@ -1016,6 +1135,15 @@
               });
               
               $.ajax({url: DOMAIN+"guardar_ventas_cajas.php?p_canti="+element.canti+"&p_tama="+element.tama+"&p_precio="+element.precioP+"&p_usuario="+user
+              });
+            }
+            else if(element.categ=="Otros"){
+              $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
+              });
+            }
+
+            else if(element.categ=="Lasagna"){
+              $.ajax({url: DOMAIN+"guardar_ventas_ingredientes.php?p_canti="+element.canti+"&p_nombre="+element.v_nombre+"&p_precio="+element.precioP+"&p_usuario="+user+"&p_forma="+p_pago
               });
             }
             

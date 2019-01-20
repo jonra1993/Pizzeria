@@ -315,6 +315,16 @@ function tableExists($table){
    return find_by_sql($sql);
   }
 
+  function join_otros_table($tabla){
+    global $db;
+    $sql  =" SELECT p.id,p.nombre,p.price, p.media_id,";
+    $sql  .=" m.file_name AS image";
+    $sql  .=" FROM $tabla p";                    //Definir la base de datos necesaria
+   $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+   $sql  .=" ORDER BY p.id ASC";
+   return find_by_sql($sql);
+  }
+
   function join_ingredientesVender_table(){
     global $db;
    $sql  =" SELECT p.id,p.qty, p.nombre_ingre, p.price, p.date, p.user, p.forma_pago";
@@ -353,9 +363,9 @@ function tableExists($table){
    return $db->query($sql);
   }
 
-  function buscar_preciosingredientes_table($nombre){
+  function buscar_preciosotros_table($nombre, $tabla){
     global $db;
-    $sql  ="SELECT p.price FROM catalogo_ingredientes p WHERE p.nombre = '{$nombre}' LIMIT 1";
+    $sql  ="SELECT p.price FROM $tabla p WHERE p.nombre = '{$nombre}' LIMIT 1";
    return $db->query($sql);
   }
  /*--------------------------------------------------------------*/

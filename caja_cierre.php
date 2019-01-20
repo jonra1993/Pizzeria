@@ -72,7 +72,7 @@ if(isset($_POST['cerrar_caja'])){
      $p_user = remove_junk(ucwords($user['username']));
 
      $query  = "INSERT INTO tabla_cierres_cajas (";        //Insertar la BD en donde se va a ingresar los datos
-     $query .=" dinero_apertura, cobros_en_caja, cobros_con_tarjeta, total_ventas, 	autoconsumo, escuelas,	ingreso_efectivo_en_caja, retiro_efectivo_en_caja, dinero_a_entregar, dinero_entregado, saldo, 	date, username";
+     $query .=" dinero_apertura, cobros_en_caja, cobros_con_tarjeta, total_ventas, 	autoconsumo, escuelas,ingreso_efectivo_en_caja, retiro_efectivo_en_caja, dinero_a_entregar, dinero_entregado, saldo, 	date, username";
      $query .=") VALUES (";
      $query .=" '{$p_apertura_caja}','{$p_cobros_efectivo}','{$p_cobros_tarjeta}','{$p_total_ventas}','{$p_autoconsumo}','{$p_escuelas}','{$p_ingreso_ef_caja}','{$p_retiro_ef_caja}','{$p_dinero_entregar}','{$p_dinero_entregado}','{$p_dinero_sobra}','{$p_date}','{$p_user}'";
      $query .="); ";
