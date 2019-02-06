@@ -29,6 +29,7 @@ $page_title = 'Resumen de venta';
   $day = date('d');
   $ventasPizzas = dailySales($year,$month,$day,'venta_pizzas');
 
+
   //Contador de Cajas
   $caja_mediana1= contador_cajas1 ('mediana','venta_cajas');
   foreach ($caja_mediana1 as $cmediana1){ $v_caja_mediana1=remove_junk($cmediana1['sum(qty)']); if($v_caja_mediana1==NULL)$v_caja_mediana1=0;}
@@ -38,23 +39,32 @@ $page_title = 'Resumen de venta';
   foreach ($caja_extragrande as $cextragrande){ $v_caja_extragrande=remove_junk($cextragrande['sum(qty)']); if($v_caja_extragrande==NULL)$v_caja_extragrande=0;}      
 
   //Contador de ingrediente extras
-  foreach ($extra_pizzas as $extra){
+  foreach ($extra_pizzas as $extra){                //Elementos extras: queso, jaomon champi pina
     $nombre_extra=remove_junk($extra['name']); 
-    ${'canti_'.$nombre_extra}=0;
-    foreach($ventasPizzas as $vPext){
-      $ingre_extra=remove_junk($vPext['extras']);
+    foreach($ventasPizzas as $vPext){                //Venta diarias
+      $ingre_extra=remove_junk($vPext['extras']);    //Extraer columna de extras de ventas
+      $tama_extra=remove_junk($vPext['tam_pizza']);
       if($ingre_extra!=NULL && (strpos($ingre_extra,$nombre_extra) !== false )){
-        $tama_extra=remove_junk($vPext['tam_pizza']); 
         foreach ($tam_pizzas as $tam) {
           if($tama_extra==(remove_junk($tam['name']))){
-            ${'canti_'.$nombre_extra.'_'.$tama_extra}+=remove_junk($vPext['qty']); 
+            ${'canti_'.$nombre_extra.'_'.$tama_extra}=0;//+=remove_junk($vPext['qty']); 
+          }
+          else{
+            ${'canti_'.$nombre_extra.'_'.$tama_extra}=0;
           }
         }    
+      }
+      else{
+        foreach ($tam_pizzas as $tam) {
+          $ta_exta=remove_junk($tam['name']);
+          ${'canti_'.$nombre_extra.'_'.$ta_exta}=0;
+        }
       }
     }
     // ${'extra'.$nombre_extra}=contador_extras($nombre_extra,'venta_pizzas'));
     // foreach (${'extra'.$nombre_extra} as $ext){ ${'v_extra_'.$nombre_extra}=remove_junk($ext['sum(qty)']); if(${'v_extra_'.$nombre_extra}==NULL) ${'v_extra_'.$nombre_extra}=0;}
   }
+  //$canti_queso_porcion=0;
   
   //Contador de Masas
   $masa_porcion=contador_masas('porcion','venta_pizzas');
@@ -71,13 +81,13 @@ $page_title = 'Resumen de venta';
   //SABORES
   //Tipo Especial
   //Conteo de Pizzas Especiales
-  foreach ($pizzas_espec as $sab) {
+  foreach ($pizzas_espec as $sab) {       //Todas las pizzas especiales: aman, tradi-pollo, tradi-hawa, PERSONALIZADA
     $nombre_sab=remove_junk($sab['name']); 
     if($nombre_sab=="personalizada"){
-      foreach ($ventasPizzas as $vP){
-        if($vP['sabor_pizza']=="personalizada"){               //Escogo solo pizzas personalizada
-          $arrayExtras = explode(",", $vP['extras']);  // se obtiene un vector de extras
-          foreach($sabor_pizzas as $sp){
+      foreach ($ventasPizzas as $vP){                   //Busco en ventas realizadas
+        if($vP['sabor_pizza']=="personalizada"){        //Escogo solo pizzas personalizada
+          $arrayExtras = explode(",", $vP['extras']);   // se obtiene un vector de extras
+          foreach($sabor_pizzas as $sp){                //Cada una de los sabores normlaes de pizzas: mixta, pollo, hayawana etc
             $nombre_sp=remove_junk($sp['name']); 
             ${'v_masa_perso_'.$nombre_sp}=0;
             foreach($arrayExtras as $aE){
@@ -93,6 +103,12 @@ $page_title = 'Resumen de venta';
             }
           }
         }
+      }
+    }
+    else{
+      foreach($sabor_pizzas as $sp){                //Cuando no hay pizzas personalizadas dejar valores en blanco
+        $nombre_sp=remove_junk($sp['name']); 
+        ${'v_masa_perso_'.$nombre_sp}=0;
       }
     }
   }
@@ -117,7 +133,7 @@ $page_title = 'Resumen de venta';
       ${'masa_'.$nombre_tam.'_sabor'}=contador_masas_sabor(remove_junk($tam['name']),'venta_pizzas',remove_junk($sab['name']));
       foreach (${'masa_'.$nombre_tam.'_sabor'} as $tms){ ${'v_masa_'.$nombre_tam.'_sabor'}=remove_junk($tms['sum(qty)']); if( ${'v_masa_'.$nombre_tam.'_sabor'}==NULL) ${'v_masa_'.$nombre_tam.'_sabor'}=0;}
     }
-    ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor+(float)${'v_masa_personalizada_'.$nombre_sab};
+    ${'v_masa_'.$nombre_sab}=(0.5*(float)$v_masa_mediana_sabor)+(0.125*(float)$v_masa_porcion_sabor)+(float)$v_masa_familiar_sabor+(float)$v_masa_extragrande_sabor+(float)${'v_masa_perso_'.$nombre_sab};
 
     if($div_personalizada!=0){        //Evitar division para cero si el numero de div de personalizada es 0
       ${'v_masa_'.$nombre_sab}+=(1/(float)$div_personalizada)*(${'v_masa_perso_'.$nombre_sab});   //Sumar la parte de pizza personalizada
@@ -127,7 +143,7 @@ $page_title = 'Resumen de venta';
   //Contador de ingredientes
   foreach ($ingredientes as $ingre) {
     $nombre_ingred=remove_junk($ingre['nombre_ingre']); 
-    ${'ingre_'.$nombre_ingred}=contador_ingredientes('jamon','venta_ingredientes');
+    ${'ingre_'.$nombre_ingred}=contador_ingredientes($nombre_ingred,'venta_ingredientes');
   }
 ?>
     
@@ -178,7 +194,8 @@ $page_title = 'Resumen de venta';
     var nombre_extra="<?php echo remove_junk($extra['name'])?>"; 
     <?php foreach ($tam_pizzas as $tam):?>
       var tamano="<?php echo remove_junk($tam['name'])?>";
-      if("<?php echo ${"canti_".$extra['name']."_".$tam['name']}?>"!="")
+      var ingedt="<?php echo ${'canti_'.$extra['name'].'_'.$tam['name']}?>";
+      if(ingedt!="")
         eval("ingre_"+nombre_extra+"_"+tamano+"="+"<?php echo ${"canti_".$extra['name']."_".$tam['name']}?>");
       else
         eval("ingre_"+nombre_extra+"_"+tamano+"="+0);
@@ -229,7 +246,11 @@ $page_title = 'Resumen de venta';
   
   var val_aprox_CajasGrandes =Number("<?php echo $v_caja_grande;?>")+Number("<?php echo $v_caja_extragrande?>");
   var val_aprox_CajasMedianas=Number("<?php echo $v_caja_mediana1?>");
-  
+
+  function f_final(){
+    var DOMAIN = "http://localhost/Pizzeria/";
+    window.open(DOMAIN+"realizar_venta.php","_self");
+  }
 
   //Cargar productos a inventario aproxiado
   <?php foreach ($products as $prod) :?>
@@ -276,9 +297,6 @@ $page_title = 'Resumen de venta';
       }});
 
   }
-  function f_final(){
-    var DOMAIN = "http://localhost/Pizzeria/";
-    window.open(DOMAIN+"realizar_venta.php","_self");
-  }
+  
 </script>
 <?php include_once('layouts/footer.php'); ?>

@@ -69,20 +69,8 @@ if(isset($_POST['cancelar'])) redirect('admin.php', false);
         <form method="post" action="caja_ingreso_retiro.php" class="clearfix">
           <div class="form-group">
             <div class="col-md-4">
-              <!--div class="input-group">
-                <span class="input-group-addon">
-                <i class="glyphicon glyphicon-th-large"></i>
-                </span>
-                <output type="text" class="form-control" name="fecha" placeholder="Descripción">
-                  <?php 
-                      //date_default_timezone_set('America/Bogota'); $fecha= date("d/m/Y"); echo $fecha; //$hora= date("d/m/Y  g:i a"); 
-                  ?>
-                </output>
-              </div-->
-              <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                <input id= "ingres_retiro" type="number" class="form-control" name="dinero" placeholder="Valor"  step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
-              </div>
+
+              <!-- Definicion de ingreso o retiro -->
               <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-sort"></i></span>
                 <select class="form-control" name="selector" required>
@@ -90,7 +78,19 @@ if(isset($_POST['cancelar'])) redirect('admin.php', false);
                   <option>Retiro de Efectivo en Caja</option>
                 </select>            
               </div>
+
+              <!-- Valor -->
+              <div class="input-group" style="margin-top: 4%;">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                <input id= "ingres_retiro" type="number" class="form-control" name="dinero" placeholder="Valor"  step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off">
+              </div>
+                <!-- Descipcion -->
               <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                <input id= "in-ret_descripcion" type="text" class="form-control" name="descrip" placeholder="Descripción"  autocomplete="off">              
+              </div>
+              <!-- Contraseña -->
+              <div class="input-group" style="margin-top: 4%;">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-th-large"></i></span>
                 <input type="password" class="form-control" name ="clave_caja" placeholder="Contraseña">
               </div>

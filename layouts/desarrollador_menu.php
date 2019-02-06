@@ -49,7 +49,7 @@
       <span class="title">Inventario</span>
     </a>
     <ul class="sub-menu">
-      <li class="nav-item start "><a class="nav-link "href="product.php">Manejo de inventario</a> </li>
+      <li class="nav-item start "><a class="nav-link "href="product.php?hello=0">Manejo de inventario</a> </li>
       <li class="nav-item start "><a class="nav-link "href="product_update.php">Actualización de inventario</a> </li>
       <li class="nav-item start "><a class="nav-link "href="product_report.php">Reportes de inventario</a> </li>
 
@@ -149,12 +149,14 @@
       </ul>
   </li>
 
-  <li  class="nav-item start">
-    <a href="caja_ingreso_retiro.php" class="nav-link nav-toggle">
-      <i class="glyphicon glyphicon-usd"></i>
-       <span class="title">Ingresos-retiro de caja</span>
-      </a>
-  </li>
+  <?php if($user['bloqueocaja']==true):?>
+    <li  class="nav-item start">
+      <a href="caja_ingreso_retiro.php" class="nav-link nav-toggle">
+        <i class="glyphicon glyphicon-usd"></i>
+        <span class="title">Ingresos-retiro de caja</span>
+        </a>
+    </li>
+  <?php endif;?>
 
   <!--li  class="nav-item start">
     <a href="prueba_impresora.php" class="nav-link nav-toggle">

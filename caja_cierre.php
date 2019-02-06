@@ -18,6 +18,7 @@ $retiros_cajas=find_sum_retiros_caja($year,$month,$day);
 $ventasRealizadas_e=0;
 $ventasRealizadas_t=0;
 $ventasAutoconsumo=0;
+$ventasEscuelas=0;
 //$efectivo=VentasRealizadas('2018-12-12 21:24:58','venta_general','efectivo');
 $efectivo=VentasRealizadas($open['date'],'venta_general','efectivo');
 foreach ($efectivo as $vB){
@@ -32,6 +33,11 @@ foreach ($tarjeta as $vB){
 $autoconsumo=VentasRealizadas($open['date'],'venta_general','autoconsumo');
 foreach ($autoconsumo as $vB){
   $ventasAutoconsumo=$ventasAutoconsumo+(float)remove_junk($vB['price']);
+}
+
+$escuelasV=VentasRealizadas_Es($open['date'],'venta_escuelas');
+foreach ($escuelasV as $esc){
+  $ventasEscuelas=$ventasEscuelas+(float)remove_junk($esc['price']);
 }
 
 foreach($ingresos_cajas as $tempo){
@@ -56,6 +62,7 @@ if(isset($_POST['cerrar_caja'])){
      $p_cobros_tarjeta = remove_junk($db->escape($_POST['cobros_tarjeta']));
      $p_total_ventas = remove_junk($db->escape($_POST['total_ventas']));
      $p_autoconsumo = remove_junk($db->escape($_POST['autoconsumo']));
+     $p_escuelas = remove_junk($db->escape($_POST['escuelas']));
      $p_ingreso_ef_caja = remove_junk($db->escape($_POST['ingreso_ef_caja']));
      $p_retiro_ef_caja = remove_junk($db->escape($_POST['retiro_ef_caja']));
      $p_dinero_entregar = remove_junk($db->escape($_POST['dinero_entregar']));
@@ -65,9 +72,9 @@ if(isset($_POST['cerrar_caja'])){
      $p_user = remove_junk(ucwords($user['username']));
 
      $query  = "INSERT INTO tabla_cierres_cajas (";        //Insertar la BD en donde se va a ingresar los datos
-     $query .=" dinero_apertura, cobros_en_caja, cobros_con_tarjeta, total_ventas, 	autoconsumo, 	ingreso_efectivo_en_caja, retiro_efectivo_en_caja, dinero_a_entregar, dinero_entregado, saldo, 	date, username";
+     $query .=" dinero_apertura, cobros_en_caja, cobros_con_tarjeta, total_ventas, 	autoconsumo, escuelas,ingreso_efectivo_en_caja, retiro_efectivo_en_caja, dinero_a_entregar, dinero_entregado, saldo, 	date, username";
      $query .=") VALUES (";
-     $query .=" '{$p_apertura_caja}','{$p_cobros_efectivo}','{$p_cobros_tarjeta}','{$p_total_ventas}','{$p_autoconsumo}','{$p_ingreso_ef_caja}','{$p_retiro_ef_caja}','{$p_dinero_entregar}','{$p_dinero_entregado}','{$p_dinero_sobra}','{$p_date}','{$p_user}'";
+     $query .=" '{$p_apertura_caja}','{$p_cobros_efectivo}','{$p_cobros_tarjeta}','{$p_total_ventas}','{$p_autoconsumo}','{$p_escuelas}','{$p_ingreso_ef_caja}','{$p_retiro_ef_caja}','{$p_dinero_entregar}','{$p_dinero_entregado}','{$p_dinero_sobra}','{$p_date}','{$p_user}'";
      $query .="); ";
      
     if($db->query($query)){
@@ -145,6 +152,9 @@ else{
               <tr><td>Autoconsumo</td><td class="text-center">
                 <input type="number" readonly style="text-align:center"  id="autoconsumo"  name="autoconsumo" value="0"/>
               </td></tr>
+              <tr><td>Escuelas</td><td class="text-center">
+                <input type="number" readonly style="text-align:center"  id="escuelas"  name="escuelas" value="0"/>
+              </td></tr>
               <tr><td>Ingreso de efectivo en caja</td><td class="text-center">
                 <input readonly type="number" style="text-align:center" id="ingreso_ef_caja" name="ingreso_ef_caja" value='0'/>
               </td></tr>
@@ -155,7 +165,7 @@ else{
                 <input type="number" readonly style="text-align:center"  id="dinero_entregar" name="dinero_entregar"/>
               </td></tr>
               <tr><td  style="background-color:#0099ff">Dinero entregado</td><td class="text-center" >
-                <input type="number" readonly style="text-align:center"  id="dinero_entregado" name="dinero_entregado"/>
+                <input type="number" style="text-align:center"  id="dinero_entregado" name="dinero_entregado" step="0.01"  min="0" pattern="^\d+(?:\.\d{1,2})?$" autocomplete="off"  onchange="myFunction(1)"/>
               </td></tr>
               <tr id="color_saldo"><td id="dinero_sobra_txt">a</td><td class="text-center">
                 <input type="number" readonly style="text-align:center"  id="dinero_sobra" name="dinero_sobra"/>
@@ -185,12 +195,12 @@ else{
               </tr>
           </thead>
           <tbody> 
-            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_d"type="number"></td></tr>
-            <tr><td>$5</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_d"type="number"></td></tr>
-            <tr><td>$10</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="diez_d" type="number"></td></tr>
-            <tr><td>$20</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="veinte_d" type="number"></td></tr>
-            <tr><td>$50</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_d" type="number"></td></tr>
-            <tr><td>$100</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_d" type="number"></td></tr>
+            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="un_d"type="number"></td></tr>
+            <tr><td>$5</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="cinco_d"type="number"></td></tr>
+            <tr><td>$10</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0"  min="0" id="diez_d" type="number"></td></tr>
+            <tr><td>$20</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="veinte_d" type="number"></td></tr>
+            <tr><td>$50</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="cincuenta_d" type="number"></td></tr>
+            <tr><td>$100</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="cien_d" type="number"></td></tr>
           </tbody>
         </table>
       </div>
@@ -213,12 +223,12 @@ else{
               </tr>
           </thead>
           <tbody>
-            <tr><td>1 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="un_c" type="number"></td></tr>
-            <tr><td>5 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cinco_c" type="number"></td></tr>
-            <tr><td>10 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="diez_c" type="number"></td></tr>
-            <tr><td>25 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0"  min="0" id="veinte_c" type="number"></td></tr>
-            <tr><td>50 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cincuenta_c"type="number"></td></tr>
-            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction()"  pattern="\d*" value="0" min="0" id="cien_c"type="number"></td></tr>
+            <tr><td>1 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="un_c" type="number"></td></tr>
+            <tr><td>5 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="cinco_c" type="number"></td></tr>
+            <tr><td>10 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="diez_c" type="number"></td></tr>
+            <tr><td>25 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0"  min="0" id="veinte_c" type="number"></td></tr>
+            <tr><td>50 ctv</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="cincuenta_c"type="number"></td></tr>
+            <tr><td>$1</td><td class="text-center"><input onkeypress="isInputNumber(event)" style="width: 100px;" onchange="myFunction(0)"  pattern="\d*" value="0" min="0" id="cien_c"type="number"></td></tr>
           </tbody>
         </table>
       </div>
@@ -236,9 +246,11 @@ else{
     var cobros_efe = Number("<?php echo $ventasRealizadas_e;?>");
     var cobros_tar = Number("<?php echo $ventasRealizadas_t;?>");
     var autocon = Number("<?php echo $ventasAutoconsumo;?>")
+    var vent_escuelas=Number("<?php echo $ventasEscuelas;?>")
     document.getElementById("retiro_ef_caja").value=d_ret_ef_caja.toFixed(2);
     document.getElementById("ingreso_ef_caja").value=d_ing_ef_caja.toFixed(2);
     document.getElementById("autoconsumo").value=autocon.toFixed(2);
+    document.getElementById("escuelas").value=vent_escuelas.toFixed(2);
     document.getElementById("apertura_caja").value=d_apertura.toFixed(2);
     document.getElementById("cobros_efectivo").value=cobros_efe.toFixed(2);
     document.getElementById("cobros_tarjeta").value=cobros_tar.toFixed(2);
@@ -266,7 +278,7 @@ else{
       
   }
   
-  function myFunction() {
+  function myFunction(aux) {
     var color_saldo = document.getElementById("color_saldo");
 
     var d_apertura = Number(document.getElementById("apertura_caja").value);
@@ -276,11 +288,14 @@ else{
     var d_autoconsumo = Number(document.getElementById("autoconsumo").value);
     var d_ing_ef_caja = Number(document.getElementById("ingreso_ef_caja").value);
     var d_ret_ef_caja = Number(document.getElementById("retiro_ef_caja").value);
+    var d_escuelas = Number(document.getElementById("escuelas").value);
+    var d_entregado_valor = Number(document.getElementById("dinero_entregado").value);
 
     var d_entregado = document.getElementById("dinero_entregado");
     var d_entregar = document.getElementById("dinero_entregar");
     var d_sobra_txt = document.getElementById("dinero_sobra_txt");
     var d_sobra = document.getElementById("dinero_sobra");
+    
 
     var s1=d_cobro_ef+d_cobro_tar;
     d_total_v.value=s1.toFixed(2);
@@ -289,11 +304,11 @@ else{
     var s2= d_ing_ef_caja-d_ret_ef_caja;
 
     //dolares
-    var cien = document.getElementById("cien_d").value;
-    var cincuenta = document.getElementById("cincuenta_d").value;
-    var veinte = document.getElementById("veinte_d").value;
-    var diez = document.getElementById("diez_d").value;
-    var cinco = document.getElementById("cinco_d").value;;
+    var cien = Number(document.getElementById("cien_d").value);
+    var cincuenta = Number(document.getElementById("cincuenta_d").value);
+    var veinte = Number(document.getElementById("veinte_d").value);
+    var diez = Number(document.getElementById("diez_d").value);
+    var cinco = Number(document.getElementById("cinco_d").value);
     var un = document.getElementById("un_d").value;
     if(!isInt(cien)||!isInt(cincuenta)||!isInt(veinte)||!isInt(diez)||!isInt(cinco)||!isInt(un)){
       alert("Sólo se aceptan números enteros"); return;
@@ -305,7 +320,7 @@ else{
     var cincuenta = document.getElementById("cincuenta_c").value;
     var veinte = document.getElementById("veinte_c").value;
     var diez = document.getElementById("diez_c").value;
-    var cinco = document.getElementById("cinco_c").value;;
+    var cinco = document.getElementById("cinco_c").value;
     var un = document.getElementById("un_c").value;
     if(!isInt(cien)||!isInt(cincuenta)||!isInt(veinte)||!isInt(diez)||!isInt(cinco)||!isInt(un)){
       alert("Sólo se aceptan números enteros"); return;
@@ -313,15 +328,23 @@ else{
     var suma2= 1*cien+0.01*((50*cincuenta)+(25*veinte)+(10*diez)+(5*cinco)+1*un);
     var k=suma2+suma1;
     var t=k.toFixed(2);
-    d_entregado.value = t;
+    if(aux==0){
+      d_entregado=t;
+      document.getElementById("dinero_entregado").value= t;
+    }
+    else {
+      var v_dinero_entregado=d_entregado_valor.toFixed(2);
+      d_entregado= v_dinero_entregado;
+      document.getElementById("dinero_entregado").value = d_entregado;
+    }
+      
 
-
-    var tempo=s1+s2-d_cobro_tar+d_apertura;
+    var tempo=s1+s2-d_cobro_tar+d_apertura+d_escuelas;
     var tempo=parseFloat(tempo)
     d_entregar.value = tempo.toFixed(2);
 
-    var sobra=k-tempo;
-    if(sobra<0){
+    var sobra_dinero=(d_entregado-tempo).toFixed(2);
+    if(sobra_dinero<0){
       //d_sobra.style.backgroundColor = "#ff9933";
       //color_saldo.style.backgroundColor = "#ff9933";
       d_sobra_txt.style.backgroundColor = "#ff9933";
@@ -334,13 +357,12 @@ else{
       d_sobra_txt.innerHTML = "Sobra dinero en caja";
     } 
 
-    sobra=sobra.toFixed(2);
-    d_sobra.value = sobra;
+    document.getElementById("dinero_sobra").value = sobra_dinero;
 
   }
 
   function isInt(n) {
-    return n % 1 === 0;
+    return n % 1 == 0;
   }
 
 </script>

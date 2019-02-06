@@ -53,13 +53,13 @@
     </li>
   <?php endif;?>
 
-
-  <li  class="nav-item start">
-    <a href="caja_ingreso_retiro.php" class="nav-link nav-toggle">
-      <i class="glyphicon glyphicon-usd"></i>
-       <span class="title">Ingresos-retiro de caja</span>
-      </a>
-  </li>
-
+  <?php if($user['bloqueocaja']==true):?>
+    <li  class="nav-item start">
+      <a href="caja_ingreso_retiro.php" class="nav-link nav-toggle">
+        <i class="glyphicon glyphicon-usd"></i>
+        <span class="title">Ingresos-retiro de caja</span>
+        </a>
+    </li>
+  <?php endif;?>
 </ul>
 <script type="text/javascript" src="assets/jquery-1.10.2.min.js"></script>
