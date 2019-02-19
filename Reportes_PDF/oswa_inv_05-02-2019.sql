@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-01-2019 a las 20:09:47
+-- Tiempo de generación: 06-02-2019 a las 02:31:41
 -- Versión del servidor: 5.6.37
 -- Versión de PHP: 5.6.31
 
@@ -169,6 +169,48 @@ INSERT INTO `catalogo_ingredientes` (`id`, `nombre`, `price`, `media_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `catalogo_lasagna`
+--
+
+CREATE TABLE IF NOT EXISTS `catalogo_lasagna` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `media_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `catalogo_lasagna`
+--
+
+INSERT INTO `catalogo_lasagna` (`id`, `nombre`, `price`, `media_id`) VALUES
+(1, 'carne', '4.00', 96),
+(2, 'pollo', '4.00', 97),
+(3, 'mixta', '4.50', 98);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catalogo_otros`
+--
+
+CREATE TABLE IF NOT EXISTS `catalogo_otros` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `media_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `catalogo_otros`
+--
+
+INSERT INTO `catalogo_otros` (`id`, `nombre`, `price`, `media_id`) VALUES
+(1, 'tiramisu', '1.50', 94);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `catalogo_pizzas`
 --
 
@@ -246,17 +288,19 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) unsigned NOT NULL,
   `name` varchar(60) NOT NULL,
   `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`, `media_id`) VALUES
-(2, 'Pizzas', 2),
+(1, 'Pizzas', 2),
+(2, 'lasagna', 95),
 (3, 'Bebidas', 4),
 (4, 'Ingredientes', 19),
-(5, 'Cajas Pizza', 87);
+(5, 'Cajas Pizza', 87),
+(6, 'Otros', 93);
 
 -- --------------------------------------------------------
 
@@ -275,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `contador` (
 --
 
 INSERT INTO `contador` (`id`, `conta`, `date`) VALUES
-(1, 0, '2019-01-12');
+(1, 0, '2019-02-05');
 
 -- --------------------------------------------------------
 
@@ -312,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `media` (
   `id` int(11) unsigned NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_type` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `media`
@@ -388,7 +432,13 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 (89, 'cajaPizza_mediana.png', 'image/png'),
 (90, 'ingre_salami.png', 'image/png'),
 (91, 'ingre_jam.png', 'image/png'),
-(92, 'Pizza-Box.png', 'image/png');
+(92, 'Pizza-Box.png', 'image/png'),
+(93, 'otros.png', 'image/png'),
+(94, 'tiramisu.png', 'image/png'),
+(95, 'lasagna.png', 'image/png'),
+(96, 'lasagna_carne.png', 'image/png'),
+(97, 'lasagna_pollo.jpg', 'image/jpeg'),
+(98, 'lasagna_mixta.png', 'image/png');
 
 -- --------------------------------------------------------
 
@@ -438,24 +488,24 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `quantity`, `unidades`, `buy_price`, `categorie_id`, `media_id`, `date`, `proveedor_id`, `qtyAproximada`) VALUES
-(1, 'Masas', '-17.26', 'Unidad', '0.00', 2, 86, '2019-01-12 00:00:00', 0, '0.00'),
-(2, 'CajasGrandes', '416.50', 'Unidad', '0.80', 2, 88, '2019-01-12 00:00:00', 0, '0.00'),
-(3, 'CajasMedianas', '105.00', 'Unidad', '0.50', 2, 89, '2019-01-12 00:00:00', 0, '0.00'),
-(19, 'Harina', '65.91', 'Kg', '0.70', 4, 20, '2019-01-12 00:00:00', 1, '0.00'),
-(20, 'Queso', '-10.77', 'Kg', '4.20', 4, 21, '2019-01-12 00:00:00', 1, '0.00'),
-(21, 'Jamón', '-0.09', 'Kg', '5.50', 4, 76, '2019-01-12 00:00:00', 7, '0.00'),
-(22, 'Mortadela', '5.20', 'Kg', '3.21', 4, 71, '2019-01-12 00:00:00', 9, '0.00'),
-(23, 'Salami', '6.64', 'Kg', '5.50', 4, 81, '2019-01-12 00:00:00', 7, '0.00'),
-(24, 'Peperoni', '16.12', 'Kg', '5.50', 4, 78, '2019-01-12 00:00:00', 7, '0.00'),
-(25, 'Salsa', '3.77', 'Balde', '2.00', 4, 82, '2019-01-12 00:00:00', 9, '0.00'),
-(26, 'Piña', '2.07', 'Unidad', '1.50', 4, 79, '2019-01-12 00:00:00', 10, '0.00'),
-(27, 'Durazno', '20.94', 'latas', '2.60', 4, 75, '2019-01-12 00:00:00', 9, '0.00'),
-(28, 'Pollo', '1.87', 'Unidad', '5.00', 4, 80, '2019-01-12 00:00:00', 12, '0.00'),
-(29, 'Champiñones', '-4.58', 'Kg', '6.15', 4, 74, '2019-01-12 00:00:00', 4, '0.00'),
-(30, 'Carne', '2.30', 'Kg', '4.60', 4, 73, '2019-01-12 00:00:00', 11, '0.00'),
-(31, 'Tocino', '0.96', 'Kg', '9.50', 4, 70, '2019-01-12 00:00:00', 13, '0.00'),
-(32, 'Aceite', '5.04', 'Litro', '1.20', 4, 72, '2019-01-12 00:00:00', 14, '0.00'),
-(33, 'Levadura', '8.71', 'Kg', '11.23', 4, 77, '2019-01-12 00:00:00', 5, '0.00');
+(1, 'Masas', '-17.76', 'Unidad', '0.00', 1, 86, '2019-02-05 00:00:00', 0, '0.00'),
+(2, 'CajasGrandes', '416.50', 'Unidad', '0.80', 1, 88, '2019-02-05 00:00:00', 0, '0.00'),
+(3, 'CajasMedianas', '105.00', 'Unidad', '0.50', 1, 89, '2019-02-05 00:00:00', 0, '0.00'),
+(19, 'Harina', '65.66', 'Kg', '0.70', 4, 20, '2019-02-05 00:00:00', 1, '0.00'),
+(20, 'Queso', '-10.95', 'Kg', '4.20', 4, 21, '2019-02-05 00:00:00', 1, '0.00'),
+(21, 'Jamón', '-0.09', 'Kg', '5.50', 4, 76, '2019-02-05 00:00:00', 7, '0.00'),
+(22, 'Mortadela', '5.20', 'Kg', '3.21', 4, 71, '2019-02-05 00:00:00', 9, '0.00'),
+(23, 'Salami', '6.64', 'Kg', '5.50', 4, 81, '2019-02-05 00:00:00', 7, '0.00'),
+(24, 'Peperoni', '16.12', 'Kg', '5.50', 4, 78, '2019-02-05 00:00:00', 7, '0.00'),
+(25, 'Salsa', '3.77', 'Balde', '2.00', 4, 82, '2019-02-05 00:00:00', 9, '0.00'),
+(26, 'Piña', '2.07', 'Unidad', '1.50', 4, 79, '2019-02-05 00:00:00', 10, '0.00'),
+(27, 'Durazno', '20.94', 'latas', '2.60', 4, 75, '2019-02-05 00:00:00', 9, '0.00'),
+(28, 'Pollo', '1.87', 'Unidad', '5.00', 4, 80, '2019-02-05 00:00:00', 12, '0.00'),
+(29, 'Champiñones', '-4.58', 'Kg', '6.15', 4, 74, '2019-02-05 00:00:00', 4, '0.00'),
+(30, 'Carne', '2.30', 'Kg', '4.60', 4, 73, '2019-02-05 00:00:00', 11, '0.00'),
+(31, 'Tocino', '0.96', 'Kg', '9.50', 4, 70, '2019-02-05 00:00:00', 13, '0.00'),
+(32, 'Aceite', '5.04', 'Litro', '1.20', 4, 72, '2019-02-05 00:00:00', 14, '0.00'),
+(33, 'Levadura', '8.71', 'Kg', '11.23', 4, 77, '2019-02-05 00:00:00', 5, '0.00');
 
 -- --------------------------------------------------------
 
@@ -895,7 +945,7 @@ CREATE TABLE IF NOT EXISTS `tabla_aperturas_cajas` (
   `dinero_apertura` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tabla_aperturas_cajas`
@@ -948,7 +998,11 @@ INSERT INTO `tabla_aperturas_cajas` (`id`, `dinero_apertura`, `date`, `username`
 (44, '41.78', '2019-01-09 13:49:05', 'Vendedor'),
 (45, '21.75', '2019-01-10 13:08:48', 'Vendedor'),
 (46, '19.79', '2019-01-11 12:32:16', 'Vendedor'),
-(47, '20.00', '2019-01-12 14:30:47', 'Vendedor');
+(47, '20.00', '2019-01-12 14:30:47', 'Vendedor'),
+(48, '20.00', '2019-01-19 17:51:31', 'Desarrollador'),
+(49, '50.00', '2019-01-19 18:01:18', 'Desarrollador'),
+(50, '50.00', '2019-01-19 18:24:29', 'Desarrollador'),
+(51, '30.00', '2019-01-19 18:29:18', 'Desarrollador');
 
 -- --------------------------------------------------------
 
@@ -963,6 +1017,7 @@ CREATE TABLE IF NOT EXISTS `tabla_cierres_cajas` (
   `cobros_con_tarjeta` decimal(25,2) NOT NULL,
   `total_ventas` decimal(25,2) NOT NULL,
   `autoconsumo` decimal(25,2) NOT NULL,
+  `escuelas` decimal(25,2) NOT NULL,
   `ingreso_efectivo_en_caja` decimal(25,2) NOT NULL,
   `retiro_efectivo_en_caja` decimal(25,2) NOT NULL,
   `dinero_a_entregar` decimal(25,2) NOT NULL,
@@ -970,62 +1025,66 @@ CREATE TABLE IF NOT EXISTS `tabla_cierres_cajas` (
   `saldo` decimal(25,2) NOT NULL,
   `date` datetime NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tabla_cierres_cajas`
 --
 
-INSERT INTO `tabla_cierres_cajas` (`id`, `dinero_apertura`, `cobros_en_caja`, `cobros_con_tarjeta`, `total_ventas`, `autoconsumo`, `ingreso_efectivo_en_caja`, `retiro_efectivo_en_caja`, `dinero_a_entregar`, `dinero_entregado`, `saldo`, `date`, `username`) VALUES
-(1, '19.43', '316.00', '0.00', '316.00', '3.00', '0.00', '0.00', '335.43', '318.03', '-17.40', '2018-11-26 23:29:51', 'Vendedor'),
-(2, '20.83', '135.25', '0.00', '135.25', '0.00', '0.00', '0.00', '156.08', '136.60', '-19.48', '2018-11-27 23:33:45', 'Vendedor'),
-(3, '31.60', '221.00', '0.00', '221.00', '17.25', '0.00', '0.00', '252.60', '225.75', '-26.85', '2018-11-28 23:32:51', 'Vendedor'),
-(4, '31.00', '154.10', '0.00', '154.10', '0.00', '0.00', '0.00', '185.10', '177.05', '-8.05', '2018-11-29 23:08:03', 'Vendedor'),
-(5, '14.96', '358.50', '0.00', '358.50', '9.00', '0.00', '0.00', '373.46', '0.00', '-373.46', '2018-11-30 23:09:07', 'Vendedor'),
-(6, '14.27', '262.50', '0.00', '262.50', '0.00', '0.00', '0.00', '276.77', '0.00', '-276.77', '2018-12-03 22:49:12', 'Vendedor'),
-(7, '33.02', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '33.02', '0.00', '-33.02', '2018-12-03 22:58:51', 'Vendedor'),
-(8, '32.52', '257.35', '0.00', '257.35', '0.00', '0.00', '0.00', '289.87', '287.07', '-2.80', '2018-12-04 22:32:18', 'Vendedor'),
-(9, '34.27', '275.50', '0.00', '275.50', '0.00', '0.00', '0.00', '309.77', '317.78', '8.01', '2018-12-05 23:27:58', 'Vendedor'),
-(10, '27.77', '323.95', '0.00', '323.95', '0.00', '0.00', '0.00', '351.72', '301.82', '-49.90', '2018-12-06 22:57:29', 'Vendedor'),
-(11, '56.86', '437.80', '0.00', '437.80', '0.00', '0.00', '0.00', '494.66', '458.52', '-36.14', '2018-12-07 23:44:50', 'Vendedor'),
-(12, '28.52', '413.75', '0.00', '413.75', '0.00', '7.50', '8.50', '441.27', '393.02', '-48.25', '2018-12-09 00:04:22', 'Vendedor'),
-(13, '15.27', '150.00', '0.00', '150.00', '0.00', '24.50', '30.00', '159.77', '187.02', '27.25', '2018-12-10 23:29:47', 'Vendedor'),
-(14, '7.12', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '7.12', '20.27', '13.15', '2018-12-11 23:35:11', 'Vendedor'),
-(15, '20.17', '0.00', '0.00', '0.00', '0.00', '1.00', '46.88', '-25.71', '0.00', '25.71', '2018-12-12 23:54:02', 'Vendedor'),
-(16, '15.53', '272.25', '0.00', '272.25', '0.00', '0.00', '9.50', '278.28', '271.07', '-7.21', '2018-12-13 23:41:01', 'Vendedor'),
-(17, '36.00', '313.00', '0.00', '313.00', '1.50', '0.00', '0.00', '349.00', '375.17', '26.17', '2018-12-14 23:46:16', 'Vendedor'),
-(18, '35.17', '514.00', '0.00', '514.00', '7.50', '0.00', '23.07', '526.10', '410.45', '-115.65', '2018-12-15 22:58:57', 'Vendedor'),
-(19, '42.45', '427.75', '0.00', '427.75', '0.00', '0.00', '0.00', '470.20', '261.71', '-208.49', '2018-12-17 22:57:21', 'Vendedor'),
-(20, '26.66', '140.50', '0.00', '140.50', '1.50', '0.00', '0.00', '167.16', '232.11', '64.95', '2018-12-18 21:46:46', 'Vendedor'),
-(21, '10.00', '269.00', '0.00', '269.00', '13.50', '0.00', '6.00', '273.00', '279.11', '6.11', '2018-12-19 23:32:34', 'Vendedor'),
-(22, '26.35', '372.00', '0.00', '372.00', '1.50', '107.10', '0.00', '505.45', '550.24', '44.79', '2018-12-20 23:23:51', 'Vendedor'),
-(23, '30.73', '654.25', '0.00', '654.25', '6.00', '0.00', '54.50', '630.48', '411.44', '-219.04', '2018-12-21 22:30:33', 'Vendedor'),
-(24, '53.30', '469.75', '0.00', '469.75', '0.00', '0.00', '60.00', '463.05', '440.31', '-22.74', '2018-12-22 22:34:20', 'Vendedor'),
-(25, '20.31', '412.00', '0.00', '412.00', '0.00', '40.18', '90.80', '381.69', '382.00', '0.31', '2018-12-23 21:52:19', 'Vendedor'),
-(26, '31.40', '319.75', '0.00', '319.75', '0.00', '30.00', '62.20', '318.95', '316.30', '-2.65', '2018-12-24 21:22:13', 'Vendedor'),
-(27, '36.30', '247.25', '0.00', '247.25', '4.50', '0.00', '0.00', '283.55', '299.30', '15.75', '2018-12-25 22:53:06', 'Vendedor'),
-(28, '24.30', '276.25', '0.00', '276.25', '10.00', '0.00', '0.00', '300.55', '0.00', '-300.55', '2018-12-27 12:26:03', 'Vendedor'),
-(29, '8.05', '274.25', '0.00', '274.25', '0.00', '0.00', '0.00', '282.30', '277.65', '-4.65', '2018-12-27 22:21:03', 'Vendedor'),
-(30, '27.60', '81.00', '0.00', '81.00', '0.00', '0.00', '0.00', '108.60', '119.10', '10.50', '2018-12-28 17:55:28', 'Vendedor'),
-(31, '7.10', '380.00', '0.00', '380.00', '0.00', '0.00', '0.00', '387.10', '0.00', '-387.10', '2018-12-28 23:03:21', 'Vendedor'),
-(32, '38.80', '383.75', '0.00', '383.75', '0.00', '0.00', '0.00', '422.55', '0.00', '-422.55', '2018-12-29 22:33:07', 'Vendedor'),
-(33, '38.80', '383.75', '0.00', '383.75', '0.00', '0.00', '0.00', '422.55', '0.00', '-422.55', '2018-12-29 22:33:09', 'Vendedor'),
-(34, '39.62', '290.75', '0.00', '290.75', '0.00', '0.00', '0.00', '330.37', '0.00', '-330.37', '2018-12-31 13:59:35', 'Vendedor'),
-(35, '29.50', '175.50', '0.00', '175.50', '1.50', '0.00', '0.00', '205.00', '0.00', '-205.00', '2018-12-31 19:34:30', 'Vendedor'),
-(36, '43.00', '202.00', '0.00', '202.00', '0.00', '0.00', '0.00', '245.00', '0.00', '-245.00', '2019-01-01 22:13:39', 'Vendedor'),
-(37, '43.00', '202.00', '0.00', '202.00', '0.00', '0.00', '0.00', '245.00', '0.00', '-245.00', '2019-01-01 22:13:43', 'Vendedor'),
-(38, '12.22', '113.75', '0.00', '113.75', '0.00', '0.00', '0.00', '125.97', '125.72', '-0.25', '2019-01-02 19:56:01', 'Vendedor'),
-(39, '12.67', '64.50', '0.00', '64.50', '0.00', '0.00', '0.00', '77.17', '0.00', '-77.17', '2019-01-03 16:21:03', 'Vendedor'),
-(40, '59.32', '138.25', '0.00', '138.25', '22.50', '18.09', '0.00', '215.66', '215.66', '0.00', '2019-01-03 22:40:02', 'Vendedor'),
-(41, '46.66', '362.50', '0.00', '362.50', '0.00', '154.00', '9.50', '553.66', '603.10', '49.44', '2019-01-04 23:02:16', 'Vendedor'),
-(42, '58.10', '472.75', '0.00', '472.75', '0.00', '0.00', '24.00', '506.85', '511.02', '4.17', '2019-01-05 22:41:28', 'Vendedor'),
-(43, '75.52', '242.75', '0.00', '242.75', '0.00', '0.00', '0.00', '318.27', '305.52', '-12.75', '2019-01-06 21:13:33', 'Vendedor'),
-(44, '79.52', '186.00', '0.00', '186.00', '0.00', '0.00', '65.12', '200.40', '0.00', '-200.40', '2019-01-07 22:25:38', 'Vendedor'),
-(45, '27.73', '226.75', '0.00', '226.75', '9.00', '0.00', '18.45', '236.03', '251.78', '15.75', '2019-01-08 22:49:53', 'Vendedor'),
-(46, '41.78', '227.00', '0.00', '227.00', '7.50', '0.00', '2.20', '266.58', '250.75', '-15.83', '2019-01-09 23:12:16', 'Vendedor'),
-(47, '21.75', '134.50', '0.00', '134.50', '0.00', '0.00', '0.00', '156.25', '169.79', '13.54', '2019-01-11 12:31:11', 'Vendedor'),
-(48, '19.79', '286.75', '0.00', '286.75', '0.00', '0.00', '131.50', '175.04', '351.19', '176.15', '2019-01-11 21:56:44', 'Vendedor'),
-(49, '20.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '20.00', '0.00', '-20.00', '2019-01-12 14:30:55', 'Vendedor');
+INSERT INTO `tabla_cierres_cajas` (`id`, `dinero_apertura`, `cobros_en_caja`, `cobros_con_tarjeta`, `total_ventas`, `autoconsumo`, `escuelas`, `ingreso_efectivo_en_caja`, `retiro_efectivo_en_caja`, `dinero_a_entregar`, `dinero_entregado`, `saldo`, `date`, `username`) VALUES
+(1, '19.43', '316.00', '0.00', '316.00', '3.00', '0.00', '0.00', '0.00', '335.43', '318.03', '-17.40', '2018-11-26 23:29:51', 'Vendedor'),
+(2, '20.83', '135.25', '0.00', '135.25', '0.00', '0.00', '0.00', '0.00', '156.08', '136.60', '-19.48', '2018-11-27 23:33:45', 'Vendedor'),
+(3, '31.60', '221.00', '0.00', '221.00', '17.25', '0.00', '0.00', '0.00', '252.60', '225.75', '-26.85', '2018-11-28 23:32:51', 'Vendedor'),
+(4, '31.00', '154.10', '0.00', '154.10', '0.00', '0.00', '0.00', '0.00', '185.10', '177.05', '-8.05', '2018-11-29 23:08:03', 'Vendedor'),
+(5, '14.96', '358.50', '0.00', '358.50', '9.00', '0.00', '0.00', '0.00', '373.46', '0.00', '-373.46', '2018-11-30 23:09:07', 'Vendedor'),
+(6, '14.27', '262.50', '0.00', '262.50', '0.00', '0.00', '0.00', '0.00', '276.77', '0.00', '-276.77', '2018-12-03 22:49:12', 'Vendedor'),
+(7, '33.02', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '33.02', '0.00', '-33.02', '2018-12-03 22:58:51', 'Vendedor'),
+(8, '32.52', '257.35', '0.00', '257.35', '0.00', '0.00', '0.00', '0.00', '289.87', '287.07', '-2.80', '2018-12-04 22:32:18', 'Vendedor'),
+(9, '34.27', '275.50', '0.00', '275.50', '0.00', '0.00', '0.00', '0.00', '309.77', '317.78', '8.01', '2018-12-05 23:27:58', 'Vendedor'),
+(10, '27.77', '323.95', '0.00', '323.95', '0.00', '0.00', '0.00', '0.00', '351.72', '301.82', '-49.90', '2018-12-06 22:57:29', 'Vendedor'),
+(11, '56.86', '437.80', '0.00', '437.80', '0.00', '0.00', '0.00', '0.00', '494.66', '458.52', '-36.14', '2018-12-07 23:44:50', 'Vendedor'),
+(12, '28.52', '413.75', '0.00', '413.75', '0.00', '0.00', '7.50', '8.50', '441.27', '393.02', '-48.25', '2018-12-09 00:04:22', 'Vendedor'),
+(13, '15.27', '150.00', '0.00', '150.00', '0.00', '0.00', '24.50', '30.00', '159.77', '187.02', '27.25', '2018-12-10 23:29:47', 'Vendedor'),
+(14, '7.12', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '7.12', '20.27', '13.15', '2018-12-11 23:35:11', 'Vendedor'),
+(15, '20.17', '0.00', '0.00', '0.00', '0.00', '0.00', '1.00', '46.88', '-25.71', '0.00', '25.71', '2018-12-12 23:54:02', 'Vendedor'),
+(16, '15.53', '272.25', '0.00', '272.25', '0.00', '0.00', '0.00', '9.50', '278.28', '271.07', '-7.21', '2018-12-13 23:41:01', 'Vendedor'),
+(17, '36.00', '313.00', '0.00', '313.00', '1.50', '0.00', '0.00', '0.00', '349.00', '375.17', '26.17', '2018-12-14 23:46:16', 'Vendedor'),
+(18, '35.17', '514.00', '0.00', '514.00', '7.50', '0.00', '0.00', '23.07', '526.10', '410.45', '-115.65', '2018-12-15 22:58:57', 'Vendedor'),
+(19, '42.45', '427.75', '0.00', '427.75', '0.00', '0.00', '0.00', '0.00', '470.20', '261.71', '-208.49', '2018-12-17 22:57:21', 'Vendedor'),
+(20, '26.66', '140.50', '0.00', '140.50', '1.50', '0.00', '0.00', '0.00', '167.16', '232.11', '64.95', '2018-12-18 21:46:46', 'Vendedor'),
+(21, '10.00', '269.00', '0.00', '269.00', '13.50', '0.00', '0.00', '6.00', '273.00', '279.11', '6.11', '2018-12-19 23:32:34', 'Vendedor'),
+(22, '26.35', '372.00', '0.00', '372.00', '1.50', '0.00', '107.10', '0.00', '505.45', '550.24', '44.79', '2018-12-20 23:23:51', 'Vendedor'),
+(23, '30.73', '654.25', '0.00', '654.25', '6.00', '0.00', '0.00', '54.50', '630.48', '411.44', '-219.04', '2018-12-21 22:30:33', 'Vendedor'),
+(24, '53.30', '469.75', '0.00', '469.75', '0.00', '0.00', '0.00', '60.00', '463.05', '440.31', '-22.74', '2018-12-22 22:34:20', 'Vendedor'),
+(25, '20.31', '412.00', '0.00', '412.00', '0.00', '0.00', '40.18', '90.80', '381.69', '382.00', '0.31', '2018-12-23 21:52:19', 'Vendedor'),
+(26, '31.40', '319.75', '0.00', '319.75', '0.00', '0.00', '30.00', '62.20', '318.95', '316.30', '-2.65', '2018-12-24 21:22:13', 'Vendedor'),
+(27, '36.30', '247.25', '0.00', '247.25', '4.50', '0.00', '0.00', '0.00', '283.55', '299.30', '15.75', '2018-12-25 22:53:06', 'Vendedor'),
+(28, '24.30', '276.25', '0.00', '276.25', '10.00', '0.00', '0.00', '0.00', '300.55', '0.00', '-300.55', '2018-12-27 12:26:03', 'Vendedor'),
+(29, '8.05', '274.25', '0.00', '274.25', '0.00', '0.00', '0.00', '0.00', '282.30', '277.65', '-4.65', '2018-12-27 22:21:03', 'Vendedor'),
+(30, '27.60', '81.00', '0.00', '81.00', '0.00', '0.00', '0.00', '0.00', '108.60', '119.10', '10.50', '2018-12-28 17:55:28', 'Vendedor'),
+(31, '7.10', '380.00', '0.00', '380.00', '0.00', '0.00', '0.00', '0.00', '387.10', '0.00', '-387.10', '2018-12-28 23:03:21', 'Vendedor'),
+(32, '38.80', '383.75', '0.00', '383.75', '0.00', '0.00', '0.00', '0.00', '422.55', '0.00', '-422.55', '2018-12-29 22:33:07', 'Vendedor'),
+(33, '38.80', '383.75', '0.00', '383.75', '0.00', '0.00', '0.00', '0.00', '422.55', '0.00', '-422.55', '2018-12-29 22:33:09', 'Vendedor'),
+(34, '39.62', '290.75', '0.00', '290.75', '0.00', '0.00', '0.00', '0.00', '330.37', '0.00', '-330.37', '2018-12-31 13:59:35', 'Vendedor'),
+(35, '29.50', '175.50', '0.00', '175.50', '1.50', '0.00', '0.00', '0.00', '205.00', '0.00', '-205.00', '2018-12-31 19:34:30', 'Vendedor'),
+(36, '43.00', '202.00', '0.00', '202.00', '0.00', '0.00', '0.00', '0.00', '245.00', '0.00', '-245.00', '2019-01-01 22:13:39', 'Vendedor'),
+(37, '43.00', '202.00', '0.00', '202.00', '0.00', '0.00', '0.00', '0.00', '245.00', '0.00', '-245.00', '2019-01-01 22:13:43', 'Vendedor'),
+(38, '12.22', '113.75', '0.00', '113.75', '0.00', '0.00', '0.00', '0.00', '125.97', '125.72', '-0.25', '2019-01-02 19:56:01', 'Vendedor'),
+(39, '12.67', '64.50', '0.00', '64.50', '0.00', '0.00', '0.00', '0.00', '77.17', '0.00', '-77.17', '2019-01-03 16:21:03', 'Vendedor'),
+(40, '59.32', '138.25', '0.00', '138.25', '22.50', '0.00', '18.09', '0.00', '215.66', '215.66', '0.00', '2019-01-03 22:40:02', 'Vendedor'),
+(41, '46.66', '362.50', '0.00', '362.50', '0.00', '0.00', '154.00', '9.50', '553.66', '603.10', '49.44', '2019-01-04 23:02:16', 'Vendedor'),
+(42, '58.10', '472.75', '0.00', '472.75', '0.00', '0.00', '0.00', '24.00', '506.85', '511.02', '4.17', '2019-01-05 22:41:28', 'Vendedor'),
+(43, '75.52', '242.75', '0.00', '242.75', '0.00', '0.00', '0.00', '0.00', '318.27', '305.52', '-12.75', '2019-01-06 21:13:33', 'Vendedor'),
+(44, '79.52', '186.00', '0.00', '186.00', '0.00', '0.00', '0.00', '65.12', '200.40', '0.00', '-200.40', '2019-01-07 22:25:38', 'Vendedor'),
+(45, '27.73', '226.75', '0.00', '226.75', '9.00', '0.00', '0.00', '18.45', '236.03', '251.78', '15.75', '2019-01-08 22:49:53', 'Vendedor'),
+(46, '41.78', '227.00', '0.00', '227.00', '7.50', '0.00', '0.00', '2.20', '266.58', '250.75', '-15.83', '2019-01-09 23:12:16', 'Vendedor'),
+(47, '21.75', '134.50', '0.00', '134.50', '0.00', '0.00', '0.00', '0.00', '156.25', '169.79', '13.54', '2019-01-11 12:31:11', 'Vendedor'),
+(48, '19.79', '286.75', '0.00', '286.75', '0.00', '0.00', '0.00', '131.50', '175.04', '351.19', '176.15', '2019-01-11 21:56:44', 'Vendedor'),
+(49, '20.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '20.00', '0.00', '-20.00', '2019-01-12 14:30:55', 'Vendedor'),
+(50, '0.00', '10.00', '0.00', '10.00', '0.00', '0.00', '0.00', '0.00', '144.50', '0.00', '355.50', '2019-01-19 17:51:23', 'Desarrollador'),
+(51, '20.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '20.00', '200.00', '180.00', '2019-01-19 18:01:11', 'Desarrollador'),
+(52, '50.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '78.00', '520.00', '442.00', '2019-01-19 18:21:37', 'Desarrollador'),
+(53, '50.00', '0.00', '0.00', '0.00', '0.00', '57.60', '0.00', '0.00', '107.60', '110.00', '2.40', '2019-01-19 18:28:48', 'Desarrollador');
 
 -- --------------------------------------------------------
 
@@ -1039,7 +1098,7 @@ CREATE TABLE IF NOT EXISTS `tabla_ingresos_retiros_cajas` (
   `date` datetime NOT NULL,
   `username` varchar(50) NOT NULL,
   `descripcion` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tabla_ingresos_retiros_cajas`
@@ -1053,7 +1112,9 @@ INSERT INTO `tabla_ingresos_retiros_cajas` (`id`, `importe`, `date`, `username`,
 (5, '11.00', '2018-12-26 19:50:17', 'Vendedor', ''),
 (6, '-11.00', '2018-12-26 21:50:21', 'Vendedor', ''),
 (7, '1.50', '2018-12-26 21:51:19', 'Vendedor', ''),
-(8, '-3.50', '2018-12-26 21:51:57', 'Vendedor', '');
+(8, '-3.50', '2018-12-26 21:51:57', 'Vendedor', ''),
+(9, '-8.00', '2019-01-19 18:35:14', 'Desarrollador', ''),
+(10, '20.00', '2019-01-19 18:35:53', 'Desarrollador', '');
 
 -- --------------------------------------------------------
 
@@ -1153,7 +1214,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`, `bloqueocaja`, `clave_caja`) VALUES
-(1, 'Desarrolador', 'desarrollador', '6de7d66eaced8e72f2861d9f821fb0ed5459fea4', 1, 'pzg9wa7o1.jpg', 1, '2019-01-12 14:47:18', 1, '64fe42831a725a1ee99e42f000f7b8433d338dff'),
+(1, 'Desarrolador', 'desarrollador', '6de7d66eaced8e72f2861d9f821fb0ed5459fea4', 1, 'pzg9wa7o1.jpg', 1, '2019-02-05 21:06:09', 1, '64fe42831a725a1ee99e42f000f7b8433d338dff'),
 (2, 'Administrador', 'yoli', '2f9f73153c9834b36c0de143feec406f6b0b0403', 2, 'no_image.jpg', 1, '2019-01-11 20:06:41', 0, '64fe42831a725a1ee99e42f000f7b8433d338dff'),
 (3, 'Vendedor', 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 3, 'no_image.jpg', 1, '2019-01-12 14:30:19', 0, '64fe42831a725a1ee99e42f000f7b8433d338dff');
 
@@ -1940,6 +2001,49 @@ INSERT INTO `venta_cajas` (`id`, `qty`, `tama`, `price`, `date`, `user`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `venta_escuelas`
+--
+
+CREATE TABLE IF NOT EXISTS `venta_escuelas` (
+  `id` int(11) unsigned NOT NULL,
+  `qty_masas` int(11) NOT NULL,
+  `price` decimal(25,2) NOT NULL,
+  `cajaGrande` int(11) NOT NULL,
+  `cajaPequena` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `user` varchar(25) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_escuelas`
+--
+
+INSERT INTO `venta_escuelas` (`id`, `qty_masas`, `price`, `cajaGrande`, `cajaPequena`, `date`, `user`) VALUES
+(1, 5, '18.00', 0, 0, '2019-01-19 14:59:07', ''),
+(2, 1, '5.00', 0, 0, '2019-01-19 15:00:38', ''),
+(3, 1, '5.00', 0, 0, '2019-01-19 15:05:58', ''),
+(4, 5, '5.00', 0, 0, '2019-01-19 15:06:08', ''),
+(5, 5, '5.00', 0, 0, '2019-01-19 15:06:34', ''),
+(6, 5, '5.00', 0, 0, '2019-01-19 15:07:00', ''),
+(7, 5, '5.00', 0, 0, '2019-01-19 15:09:18', ''),
+(8, 2, '9.00', 0, 0, '2019-01-19 15:12:30', 'Array'),
+(9, 10, '19.20', 0, 0, '2019-01-19 15:13:45', 'Array'),
+(10, 10, '80.00', 0, 0, '2019-01-19 15:15:22', ''),
+(11, 10, '22.50', 0, 0, '2019-01-19 15:17:11', 'Desarrollador'),
+(12, 10, '10.00', 0, 0, '2019-01-19 17:00:39', 'Desarrollador'),
+(13, 10, '10.00', 0, 0, '2019-01-19 17:03:19', 'Desarrollador'),
+(14, 10, '36.00', 0, 0, '2019-01-19 17:03:30', 'Desarrollador'),
+(15, 10, '36.00', 0, 0, '2019-01-19 17:04:08', 'Desarrollador'),
+(16, 2, '12.80', 0, 0, '2019-01-19 17:04:20', 'Desarrollador'),
+(17, 1, '7.20', 3, 3, '2019-01-19 17:05:09', 'Desarrollador'),
+(18, 5, '28.00', 0, 0, '2019-01-19 18:03:36', 'Desarrollador'),
+(19, 8, '57.60', 2, 0, '2019-01-19 18:28:25', 'Desarrollador'),
+(20, 5, '30.00', 3, 0, '2019-01-19 18:30:29', 'Desarrollador'),
+(21, 5, '30.00', 3, 0, '2019-01-19 20:12:45', 'Desarrollador');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `venta_general`
 --
 
@@ -1952,7 +2056,7 @@ CREATE TABLE IF NOT EXISTS `venta_general` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1852 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1858 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `venta_general`
@@ -3806,7 +3910,14 @@ INSERT INTO `venta_general` (`id`, `orden`, `price`, `pagado`, `vuelto`, `date`,
 (1848, 34, '1.50', '1.50', '0.00', '2019-01-11 20:13:21', 'vendedor', 'efectivo'),
 (1849, 35, '4.50', '4.50', '0.00', '2019-01-11 20:14:11', 'vendedor', 'efectivo'),
 (1850, 36, '14.00', '20.00', '6.00', '2019-01-11 21:25:02', 'vendedor', 'efectivo'),
-(1851, 37, '6.50', '6.50', '0.00', '2019-01-11 21:26:27', 'vendedor', 'efectivo');
+(1851, 37, '6.50', '6.50', '0.00', '2019-01-11 21:26:27', 'vendedor', 'efectivo'),
+(1852, 0, '10.00', '10.00', '0.00', '2019-01-19 15:09:26', 'desarrollador', 'efectivo'),
+(1853, 1, '4.50', '5.00', '0.50', '2019-01-19 20:38:28', 'desarrollador', 'efectivo');
+INSERT INTO `venta_general` (`id`, `orden`, `price`, `pagado`, `vuelto`, `date`, `user`, `forma_pago`) VALUES
+(1854, 2, '4.50', '10.00', '5.50', '2019-01-19 20:40:47', 'desarrollador', 'efectivo'),
+(1855, 3, '6.00', '10.00', '4.00', '2019-01-19 20:46:03', 'desarrollador', 'efectivo'),
+(1856, 4, '6.00', '6.00', '0.00', '2019-01-19 20:47:36', 'desarrollador', 'efectivo'),
+(1857, 5, '10.00', '10.00', '0.00', '2019-01-19 21:41:18', 'desarrollador', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -3822,7 +3933,7 @@ CREATE TABLE IF NOT EXISTS `venta_ingredientes` (
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL,
   `forma_pago` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=475 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=482 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `venta_ingredientes`
@@ -4302,7 +4413,14 @@ INSERT INTO `venta_ingredientes` (`id`, `qty`, `nombre_ingre`, `price`, `date`, 
 (471, 1, 'mediana', '1.00', '2019-01-11 18:39:54', 'vendedor', 'efectivo'),
 (472, 1, 'extragrande', '1.00', '2019-01-11 19:53:16', 'vendedor', 'efectivo'),
 (473, 1, 'extragrande', '1.00', '2019-01-11 20:11:34', 'vendedor', 'efectivo'),
-(474, 1, 'familiar', '1.00', '2019-01-11 21:25:25', 'vendedor', 'efectivo');
+(474, 1, 'familiar', '1.00', '2019-01-11 21:25:25', 'vendedor', 'efectivo'),
+(475, 3, 'undefined', '4.50', '2019-01-19 20:38:45', 'desarrollador', 'efectivo'),
+(476, 3, 'undefined', '4.50', '2019-01-19 20:41:00', 'desarrollador', 'efectivo'),
+(477, 4, 'undefined', '6.00', '2019-01-19 20:46:19', 'desarrollador', 'efectivo'),
+(478, 4, 'tiramisu', '6.00', '2019-01-19 20:47:53', 'desarrollador', 'efectivo'),
+(479, 1, 'Lasagna pollo', '4.00', '2019-01-19 21:41:59', 'desarrollador', 'efectivo'),
+(480, 1, 'Lasagna mixta', '4.50', '2019-01-19 21:41:59', 'desarrollador', 'efectivo'),
+(481, 1, 'tiramisu', '1.50', '2019-01-19 21:41:59', 'desarrollador', 'efectivo');
 
 -- --------------------------------------------------------
 
@@ -4322,7 +4440,7 @@ CREATE TABLE IF NOT EXISTS `venta_pizzas` (
   `forma_pago` varchar(25) NOT NULL,
   `date` datetime NOT NULL,
   `user` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2604 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2605 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `venta_pizzas`
@@ -6908,7 +7026,8 @@ INSERT INTO `venta_pizzas` (`id`, `qty`, `tam_pizza`, `tipo_pizza`, `sabor_pizza
 (2600, 1, 'porcion', 'porcion', 'pollo', 'servirse', '', '1.50', 'efectivo', '2019-01-11 20:14:54', 'vendedor'),
 (2601, 1, 'familiar', 'normal', 'mixta', 'llevar', '', '13.00', 'efectivo', '2019-01-11 21:25:21', 'vendedor'),
 (2602, 3, 'porcion', 'porcion', 'mixta', 'servirse', '', '4.50', 'efectivo', '2019-01-11 21:28:14', 'vendedor'),
-(2603, 1, 'porcion', 'porcion', 'mixta', 'servirse', '', '1.50', 'efectivo', '2019-01-11 21:28:23', 'vendedor');
+(2603, 1, 'porcion', 'porcion', 'mixta', 'servirse', '', '1.50', 'efectivo', '2019-01-11 21:28:23', 'vendedor'),
+(2604, 1, 'mediana', 'especial', 'tradicionalPollo', 'servirse', '', '10.00', 'efectivo', '2019-01-19 15:09:41', 'desarrollador');
 
 --
 -- Índices para tablas volcadas
@@ -6930,6 +7049,18 @@ ALTER TABLE `catalogo_extras`
 -- Indices de la tabla `catalogo_ingredientes`
 --
 ALTER TABLE `catalogo_ingredientes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `catalogo_lasagna`
+--
+ALTER TABLE `catalogo_lasagna`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `catalogo_otros`
+--
+ALTER TABLE `catalogo_otros`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -7064,6 +7195,12 @@ ALTER TABLE `venta_cajas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `venta_escuelas`
+--
+ALTER TABLE `venta_escuelas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
@@ -7101,10 +7238,20 @@ ALTER TABLE `catalogo_extras`
 ALTER TABLE `catalogo_ingredientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT de la tabla `catalogo_lasagna`
+--
+ALTER TABLE `catalogo_lasagna`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `catalogo_otros`
+--
+ALTER TABLE `catalogo_otros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `contador`
 --
@@ -7119,7 +7266,7 @@ ALTER TABLE `extra_pizzas`
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT de la tabla `productovender`
 --
@@ -7149,17 +7296,17 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT de la tabla `tabla_aperturas_cajas`
 --
 ALTER TABLE `tabla_aperturas_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT de la tabla `tabla_cierres_cajas`
 --
 ALTER TABLE `tabla_cierres_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT de la tabla `tabla_ingresos_retiros_cajas`
 --
 ALTER TABLE `tabla_ingresos_retiros_cajas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `tam_pizzas`
 --
@@ -7196,20 +7343,25 @@ ALTER TABLE `venta_bebidas`
 ALTER TABLE `venta_cajas`
   MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=478;
 --
+-- AUTO_INCREMENT de la tabla `venta_escuelas`
+--
+ALTER TABLE `venta_escuelas`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+--
 -- AUTO_INCREMENT de la tabla `venta_general`
 --
 ALTER TABLE `venta_general`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1852;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1858;
 --
 -- AUTO_INCREMENT de la tabla `venta_ingredientes`
 --
 ALTER TABLE `venta_ingredientes`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=475;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=482;
 --
 -- AUTO_INCREMENT de la tabla `venta_pizzas`
 --
 ALTER TABLE `venta_pizzas`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2604;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2605;
 --
 -- Restricciones para tablas volcadas
 --
