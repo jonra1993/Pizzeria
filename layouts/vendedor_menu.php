@@ -60,6 +60,16 @@
         <span class="title">Ingresos-retiro de caja</span>
         </a>
     </li>
+    <!-- Realizar Pizzas Escuelas-->
+    <li  class="nav-item start">
+      <a href="add_escuelas.php" class="nav-link">
+        <i class="glyphicon glyphicon-blackboard"></i>      <!--Iconos de boostrap ver: https://getbootstrap.com/docs/3.3/components/-->
+        <span class="title">Pizzas escuelas  </span>
+      </a>
+    </li>
   <?php endif;?>
+
+   
+
 </ul>
 <script type="text/javascript" src="assets/jquery-1.10.2.min.js"></script>
