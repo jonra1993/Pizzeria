@@ -43,14 +43,16 @@
             </thead>
             <tbody>
               <?php foreach ($cierres as $cierre):?>
-              <tr>
+              <?php $desIngreso=remove_junk($cierre['Descripcion_ingreso']); ?>
+              <?php $desRetiro=remove_junk($cierre['Descripcion_retiro']); ?>
+              <tr>#06500C
                 <td class="text-center"> <?php echo read_date($cierre['date']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($cierre['username']); ?></td>
                 <td class="text-center" id="da<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['dinero_apertura']); ?></td>
                 <td class="text-center" id="cc<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['cobros_en_caja']); ?></td>
                 <td class="text-center" id="ct<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['cobros_con_tarjeta']); ?></td>
-                <td class="text-center" id="ic<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['ingreso_efectivo_en_caja']); ?></td>
-                <td class="text-center" id="rc<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['retiro_efectivo_en_caja']); ?></td>
+                <td style="color: #2D8EFF; text-decoration: underline;" title="<?php echo $desIngreso;?>" class="text-center" id="ic<?php echo remove_junk($cierre['id']); ?>"><?php echo remove_junk($cierre['ingreso_efectivo_en_caja']); ?></td>
+                <td style="color: #06500C; text-decoration: underline;" title="<?php echo $desRetiro;?>" class="text-center" id="rc<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['retiro_efectivo_en_caja']); ?></td>
                 <td class="text-center" id="de<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['dinero_entregado']); ?></td>
                 <td class="text-center" id="s<?php echo remove_junk($cierre['id']); ?>"> <?php echo remove_junk($cierre['saldo']); ?></td>
               </tr>

@@ -23,6 +23,9 @@
       case 'Ingredientes':
         $ventas = monthlySales($year,$month,'venta_ingredientes');
         break;
+      case 'Ventas a escuelas':
+        $ventas = monthlySales($year,$month,'venta_escuelas');  
+        break;
     }
   } 
   else{
@@ -51,6 +54,7 @@
                 <?php foreach ($categorias as $cat):?>
                   <option><?php echo remove_junk($cat['name']); ?></option>
                 <?php endforeach; ?>
+                <option>Ventas a escuelas</option>
               <?php else:?>
                 <option><?php echo remove_junk($selector); ?></option>
                 <?php foreach ($categorias as $cat):?>
@@ -58,6 +62,9 @@
                     <option><?php echo remove_junk($cat['name']);?></option>
                   <?php endif?>
                 <?php endforeach; ?>
+                <?php if("Ventas a escuelas"!=remove_junk($selector)):?>
+                  <option>Ventas a escuelas</option>
+                <?php endif?>
               <?php endif?>
             </select>
           </div>
@@ -221,6 +228,36 @@
                       <th class="text-center" style="width: 10%;" colspan="3"> Total </th>
                       <th class="text-center" style="width: 10%;" id="total"> </th>
                     </tr>
+                </table>
+              </div>
+            <?php break; ?>
+            <?php case 'Ventas a escuelas': ?>
+              <div class="panel-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center" style="width: 12%;"> Fecha </th>
+                      <th class="text-center" style="width: 10%;"> Cantidad de masas </th>
+                      <th class="text-center" style="width: 10%;"> Cajas Grandes </th>
+                      <th class="text-center" style="width: 10%;"> Cajas Pequeñas </th>
+                      <th class="text-center" style="width: 10%;"> Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($ventas as $sale):?>
+                        <tr>
+                          <td class="text-center"> <?php echo read_date($sale['date']); ?></td>
+                          <td class="text-center"> <?php echo remove_junk($sale['qty_masas']); ?></td>
+                          <td class="text-center"> <?php echo remove_junk($sale['cajaGrande']); ?></td>
+                          <td class="text-center"> <?php echo remove_junk($sale['cajaPequena']); ?></td>    
+                          <td class="text-center" id="pri<?php echo remove_junk($sale['id']); ?>"> <?php echo remove_junk($sale['price']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                  <tr>
+                    <th class="text-center" style="width: 10%;" colspan="4"> Total </th>
+                    <th class="text-center" style="width: 10%;" id="total"> </th>
+                  </tr>
                 </table>
               </div>
             <?php break; ?>

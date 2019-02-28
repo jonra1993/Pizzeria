@@ -577,6 +577,14 @@ function monthlySales ($year,$month,$tabla){
     return find_by_sql($sql);
   }
 
+  function find_descr_ingresos_caja($year,$month,$day){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    $sql  =" SELECT descripcion";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe>=0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
+    return find_by_sql($sql);
+  }
+
   function find_sum_retiros_caja($year,$month,$day){
     $current_user = current_user();
     $p_user = remove_junk(ucwords($current_user['username']));
@@ -584,7 +592,13 @@ function monthlySales ($year,$month,$tabla){
     $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
     return find_by_sql($sql);
   }
-
+  function find_descr_retiros_caja($year,$month,$day){
+    $current_user = current_user();
+    $p_user = remove_junk(ucwords($current_user['username']));
+    $sql  =" SELECT descripcion";
+    $sql  .=" FROM tabla_ingresos_retiros_cajas c WHERE  c.importe<0 AND DATE_FORMAT(c.date, '%Y-%m-%d' ) >= '{$year}-{$month}-{$day}' AND c.username='{$p_user}'";
+    return find_by_sql($sql);
+  }
   function delete_sum_ingresos_caja($year,$month,$day){
     global $db;
     $current_user = current_user();
@@ -619,7 +633,7 @@ function monthlySales ($year,$month,$tabla){
 /*--------------------------------------------------------------*/
 function  daily_cierres_cajas($year,$month,$day){
   global $db;
-  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
+  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username, c.Descripcion_ingreso,c.Descripcion_retiro";
   $sql .= " FROM tabla_cierres_cajas c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) = '{$year}-{$month}-{$day}'";
   $sql  .=" ORDER BY c.date DESC";
@@ -627,7 +641,7 @@ function  daily_cierres_cajas($year,$month,$day){
 }
 
 function monthly_cierres_cajas ($year,$month){ 
-  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
+  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username, c.Descripcion_ingreso,c.Descripcion_retiro";
   $sql .= " FROM tabla_cierres_cajas c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m' ) = '{$year}-{$month}'";
   $sql  .=" ORDER BY c.date DESC";
@@ -638,7 +652,7 @@ function by_dates_cierres_cajas ($start_date,$end_date){
   global $db;
   $start_date  = date("Y-m-d", strtotime($start_date));
   $end_date    = date("Y-m-d", strtotime($end_date));
-  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username";
+  $sql  =" SELECT c.date, c.id,c.dinero_apertura,c.cobros_en_caja,c.cobros_con_tarjeta,c.total_ventas,c.autoconsumo,c.ingreso_efectivo_en_caja,c.retiro_efectivo_en_caja,c.dinero_a_entregar,c.dinero_entregado,c.saldo,c.username, c.Descripcion_ingreso,c.Descripcion_retiro";
   $sql .= " FROM tabla_cierres_cajas c";
   $sql .= " WHERE DATE_FORMAT(c.date, '%Y-%m-%d' ) BETWEEN '{$start_date}' AND '{$end_date}'";
   $sql .= " ORDER BY c.date desc";

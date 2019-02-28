@@ -8,21 +8,22 @@
 <?php
 $user = current_user();
 if(isset($_POST['aceptar'])){
-   $req_fields = array('dinero','clave_caja');
+   $req_fields = array('dinero','clave_caja','descrip');
    validate_fields($req_fields);
   if(empty($errors)){
     $aux = remove_junk(ucwords($user['username']));
     $p_id = remove_junk(ucwords($user['id']));
     $p_date    = make_date();
     $p_dinero = remove_junk($db->escape($_POST['dinero']));
+    $p_descrip = remove_junk($db->escape($_POST['descrip']));
     $option   = remove_junk($db->escape($_POST['selector']));
     $clave_caja   = remove_junk($db->escape($_POST['clave_caja']));
     if(authenticate_clave_caja($clave_caja)){
       if($option == 'Retiro de Efectivo en Caja') $p_dinero=-$p_dinero;
       $query  = "INSERT INTO tabla_ingresos_retiros_cajas (";        //Insertar la BD en donde se va a ingresar los datos
-      $query .=" importe,date,username";
+      $query .=" importe,date,username,descripcion";
       $query .=") VALUES (";
-      $query .=" '{$p_dinero}', '{$p_date}', '{$aux}'";
+      $query .=" '{$p_dinero}', '{$p_date}', '{$aux}', '{$p_descrip}'";
       $query .="); ";
       if($db->query($query)){
         if($p_dinero<0)$session->msg('s',"Retiro de dinero exitoso");  
